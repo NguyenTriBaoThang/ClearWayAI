@@ -27,8 +27,8 @@
 ### Phase B — 3D & Blueprint UI (Tasks 05–20)
 | Task ID | Task Description | Priority | Dependencies | Status | Verification Proof |
 | :--- | :--- | :---: | :---: | :---: | :--- |
-| **T05** | Khóa giao diện theo ảnh tham chiếu: UI blueprint & acceptance pixels | P0 | T01–T04 | **PLANNED** | assets/reference/dashboard-target.png copied (1254x1254) |
-| **T06** | Code layout dashboard bám ảnh: topbar, sidebar, các vùng panel | P0 | T05 | **PLANNED** | Scheduled |
+| **T05** | Khóa giao diện theo ảnh tham chiếu: UI blueprint & acceptance pixels | P0 | T01–T04 | **VERIFIED** | UI_REFERENCE_SPEC.md, UI_VISUAL_ACCEPTANCE.md, verified 1254x1254 target |
+| **T06** | Code layout dashboard bám ảnh: topbar, sidebar, các vùng panel | P0 | T05 | **PLANNED** | Scheduled next |
 | **T07** | Dựng Three.js/R3F Canvas 3D tương tác đúng phối cảnh isometric | P0 | T05, T06 | **PLANNED** | Scheduled |
 | **T08** | Dựng đường giao lộ 3D: mặt đường, làn, vạch kẻ, crosswalk | P0 | T07 | **PLANNED** | Scheduled |
 | **T09** | Dựng bối cảnh thành phố 3D chi tiết như ảnh | P0 | T07, T08 | **PLANNED** | Scheduled |
@@ -117,6 +117,6 @@
 ---
 
 ## 3. Current Sprint Focus
-- **Current Milestone:** TASK 01, TASK 02, TASK 03 & TASK 04 Complete & Verified.
-- **Next Dependent Task:** TASK 05 — Khóa giao diện theo ảnh tham chiếu: UI blueprint và acceptance pixels.
+- **Current Milestone:** TASK 01–05 Complete & Verified.
+- **Next Dependent Task:** TASK 06 — Code layout dashboard bám ảnh: topbar, sidebar, các vùng panel.
 

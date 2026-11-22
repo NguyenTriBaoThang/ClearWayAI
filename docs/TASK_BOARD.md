@@ -8,15 +8,15 @@
 
 ## 📊 Sprint Progress Overview
 - **Total Tasks:** 60
-- **Verified Complete:** 4 (T01, T02, T03, T04)
+- **Verified Complete:** 5 (T01, T02, T03, T04, T05)
 - **In Progress:** 0
-- **Planned:** 56
-- **Phase Completion:** Phase A (4/6 complete)
+- **Planned:** 55
+- **Phase Completion:** Phase A (4/6 complete), Phase B (1/16 complete)
 
 ```mermaid
 pie title Task Completion by Status
-    "VERIFIED" : 4
-    "PLANNED" : 56
+    "VERIFIED" : 5
+    "PLANNED" : 55
 ```
 
 ---
@@ -29,7 +29,7 @@ pie title Task Completion by Status
 | **T02** | Phase A | Tạo GitHub repository chuyên nghiệp giống cấu trúc LocalExplorerAI | **P0** | T01 | **VERIFIED** | GitHub Issue/PR templates, CONTRIBUTING, SECURITY, CODEOWNERS, .gitattributes LFS, TASK_BOARD |
 | **T03** | Phase A | Tạo website Technical Documentation như LocalExplorerAI Docs | **P0** | T01, T02 | **VERIFIED** | Docs portal built with 24 chapters, search, dark/light, Mermaid, GitHub Pages workflow |
 | **T04** | Phase A | Viết ALL README.md cho toàn bộ monorepo | **P0** | T01–T03 | **VERIFIED** | Root README + 13 module READMEs, architecture templates, 28 markdown files link-checked (0 broken links) |
-| **T05** | Phase B | Khóa giao diện theo ảnh tham chiếu: UI blueprint và acceptance pixels | **P0** | T01–T04 | `PLANNED` | assets/reference/dashboard-target.png present (1254x1254) |
+| **T05** | Phase B | Khóa giao diện theo ảnh tham chiếu: UI blueprint và acceptance pixels | **P0** | T01–T04 | **VERIFIED** | UI_REFERENCE_SPEC.md, UI_VISUAL_ACCEPTANCE.md, verified 1254x1254 target |
 | **T06** | Phase B | Code layout dashboard bám ảnh: topbar, sidebar, các vùng panel | **P0** | T05 | `PLANNED` | Layout components ready for pixel-locking |
 | **T07** | Phase B | Dựng Three.js/R3F Canvas 3D tương tác đúng phối cảnh isometric | **P0** | T05, T06 | `PLANNED` | DigitalTwinCanvas initialized; isometric camera pending |
 | **T08** | Phase B | Dựng đường giao lộ 3D: mặt đường, làn, vạch kẻ, crosswalk | **P0** | T07 | `PLANNED` | road-network.json & road geometry meshes |
