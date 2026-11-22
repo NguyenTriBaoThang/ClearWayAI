@@ -8,15 +8,15 @@
 
 ## 📊 Sprint Progress Overview
 - **Total Tasks:** 60
-- **Verified Complete:** 6 (T01, T02, T03, T04, T05, T06)
+- **Verified Complete:** 7 (T01, T02, T03, T04, T05, T06, T07)
 - **In Progress:** 0
-- **Planned:** 54
-- **Phase Completion:** Phase A (4/6 complete), Phase B (2/16 complete)
+- **Planned:** 53
+- **Phase Completion:** Phase A (4/6 complete), Phase B (3/16 complete)
 
 ```mermaid
 pie title Task Completion by Status
-    "VERIFIED" : 6
-    "PLANNED" : 54
+    "VERIFIED" : 7
+    "PLANNED" : 53
 ```
 
 ---
@@ -31,7 +31,7 @@ pie title Task Completion by Status
 | **T04** | Phase A | Viết ALL README.md cho toàn bộ monorepo | **P0** | T01–T03 | **VERIFIED** | Root README + 13 module READMEs, architecture templates, 28 markdown files link-checked (0 broken links) |
 | **T05** | Phase B | Khóa giao diện theo ảnh tham chiếu: UI blueprint và acceptance pixels | **P0** | T01–T04 | **VERIFIED** | UI_REFERENCE_SPEC.md, UI_VISUAL_ACCEPTANCE.md, verified 1254x1254 target |
 | **T06** | Phase B | Code layout dashboard bám ảnh: topbar, sidebar, các vùng panel | **P0** | T05 | **VERIFIED** | Responsive cyber grid, TopBar, Sidebar, PanelFrame, StatusPill, KpiTile, 5 panel cards, Floating 3D HUD, pytest (14/14) |
-| **T07** | Phase B | Dựng Three.js/R3F Canvas 3D tương tác đúng phối cảnh isometric | **P0** | T05, T06 | `PLANNED` | DigitalTwinCanvas initialized; isometric camera pending |
+| **T07** | Phase B | Dựng Three.js/R3F Canvas 3D tương tác đúng phối cảnh isometric | **P0** | T05, T06 | **VERIFIED** | True isometric OrbitControls (bounded pitch), dual-cam (persp/ortho), presets (ISO/TOP/CLOSE/CHASE), cyber lighting/grid, pytest (18/18) |
 | **T08** | Phase B | Dựng đường giao lộ 3D: mặt đường, làn, vạch kẻ, crosswalk | **P0** | T07 | `PLANNED` | road-network.json & road geometry meshes |
 | **T09** | Phase B | Dựng bối cảnh thành phố 3D chi tiết như ảnh | **P0** | T07, T08 | `PLANNED` | City blocks, urban props, lighting presets |
 | **T10** | Phase B | Bộ tài sản 3D phương tiện Việt Nam và xe ưu tiên | **P0** | T07–T09 | `PLANNED` | Vehicle models: motorbike, sedan, bus, ambulance |

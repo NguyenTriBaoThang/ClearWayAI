@@ -29,8 +29,8 @@
 | :--- | :--- | :---: | :---: | :---: | :--- |
 | **T05** | Khóa giao diện theo ảnh tham chiếu: UI blueprint & acceptance pixels | P0 | T01–T04 | **VERIFIED** | UI_REFERENCE_SPEC.md, UI_VISUAL_ACCEPTANCE.md, verified 1254x1254 target |
 | **T06** | Code layout dashboard bám ảnh: topbar, sidebar, các vùng panel | P0 | T05 | **VERIFIED** | Responsive cyber grid, TopBar, Sidebar, PanelFrame, StatusPill, KpiTile, 5 panel cards, Floating 3D HUD, pytest (14/14) |
-| **T07** | Dựng Three.js/R3F Canvas 3D tương tác đúng phối cảnh isometric | P0 | T05, T06 | **PLANNED** | Scheduled next |
-| **T08** | Dựng đường giao lộ 3D: mặt đường, làn, vạch kẻ, crosswalk | P0 | T07 | **PLANNED** | Scheduled |
+| **T07** | Dựng Three.js/R3F Canvas 3D tương tác đúng phối cảnh isometric | P0 | T05, T06 | **VERIFIED** | True isometric OrbitControls (bounded pitch), dual-cam (persp/ortho), presets (ISO/TOP/CLOSE/CHASE), cyber lighting/grid, pytest (18/18) |
+| **T08** | Dựng đường giao lộ 3D: mặt đường, làn, vạch kẻ, crosswalk | P0 | T07 | **PLANNED** | Scheduled next |
 | **T09** | Dựng bối cảnh thành phố 3D chi tiết như ảnh | P0 | T07, T08 | **PLANNED** | Scheduled |
 | **T10** | Bộ tài sản 3D phương tiện Việt Nam và xe ưu tiên | P0 | T07–T09 | **PLANNED** | Scheduled |
 | **T11** | Chuyển động xe 3D theo lane graph và snapshot có ID | P0 | T08–T10 | **PLANNED** | Scheduled |

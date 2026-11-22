@@ -8,10 +8,14 @@ import {
   Radio,
   Flame,
   ShieldCheck,
-  Maximize2,
   Video,
+  Eye,
+  Maximize2,
+  Activity,
 } from 'lucide-react';
 import { StatusPill } from '../../components/StatusPill';
+import { SceneEnvironment } from './SceneEnvironment';
+import { SceneController, CameraPresetType, ProjectionMode, CameraStateMetrics } from './SceneController';
 
 interface DigitalTwinCanvasProps {
   intersectionId?: string;
@@ -24,94 +28,77 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
   style,
 }) => {
   const mountRef = useRef<HTMLDivElement>(null);
+  const controllerRef = useRef<SceneController | null>(null);
+
   const [webglInitialized, setWebglInitialized] = useState<boolean>(false);
   const [fps, setFps] = useState<number>(60);
-  const [cameraPreset, setCameraPreset] = useState<'iso' | 'top' | 'close' | 'chase'>('iso');
-  const [showLayersMenu, setShowLayersMenu] = useState<boolean>(false);
+  const [renderMs, setRenderMs] = useState<number>(2.4);
+  const [drawCalls, setDrawCalls] = useState<number>(18);
+  const [triangles, setTriangles] = useState<number>(1420);
+
+  const [cameraPreset, setCameraPreset] = useState<CameraPresetType>('iso');
+  const [projectionMode, setProjectionMode] = useState<ProjectionMode>('perspective');
+  const [autoRotate, setAutoRotate] = useState<boolean>(false);
+  const [showMetrics, setShowMetrics] = useState<boolean>(true);
+  const [camMetrics, setCamMetrics] = useState<CameraStateMetrics>({
+    position: { x: 46, y: 50, z: 46 },
+    target: { x: 0, y: 0, z: 0 },
+    distance: 81,
+    pitchDeg: 38,
+    yawDeg: 45,
+    projection: 'perspective',
+    preset: 'iso',
+    autoRotate: false,
+  });
 
   useEffect(() => {
     if (!mountRef.current) return;
 
-    const width = mountRef.current.clientWidth || 800;
-    const height = mountRef.current.clientHeight || 500;
+    const container = mountRef.current;
+    const width = container.clientWidth || 800;
+    const height = container.clientHeight || 500;
 
-    // 1. Scene setup
+    // 1. Three.js Scene Setup
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x0a1128);
 
-    // 2. Camera setup
-    const aspect = width / height;
-    const camera = new THREE.PerspectiveCamera(45, aspect, 0.1, 1000);
-    camera.position.set(40, 45, 40);
-    camera.lookAt(0, 0, 0);
-
-    // 3. WebGL Renderer
+    // 2. WebGL Renderer
     let renderer: THREE.WebGLRenderer;
     try {
-      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+      renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: false,
+        powerPreference: 'high-performance',
+      });
       renderer.setSize(width, height);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      mountRef.current.appendChild(renderer.domElement);
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      container.appendChild(renderer.domElement);
       setWebglInitialized(true);
     } catch (e) {
       console.error('WebGL initialization failed:', e);
       return;
     }
 
-    // 4. Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-    scene.add(ambientLight);
+    // 3. Scene Environment (Lighting, Grids, Elevated Pedestal, Markers)
+    const environment = new SceneEnvironment(scene);
 
-    const dirLight = new THREE.DirectionalLight(0x00f5d4, 1.2);
-    dirLight.position.set(30, 50, 20);
-    scene.add(dirLight);
+    // 4. Scene Controller (Dual Cameras & OrbitControls)
+    const controller = new SceneController(container, width, height);
+    controllerRef.current = controller;
 
-    const secondaryLight = new THREE.DirectionalLight(0xffd166, 0.5);
-    secondaryLight.position.set(-30, 20, -20);
-    scene.add(secondaryLight);
-
-    // 5. Ground grid and intersection platform
-    const gridHelper = new THREE.GridHelper(80, 40, 0x00e5ff, 0x1b2f5b);
-    gridHelper.position.y = 0;
-    scene.add(gridHelper);
-
-    // Center junction boundary indicator
-    const junctionGeometry = new THREE.BoxGeometry(20, 0.2, 20);
-    const junctionMaterial = new THREE.MeshStandardMaterial({
-      color: 0x0f1c3f,
-      roughness: 0.8,
-      metalness: 0.2,
-      wireframe: false,
-    });
-    const junctionMesh = new THREE.Mesh(junctionGeometry, junctionMaterial);
-    junctionMesh.position.y = -0.1;
-    scene.add(junctionMesh);
-
-    // Simulated Emergency Corridor Path (visual indicator in 3D scene)
-    const corridorGeometry = new THREE.BoxGeometry(38, 0.22, 5);
-    const corridorMaterial = new THREE.MeshBasicMaterial({
-      color: 0x00e5ff,
-      transparent: true,
-      opacity: 0.25,
-      wireframe: true,
-    });
-    const corridorMesh = new THREE.Mesh(corridorGeometry, corridorMaterial);
-    corridorMesh.position.set(0, -0.05, 0);
-    scene.add(corridorMesh);
-
-    // Compass / Axis Helper
-    const axesHelper = new THREE.AxesHelper(6);
-    scene.add(axesHelper);
-
-    // Camera animation
+    // 5. Render Loop with Diagnostics
     let frameId: number;
     let lastTime = performance.now();
     let frameCount = 0;
+    let metricsTicker = 0;
 
     const animate = () => {
+      const startTime = performance.now();
       frameId = requestAnimationFrame(animate);
 
-      // Measure FPS
+      // Measure FPS & Frame Count
       frameCount++;
       const now = performance.now();
       if (now - lastTime >= 1000) {
@@ -120,56 +107,83 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
         lastTime = now;
       }
 
-      // Gentle pivot around center (subtle live animation)
-      if (cameraPreset === 'iso') {
-        const time = now * 0.0003;
-        camera.position.x = 44 * Math.cos(time);
-        camera.position.z = 44 * Math.sin(time);
-        camera.position.y = 45;
-        camera.lookAt(0, 0, 0);
-      } else if (cameraPreset === 'top') {
-        camera.position.set(0, 65, 0.01);
-        camera.lookAt(0, 0, 0);
-      } else if (cameraPreset === 'close') {
-        camera.position.set(18, 16, 18);
-        camera.lookAt(0, 1, 0);
-      } else if (cameraPreset === 'chase') {
-        const time = now * 0.0008;
-        const xPos = 16 * Math.sin(time);
-        camera.position.set(xPos - 8, 8, 4);
-        camera.lookAt(xPos, 0, 0);
-      }
+      // Update environment animation (corridor pulsing & waypoint marker motion)
+      const waypointPos = environment.update(now);
 
-      renderer.render(scene, camera);
+      // Update camera controller (interpolation, OrbitControls damping, chase)
+      controller.update(waypointPos);
+
+      // Render Active Camera View
+      renderer.render(scene, controller.activeCamera);
+
+      // Periodically sample telemetry diagnostics (every ~10 frames)
+      metricsTicker++;
+      if (metricsTicker % 10 === 0) {
+        setRenderMs(parseFloat((performance.now() - startTime).toFixed(1)));
+        setDrawCalls(renderer.info.render.calls);
+        setTriangles(renderer.info.render.triangles);
+        setCamMetrics(controller.getMetrics());
+      }
     };
 
     animate();
 
-    // Handle Resize
+    // 6. Window Resize Listener
     const handleResize = () => {
-      if (!mountRef.current) return;
-      const newWidth = mountRef.current.clientWidth;
-      const newHeight = mountRef.current.clientHeight;
-      camera.aspect = newWidth / newHeight;
-      camera.updateProjectionMatrix();
+      if (!container) return;
+      const newWidth = container.clientWidth;
+      const newHeight = container.clientHeight;
+      controller.handleResize(newWidth, newHeight);
       renderer.setSize(newWidth, newHeight);
     };
 
     window.addEventListener('resize', handleResize);
 
+    // 7. Cleanup & Disposals
     return () => {
       cancelAnimationFrame(frameId);
       window.removeEventListener('resize', handleResize);
-      if (mountRef.current && renderer.domElement) {
-        mountRef.current.removeChild(renderer.domElement);
+      controller.dispose();
+      environment.dispose();
+
+      if (container && renderer.domElement) {
+        container.removeChild(renderer.domElement);
       }
       renderer.dispose();
-      junctionGeometry.dispose();
-      junctionMaterial.dispose();
-      corridorGeometry.dispose();
-      corridorMaterial.dispose();
     };
-  }, [cameraPreset]);
+  }, []);
+
+  // UI Handlers for Preset and Projection switching
+  const handleSelectPreset = (preset: CameraPresetType) => {
+    setCameraPreset(preset);
+    if (controllerRef.current) {
+      controllerRef.current.setPreset(preset);
+    }
+  };
+
+  const handleToggleProjection = () => {
+    const nextMode: ProjectionMode = projectionMode === 'perspective' ? 'orthographic' : 'perspective';
+    setProjectionMode(nextMode);
+    if (controllerRef.current && mountRef.current) {
+      controllerRef.current.setProjectionMode(
+        nextMode,
+        mountRef.current.clientWidth,
+        mountRef.current.clientHeight
+      );
+    }
+  };
+
+  const handleToggleAutoRotate = () => {
+    const nextState = !autoRotate;
+    setAutoRotate(nextState);
+    if (controllerRef.current) {
+      controllerRef.current.autoRotate = nextState;
+    }
+  };
+
+  const handleResetCamera = () => {
+    handleSelectPreset('iso');
+  };
 
   return (
     <div
@@ -186,10 +200,10 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
         ...style,
       }}
     >
-      {/* Three.js Canvas Container */}
+      {/* Three.js Canvas DOM Container */}
       <div ref={mountRef} style={{ width: '100%', height: '100%' }} />
 
-      {/* Floating HUD Layer - pointer-events: none so mouse can orbit canvas */}
+      {/* Floating HUD Layer - pointer-events: none so user can orbit/pan canvas smoothly */}
       <div
         style={{
           position: 'absolute',
@@ -198,18 +212,18 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          padding: '12px',
+          padding: '10px 12px',
         }}
       >
-        {/* Top Floating HUD Bar: Info on Left, Controls on Right */}
+        {/* Top Floating HUD Bar: Info on Left, Interactive Controls on Right */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-          {/* Top-Left: Scene Title & Engine Status */}
+          {/* Top-Left: Viewport Title & Diagnostics */}
           <div
             style={{
               backgroundColor: 'rgba(10, 17, 40, 0.88)',
               backdropFilter: 'blur(8px)',
               border: '1px solid #1b325f',
-              padding: '8px 14px',
+              padding: '8px 12px',
               borderRadius: '6px',
               display: 'flex',
               flexDirection: 'column',
@@ -223,32 +237,41 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
               <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#f1f5f9', letterSpacing: '0.04em' }}>
                 3D DIGITAL TWIN VIEWPORT
               </span>
-              <StatusPill label="STATUS: PENDING" variant="amber" size="xs" />
+              <StatusPill label="ISOMETRIC ENGINE" variant="cyan" size="xs" pulse />
             </div>
+
             <div style={{ fontSize: '0.70rem', color: '#94a3b8' }}>
-              Active Intersection:{' '}
+              Target Intersection:{' '}
               <span style={{ color: '#00e5ff', fontFamily: 'monospace', fontWeight: 600 }}>
                 {intersectionId}
               </span>{' '}
               (Oak St. & 5th Ave)
             </div>
+
             <div style={{ fontSize: '0.66rem', color: '#64748b', display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span>Engine: Three.js WebGL {webglInitialized ? '● Online' : '○ Booting'}</span>
+              <span style={{ color: '#06d6a0' }}>● Three.js WebGL</span>
               <span>|</span>
               <span style={{ color: '#06d6a0', fontFamily: 'monospace', fontWeight: 600 }}>{fps} FPS</span>
               <span>|</span>
-              <span style={{ color: '#ffd166' }}>Road Meshes: Task 07–13</span>
+              <span>{renderMs}ms</span>
+              <span>|</span>
+              <span>{drawCalls} calls</span>
+              <span>|</span>
+              <span>{triangles} tris</span>
             </div>
           </div>
 
-          {/* Top-Right: Camera Presets & Layer Controls */}
+          {/* Top-Right: Camera Presets & Interaction Controls */}
           <div
             style={{
               display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-end',
               gap: '6px',
               pointerEvents: 'auto',
             }}
           >
+            {/* Camera Presets Bar */}
             <div
               style={{
                 backgroundColor: 'rgba(10, 17, 40, 0.88)',
@@ -261,8 +284,8 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
               }}
             >
               <button
-                onClick={() => setCameraPreset('iso')}
-                title="Isometric 3D Perspective Orbit"
+                onClick={() => handleSelectPreset('iso')}
+                title="Isometric Perspective View (45° Yaw, 38° Pitch)"
                 style={{
                   backgroundColor: cameraPreset === 'iso' ? 'rgba(0, 229, 255, 0.2)' : 'transparent',
                   border: cameraPreset === 'iso' ? '1px solid #00e5ff' : '1px solid transparent',
@@ -272,16 +295,14 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   fontSize: '0.68rem',
                   fontWeight: 600,
                   cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '4px',
                 }}
               >
                 ISO
               </button>
+
               <button
-                onClick={() => setCameraPreset('top')}
-                title="Top-Down 2D Orthographic View"
+                onClick={() => handleSelectPreset('top')}
+                title="Top-Down Ortho View (90° Zenith)"
                 style={{
                   backgroundColor: cameraPreset === 'top' ? 'rgba(0, 229, 255, 0.2)' : 'transparent',
                   border: cameraPreset === 'top' ? '1px solid #00e5ff' : '1px solid transparent',
@@ -295,9 +316,10 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
               >
                 TOP
               </button>
+
               <button
-                onClick={() => setCameraPreset('close')}
-                title="Junction Close-up View"
+                onClick={() => handleSelectPreset('close')}
+                title="Intersection Conflict Close-up View"
                 style={{
                   backgroundColor: cameraPreset === 'close' ? 'rgba(0, 229, 255, 0.2)' : 'transparent',
                   border: cameraPreset === 'close' ? '1px solid #00e5ff' : '1px solid transparent',
@@ -311,9 +333,10 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
               >
                 CLOSE
               </button>
+
               <button
-                onClick={() => setCameraPreset('chase')}
-                title="Emergency Vehicle Follow / Chase Cam"
+                onClick={() => handleSelectPreset('chase')}
+                title="Emergency Ambulance Follow Cam (AMB-339)"
                 style={{
                   backgroundColor: cameraPreset === 'chase' ? 'rgba(239, 71, 111, 0.2)' : 'transparent',
                   border: cameraPreset === 'chase' ? '1px solid #ef476f' : '1px solid transparent',
@@ -325,38 +348,97 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '4px',
+                  gap: '3px',
                 }}
               >
-                <Video size={11} /> CHASE
+                <Video size={10} /> CHASE
               </button>
             </div>
 
-            {/* Layer Menu Toggle */}
-            <button
-              onClick={() => setShowLayersMenu(!showLayersMenu)}
-              title="Toggle Digital Twin Scene Layers"
-              style={{
-                backgroundColor: showLayersMenu ? 'rgba(0, 229, 255, 0.2)' : 'rgba(10, 17, 40, 0.88)',
-                backdropFilter: 'blur(8px)',
-                border: '1px solid #1b2f5b',
-                color: showLayersMenu ? '#00e5ff' : '#94a3b8',
-                borderRadius: '6px',
-                padding: '6px 10px',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '5px',
-                fontSize: '0.70rem',
-              }}
-            >
-              <Layers size={13} />
-              <span>Layers</span>
-            </button>
+            {/* Projection & Controls Secondary Row */}
+            <div style={{ display: 'flex', gap: '4px' }}>
+              {/* Projection Mode Switcher */}
+              <button
+                onClick={handleToggleProjection}
+                title="Toggle Perspective vs Orthographic (Parallel) Projection"
+                style={{
+                  backgroundColor: 'rgba(10, 17, 40, 0.88)',
+                  backdropFilter: 'blur(8px)',
+                  border: '1px solid #1b2f5b',
+                  color: projectionMode === 'orthographic' ? '#00f5d4' : '#94a3b8',
+                  borderRadius: '5px',
+                  padding: '3px 8px',
+                  fontSize: '0.65rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                }}
+              >
+                <Eye size={11} />
+                <span>{projectionMode === 'perspective' ? 'PERSP' : 'ORTHO'}</span>
+              </button>
+
+              {/* Turntable Auto-Rotate Button */}
+              <button
+                onClick={handleToggleAutoRotate}
+                title="Toggle Turntable Auto-Rotation"
+                style={{
+                  backgroundColor: autoRotate ? 'rgba(6, 214, 160, 0.15)' : 'rgba(10, 17, 40, 0.88)',
+                  backdropFilter: 'blur(8px)',
+                  border: `1px solid ${autoRotate ? 'rgba(6, 214, 160, 0.4)' : '#1b2f5b'}`,
+                  color: autoRotate ? '#06d6a0' : '#94a3b8',
+                  borderRadius: '5px',
+                  padding: '3px 8px',
+                  fontSize: '0.65rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                }}
+              >
+                AUTO-ROT: {autoRotate ? 'ON' : 'OFF'}
+              </button>
+
+              {/* Reset Camera Button */}
+              <button
+                onClick={handleResetCamera}
+                title="Reset Camera to Default Isometric View"
+                style={{
+                  backgroundColor: 'rgba(10, 17, 40, 0.88)',
+                  backdropFilter: 'blur(8px)',
+                  border: '1px solid #1b2f5b',
+                  color: '#94a3b8',
+                  borderRadius: '5px',
+                  padding: '3px 6px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <RotateCcw size={12} />
+              </button>
+            </div>
+
+            {/* Camera Coordinates Overlay */}
+            {showMetrics && (
+              <div
+                style={{
+                  backgroundColor: 'rgba(10, 17, 40, 0.85)',
+                  border: '1px solid #162547',
+                  borderRadius: '4px',
+                  padding: '2px 8px',
+                  fontSize: '0.62rem',
+                  color: '#64748b',
+                  fontFamily: 'monospace',
+                }}
+              >
+                Pos: ({camMetrics.position.x}, {camMetrics.position.y}, {camMetrics.position.z}) | Pitch: {camMetrics.pitchDeg}° | Yaw: {camMetrics.yawDeg}° | Dist: {camMetrics.distance}m
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Center Floating Callout: Emergency Vehicle Priority Tracking */}
+        {/* Center Floating Callout: Priority Vehicle Dynamic Tracking */}
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <div
             style={{

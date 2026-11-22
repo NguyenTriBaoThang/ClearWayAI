@@ -74,10 +74,10 @@ def test_threejs_canvas_has_floating_hud_without_pointer_blocking():
     with open(canvas_path, "r", encoding="utf-8") as f:
         content = f.read()
 
-    # Must initialize true Three.js
+    # Must initialize true Three.js and scene modules
     assert "THREE.WebGLRenderer" in content
-    assert "THREE.PerspectiveCamera" in content
-    assert "THREE.GridHelper" in content
+    assert "SceneController" in content
+    assert "SceneEnvironment" in content
 
     # Must contain floating HUD layers
     assert "pointerEvents: 'none'" in content or 'pointerEvents: "none"' in content
