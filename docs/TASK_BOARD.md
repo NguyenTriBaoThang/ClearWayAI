@@ -8,15 +8,15 @@
 
 ## 📊 Sprint Progress Overview
 - **Total Tasks:** 60
-- **Verified Complete:** 18 (T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15, T16, T17, T18)
+- **Verified Complete:** 19 (T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19)
 - **In Progress:** 0
-- **Planned:** 42
-- **Phase Completion:** Phase A (4/6 complete), Phase B (14/16 complete)
+- **Planned:** 41
+- **Phase Completion:** Phase A (4/6 complete), Phase B (15/16 complete)
 
 ```mermaid
 pie title Task Completion by Status
-    "VERIFIED" : 18
-    "PLANNED" : 42
+    "VERIFIED" : 19
+    "PLANNED" : 41
 ```
 
 ---
@@ -43,7 +43,7 @@ pie title Task Completion by Status
 | **T16** | Phase B | Panel trên phải: Adaptive Traffic Signal & Queue Chart | **P0** | T06, T12, T15 | **VERIFIED** | AdaptiveSignalPanel, TrafficAnalytics contract, Queue-vs-Capacity vector chart, -19% Delay KPI, PPO diagnostics drawer, multi-mode policy switcher, pytest (69/69) |
 | **T17** | Phase B | Panel dưới trái: IoT sensor list + mini city map tương tác | **P0** | T06, T08–T09 | **VERIFIED** | IoTSensorsPanel, 5 sensor categories (306/306 online), 6 data layer toggles, vector city map with corridor & hospital, scale bar, node inspector, pytest (76/76) |
 | **T18** | Phase B | Panel dưới phải: traffic analytics, gauge và cảnh báo | **P0** | T06, T16 | **VERIFIED** | OperationsAnalyticsPanel, TrafficAnalytics contract, 4-approach volume bars, travel times, 82/100 radial performance gauge, live anomaly alerts feed, pytest (83/83) |
-| **T19** | Phase B | Chức năng điều hành tương tác: sim controls, nhiệm vụ và inspector | **P0** | T06–T18 | `PLANNED` | Start, pause, step, scenario selector, mission drawer |
+| **T19** | Phase B | Chức năng điều hành tương tác: sim controls, nhiệm vụ và inspector | **P0** | T06–T18 | **VERIFIED** | SimulationControls (play/pause/step/speed/scenarios), MissionDrawer (AMB-339 live ETA, 4-node chain, pre-emption toggle), UnifiedInspector (vehicles, signals, sensors, nodes, telemetry export), pytest (89/89) |
 | **T20** | Phase B | Visual fidelity gate: kiểm tra UI/3D giống ảnh và tối ưu FPS | **P0** | T05–T19 | `PLANNED` | Playwright screenshot baseline & FPS budget check |
 | **T21** | Phase A | Đặc tả hệ thống, ADR, schema và ranh giới an toàn | **P0** | T01 | `PLANNED` | SRS.md, ADRs, Pydantic/JSON schemas |
 | **T22** | Phase A | Thiết lập CI/CD, lint, tests và môi trường phát triển | **P0** | T01–T21 | `PLANNED` | GitHub Actions workflow, ruff, mypy, pre-commit |

@@ -41,7 +41,7 @@
 | **T16** | Panel trên phải: Adaptive Traffic Signal & Queue Chart | P0 | T06, T12, T15 | **VERIFIED** | AdaptiveSignalPanel, TrafficAnalytics contract, Queue-vs-Capacity vector chart, -19% Delay KPI, PPO diagnostics drawer, multi-mode policy switcher, pytest (69/69) |
 | **T17** | Panel dưới trái: IoT sensor list + mini city map tương tác | P0 | T06, T08–T09 | **VERIFIED** | IoTSensorsPanel, 5 sensor categories (306/306 online), 6 data layer toggles, vector city map with corridor & hospital, scale bar, node inspector, pytest (76/76) |
 | **T18** | Panel dưới phải: traffic analytics, gauge và cảnh báo | P0 | T06, T16 | **VERIFIED** | OperationsAnalyticsPanel, TrafficAnalytics contract, 4-approach volume bars, travel times, 82/100 radial performance gauge, live anomaly alerts feed, pytest (83/83) |
-| **T19** | Chức năng điều hành tương tác: sim controls, nhiệm vụ và inspector | P0 | T06–T18 | **PLANNED** | Scheduled |
+| **T19** | Chức năng điều hành tương tác: sim controls, nhiệm vụ và inspector | P0 | T06–T18 | **VERIFIED** | SimulationControls (play/pause/step/speed/scenarios), MissionDrawer (AMB-339 live ETA, 4-node chain, pre-emption toggle), UnifiedInspector (vehicles, signals, sensors, nodes, telemetry export), pytest (89/89) |
 | **T20** | Visual fidelity gate: kiểm tra UI/3D giống ảnh và tối ưu FPS | P0 | T05–T19 | **PLANNED** | Scheduled |
 
 ### Phase C — SUMO Microscopic Simulation (Tasks 23–27)
@@ -117,6 +117,6 @@
 ---
 
 ## 3. Current Sprint Focus
-- **Current Milestone:** TASK 01–18 Complete & Verified (Phase A: 4/6, Phase B: 14/16).
-- **Next Dependent Task:** TASK 19 — Chức năng điều hành tương tác: sim controls, nhiệm vụ và inspector.
+- **Current Milestone:** TASK 01–19 Complete & Verified (Phase A: 4/6, Phase B: 15/16).
+- **Next Dependent Task:** TASK 20 — Visual fidelity gate: kiểm tra UI/3D giống ảnh và tối ưu FPS.
 
