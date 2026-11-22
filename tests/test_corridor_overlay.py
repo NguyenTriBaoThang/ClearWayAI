@@ -115,3 +115,4 @@ def test_scene_and_canvas_corridor_integration():
 
     # Zero static fake rule
     assert "dashboard-target.png" not in canvas_content, "Scene must never use static target image!"
+
