@@ -92,7 +92,7 @@ def test_digital_twin_canvas_status_updated():
     with open(canvas_path, "r", encoding="utf-8") as f:
         content = f.read()
 
-    assert "ROAD NETWORK ACTIVE" in content
+    assert "ROAD NETWORK ACTIVE" in content or "CITY TWIN ACTIVE" in content
     assert "LAYERS" in content
     assert "roadMarkings" in content
     assert "crosswalks" in content

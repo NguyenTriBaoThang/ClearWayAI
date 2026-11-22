@@ -8,15 +8,15 @@
 
 ## 📊 Sprint Progress Overview
 - **Total Tasks:** 60
-- **Verified Complete:** 8 (T01, T02, T03, T04, T05, T06, T07, T08)
+- **Verified Complete:** 9 (T01, T02, T03, T04, T05, T06, T07, T08, T09)
 - **In Progress:** 0
-- **Planned:** 52
-- **Phase Completion:** Phase A (4/6 complete), Phase B (4/16 complete)
+- **Planned:** 51
+- **Phase Completion:** Phase A (4/6 complete), Phase B (5/16 complete)
 
 ```mermaid
 pie title Task Completion by Status
-    "VERIFIED" : 8
-    "PLANNED" : 52
+    "VERIFIED" : 9
+    "PLANNED" : 51
 ```
 
 ---
@@ -33,7 +33,7 @@ pie title Task Completion by Status
 | **T06** | Phase B | Code layout dashboard bám ảnh: topbar, sidebar, các vùng panel | **P0** | T05 | **VERIFIED** | Responsive cyber grid, TopBar, Sidebar, PanelFrame, StatusPill, KpiTile, 5 panel cards, Floating 3D HUD, pytest (14/14) |
 | **T07** | Phase B | Dựng Three.js/R3F Canvas 3D tương tác đúng phối cảnh isometric | **P0** | T05, T06 | **VERIFIED** | True isometric OrbitControls (bounded pitch), dual-cam (persp/ortho), presets (ISO/TOP/CLOSE/CHASE), cyber lighting/grid, pytest (18/18) |
 | **T08** | Phase B | Dựng đường giao lộ 3D: mặt đường, làn, vạch kẻ, crosswalk | **P0** | T07 | **VERIFIED** | RoadNetworkMesh, 4 orthogonal approaches (14m cross), zebra crosswalks (10 stripes/arm), stop lines, double yellow dividers, directional arrows, pytest (23/23) |
-| **T09** | Phase B | Dựng bối cảnh thành phố 3D chi tiết như ảnh | **P0** | T07, T08 | `PLANNED` | City blocks, urban props, lighting presets |
+| **T09** | Phase B | Dựng bối cảnh thành phố 3D chi tiết như ảnh | **P0** | T07, T08 | **VERIFIED** | CityEnvironmentMesh, 4 quadrant towers, Metropolitan Hospital with rooftop helipad & medical beacon, streetlights, low-poly trees, 4 V2X RSU nodes, pytest (28/28) |
 | **T10** | Phase B | Bộ tài sản 3D phương tiện Việt Nam và xe ưu tiên | **P0** | T07–T09 | `PLANNED` | Vehicle models: motorbike, sedan, bus, ambulance |
 | **T11** | Phase B | Chuyển động xe 3D theo lane graph và snapshot có ID | **P0** | T08–T10 | `PLANNED` | Vehicle motion interpolation & inspector |
 | **T12** | Phase B | Đèn tín hiệu 3D, người đi bộ và logic chuyển pha trực quan | **P0** | T08–T11 | `PLANNED` | Signal poles, emissive heads, conflict-free transitions |

@@ -33,8 +33,8 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
   const [webglInitialized, setWebglInitialized] = useState<boolean>(false);
   const [fps, setFps] = useState<number>(60);
   const [renderMs, setRenderMs] = useState<number>(2.4);
-  const [drawCalls, setDrawCalls] = useState<number>(22);
-  const [triangles, setTriangles] = useState<number>(2450);
+  const [drawCalls, setDrawCalls] = useState<number>(28);
+  const [triangles, setTriangles] = useState<number>(3820);
 
   const [cameraPreset, setCameraPreset] = useState<CameraPresetType>('iso');
   const [projectionMode, setProjectionMode] = useState<ProjectionMode>('perspective');
@@ -46,6 +46,9 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
     roadMarkings: true,
     crosswalks: true,
     sidewalks: true,
+    buildings: true,
+    streetFurniture: true,
+    trees: true,
   });
 
   const [camMetrics, setCamMetrics] = useState<CameraStateMetrics>({
@@ -89,7 +92,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
       return;
     }
 
-    // 3. Scene Environment (Lighting, Grids, Road Network, Crosswalks, Markers)
+    // 3. Scene Environment (Lighting, Grids, Road Network, City Buildings, Hospital, RSUs)
     const environment = new SceneEnvironment(scene);
     environmentRef.current = environment;
 
@@ -116,7 +119,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
         lastTime = now;
       }
 
-      // Update environment animation (corridor pulsing & waypoint marker motion)
+      // Update environment animation (corridor pulsing, hospital beacon, waypoint marker motion)
       const waypointPos = environment.update(now);
 
       // Update camera controller (interpolation, OrbitControls damping, chase)
@@ -204,6 +207,12 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
         environmentRef.current.roadNetwork.setCrosswalksVisibility(nextState);
       } else if (layerKey === 'sidewalks') {
         environmentRef.current.roadNetwork.setSidewalksVisibility(nextState);
+      } else if (layerKey === 'buildings') {
+        environmentRef.current.cityEnvironment.setBuildingsVisibility(nextState);
+      } else if (layerKey === 'streetFurniture') {
+        environmentRef.current.cityEnvironment.setStreetFurnitureVisibility(nextState);
+      } else if (layerKey === 'trees') {
+        environmentRef.current.cityEnvironment.setTreesVisibility(nextState);
       }
     }
   };
@@ -260,7 +269,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
               <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#f1f5f9', letterSpacing: '0.04em' }}>
                 3D DIGITAL TWIN VIEWPORT
               </span>
-              <StatusPill label="ROAD NETWORK ACTIVE" variant="cyan" size="xs" pulse />
+              <StatusPill label="CITY TWIN ACTIVE" variant="cyan" size="xs" pulse />
             </div>
 
             <div style={{ fontSize: '0.70rem', color: '#94a3b8' }}>
@@ -268,7 +277,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
               <span style={{ color: '#00e5ff', fontFamily: 'monospace', fontWeight: 600 }}>
                 {intersectionId}
               </span>{' '}
-              (Oak St. & 5th Ave — 4 Arms, 14m Cross)
+              (Oak St. & 5th Ave — Urban Medical & Tech District)
             </div>
 
             <div style={{ fontSize: '0.66rem', color: '#64748b', display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -478,12 +487,44 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   gap: '6px',
                   fontSize: '0.66rem',
                   boxShadow: '0 4px 16px rgba(0,0,0,0.5)',
-                  minWidth: '150px',
+                  minWidth: '160px',
                 }}
               >
                 <div style={{ color: '#94a3b8', fontWeight: 600, borderBottom: '1px solid #1b2f5b', paddingBottom: '3px' }}>
-                  Roadway Layers
+                  Scene Layers
                 </div>
+
+                <label
+                  onClick={() => handleToggleLayer('buildings')}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', color: layers.buildings ? '#00e5ff' : '#64748b' }}
+                >
+                  <div style={{ width: '12px', height: '12px', border: '1px solid #1b2f5b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {layers.buildings && <Check size={10} color="#00e5ff" />}
+                  </div>
+                  <span>Buildings & Hospital</span>
+                </label>
+
+                <label
+                  onClick={() => handleToggleLayer('streetFurniture')}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', color: layers.streetFurniture ? '#00e5ff' : '#64748b' }}
+                >
+                  <div style={{ width: '12px', height: '12px', border: '1px solid #1b2f5b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {layers.streetFurniture && <Check size={10} color="#00e5ff" />}
+                  </div>
+                  <span>Streetlights & RSUs</span>
+                </label>
+
+                <label
+                  onClick={() => handleToggleLayer('trees')}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', color: layers.trees ? '#00e5ff' : '#64748b' }}
+                >
+                  <div style={{ width: '12px', height: '12px', border: '1px solid #1b2f5b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {layers.trees && <Check size={10} color="#00e5ff" />}
+                  </div>
+                  <span>Urban Trees</span>
+                </label>
+
+                <div style={{ height: '1px', backgroundColor: '#1b2f5b', margin: '2px 0' }} />
 
                 <label
                   onClick={() => handleToggleLayer('roadMarkings')}

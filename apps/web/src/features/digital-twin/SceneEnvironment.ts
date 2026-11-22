@@ -1,14 +1,17 @@
 import * as THREE from 'three';
 import { RoadNetworkMesh } from './RoadNetworkMesh';
+import { CityEnvironmentMesh } from './CityEnvironmentMesh';
 
 /**
  * SceneEnvironment manages lighting, cyber grid, junction pedestal,
  * 3D road network geometry (asphalt, lanes, crosswalks, sidewalks),
+ * 3D urban context (cyber towers, hospital facility, streetlights, trees, RSUs),
  * cardinal markers, and visual corridor ribbons for ClearWayAI.
  */
 export class SceneEnvironment {
   public scene: THREE.Scene;
   public roadNetwork: RoadNetworkMesh;
+  public cityEnvironment: CityEnvironmentMesh;
 
   public keyLight!: THREE.DirectionalLight;
   public fillLight!: THREE.DirectionalLight;
@@ -24,9 +27,13 @@ export class SceneEnvironment {
     this.setupLighting();
     this.setupGroundAndGrid();
 
-    // Instantiate and add procedural road network (asphalt, lanes, markings, crosswalks, sidewalks)
+    // 1. Procedural Road Network (Asphalt, Lanes, Markings, Crosswalks, Sidewalks)
     this.roadNetwork = new RoadNetworkMesh();
     this.scene.add(this.roadNetwork.group);
+
+    // 2. Procedural City Environment (Towers, Hospital, Streetlights, Trees, RSUs)
+    this.cityEnvironment = new CityEnvironmentMesh();
+    this.scene.add(this.cityEnvironment.group);
 
     this.setupCardinalMarkers();
     this.setupCorridorRibbon();
@@ -156,7 +163,12 @@ export class SceneEnvironment {
       this.corridorMaterial.opacity = 0.16 + 0.1 * Math.sin(timeMs * 0.003);
     }
 
-    // 2. Animate ambulance waypoint traversing East-West along corridor (-35m to +35m)
+    // 2. Update dynamic urban effects (Hospital medical strobe, RSU LEDs)
+    if (this.cityEnvironment) {
+      this.cityEnvironment.update(timeMs);
+    }
+
+    // 3. Animate ambulance waypoint traversing East-West along corridor (-35m to +35m)
     if (this.waypointsMesh) {
       const progress = ((timeMs * 0.006) % 70) - 35;
       this.waypointsMesh.position.x = progress;
@@ -169,6 +181,9 @@ export class SceneEnvironment {
   public dispose(): void {
     if (this.roadNetwork) {
       this.roadNetwork.dispose();
+    }
+    if (this.cityEnvironment) {
+      this.cityEnvironment.dispose();
     }
     this.disposables.forEach((item) => {
       try {
