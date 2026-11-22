@@ -1,0 +1,28 @@
+{
+  "name": "clearway-ai-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ClearWayAI Monorepo: 3D Digital Twin, Multi-Intersection Pre-clearance, and Traffic Optimization System",
+  "workspaces": [
+    "apps/*",
+    "docs-site",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm --prefix apps/web run dev",
+    "dev:all": "concurrently \"npm --prefix apps/web run dev\" \"python -m uvicorn apps.api.src.main:app --reload --port 8000\"",
+    "build": "pnpm --filter @clearway/shared build && pnpm --filter clearway-web build",
+    "lint": "pnpm --filter clearway-web lint",
+    "test": "pnpm --filter clearway-web test"
+  },
+  "keywords": [
+    "traffic-simulation",
+    "digital-twin",
+    "sumo",
+    "threejs",
+    "fastapi",
+    "emergency-corridor"
+  ],
+  "author": "Nguyen Tri Bao Thang",
+  "license": "MIT"
+}

@@ -1,0 +1,50 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    container_name: clearway-api
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=development
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - SAFETY_MODE=SIMULATION
+      - DATA_PROVENANCE=DEMO_FIXTURE
+      - DEMO_MODE=true
+    volumes:
+      - ./apps/api:/app/apps/api
+      - ./data:/app/data
+      - ./models:/app/models
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    container_name: clearway-web
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8000
+    depends_on:
+      api:
+        condition: service_healthy
+    volumes:
+      - ./apps/web:/app/apps/web
+      - /app/apps/web/node_modules
+    restart: unless-stopped
+
+  # Optional local Redis for pub/sub event streaming in future tasks
+  redis:
+    image: redis:7-alpine
+    container_name: clearway-redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped

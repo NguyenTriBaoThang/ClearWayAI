@@ -1,0 +1,7 @@
+packages:
+  - 'apps/*'
+  - 'docs-site'
+  - 'packages/*'
+
+onlyBuiltDependencies:
+  - esbuild

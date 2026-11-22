@@ -1,0 +1,50 @@
+{
+  "_metadata": {
+    "provenance": "DEMO_FIXTURE",
+    "description": "Baseline demonstration fixture matching blueprint intersection Oak St. & 5th Ave (INT-0457).",
+    "disclaimer": "Simulated offline fixture for UI verification and testing only. NOT live field telemetry."
+  },
+  "intersection_id": "INT-0457",
+  "intersection_name": "Oak St. & 5th Ave",
+  "cycle_time_s": 120,
+  "current_phase": "P3 (E-W Thru)",
+  "next_phase": "P4 (E-W Left)",
+  "occupancy_pct": 76,
+  "avg_speed_kmh": 52,
+  "delay_reduction_pct": -19,
+  "signal_approaches": [
+    { "approach": "N - Oak St. (NB)", "red_s": 67, "yellow_s": 4, "green_s": 49, "cycle_s": 120, "split_pct": 41 },
+    { "approach": "S - Oak St. (SB)", "red_s": 67, "yellow_s": 4, "green_s": 49, "cycle_s": 120, "split_pct": 41 },
+    { "approach": "E - 5th Ave. (EB)", "red_s": 49, "yellow_s": 4, "green_s": 67, "cycle_s": 120, "split_pct": 56 },
+    { "approach": "W - 5th Ave. (WB)", "red_s": 49, "yellow_s": 4, "green_s": 67, "cycle_s": 120, "split_pct": 56 }
+  ],
+  "hardware_status": {
+    "network_id": "RM-INT-0457",
+    "v2x_infrastructure": "V2I Infrastructure (Roadside & Signal)",
+    "v2v_communication": "V2V/V2X Vehicle Communication",
+    "obu_vehicles_online": 1842,
+    "obu_pct": 99.2,
+    "rsu_online": 42,
+    "rsu_pct": 100,
+    "edge_controller_status": "Online",
+    "signal_controller_status": "Online (8 Phases)",
+    "v2x_status": "Active",
+    "latency_ms": 11,
+    "packet_loss_pct": 0.2
+  },
+  "emergency_mission": {
+    "active": true,
+    "mission_id": "AMB-339",
+    "eta_hospital_min": 3.4,
+    "vehicle_speed_kmh": 68,
+    "status": "Active - Priority Corridor Enabled"
+  },
+  "analytics": {
+    "intersection_performance_index": 82,
+    "throughput_delta_pct": 15,
+    "avg_delay_delta_pct": -19,
+    "stops_per_veh_delta_pct": -22,
+    "avg_queue_m": 87,
+    "backlog_m": 45
+  }
+}
