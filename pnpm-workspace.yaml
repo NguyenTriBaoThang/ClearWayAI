@@ -3,5 +3,5 @@ packages:
   - 'docs-site'
   - 'packages/*'
 
-onlyBuiltDependencies:
-  - esbuild
+allowBuilds:
+  esbuild: true
