@@ -17,7 +17,7 @@ def test_vehicle_motion_modules_exist():
 def test_vehicle_snapshot_fixture_specification():
     """Verify snapshot fixture generates realistic, deterministic mixed traffic and emergency corridor."""
     fixture_path = os.path.join(DIGITAL_TWIN_DIR, "VehicleSnapshotFixture.ts")
-    with open(fixture_path, "r", encoding="utf-8") as f:
+    with open(fixture_path, encoding="utf-8") as f:
         content = f.read()
 
     # Trajectory source implementation
@@ -51,7 +51,7 @@ def test_vehicle_snapshot_fixture_specification():
 def test_vehicle_motion_system_interpolation_and_safety():
     """Verify VehicleMotionSystem implements persistent mapping, angle slerp, anti-teleport clamping, and STALE detection."""
     sys_path = os.path.join(DIGITAL_TWIN_DIR, "VehicleMotionSystem.ts")
-    with open(sys_path, "r", encoding="utf-8") as f:
+    with open(sys_path, encoding="utf-8") as f:
         content = f.read()
 
     # Persistent mapping
@@ -89,7 +89,7 @@ def test_speed_unit_conversion():
 def test_digital_twin_canvas_vehicle_motion_and_inspector():
     """Verify DigitalTwinCanvas integrates motion system, rich vehicle inspector, and layer controls."""
     canvas_path = os.path.join(DIGITAL_TWIN_DIR, "DigitalTwinCanvas.tsx")
-    with open(canvas_path, "r", encoding="utf-8") as f:
+    with open(canvas_path, encoding="utf-8") as f:
         content = f.read()
 
     # Status pill active

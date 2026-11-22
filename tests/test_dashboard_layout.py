@@ -1,7 +1,6 @@
 """Verification test for Task 06: Operations Dashboard UI Layout & Blueprint Adherence."""
 
 import os
-import re
 
 WEB_SRC = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "apps", "web", "src"))
 
@@ -25,7 +24,7 @@ def test_topbar_structure_and_provenance():
     """Verify TopBar has brand, provenance gate, simulation time, and emergency corridor status."""
     topbar_path = os.path.join(WEB_SRC, "layout", "TopBar.tsx")
     assert os.path.exists(topbar_path)
-    with open(topbar_path, "r", encoding="utf-8") as f:
+    with open(topbar_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "CLEARWAY AI" in content
@@ -40,7 +39,7 @@ def test_sidebar_structure_and_safety_locks():
     """Verify Sidebar navigation has active links and safety interlock indicators."""
     sidebar_path = os.path.join(WEB_SRC, "layout", "Sidebar.tsx")
     assert os.path.exists(sidebar_path)
-    with open(sidebar_path, "r", encoding="utf-8") as f:
+    with open(sidebar_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "/dashboard" in content
@@ -54,7 +53,7 @@ def test_dashboard_page_panels_and_proportions():
     """Verify DashboardPage renders all 5 required operational panels around the 3D viewport."""
     page_path = os.path.join(WEB_SRC, "pages", "DashboardPage.tsx")
     assert os.path.exists(page_path)
-    with open(page_path, "r", encoding="utf-8") as f:
+    with open(page_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "V2XHardwareCard" in content
@@ -71,7 +70,7 @@ def test_threejs_canvas_has_floating_hud_without_pointer_blocking():
     """Verify DigitalTwinCanvas includes WebGL canvas, HUD overlays, and pointerEvents='none' container."""
     canvas_path = os.path.join(WEB_SRC, "features", "digital-twin", "DigitalTwinCanvas.tsx")
     assert os.path.exists(canvas_path)
-    with open(canvas_path, "r", encoding="utf-8") as f:
+    with open(canvas_path, encoding="utf-8") as f:
         content = f.read()
 
     # Must initialize true Three.js and scene modules
@@ -95,7 +94,7 @@ def test_css_variables_and_responsive_grids():
     """Verify index.css contains blueprint color tokens and responsive grid rules."""
     css_path = os.path.join(WEB_SRC, "index.css")
     assert os.path.exists(css_path)
-    with open(css_path, "r", encoding="utf-8") as f:
+    with open(css_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "--bg-main: #070d1e;" in content

@@ -1,7 +1,6 @@
 """Verification test suite for Task 18: Bottom-Right Traffic Analytics, Radial Gauge & Alerts Panel."""
 
 import os
-import re
 
 WEB_SRC = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "apps", "web", "src"))
 SHARED_SRC = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "packages", "shared", "src"))
@@ -19,7 +18,7 @@ def test_analytics_files_exist():
 def test_traffic_analytics_contract_compliance():
     """Verify that OperationsAnalyticsPanel adheres to the shared TrafficAnalytics interface."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "OperationsAnalyticsPanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     # Must import TrafficAnalytics and DataProvenance from @clearway/shared
@@ -38,7 +37,7 @@ def test_traffic_analytics_contract_compliance():
 def test_real_time_volume_bars():
     """Verify the 4 real-time hourly volume values matching the UI blueprint."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "OperationsAnalyticsPanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     # Approaches and values
@@ -55,7 +54,7 @@ def test_real_time_volume_bars():
 def test_average_travel_time_horizontal_bars():
     """Verify zone travel times and baseline comparison percentages."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "OperationsAnalyticsPanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     # 4 corridor pairs
@@ -76,7 +75,7 @@ def test_average_travel_time_horizontal_bars():
 def test_radial_performance_gauge_and_kpis():
     """Verify circular progress gauge with 82/100 score and key KPI deltas."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "OperationsAnalyticsPanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     # Circular gauge score
@@ -96,7 +95,7 @@ def test_radial_performance_gauge_and_kpis():
 def test_anomaly_alerts_feed_and_filtering():
     """Verify anomaly alerts feed with critical corridor, queue warning, and radio info."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "OperationsAnalyticsPanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     # Key alerts
@@ -113,7 +112,7 @@ def test_anomaly_alerts_feed_and_filtering():
 def test_zero_static_fake_assets():
     """Verify no raster mock images are used in the component."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "OperationsAnalyticsPanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "dashboard-target.png" not in content

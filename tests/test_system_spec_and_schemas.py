@@ -15,13 +15,11 @@ if API_SRC not in sys.path:
     sys.path.insert(0, API_SRC)
 
 from schemas import (
-    SystemStatusResponse,
-    TelemetrySnapshotSchema,
+    EmergencyMissionSchema,
     HardwareStatusSchema,
     SignalStateSchema,
-    EmergencyMissionSchema,
+    SystemStatusResponse,
     TrafficAnalyticsSchema,
-    VehicleTelemetry,
 )
 
 
@@ -30,7 +28,7 @@ def test_srs_document_exists_and_complete():
     srs_path = os.path.join(DOCS_DIR, "SRS.md")
     assert os.path.exists(srs_path), f"File {srs_path} must exist!"
 
-    with open(srs_path, "r", encoding="utf-8") as f:
+    with open(srs_path, encoding="utf-8") as f:
         content = f.read()
 
     # Functional Requirements
@@ -64,7 +62,7 @@ def test_safety_boundaries_document_and_invariants():
     safety_path = os.path.join(DOCS_DIR, "SAFETY_BOUNDARIES.md")
     assert os.path.exists(safety_path), f"File {safety_path} must exist!"
 
-    with open(safety_path, "r", encoding="utf-8") as f:
+    with open(safety_path, encoding="utf-8") as f:
         content = f.read()
 
     # Invariants
@@ -93,7 +91,7 @@ def test_adr_records_exist_and_indexed():
     for adr in expected_adrs:
         fp = os.path.join(ADR_DIR, adr)
         assert os.path.exists(fp), f"ADR file {adr} must exist in {ADR_DIR}!"
-        with open(fp, "r", encoding="utf-8") as f:
+        with open(fp, encoding="utf-8") as f:
             text = f.read()
             assert "Context" in text or "Title" in text
             assert "Decision" in text or "Status" in text
@@ -193,7 +191,7 @@ def test_json_schemas_exist_and_valid():
     for sf in expected_schemas:
         fp = os.path.join(SCHEMAS_DIR, sf)
         assert os.path.exists(fp), f"JSON Schema file {sf} must exist in {SCHEMAS_DIR}!"
-        with open(fp, "r", encoding="utf-8") as f:
+        with open(fp, encoding="utf-8") as f:
             data = json.load(f)
             assert "title" in data
             assert "type" in data or "properties" in data

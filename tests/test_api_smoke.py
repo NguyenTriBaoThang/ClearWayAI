@@ -1,12 +1,12 @@
 """Root smoke tests for ClearWayAI repository."""
 
-import sys
 import os
+import sys
 
 # Add apps/api/src to sys.path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "apps", "api", "src")))
 
-from apps.api.src.main import app, root, health_check
+from apps.api.src.main import health_check, root
 
 
 def test_api_root_endpoint():

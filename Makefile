@@ -1,4 +1,4 @@
-.PHONY: help install dev dev-api dev-web test test-api test-web lint build clean compose-up compose-down
+.PHONY: help install dev dev-api dev-web test test-api test-web lint format check-all build compose-up compose-down clean
 
 help:
 	@echo "ClearWayAI Monorepo Commands:"
@@ -9,13 +9,17 @@ help:
 	@echo "  make test         Run all tests (Python + Web)"
 	@echo "  make test-api     Run Pytest smoke and unit tests"
 	@echo "  make test-web     Run Web tests"
-	@echo "  make lint         Run linters (ruff, eslint)"
+	@echo "  make lint         Run linters (ruff check, eslint)"
+	@echo "  make format       Run code formatters (ruff format)"
+	@echo "  make check-all    Run unified CI quality gates locally"
 	@echo "  make build        Build all web applications and packages"
 	@echo "  make compose-up   Start Docker containers"
 	@echo "  make compose-down Stop Docker containers"
+	@echo "  make clean        Clean build artifacts and caches"
 
 install:
 	pip install -r requirements.txt
+	pip install ruff mypy pre-commit
 	npm install
 
 dev:
@@ -37,8 +41,14 @@ test-web:
 	npm --prefix apps/web run test
 
 lint:
-	python -m ruff check . || true
+	python -m ruff check .
 	npm --prefix apps/web run lint || true
+
+format:
+	python -m ruff format .
+
+check-all:
+	python scripts/check_all.py
 
 build:
 	npm --prefix packages/shared run build || true
@@ -53,5 +63,6 @@ compose-down:
 clean:
 	find . -type d -name "__pycache__" -exec rm -rf {} +
 	find . -type d -name ".pytest_cache" -exec rm -rf {} +
+	find . -type d -name ".ruff_cache" -exec rm -rf {} +
+	find . -type d -name ".mypy_cache" -exec rm -rf {} +
 	rm -rf apps/web/dist docs-site/dist packages/shared/dist
-

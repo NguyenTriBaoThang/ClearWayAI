@@ -16,7 +16,7 @@ def test_corridor_overlay_modules_exist():
 def test_corridor_modes_and_styling():
     """Verify CorridorOverlay3D supports PLANNED, ACTIVE, COMPLETED, and BLOCKED modes."""
     corridor_path = os.path.join(DIGITAL_TWIN_DIR, "CorridorOverlay3D.ts")
-    with open(corridor_path, "r", encoding="utf-8") as f:
+    with open(corridor_path, encoding="utf-8") as f:
         content = f.read()
 
     # Corridor modes
@@ -38,7 +38,7 @@ def test_corridor_modes_and_styling():
 def test_vehicle_callout_and_telemetry():
     """Verify in-scene 3D vehicle callout displays Mission ID, ETA, and priority status."""
     corridor_path = os.path.join(DIGITAL_TWIN_DIR, "CorridorOverlay3D.ts")
-    with open(corridor_path, "r", encoding="utf-8") as f:
+    with open(corridor_path, encoding="utf-8") as f:
         content = f.read()
 
     # Callout billboard
@@ -60,7 +60,7 @@ def test_vehicle_callout_and_telemetry():
 def test_flow_arrows_and_conflict_zone():
     """Verify FlowArrows3D builds flow arrows, yellow box conflict zone, hotspots, and sensor footprints."""
     arrows_path = os.path.join(DIGITAL_TWIN_DIR, "FlowArrows3D.ts")
-    with open(arrows_path, "r", encoding="utf-8") as f:
+    with open(arrows_path, encoding="utf-8") as f:
         content = f.read()
 
     # Flow arrows
@@ -81,7 +81,7 @@ def test_flow_arrows_and_conflict_zone():
 def test_scene_and_canvas_corridor_integration():
     """Verify SceneEnvironment mounts corridor/flow overlays and Canvas has HUD toggles & inspector."""
     env_path = os.path.join(DIGITAL_TWIN_DIR, "SceneEnvironment.ts")
-    with open(env_path, "r", encoding="utf-8") as f:
+    with open(env_path, encoding="utf-8") as f:
         env_content = f.read()
 
     assert "CorridorOverlay3D" in env_content
@@ -94,7 +94,7 @@ def test_scene_and_canvas_corridor_integration():
     assert "this.flowArrows.dispose();" in env_content
 
     canvas_path = os.path.join(DIGITAL_TWIN_DIR, "DigitalTwinCanvas.tsx")
-    with open(canvas_path, "r", encoding="utf-8") as f:
+    with open(canvas_path, encoding="utf-8") as f:
         canvas_content = f.read()
 
     # Active status pill

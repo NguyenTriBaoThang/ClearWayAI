@@ -1,13 +1,14 @@
 """Data schemas for ClearWayAI API adhering to shared domain contracts."""
 
-from datetime import datetime, timezone
-from typing import Optional, Literal, List
+from datetime import UTC, datetime
+from typing import Literal
+
 from pydantic import BaseModel, Field
 
 
 def utc_now() -> datetime:
     """Return current UTC datetime."""
-    return datetime.now(timezone.utc)
+    return datetime.now(UTC)
 
 
 # Domain Literals
@@ -45,7 +46,7 @@ class SystemStatusResponse(BaseModel):
     data_provenance: DataProvenance = "DEMO_FIXTURE"
     demo_mode_enabled: bool = True
     modules: ModuleStatus = Field(default_factory=ModuleStatus)
-    active_scenario: Optional[str] = "demo-oak-5th-intersection"
+    active_scenario: str | None = "demo-oak-5th-intersection"
     timestamp: datetime = Field(default_factory=utc_now)
     message: str = "ClearWayAI System Initialized. All live telemetry and control disabled pending verification."
 
@@ -61,7 +62,7 @@ class VehicleTelemetry(BaseModel):
     heading_deg: float
     lane_id: str
     is_priority_vehicle: bool = False
-    mission_id: Optional[str] = None
+    mission_id: str | None = None
     provenance: DataProvenance = "DEMO_FIXTURE"
 
 
@@ -83,7 +84,7 @@ class SignalStateSchema(BaseModel):
     cycle_time_s: int
     current_phase_name: str
     next_phase_name: str
-    approaches: List[SignalApproachTimingSchema]
+    approaches: list[SignalApproachTimingSchema]
     provenance: DataProvenance = "DEMO_FIXTURE"
 
 
@@ -110,7 +111,7 @@ class EmergencyMissionSchema(BaseModel):
     target_facility: str
     eta_hospital_min: float
     status: Literal["ACTIVE", "STANDBY", "COMPLETED", "CANCELLED"]
-    corridor_intersections: List[str]
+    corridor_intersections: list[str]
     provenance: DataProvenance = "DEMO_FIXTURE"
 
 
@@ -133,9 +134,9 @@ class TelemetrySnapshotSchema(BaseModel):
     intersection_id: str
     timestamp: datetime = Field(default_factory=utc_now)
     sim_time_sec: float
-    vehicles: List[VehicleTelemetry] = Field(default_factory=list)
-    signals: Optional[SignalStateSchema] = None
-    hardware: Optional[HardwareStatusSchema] = None
-    analytics: Optional[TrafficAnalyticsSchema] = None
-    active_mission: Optional[EmergencyMissionSchema] = None
+    vehicles: list[VehicleTelemetry] = Field(default_factory=list)
+    signals: SignalStateSchema | None = None
+    hardware: HardwareStatusSchema | None = None
+    analytics: TrafficAnalyticsSchema | None = None
+    active_mission: EmergencyMissionSchema | None = None
     provenance: DataProvenance = "DEMO_FIXTURE"

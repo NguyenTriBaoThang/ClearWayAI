@@ -15,7 +15,7 @@ def test_city_environment_mesh_module_exists():
 def test_city_quadrants_and_hospital_facility():
     """Verify procedural generation of 4 city quadrants, towers, and metropolitan hospital."""
     city_path = os.path.join(DIGITAL_TWIN_DIR, "CityEnvironmentMesh.ts")
-    with open(city_path, "r", encoding="utf-8") as f:
+    with open(city_path, encoding="utf-8") as f:
         content = f.read()
 
     # NW Commercial Towers
@@ -40,7 +40,7 @@ def test_city_quadrants_and_hospital_facility():
 def test_street_furniture_and_rsu_nodes():
     """Verify streetlights, low-poly urban trees, and V2X RSU nodes are generated."""
     city_path = os.path.join(DIGITAL_TWIN_DIR, "CityEnvironmentMesh.ts")
-    with open(city_path, "r", encoding="utf-8") as f:
+    with open(city_path, encoding="utf-8") as f:
         content = f.read()
 
     # Streetlights
@@ -61,7 +61,7 @@ def test_street_furniture_and_rsu_nodes():
 def test_layer_controls_and_animation_lifecycle():
     """Verify layer toggle methods, dynamic strobe updates, and resource disposal."""
     city_path = os.path.join(DIGITAL_TWIN_DIR, "CityEnvironmentMesh.ts")
-    with open(city_path, "r", encoding="utf-8") as f:
+    with open(city_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "setBuildingsVisibility" in content
@@ -74,7 +74,7 @@ def test_layer_controls_and_animation_lifecycle():
 def test_scene_environment_and_canvas_integration():
     """Verify SceneEnvironment mounts CityEnvironmentMesh and DigitalTwinCanvas has HUD toggles."""
     env_path = os.path.join(DIGITAL_TWIN_DIR, "SceneEnvironment.ts")
-    with open(env_path, "r", encoding="utf-8") as f:
+    with open(env_path, encoding="utf-8") as f:
         env_content = f.read()
 
     assert "CityEnvironmentMesh" in env_content
@@ -83,7 +83,7 @@ def test_scene_environment_and_canvas_integration():
     assert "this.cityEnvironment.dispose();" in env_content
 
     canvas_path = os.path.join(DIGITAL_TWIN_DIR, "DigitalTwinCanvas.tsx")
-    with open(canvas_path, "r", encoding="utf-8") as f:
+    with open(canvas_path, encoding="utf-8") as f:
         canvas_content = f.read()
 
     assert (

@@ -9,7 +9,7 @@ REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 def check_markdown_links():
     md_files = []
-    for root, dirs, files in os.walk(REPO_ROOT):
+    for root, _dirs, files in os.walk(REPO_ROOT):
         # Skip node_modules, .venv, dist, .git
         if any(ignored in root for ignored in ["node_modules", ".venv", "dist", ".git", ".pytest_cache"]):
             continue
@@ -23,7 +23,7 @@ def check_markdown_links():
 
     for md_path in md_files:
         rel_md_path = os.path.relpath(md_path, REPO_ROOT)
-        with open(md_path, "r", encoding="utf-8") as f:
+        with open(md_path, encoding="utf-8") as f:
             content = f.read()
 
         matches = link_pattern.findall(content)

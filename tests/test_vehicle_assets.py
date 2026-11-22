@@ -16,7 +16,7 @@ def test_vehicle_factory_and_manager_exist():
 def test_vehicle_asset_factory_classes():
     """Verify factory implements all 7 vehicle classes matching Vietnamese traffic & emergency services."""
     factory_path = os.path.join(DIGITAL_TWIN_DIR, "VehicleAssetFactory.ts")
-    with open(factory_path, "r", encoding="utf-8") as f:
+    with open(factory_path, encoding="utf-8") as f:
         content = f.read()
 
     # High-density urban motorcycle
@@ -45,7 +45,7 @@ def test_vehicle_asset_factory_classes():
 def test_traffic_vehicle_manager_fleet_and_raycasting():
     """Verify TrafficVehicleManager manages initial fleet, AMB-339 corridor motion, and click raycasting."""
     mgr_path = os.path.join(DIGITAL_TWIN_DIR, "TrafficVehicleManager.ts")
-    with open(mgr_path, "r", encoding="utf-8") as f:
+    with open(mgr_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "spawnInitialFleet" in content
@@ -61,7 +61,7 @@ def test_traffic_vehicle_manager_fleet_and_raycasting():
 def test_scene_environment_integrates_vehicle_manager():
     """Verify SceneEnvironment mounts vehicle manager and feeds ambulance coordinates to chase cam."""
     env_path = os.path.join(DIGITAL_TWIN_DIR, "SceneEnvironment.ts")
-    with open(env_path, "r", encoding="utf-8") as f:
+    with open(env_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "TrafficVehicleManager" in content
@@ -74,7 +74,7 @@ def test_scene_environment_integrates_vehicle_manager():
 def test_canvas_has_vehicle_inspector_and_layer_controls():
     """Verify DigitalTwinCanvas integrates raycast click handler, inspector chip, and layer toggles."""
     canvas_path = os.path.join(DIGITAL_TWIN_DIR, "DigitalTwinCanvas.tsx")
-    with open(canvas_path, "r", encoding="utf-8") as f:
+    with open(canvas_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "handleCanvasClick" in content

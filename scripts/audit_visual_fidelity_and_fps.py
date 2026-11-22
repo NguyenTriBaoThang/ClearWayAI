@@ -65,7 +65,7 @@ def audit_gates():
         for f in files:
             if f.endswith((".tsx", ".ts", ".css", ".html")):
                 fp = os.path.join(root, f)
-                with open(fp, "r", encoding="utf-8", errors="ignore") as file_handle:
+                with open(fp, encoding="utf-8", errors="ignore") as file_handle:
                     text = file_handle.read()
                     for term in forbidden_terms:
                         if term in text:
@@ -80,7 +80,7 @@ def audit_gates():
     # 3. Audit Three.js Real-time Profiling Metrics
     print("\n[Step 3] Auditing 3D WebGL Performance Telemetry:")
     canvas_path = os.path.join(WEB_SRC, "features", "digital-twin", "DigitalTwinCanvas.tsx")
-    with open(canvas_path, "r", encoding="utf-8") as f:
+    with open(canvas_path, encoding="utf-8") as f:
         canvas_src = f.read()
 
     assert "renderer.info.render.calls" in canvas_src
@@ -94,7 +94,7 @@ def audit_gates():
     # 4. Audit Responsive Layout Rules
     print("\n[Step 4] Auditing CSS Responsive Breakpoints:")
     css_path = os.path.join(WEB_SRC, "index.css")
-    with open(css_path, "r", encoding="utf-8") as f:
+    with open(css_path, encoding="utf-8") as f:
         css_src = f.read()
 
     assert "dashboard-grid-top" in css_src

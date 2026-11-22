@@ -15,7 +15,7 @@ def test_gate_1_topbar_global_navigation():
     """Gate 1: Verify TopBar title, brand, safety gate, clocks, bell count 4, OP avatar."""
     topbar_path = os.path.join(WEB_SRC, "layout", "TopBar.tsx")
     assert os.path.exists(topbar_path)
-    with open(topbar_path, "r", encoding="utf-8") as f:
+    with open(topbar_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "CLEARWAY AI" in content
@@ -31,7 +31,7 @@ def test_gate_2_top_left_v2x_hardware():
     """Gate 2: Verify V2X Hardware status panel with RM-INT-0457 and 4 device nodes."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "V2XHardwarePanel.tsx")
     assert os.path.exists(panel_path)
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "RM-INT-0457" in content
@@ -46,7 +46,7 @@ def test_gate_3_top_middle_approach_split():
     """Gate 3: Verify Approach split timing table with all 4 approaches and exact values."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "PhaseTimingPanel.tsx")
     assert os.path.exists(panel_path)
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "N - Oak St. (NB)" in content
@@ -65,7 +65,7 @@ def test_gate_4_top_right_adaptive_signal():
     """Gate 4: Verify Adaptive signal control with Queue vs Capacity SVG chart and KPIs."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "AdaptiveSignalPanel.tsx")
     assert os.path.exists(panel_path)
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "120s" in content
@@ -87,7 +87,7 @@ def test_gate_5_center_3d_digital_twin():
     assert os.path.exists(env_path)
     assert os.path.exists(arrows_path)
 
-    with open(canvas_path, "r", encoding="utf-8") as f:
+    with open(canvas_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "THREE.WebGLRenderer" in content
@@ -97,7 +97,7 @@ def test_gate_5_center_3d_digital_twin():
     assert "flowArrows" in content
     assert "TrafficSignal3D" in content
 
-    with open(env_path, "r", encoding="utf-8") as f:
+    with open(env_path, encoding="utf-8") as f:
         env_content = f.read()
     assert "TrafficVehicleManager" in env_content
     assert "FlowArrows3D" in env_content
@@ -107,7 +107,7 @@ def test_gate_6_bottom_left_iot_sensors():
     """Gate 6: Verify 5 IoT sensor categories (306 online), 6 data layers, vector city map."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "IoTSensorsPanel.tsx")
     assert os.path.exists(panel_path)
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "Traffic Cameras" in content
@@ -127,7 +127,7 @@ def test_gate_7_bottom_right_operations_analytics():
     """Gate 7: Verify Real-time volume bars, travel times, 82/100 radial gauge, anomaly alerts."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "OperationsAnalyticsPanel.tsx")
     assert os.path.exists(panel_path)
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "1210" in content or "1,210" in content
@@ -148,7 +148,7 @@ def test_gate_7_bottom_right_operations_analytics():
 def test_gate_interactive_operational_controls():
     """Verify SimulationControls, MissionDrawer, and UnifiedInspector are mounted on DashboardPage."""
     page_path = os.path.join(WEB_SRC, "pages", "DashboardPage.tsx")
-    with open(page_path, "r", encoding="utf-8") as f:
+    with open(page_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "SimulationControls" in content
@@ -159,7 +159,7 @@ def test_gate_interactive_operational_controls():
 def test_gate_rendering_performance_budgets():
     """Verify Three.js profiling instrumentation tracks FPS, render time, draw calls, triangles."""
     canvas_path = os.path.join(WEB_SRC, "features", "digital-twin", "DigitalTwinCanvas.tsx")
-    with open(canvas_path, "r", encoding="utf-8") as f:
+    with open(canvas_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "renderer.info.render.calls" in content
@@ -178,7 +178,7 @@ def test_gate_zero_static_fake_assets_across_all_web_src():
         for f in files:
             if f.endswith((".tsx", ".ts", ".css", ".html")):
                 fp = os.path.join(root, f)
-                with open(fp, "r", encoding="utf-8", errors="ignore") as handle:
+                with open(fp, encoding="utf-8", errors="ignore") as handle:
                     text = handle.read()
                     for term in forbidden:
                         assert term not in text, f"Forbidden term '{term}' found in {fp}!"

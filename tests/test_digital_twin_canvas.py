@@ -17,7 +17,7 @@ def test_digital_twin_modules_exist():
 def test_scene_environment_lighting_and_pedestal():
     """Verify SceneEnvironment defines cyberpunk lighting rigs, dual-tier grid, and pedestal."""
     env_path = os.path.join(DIGITAL_TWIN_DIR, "SceneEnvironment.ts")
-    with open(env_path, "r", encoding="utf-8") as f:
+    with open(env_path, encoding="utf-8") as f:
         content = f.read()
 
     # Lighting verification
@@ -37,7 +37,7 @@ def test_scene_environment_lighting_and_pedestal():
 def test_scene_controller_orbitcontrols_and_cameras():
     """Verify SceneController supports dual cameras, OrbitControls, and bounded pitch."""
     ctrl_path = os.path.join(DIGITAL_TWIN_DIR, "SceneController.ts")
-    with open(ctrl_path, "r", encoding="utf-8") as f:
+    with open(ctrl_path, encoding="utf-8") as f:
         content = f.read()
 
     # OrbitControls & Cameras
@@ -61,7 +61,7 @@ def test_scene_controller_orbitcontrols_and_cameras():
 def test_canvas_component_hud_and_metrics():
     """Verify DigitalTwinCanvas integrates WebGL, presets, projection switcher, and diagnostics."""
     canvas_path = os.path.join(DIGITAL_TWIN_DIR, "DigitalTwinCanvas.tsx")
-    with open(canvas_path, "r", encoding="utf-8") as f:
+    with open(canvas_path, encoding="utf-8") as f:
         content = f.read()
 
     # WebGL initialization

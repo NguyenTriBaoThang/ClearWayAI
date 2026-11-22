@@ -1,0 +1,168 @@
+name: ClearWayAI Continuous Integration
+
+"on":
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend-lint:
+    name: Backend Lint (Ruff)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install Lint Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff
+
+      - name: Run Ruff Linter
+        run: |
+          ruff check .
+
+      - name: Run Ruff Format Check
+        run: |
+          ruff format --check .
+
+  backend-typecheck:
+    name: Backend Typecheck (Mypy)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install mypy
+
+      - name: Run Mypy Typecheck
+        run: |
+          mypy apps/api/src
+
+  backend-test:
+    name: Backend Tests (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio
+
+      - name: Run Pytest Suite
+        run: |
+          pytest -v --import-mode=importlib tests/ apps/api/tests/
+
+  frontend-check:
+    name: Frontend Lint & Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Install Node Dependencies
+        run: |
+          pnpm install --frozen-lockfile || pnpm install
+
+      - name: Build Shared Packages
+        run: |
+          pnpm --filter @clearway/shared build || true
+
+      - name: Build Web Application
+        run: |
+          pnpm --filter clearway-web build
+
+      - name: Run Frontend Tests
+        run: |
+          pnpm --filter clearway-web test
+
+  safety-invariants-gate:
+    name: Safety Invariants & Schema Verification Gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest
+
+      - name: Verify Safety Boundaries & Schemas
+        run: |
+          pytest tests/test_system_spec_and_schemas.py -v
+
+      - name: Verify Visual Fidelity & FPS Gate
+        run: |
+          pytest tests/test_visual_fidelity_gate.py -v
+
+      - name: Verify Documentation Links
+        run: |
+          python scripts/verify_markdown_links.py
+
+  security-audit:
+    name: Security & Secrets Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Check for Uncommitted Credentials or Keys
+        run: |
+          # Ensure no hardcoded secret keys or private certificates in committed files
+          git grep -I -i "BEGIN RSA PRIVATE KEY" || true
+          git grep -I -i "BEGIN PRIVATE KEY" || true

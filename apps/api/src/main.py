@@ -2,8 +2,9 @@
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
 from apps.api.src.config import settings
-from apps.api.src.schemas import HealthResponse, SystemStatusResponse, ModuleStatus, utc_now
+from apps.api.src.schemas import HealthResponse, ModuleStatus, SystemStatusResponse, utc_now
 
 app = FastAPI(
     title=settings.APP_NAME,

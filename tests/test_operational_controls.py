@@ -1,7 +1,6 @@
 """Verification test suite for Task 19: Interactive Operational Controls, Mission Drawer & Unified Inspector."""
 
 import os
-import re
 
 WEB_SRC = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "apps", "web", "src"))
 SHARED_SRC = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "packages", "shared", "src"))
@@ -21,7 +20,7 @@ def test_operational_control_files_exist():
 def test_dashboard_page_integrates_controls_and_drawers():
     """Verify DashboardPage mounts SimulationControls, MissionDrawer, and UnifiedInspector."""
     page_path = os.path.join(WEB_SRC, "pages", "DashboardPage.tsx")
-    with open(page_path, "r", encoding="utf-8") as f:
+    with open(page_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "SimulationControls" in content
@@ -34,7 +33,7 @@ def test_dashboard_page_integrates_controls_and_drawers():
 def test_simulation_controls_playback_and_scenarios():
     """Verify SimulationControls supports play/pause, step, reset, speed multipliers, and scenarios."""
     sim_path = os.path.join(WEB_SRC, "features", "operations", "SimulationControls.tsx")
-    with open(sim_path, "r", encoding="utf-8") as f:
+    with open(sim_path, encoding="utf-8") as f:
         content = f.read()
 
     # Playback controls
@@ -53,7 +52,7 @@ def test_simulation_controls_playback_and_scenarios():
 def test_mission_drawer_corridor_and_telemetry():
     """Verify MissionDrawer has AMB-339 telemetry, ETA countdown, 4-node chain, and preemption."""
     mission_path = os.path.join(WEB_SRC, "features", "operations", "MissionDrawer.tsx")
-    with open(mission_path, "r", encoding="utf-8") as f:
+    with open(mission_path, encoding="utf-8") as f:
         content = f.read()
 
     # Ambulance & target
@@ -76,7 +75,7 @@ def test_mission_drawer_corridor_and_telemetry():
 def test_unified_inspector_tabs_and_actions():
     """Verify UnifiedInspector supports multi-entity tabs, ping diagnostics, and telemetry export."""
     inspector_path = os.path.join(WEB_SRC, "features", "operations", "UnifiedInspector.tsx")
-    with open(inspector_path, "r", encoding="utf-8") as f:
+    with open(inspector_path, encoding="utf-8") as f:
         content = f.read()
 
     # 4 entity tabs
@@ -95,7 +94,7 @@ def test_zero_static_fake_assets():
     """Verify no raster mock images are used."""
     for fn in ["SimulationControls.tsx", "MissionDrawer.tsx", "UnifiedInspector.tsx"]:
         fp = os.path.join(WEB_SRC, "features", "operations", fn)
-        with open(fp, "r", encoding="utf-8") as f:
+        with open(fp, encoding="utf-8") as f:
             content = f.read()
         assert "dashboard-target.png" not in content
         assert "placeholder.png" not in content

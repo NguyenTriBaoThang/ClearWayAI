@@ -16,7 +16,7 @@ def test_road_network_data_and_mesh_exist():
 def test_road_network_configuration_parameters():
     """Verify intersection topology configures standard 3.5m lanes and 4 orthogonal approaches."""
     config_path = os.path.join(DIGITAL_TWIN_DIR, "roadNetworkData.ts")
-    with open(config_path, "r", encoding="utf-8") as f:
+    with open(config_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "INT-0457" in content
@@ -32,7 +32,7 @@ def test_road_network_configuration_parameters():
 def test_road_network_mesh_geometry_elements():
     """Verify RoadNetworkMesh implements asphalt, sidewalks, center lines, dashed dividers, stop lines, crosswalks, and arrows."""
     mesh_path = os.path.join(DIGITAL_TWIN_DIR, "RoadNetworkMesh.ts")
-    with open(mesh_path, "r", encoding="utf-8") as f:
+    with open(mesh_path, encoding="utf-8") as f:
         content = f.read()
 
     # Asphalt surfaces
@@ -74,7 +74,7 @@ def test_road_network_mesh_geometry_elements():
 def test_scene_environment_integrates_road_network():
     """Verify SceneEnvironment mounts RoadNetworkMesh and exposes clean disposal."""
     env_path = os.path.join(DIGITAL_TWIN_DIR, "SceneEnvironment.ts")
-    with open(env_path, "r", encoding="utf-8") as f:
+    with open(env_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "RoadNetworkMesh" in content
@@ -89,7 +89,7 @@ def test_scene_environment_integrates_road_network():
 def test_digital_twin_canvas_status_updated():
     """Verify DigitalTwinCanvas reflects active road network status and layer toggle menus."""
     canvas_path = os.path.join(DIGITAL_TWIN_DIR, "DigitalTwinCanvas.tsx")
-    with open(canvas_path, "r", encoding="utf-8") as f:
+    with open(canvas_path, encoding="utf-8") as f:
         content = f.read()
 
     assert (

@@ -16,7 +16,7 @@ def test_traffic_signal_modules_exist():
 def test_conflict_free_safety_interlock_logic():
     """Verify SignalPhaseController enforces strict conflict-free matrix, yellow intervals, and all-red clearance."""
     controller_path = os.path.join(DIGITAL_TWIN_DIR, "SignalPhaseController.ts")
-    with open(controller_path, "r", encoding="utf-8") as f:
+    with open(controller_path, encoding="utf-8") as f:
         content = f.read()
 
     # Safety validation & interlock
@@ -44,7 +44,7 @@ def test_conflict_free_safety_interlock_logic():
 def test_physical_signal_head_single_lens_rule():
     """Verify TrafficSignal3D enforces physical single-lens illumination (no simultaneous red+green)."""
     signal3d_path = os.path.join(DIGITAL_TWIN_DIR, "TrafficSignal3D.ts")
-    with open(signal3d_path, "r", encoding="utf-8") as f:
+    with open(signal3d_path, encoding="utf-8") as f:
         content = f.read()
 
     # Master poles for all 4 intersection quadrants
@@ -68,7 +68,7 @@ def test_physical_signal_head_single_lens_rule():
 def test_pedestrian_crossing_agents_and_walk_logic():
     """Verify 3D pedestrian agents animate across zebra crosswalks during WALK phase and wait safely on sidewalk."""
     signal3d_path = os.path.join(DIGITAL_TWIN_DIR, "TrafficSignal3D.ts")
-    with open(signal3d_path, "r", encoding="utf-8") as f:
+    with open(signal3d_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "buildPedestrianAgents" in content
@@ -81,7 +81,7 @@ def test_pedestrian_crossing_agents_and_walk_logic():
 def test_scene_environment_and_canvas_signal_integration():
     """Verify SceneEnvironment mounts signals and DigitalTwinCanvas has inspector & live phase badges."""
     env_path = os.path.join(DIGITAL_TWIN_DIR, "SceneEnvironment.ts")
-    with open(env_path, "r", encoding="utf-8") as f:
+    with open(env_path, encoding="utf-8") as f:
         env_content = f.read()
 
     assert "TrafficSignal3D" in env_content
@@ -90,7 +90,7 @@ def test_scene_environment_and_canvas_signal_integration():
     assert "this.trafficSignals.dispose();" in env_content
 
     canvas_path = os.path.join(DIGITAL_TWIN_DIR, "DigitalTwinCanvas.tsx")
-    with open(canvas_path, "r", encoding="utf-8") as f:
+    with open(canvas_path, encoding="utf-8") as f:
         canvas_content = f.read()
 
     # Active status pill

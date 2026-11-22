@@ -1,7 +1,6 @@
 """Verification test suite for Task 14: Top-Left V2I/V2X Communication & Hardware Status Panel."""
 
 import os
-import re
 
 WEB_SRC = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "apps", "web", "src"))
 SHARED_SRC = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "packages", "shared", "src"))
@@ -19,7 +18,7 @@ def test_v2x_panel_files_exist():
 def test_hardware_status_contract_compliance():
     """Verify that V2XHardwarePanel adheres to the shared HardwareStatus interface."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "V2XHardwarePanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     # Must import HardwareStatus and DataProvenance from @clearway/shared
@@ -43,7 +42,7 @@ def test_hardware_status_contract_compliance():
 def test_pipeline_architecture_nodes():
     """Verify that all 4 hardware pipeline architecture nodes are defined and rendered."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "V2XHardwarePanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     # 4 Architecture stages: Vehicle (OBU) ➔ RSU ➔ Edge Controller ➔ Signal Controller
@@ -62,7 +61,7 @@ def test_pipeline_architecture_nodes():
 def test_honest_provenance_gating():
     """Verify honest provenance gating: clearly labeled as simulated, zero fake claims."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "V2XHardwarePanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     # Must clearly display simulated status
@@ -76,7 +75,7 @@ def test_honest_provenance_gating():
 def test_interactive_device_inspector():
     """Verify interactive inspector modal/drawer with station IDs, IP/MAC, protocols, and ping."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "V2XHardwarePanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     # Station IDs and standards
@@ -99,7 +98,7 @@ def test_interactive_device_inspector():
 def test_simulation_fallback_modes():
     """Verify degraded and offline fallback modes with safety interlock alerts."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "V2XHardwarePanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     # Three operating modes
@@ -115,7 +114,7 @@ def test_simulation_fallback_modes():
 def test_zero_static_fake_assets():
     """Verify no static fake screenshot assets or raster mocks are referenced."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "V2XHardwarePanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "dashboard-target.png" not in content

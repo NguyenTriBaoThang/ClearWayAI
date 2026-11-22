@@ -1,7 +1,6 @@
 """Verification test suite for Task 16: Top-Right Adaptive Signal Control & Queue Chart Panel."""
 
 import os
-import re
 
 WEB_SRC = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "apps", "web", "src"))
 SHARED_SRC = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "packages", "shared", "src"))
@@ -19,7 +18,7 @@ def test_adaptive_signal_files_exist():
 def test_traffic_analytics_contract_compliance():
     """Verify that AdaptiveSignalPanel adheres to the shared TrafficAnalytics interface."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "AdaptiveSignalPanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     # Must import TrafficAnalytics and DataProvenance from @clearway/shared
@@ -38,7 +37,7 @@ def test_traffic_analytics_contract_compliance():
 def test_top_kpis_and_phases():
     """Verify cycle time (120s), current phase (P3 E-W Thru), and next phase (P4 E-W Left)."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "AdaptiveSignalPanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "120s" in content
@@ -52,7 +51,7 @@ def test_top_kpis_and_phases():
 def test_queue_vs_capacity_vector_chart():
     """Verify the Queue vs Capacity SVG chart has curves, gridlines, axis ticks, and occupancy badge."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "AdaptiveSignalPanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     # Cyan Queue curve and Red dashed Capacity line
@@ -75,7 +74,7 @@ def test_queue_vs_capacity_vector_chart():
 def test_optimization_metrics_kpi():
     """Verify -19% Delay, 87m Avg Queue, and 45m Backlog are rendered."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "AdaptiveSignalPanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "-19%" in content
@@ -89,7 +88,7 @@ def test_optimization_metrics_kpi():
 def test_interactive_control_modes_and_diagnostics():
     """Verify multi-mode policy switcher (RL PPO, Actuated, Fixed) and diagnostics drawer."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "AdaptiveSignalPanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     # Control modes
@@ -107,7 +106,7 @@ def test_interactive_control_modes_and_diagnostics():
 def test_zero_static_fake_assets():
     """Verify no raster mock images are used in the component."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "AdaptiveSignalPanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "dashboard-target.png" not in content

@@ -22,7 +22,7 @@
 | **T03** | Tạo website Technical Documentation như LocalExplorerAI Docs | P0 | T01, T02 | **VERIFIED** | Docs-site built (24 technical chapters, dark/light, search, GitHub Pages workflow .github/workflows/docs-deploy.yml) |
 | **T04** | Viết ALL README.md cho toàn bộ monorepo | P0 | T01–T03 | **VERIFIED** | Root README + 13 module READMEs, architecture templates, 28 markdown files link-checked (0 broken links) |
 | **T21** | Đặc tả hệ thống, ADR, schema và ranh giới an toàn | P0 | T01 | **VERIFIED** | SRS.md, SAFETY_BOUNDARIES.md, 6 ADRs, Pydantic & JSON Schemas, MMU interlock specification, pytest (104/104) |
-| **T22** | Thiết lập CI/CD, lint, tests và môi trường phát triển | P0 | T01–T21 | **PLANNED** | Scheduled |
+| **T22** | Thiết lập CI/CD, lint, tests và môi trường phát triển | P0 | T01–T21 | **VERIFIED** | GitHub Actions ci.yml & nightly-benchmark.yml, ruff, mypy, pre-commit, dev_setup.py, check_all.py, pytest (106/106) |
 
 ### Phase B — 3D & Blueprint UI (Tasks 05–20)
 | Task ID | Task Description | Priority | Dependencies | Status | Verification Proof |

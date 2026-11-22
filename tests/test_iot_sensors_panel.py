@@ -1,7 +1,6 @@
 """Verification test suite for Task 17: Bottom-Left IoT Sensor Network & City Map Overview Panel."""
 
 import os
-import re
 
 WEB_SRC = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "apps", "web", "src"))
 
@@ -18,7 +17,7 @@ def test_iot_sensors_files_exist():
 def test_five_sensor_categories_inventory():
     """Verify all 5 sensor device categories and counts matching the UI blueprint."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "IoTSensorsPanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     # 5 Device Categories:
@@ -39,7 +38,7 @@ def test_five_sensor_categories_inventory():
 def test_six_data_layers_checkboxes():
     """Verify that all 6 city data layers are supported with interactive state toggles."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "IoTSensorsPanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     # 6 Data Layers:
@@ -55,7 +54,7 @@ def test_six_data_layers_checkboxes():
 def test_mini_vector_city_map_elements():
     """Verify vector SVG city map includes arterial streets, hospital, scale bar, and compass."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "IoTSensorsPanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     # Streets
@@ -82,7 +81,7 @@ def test_mini_vector_city_map_elements():
 def test_interactive_intersection_node_inspector():
     """Verify corridor intersection nodes are defined and interactive."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "IoTSensorsPanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     # Nodes on the corridor
@@ -100,7 +99,7 @@ def test_interactive_intersection_node_inspector():
 def test_honest_provenance_gating():
     """Verify honest provenance gating: clearly labeled as simulated, zero fake claims."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "IoTSensorsPanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "DEMO_FIXTURE" in content
@@ -109,7 +108,7 @@ def test_honest_provenance_gating():
 def test_zero_static_fake_assets():
     """Verify no raster mock images are used."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "IoTSensorsPanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "dashboard-target.png" not in content

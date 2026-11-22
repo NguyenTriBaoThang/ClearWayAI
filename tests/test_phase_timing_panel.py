@@ -1,7 +1,6 @@
 """Verification test suite for Task 15: Top-Middle Approach Split Timing Table Panel."""
 
 import os
-import re
 
 WEB_SRC = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "apps", "web", "src"))
 SHARED_SRC = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "packages", "shared", "src"))
@@ -19,7 +18,7 @@ def test_phase_timing_files_exist():
 def test_signal_state_contract_compliance():
     """Verify that PhaseTimingPanel adheres to the shared SignalState and SignalApproachTiming interfaces."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "PhaseTimingPanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     # Must import SignalApproachTiming and SignalState from @clearway/shared
@@ -40,7 +39,7 @@ def test_signal_state_contract_compliance():
 def test_four_approach_split_timing_values():
     """Verify that all 4 approach rows have exact split timing values matching the UI blueprint."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "PhaseTimingPanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     # 4 approaches:
@@ -61,7 +60,7 @@ def test_four_approach_split_timing_values():
 def test_mini_signal_head_and_countdown_display():
     """Verify visual mini signal heads (3 lenses) and countdown timers are present."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "PhaseTimingPanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     # Lenses representation: Red, Yellow, Green color styling
@@ -74,7 +73,7 @@ def test_mini_signal_head_and_countdown_display():
 def test_interactive_approach_inspector():
     """Verify clicking an approach opens an inspector drawer with NEMA phase and clearance specs."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "PhaseTimingPanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     # NEMA phase assignments and clearances
@@ -90,7 +89,7 @@ def test_interactive_approach_inspector():
 def test_emergency_corridor_preemption():
     """Verify emergency corridor pre-emption override mode (AMB-339 priority corridor)."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "PhaseTimingPanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "preemptionActive" in content
@@ -101,7 +100,7 @@ def test_emergency_corridor_preemption():
 def test_zero_static_fake_assets():
     """Verify no static raster screenshots are referenced in the component."""
     panel_path = os.path.join(WEB_SRC, "features", "dashboard", "PhaseTimingPanel.tsx")
-    with open(panel_path, "r", encoding="utf-8") as f:
+    with open(panel_path, encoding="utf-8") as f:
         content = f.read()
 
     assert "dashboard-target.png" not in content
