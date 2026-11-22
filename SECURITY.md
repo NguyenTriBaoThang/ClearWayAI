@@ -36,3 +36,4 @@ Please allow up to 48 hours for an initial response. Do **not** disclose securit
 
 - Never commit API keys, database credentials, private keys, or `.env` files.
 - The repository utilizes automated secret scanning and Dependabot alerts to continuously monitor dependencies and infrastructure.
+

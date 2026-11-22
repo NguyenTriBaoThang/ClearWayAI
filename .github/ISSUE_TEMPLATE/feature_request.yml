@@ -39,3 +39,4 @@ body:
         - "Requires Safety Gateway validation (Signal timing / priority logic)"
     validations:
       required: true
+

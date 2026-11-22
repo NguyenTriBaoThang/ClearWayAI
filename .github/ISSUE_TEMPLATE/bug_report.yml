@@ -49,3 +49,4 @@ body:
       placeholder: "Windows 11, Chrome 124, Python 3.13, RTX 4070"
     validations:
       required: true
+

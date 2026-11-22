@@ -85,3 +85,4 @@ pie title Task Completion by Status
 | **T58** | Phase J | Đóng gói release MVP, deployment và hồ sơ nộp thi | **P0** | T02–T22, T50–T57 | `PLANNED` | v0.1.0-mvp release package & submission dossier |
 | **T59** | Phase J | PPO Reinforcement Learning điều phối đa nút trong sandbox | **P2** | T39–T41, T51 | `PLANNED` | Research Gym environment & RL training |
 | **T60** | Phase J | Camera thật → định vị xe lên 3D và kiểm định digital twin | **P2** | T28–T32, T46–T47 | `PLANNED` | Shadow mode camera-to-3D localization |
+

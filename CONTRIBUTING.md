@@ -108,3 +108,4 @@ docker-compose config
 3. Ensure all automated tests and typechecks pass.
 4. Attach visual evidence (screenshots, terminal logs, or screen recordings) for any UI or 3D changes.
 5. Update `docs/PROJECT_STATUS.md` and module documentation if your PR completes or progresses a roadmap task.
+
