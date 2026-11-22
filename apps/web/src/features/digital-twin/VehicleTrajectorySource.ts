@@ -38,3 +38,4 @@ export interface VehicleTrajectorySource {
   getAllVehicleIds(): string[];
   reset(): void;
 }
+
