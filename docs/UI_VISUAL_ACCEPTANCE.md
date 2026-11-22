@@ -98,4 +98,19 @@ This document defines the strict visual acceptance criteria, regional quality ga
 | Task ID | Reviewer / Role | Date | Verdict | Evidence |
 | :---: | :---: | :---: | :---: | :--- |
 | **T05** | Senior Full-Stack Engineer | 2026-11-22 | **VERIFIED** | `docs/UI_REFERENCE_SPEC.md`, `docs/UI_VISUAL_ACCEPTANCE.md`, reference image confirmed 1254x1254 |
+| **T06** | UI & Frontend Lead | 2026-11-22 | **VERIFIED** | Responsive dashboard layout, TopBar, Sidebar, PanelFrame, StatusPill, KpiTile |
+| **T07** | 3D Graphics Engineer | 2026-11-23 | **VERIFIED** | Three.js Isometric Canvas, bounded pitch OrbitControls, dual-cam ortho/persp |
+| **T08** | 3D Graphics Engineer | 2026-11-23 | **VERIFIED** | RoadNetworkMesh, 4-way orthogonal intersection, zebra crosswalks, stop lines |
+| **T09** | 3D Graphics Engineer | 2026-11-23 | **VERIFIED** | CityEnvironmentMesh, quadrant commercial towers, Metropolitan Hospital with helipad beacon |
+| **T10** | 3D Assets Engineer | 2026-11-23 | **VERIFIED** | VehicleAssetFactory, 7 vehicle classes with AMB-339 ambulance and motorcycles |
+| **T11** | Simulation Engineer | 2026-11-23 | **VERIFIED** | VehicleMotionSystem, 42-vehicle snapshot fixture, anti-teleport clamp, 3D speed badges |
+| **T12** | Traffic Systems Engineer | 2026-11-23 | **VERIFIED** | TrafficSignal3D, 4 mast poles, NEMA 6-phase sequence, mutual exclusion lenses, pedestrians |
+| **T13** | Visual Analytics Lead | 2026-11-23 | **VERIFIED** | CorridorOverlay3D ribbon, animated chevrons, FlowArrows3D conflict grid, RSU footprints |
+| **T14** | V2X Hardware Engineer | 2026-11-23 | **VERIFIED** | V2XHardwarePanel, RM-INT-0457, 4-node pipeline, interactive device inspector, fallback modes |
+| **T15** | Traffic Systems Engineer | 2026-11-23 | **VERIFIED** | PhaseTimingPanel, 4-approach split table, mini signal lenses, countdowns, pre-emption override |
+| **T16** | AI / RL Engineer | 2026-11-23 | **VERIFIED** | AdaptiveSignalPanel, Queue vs Capacity vector chart, -19% delay KPI, PPO diagnostics |
+| **T17** | IoT Systems Engineer | 2026-11-23 | **VERIFIED** | IoTSensorsPanel, 5 categories (306 endpoints), 6 layers, vector map, hospital, scale bar |
+| **T18** | Analytics & Operations Lead | 2026-11-23 | **VERIFIED** | OperationsAnalyticsPanel, volume bars, travel times, 82/100 radial gauge, anomaly alerts |
+| **T19** | Full-Stack Operations Lead | 2026-11-23 | **VERIFIED** | SimulationControls (play/pause/step/speed/scenarios), MissionDrawer, UnifiedInspector |
+| **T20** | QA & Visual Fidelity Gatekeeper | 2026-11-23 | **VERIFIED** | Full 7-Gate Visual Fidelity & FPS audit passed: >=55 FPS, <=8.0ms render, <=60 calls, 0 fakes |
 
