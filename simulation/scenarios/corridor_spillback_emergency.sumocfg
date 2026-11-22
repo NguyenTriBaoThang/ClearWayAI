@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<configuration>
+    <input>
+        <net-file value="../sumo/corridor_4node.net.xml"/>
+        <route-files value="corridor_spillback_emergency.rou.xml"/>
+        <additional-files value="../sumo/corridor_4node.det.xml"/>
+    </input>
+    <time>
+        <begin value="0"/>
+        <end value="300"/>
+        <step-length value="0.1"/>
+    </time>
+    <processing>
+        <lateral-resolution value="0.64"/>
+        <collision.action value="warn"/>
+        <time-to-teleport value="-1"/>
+    </processing>
+    <gui_only>
+        <start value="true"/>
+    </gui_only>
+</configuration>

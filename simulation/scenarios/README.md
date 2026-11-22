@@ -1,6 +1,6 @@
 # ClearWayAI Traffic Demand Scenarios (`simulation/scenarios`)
 
-> **Synthetic Mixed Traffic Generation & Congestion Load Profiles (ADR-0005)**
+> **Synthetic Mixed Traffic Generation, Congestion Load Profiles, and Emergency Missions (ADR-0005 & ADR-0006)**
 
 ---
 
@@ -10,7 +10,7 @@ This module generates deterministic, realistic traffic demand for the Oak–5th 
 
 ---
 
-## 2. Vietnamese Mixed Vehicle Fleet
+## 2. Vietnamese Mixed Vehicle Fleet & Emergency Vehicles
 
 | Vehicle Class | Mix % | Length ($m$) | Width ($m$) | Sublane Model | Lateral Alignment | Max Speed ($km/h$) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -19,6 +19,8 @@ This module generates deterministic, realistic traffic demand for the Oak–5th 
 | **SUV / Crossover** | **5%** | $4.90$ | $2.00$ | `SL2015` | `center` | $60$ ($16.67\text{ m/s}$) |
 | **Transit Bus** | **3%** | $11.00$ | $2.50$ | `SL2015` | `center` | $50$ ($13.89\text{ m/s}$) |
 | **Delivery Truck** | **2%** | $8.50$ | $2.50$ | `SL2015` | `center` | $45$ ($12.50\text{ m/s}$) |
+| **AMB-339 (Ambulance)** | Mission-Injected | $6.50$ | $2.20$ | `SL2015` | `arbitrary` | $80$ ($22.22\text{ m/s}$) |
+| **Fire Engine** | Mission-Injected | $9.00$ | $2.50$ | `SL2015` | `center` | $70$ ($19.44\text{ m/s}$) |
 
 ---
 
@@ -33,23 +35,19 @@ This module generates deterministic, realistic traffic demand for the Oak–5th 
 
 ---
 
-## 4. Usage & Generation Commands
+## 4. Emergency Mission Injection & Blue-Light Scenarios
 
-### Generate Preset Scenarios (5-minute simulation runs)
 ```bash
-# Generate all 4 standard scenario route presets (Seed: 42)
-python simulation/scenarios/generate_demand.py --all
+# Inject AMB-339 into peak scenario at t=60s
+python simulation/scenarios/emergency_mission.py --scenario peak --depart 60.0
 
-# Generate specific scenario with custom duration and seed
-python simulation/scenarios/generate_demand.py --scenario peak --duration 1800 --seed 123 --output simulation/scenarios/corridor_peak_30min.rou.xml
+# Generate all 3 emergency presets (normal, peak, spillback)
+python simulation/scenarios/emergency_mission.py --all
 ```
 
-### Running Simulations via SUMO CLI
-```bash
-# Run peak congestion simulation in SUMO GUI
-sumo-gui -c simulation/scenarios/corridor_peak.sumocfg
+Pre-configured emergency presets:
+- `corridor_normal_emergency.sumocfg`: AMB-339 departs at $t=45\text{ s}$
+- `corridor_peak_emergency.sumocfg`: AMB-339 departs at $t=60\text{ s}$
+- `corridor_spillback_emergency.sumocfg`: AMB-339 departs at $t=75\text{ s}$
 
-# Run headless command-line simulation
-sumo -c simulation/scenarios/corridor_normal.sumocfg
-```
-
+See [EMERGENCY_CORRIDOR_SPEC.md](EMERGENCY_CORRIDOR_SPEC.md) for full blue-light yielding equations and lateral corridor clearance analysis.

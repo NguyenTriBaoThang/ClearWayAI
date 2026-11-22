@@ -63,7 +63,7 @@ def main():
             [sys.executable, "-m", "pytest", "tests/test_system_spec_and_schemas.py", "-q"],
         ),
         ("Ruff Linter Check", [sys.executable, "-m", "ruff", "check", "."]),
-        ("Mypy Typecheck (apps/api)", [sys.executable, "-m", "mypy", "apps/api/src"]),
+        ("Mypy Typecheck (apps/api)", [sys.executable, "-m", "mypy", "--explicit-package-bases", "apps/api/src"]),
         ("Pytest Test Matrix", [sys.executable, "-m", "pytest", "tests/", "-q"]),
     ]
 

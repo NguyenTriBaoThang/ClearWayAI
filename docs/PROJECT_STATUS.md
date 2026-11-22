@@ -49,7 +49,7 @@
 | :--- | :--- | :---: | :---: | :---: | :--- |
 | **T23** | Dựng mạng SUMO 3–5 nút giao liên tiếp | P0 | T01, T21–T22 | **VERIFIED** | Synthetic Oak-5th corridor (Nodes A–D), 26 edges, 4 NEMA traffic lights, E1/E2 detector network, Sublane SL2015 model, sumolib verified, pytest (113/113) |
 | **T24** | Sinh giao thông hỗn hợp xe máy–ô tô và kịch bản tải | P0 | T23 | **VERIFIED** | Vietnamese fleet mix (75% moto, SL2015 arbitrary latAlignment), 4 scenario profiles (free_flow, normal, peak, spillback), deterministic seed, pytest (119/119) |
-| **T25** | Mô phỏng xe ưu tiên và cơ chế nhường đường trong SUMO | P0 | T23, T24 | **PLANNED** | Scheduled |
+| **T25** | Mô phỏng xe ưu tiên và cơ chế nhường đường trong SUMO | P0 | T23, T24 | **VERIFIED** | Emergency vTypes (AMB-339 ambulance, fire engine), speedFactor=1.30, blue-light lcCooperative=1.0 yielding, emergency presets, pytest (124/124) |
 | **T26** | Xây SUMO/TraCI adapter có step, replay, telemetry | P0 | T23–T25 | **PLANNED** | Scheduled |
 | **T27** | Cài đặt 3 baseline để so sánh công bằng | P0 | T24–T26 | **PLANNED** | Scheduled |
 

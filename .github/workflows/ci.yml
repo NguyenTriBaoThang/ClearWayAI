@@ -61,7 +61,7 @@ jobs:
 
       - name: Run Mypy Typecheck
         run: |
-          mypy apps/api/src
+          mypy --explicit-package-bases apps/api/src
 
   backend-test:
     name: Backend Tests (Python ${{ matrix.python-version }})

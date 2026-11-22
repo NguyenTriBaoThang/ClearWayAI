@@ -1,5 +1,5 @@
 <additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
-    <!-- ClearWayAI Vietnamese Mixed Traffic Vehicle Types (ADR-0005) -->
+    <!-- ClearWayAI Vietnamese Mixed Traffic & Emergency Vehicle Types (ADR-0005) -->
     
     <!-- 1. Motorcycle (75% volume): Lateral sublane filtering, stopline swarming -->
     <vType id="motorcycle"
@@ -21,6 +21,7 @@
            lcAssertive="0.9"
            lcSublane="1.0"
            lcKeepRight="0.0"
+           lcCooperative="1.0"
            guiShape="motorcycle"
            color="1.0,0.8,0.0"/>
 
@@ -43,6 +44,7 @@
            lcPushy="0.2"
            lcAssertive="0.4"
            lcSublane="0.5"
+           lcCooperative="1.0"
            guiShape="passenger"
            color="0.2,0.6,1.0"/>
 
@@ -65,6 +67,7 @@
            lcPushy="0.2"
            lcAssertive="0.4"
            lcSublane="0.5"
+           lcCooperative="1.0"
            guiShape="passenger/wagon"
            color="0.3,0.8,0.4"/>
 
@@ -87,6 +90,7 @@
            lcPushy="0.1"
            lcAssertive="0.2"
            lcSublane="0.2"
+           lcCooperative="1.0"
            guiShape="bus"
            color="0.9,0.3,0.3"/>
 
@@ -109,7 +113,61 @@
            lcPushy="0.1"
            lcAssertive="0.2"
            lcSublane="0.2"
+           lcCooperative="1.0"
            guiShape="truck"
            color="0.6,0.6,0.6"/>
-</additional>
 
+    <!-- 6. Priority Emergency Ambulance (AMB-339): High acceleration, blue-light sublane filtering -->
+    <vType id="emergency_ambulance"
+           vClass="emergency"
+           length="6.50"
+           width="2.20"
+           height="2.80"
+           minGap="1.00"
+           maxSpeed="22.22"
+           speedFactor="1.30"
+           accel="3.5"
+           decel="5.0"
+           emergencyDecel="9.0"
+           sigma="0.1"
+           tau="0.6"
+           laneChangeModel="SL2015"
+           latAlignment="arbitrary"
+           minGapLat="0.25"
+           lcPushy="1.0"
+           lcAssertive="1.0"
+           lcSublane="1.0"
+           lcStrategic="2.0"
+           lcCooperative="0.0"
+           jmDriveAfterYellowTime="3.0"
+           jmDriveAfterRedTime="1.5"
+           guiShape="emergency"
+           color="1.0,0.2,0.2"/>
+
+    <!-- 7. Emergency Heavy Rescue / Fire Engine: High priority response -->
+    <vType id="emergency_fire"
+           vClass="emergency"
+           length="9.00"
+           width="2.50"
+           height="3.20"
+           minGap="1.50"
+           maxSpeed="19.44"
+           speedFactor="1.20"
+           accel="2.5"
+           decel="4.5"
+           emergencyDecel="8.0"
+           sigma="0.1"
+           tau="0.7"
+           laneChangeModel="SL2015"
+           latAlignment="center"
+           minGapLat="0.40"
+           lcPushy="0.9"
+           lcAssertive="0.9"
+           lcSublane="0.8"
+           lcStrategic="2.0"
+           lcCooperative="0.0"
+           jmDriveAfterYellowTime="3.0"
+           jmDriveAfterRedTime="1.0"
+           guiShape="firebrigade"
+           color="0.9,0.1,0.1"/>
+</additional>

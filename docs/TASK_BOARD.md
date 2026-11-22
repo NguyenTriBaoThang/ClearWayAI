@@ -8,15 +8,15 @@
 
 ## 📊 Sprint Progress Overview
 - **Total Tasks:** 60
-- **Verified Complete:** 24 (T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24)
+- **Verified Complete:** 25 (T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25)
 - **In Progress:** 0
-- **Planned:** 36
-- **Phase Completion:** Phase A (6/6 complete - 100% COMPLETE!), Phase B (16/16 complete - 100% COMPLETE!), Phase C (2/5 complete)
+- **Planned:** 35
+- **Phase Completion:** Phase A (6/6 complete - 100% COMPLETE!), Phase B (16/16 complete - 100% COMPLETE!), Phase C (3/5 complete)
 
 ```mermaid
 pie title Task Completion by Status
-    "VERIFIED" : 24
-    "PLANNED" : 36
+    "VERIFIED" : 25
+    "PLANNED" : 35
 ```
 
 ---
@@ -49,7 +49,7 @@ pie title Task Completion by Status
 | **T22** | Phase A | Thiết lập CI/CD, lint, tests và môi trường phát triển | **P0** | T01–T21 | **VERIFIED** | GitHub Actions ci.yml & nightly-benchmark.yml, ruff, mypy, pre-commit, dev_setup.py, check_all.py, pytest (106/106) |
 | **T23** | Phase C | Dựng mạng SUMO 3–5 nút giao liên tiếp | **P0** | T01, T21–T22 | **VERIFIED** | Synthetic Oak-5th corridor (Nodes A–D), 26 edges, 4 NEMA traffic lights, E1/E2 detector network, Sublane SL2015 model, sumolib verified, pytest (113/113) |
 | **T24** | Phase C | Sinh giao thông hỗn hợp xe máy–ô tô và kịch bản tải | **P0** | T23 | **VERIFIED** | Vietnamese fleet mix (75% moto, SL2015 arbitrary latAlignment), 4 scenario profiles (free_flow, normal, peak, spillback), deterministic seed, pytest (119/119) |
-| **T25** | Phase C | Mô phỏng xe ưu tiên và cơ chế nhường đường trong SUMO | **P0** | T23, T24 | `PLANNED` | Emergency vehicle vTypes, bluelight behavior |
+| **T25** | Phase C | Mô phỏng xe ưu tiên và cơ chế nhường đường trong SUMO | **P0** | T23, T24 | **VERIFIED** | Emergency vTypes (AMB-339 ambulance, fire engine), speedFactor=1.30, blue-light lcCooperative=1.0 yielding, emergency presets, pytest (124/124) |
 | **T26** | Phase C | Xây SUMO/TraCI adapter có step, replay, telemetry | **P0** | T23–T25 | `PLANNED` | TraCI SimulationManager, snapshot exporter |
 | **T27** | Phase C | Cài đặt 3 baseline để so sánh công bằng | **P0** | T24–T26 | `PLANNED` | Fixed (B0), Reactive (B1), Corridor (B2) |
 | **T28** | Phase D | Thiết lập thu thập video giao thông và pháp lý dữ liệu | **P0** | T21, T22 | `PLANNED` | DATA_GOVERNANCE.md, video ingestion manifests |
