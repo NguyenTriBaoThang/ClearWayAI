@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --bg-primary: #0a0f1d;
+  --bg-secondary: #0f172a;
+  --bg-tertiary: #1e293b;
+  --border-color: #1e293b;
+  --border-highlight: #38bdf8;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --accent-cyan: #00e5ff;
+  --accent-blue: #38bdf8;
+  --accent-emerald: #10b981;
+  --accent-amber: #f59e0b;
+  --accent-rose: #f43f5e;
+  --code-bg: #0d1527;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #e2e8f0;
+  --border-color: #cbd5e1;
+  --border-highlight: #0284c7;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --accent-cyan: #0284c7;
+  --accent-blue: #2563eb;
+  --accent-emerald: #059669;
+  --accent-amber: #d97706;
+  --accent-rose: #e11d48;
+  --code-bg: #f1f5f9;
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+code, pre, .font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-cyan);
+}
+
+/* Callout Alerts */
+.callout {
+  padding: 14px 18px;
+  border-radius: 8px;
+  margin: 16px 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.callout-important {
+  background-color: rgba(244, 63, 94, 0.1);
+  border-left: 4px solid var(--accent-rose);
+  color: var(--text-primary);
+}
+
+.callout-note {
+  background-color: rgba(56, 189, 248, 0.1);
+  border-left: 4px solid var(--accent-blue);
+  color: var(--text-primary);
+}
+
+.callout-tip {
+  background-color: rgba(16, 185, 129, 0.1);
+  border-left: 4px solid var(--accent-emerald);
+  color: var(--text-primary);
+}
+
+.callout-warning {
+  background-color: rgba(245, 158, 11, 0.1);
+  border-left: 4px solid var(--accent-amber);
+  color: var(--text-primary);
+}
+
+/* Markdown typography in Docs */
+.doc-prose h1 {
+  font-size: 2.1rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.doc-prose h2 {
+  font-size: 1.45rem;
+  font-weight: 700;
+  margin-top: 32px;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.doc-prose h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.doc-prose p {
+  margin-bottom: 14px;
+  color: var(--text-secondary);
+}
+
+.doc-prose ul, .doc-prose ol {
+  margin-bottom: 14px;
+  padding-left: 24px;
+  color: var(--text-secondary);
+}
+
+.doc-prose li {
+  margin-bottom: 6px;
+}
+
+.doc-prose a {
+  color: var(--accent-cyan);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.doc-prose a:hover {
+  color: var(--accent-blue);
+}
+
+.doc-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 0.88rem;
+}
+
+.doc-prose th {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  padding: 10px 12px;
+  text-align: left;
+  border: 1px solid var(--border-color);
+  font-weight: 600;
+}
+
+.doc-prose td {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+.doc-prose pre {
+  background-color: var(--code-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 14px;
+  overflow-x: auto;
+  margin: 16px 0;
+  font-size: 0.85rem;
+  position: relative;
+}
+
+.doc-prose code:not(pre code) {
+  background-color: var(--code-bg);
+  color: var(--accent-cyan);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  border: 1px solid var(--border-color);
+}
