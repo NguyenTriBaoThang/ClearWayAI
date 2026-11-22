@@ -52,3 +52,4 @@ sumo-gui -c simulation/scenarios/corridor_peak.sumocfg
 # Run headless command-line simulation
 sumo -c simulation/scenarios/corridor_normal.sumocfg
 ```
+
