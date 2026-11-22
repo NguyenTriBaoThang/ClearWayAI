@@ -1,0 +1,152 @@
+<?xml version="1.0" ?>
+<routes>
+    <vType id="motorcycle" vClass="motorcycle" length="1.90" width="0.70" height="1.20" minGap="0.40" maxSpeed="13.89" accel="3.2" decel="4.5" laneChangeModel="SL2015" latAlignment="arbitrary" minGapLat="0.20" lcPushy="0.8" lcAssertive="0.9" lcSublane="1.0" guiShape="motorcycle" color="1.0,0.8,0.0"/>
+    <vType id="car" vClass="passenger" length="4.60" width="1.90" height="1.50" minGap="1.50" maxSpeed="16.67" accel="2.6" decel="4.5" laneChangeModel="SL2015" latAlignment="center" minGapLat="0.50" lcPushy="0.2" lcAssertive="0.4" lcSublane="0.5" guiShape="passenger" color="0.2,0.6,1.0"/>
+    <vType id="suv" vClass="passenger" length="4.90" width="2.00" height="1.70" minGap="1.60" maxSpeed="16.67" accel="2.4" decel="4.5" laneChangeModel="SL2015" latAlignment="center" minGapLat="0.50" lcPushy="0.2" lcAssertive="0.4" lcSublane="0.5" guiShape="passenger/wagon" color="0.3,0.8,0.4"/>
+    <vType id="bus" vClass="bus" length="11.00" width="2.50" height="3.20" minGap="2.00" maxSpeed="13.89" accel="1.8" decel="3.5" laneChangeModel="SL2015" latAlignment="center" minGapLat="0.60" lcPushy="0.1" lcAssertive="0.2" lcSublane="0.2" guiShape="bus" color="0.9,0.3,0.3"/>
+    <vType id="truck" vClass="truck" length="8.50" width="2.50" height="3.00" minGap="2.50" maxSpeed="12.50" accel="1.5" decel="3.0" laneChangeModel="SL2015" latAlignment="center" minGapLat="0.60" lcPushy="0.1" lcAssertive="0.2" lcSublane="0.2" guiShape="truck" color="0.6,0.6,0.6"/>
+    <route id="route_eb_through" edges="edge_west_to_a edge_a_to_b edge_b_to_c edge_c_to_d edge_d_to_east"/>
+    <route id="route_wb_through" edges="edge_east_to_d edge_d_to_c edge_c_to_b edge_b_to_a edge_a_to_west"/>
+    <route id="route_sb_a" edges="edge_na_to_a edge_a_to_sa"/>
+    <route id="route_nb_a" edges="edge_sa_to_a edge_a_to_na"/>
+    <route id="route_sb_b" edges="edge_nb_to_b edge_b_to_sb"/>
+    <route id="route_nb_b" edges="edge_sb_to_b edge_b_to_nb"/>
+    <route id="route_sb_c" edges="edge_nc_to_c edge_c_to_sc"/>
+    <route id="route_nb_c" edges="edge_sc_to_c edge_c_to_nc"/>
+    <route id="route_sb_d" edges="edge_nd_to_d edge_d_to_sd"/>
+    <route id="route_nb_d" edges="edge_sd_to_d edge_d_to_nd"/>
+    <route id="route_na_to_eb" edges="edge_na_to_a edge_a_to_b edge_b_to_c edge_c_to_d edge_d_to_east"/>
+    <route id="route_sa_to_eb" edges="edge_sa_to_a edge_a_to_b edge_b_to_c edge_c_to_d edge_d_to_east"/>
+    <route id="route_nb_to_eb" edges="edge_nb_to_b edge_b_to_c edge_c_to_d edge_d_to_east"/>
+    <route id="route_sb_to_eb" edges="edge_sb_to_b edge_b_to_c edge_c_to_d edge_d_to_east"/>
+    <route id="route_nc_to_eb" edges="edge_nc_to_c edge_c_to_d edge_d_to_east"/>
+    <route id="route_sc_to_eb" edges="edge_sc_to_c edge_c_to_d edge_d_to_east"/>
+    <vehicle id="veh_free_flow_00070" type="truck" route="route_nb_a" depart="3.78" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00090" type="motorcycle" route="route_sb_d" depart="5.54" departSpeed="max" departLane="best" departPosLat="-0.47"/>
+    <vehicle id="veh_free_flow_00034" type="bus" route="route_wb_through" depart="5.64" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00000" type="motorcycle" route="route_eb_through" depart="7.95" departSpeed="max" departLane="best" departPosLat="-0.45"/>
+    <vehicle id="veh_free_flow_00001" type="motorcycle" route="route_eb_through" depart="9.92" departSpeed="max" departLane="best" departPosLat="0.35"/>
+    <vehicle id="veh_free_flow_00098" type="motorcycle" route="route_na_to_eb" depart="10.65" departSpeed="max" departLane="best" departPosLat="-0.47"/>
+    <vehicle id="veh_free_flow_00122" type="motorcycle" route="route_sc_to_eb" depart="15.31" departSpeed="max" departLane="best" departPosLat="-0.20"/>
+    <vehicle id="veh_free_flow_00083" type="motorcycle" route="route_sb_c" depart="19.51" departSpeed="max" departLane="best" departPosLat="0.78"/>
+    <vehicle id="veh_free_flow_00035" type="motorcycle" route="route_wb_through" depart="20.41" departSpeed="max" departLane="best" departPosLat="0.44"/>
+    <vehicle id="veh_free_flow_00067" type="motorcycle" route="route_sb_a" depart="20.80" departSpeed="max" departLane="best" departPosLat="-0.10"/>
+    <vehicle id="veh_free_flow_00111" type="motorcycle" route="route_nb_to_eb" depart="24.39" departSpeed="max" departLane="best" departPosLat="-0.69"/>
+    <vehicle id="veh_free_flow_00002" type="motorcycle" route="route_eb_through" depart="27.29" departSpeed="max" departLane="best" departPosLat="-0.16"/>
+    <vehicle id="veh_free_flow_00003" type="motorcycle" route="route_eb_through" depart="27.52" departSpeed="max" departLane="best" departPosLat="0.01"/>
+    <vehicle id="veh_free_flow_00088" type="car" route="route_nb_c" depart="27.65" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00004" type="motorcycle" route="route_eb_through" depart="27.73" departSpeed="max" departLane="best" departPosLat="0.30"/>
+    <vehicle id="veh_free_flow_00036" type="motorcycle" route="route_wb_through" depart="28.98" departSpeed="max" departLane="best" departPosLat="-0.47"/>
+    <vehicle id="veh_free_flow_00089" type="motorcycle" route="route_nb_c" depart="33.13" departSpeed="max" departLane="best" departPosLat="1.00"/>
+    <vehicle id="veh_free_flow_00092" type="motorcycle" route="route_nb_d" depart="33.56" departSpeed="max" departLane="best" departPosLat="0.67"/>
+    <vehicle id="veh_free_flow_00005" type="motorcycle" route="route_eb_through" depart="33.87" departSpeed="max" departLane="best" departPosLat="0.18"/>
+    <vehicle id="veh_free_flow_00037" type="motorcycle" route="route_wb_through" depart="36.66" departSpeed="max" departLane="best" departPosLat="-0.13"/>
+    <vehicle id="veh_free_flow_00105" type="car" route="route_sa_to_eb" depart="36.89" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00084" type="motorcycle" route="route_sb_c" depart="40.08" departSpeed="max" departLane="best" departPosLat="0.24"/>
+    <vehicle id="veh_free_flow_00038" type="bus" route="route_wb_through" depart="41.19" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00099" type="suv" route="route_na_to_eb" depart="42.01" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00006" type="motorcycle" route="route_eb_through" depart="46.79" departSpeed="max" departLane="best" departPosLat="0.61"/>
+    <vehicle id="veh_free_flow_00007" type="motorcycle" route="route_eb_through" depart="56.13" departSpeed="max" departLane="best" departPosLat="-0.69"/>
+    <vehicle id="veh_free_flow_00039" type="motorcycle" route="route_wb_through" depart="56.81" departSpeed="max" departLane="best" departPosLat="0.00"/>
+    <vehicle id="veh_free_flow_00040" type="suv" route="route_wb_through" depart="58.29" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00077" type="motorcycle" route="route_nb_b" depart="59.04" departSpeed="max" departLane="best" departPosLat="-0.69"/>
+    <vehicle id="veh_free_flow_00068" type="motorcycle" route="route_sb_a" depart="60.67" departSpeed="max" departLane="best" departPosLat="-0.50"/>
+    <vehicle id="veh_free_flow_00117" type="motorcycle" route="route_nc_to_eb" depart="72.42" departSpeed="max" departLane="best" departPosLat="0.74"/>
+    <vehicle id="veh_free_flow_00041" type="motorcycle" route="route_wb_through" depart="73.60" departSpeed="max" departLane="best" departPosLat="0.28"/>
+    <vehicle id="veh_free_flow_00106" type="motorcycle" route="route_sa_to_eb" depart="77.75" departSpeed="max" departLane="best" departPosLat="-0.75"/>
+    <vehicle id="veh_free_flow_00113" type="car" route="route_sb_to_eb" depart="77.87" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00114" type="motorcycle" route="route_sb_to_eb" depart="79.05" departSpeed="max" departLane="best" departPosLat="-0.34"/>
+    <vehicle id="veh_free_flow_00085" type="motorcycle" route="route_sb_c" depart="79.62" departSpeed="max" departLane="best" departPosLat="0.05"/>
+    <vehicle id="veh_free_flow_00042" type="motorcycle" route="route_wb_through" depart="80.63" departSpeed="max" departLane="best" departPosLat="0.53"/>
+    <vehicle id="veh_free_flow_00008" type="motorcycle" route="route_eb_through" depart="80.70" departSpeed="max" departLane="best" departPosLat="-0.81"/>
+    <vehicle id="veh_free_flow_00009" type="car" route="route_eb_through" depart="81.49" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00078" type="bus" route="route_nb_b" depart="84.65" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00043" type="car" route="route_wb_through" depart="86.44" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00010" type="car" route="route_eb_through" depart="88.71" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00044" type="motorcycle" route="route_wb_through" depart="92.10" departSpeed="max" departLane="best" departPosLat="-0.35"/>
+    <vehicle id="veh_free_flow_00045" type="suv" route="route_wb_through" depart="92.25" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00107" type="car" route="route_sa_to_eb" depart="94.99" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00011" type="motorcycle" route="route_eb_through" depart="98.91" departSpeed="max" departLane="best" departPosLat="0.95"/>
+    <vehicle id="veh_free_flow_00012" type="motorcycle" route="route_eb_through" depart="102.62" departSpeed="max" departLane="best" departPosLat="0.66"/>
+    <vehicle id="veh_free_flow_00046" type="car" route="route_wb_through" depart="108.05" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00013" type="car" route="route_eb_through" depart="110.13" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00047" type="motorcycle" route="route_wb_through" depart="110.80" departSpeed="max" departLane="best" departPosLat="0.76"/>
+    <vehicle id="veh_free_flow_00014" type="motorcycle" route="route_eb_through" depart="116.84" departSpeed="max" departLane="best" departPosLat="-0.91"/>
+    <vehicle id="veh_free_flow_00015" type="motorcycle" route="route_eb_through" depart="118.86" departSpeed="max" departLane="best" departPosLat="-0.84"/>
+    <vehicle id="veh_free_flow_00016" type="motorcycle" route="route_eb_through" depart="120.93" departSpeed="max" departLane="best" departPosLat="-0.44"/>
+    <vehicle id="veh_free_flow_00093" type="motorcycle" route="route_nb_d" depart="122.03" departSpeed="max" departLane="best" departPosLat="0.97"/>
+    <vehicle id="veh_free_flow_00017" type="motorcycle" route="route_eb_through" depart="128.80" departSpeed="max" departLane="best" departPosLat="-0.26"/>
+    <vehicle id="veh_free_flow_00100" type="motorcycle" route="route_na_to_eb" depart="129.55" departSpeed="max" departLane="best" departPosLat="-0.15"/>
+    <vehicle id="veh_free_flow_00018" type="motorcycle" route="route_eb_through" depart="130.63" departSpeed="max" departLane="best" departPosLat="0.87"/>
+    <vehicle id="veh_free_flow_00048" type="motorcycle" route="route_wb_through" depart="132.79" departSpeed="max" departLane="best" departPosLat="-0.03"/>
+    <vehicle id="veh_free_flow_00049" type="car" route="route_wb_through" depart="133.33" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00071" type="bus" route="route_nb_a" depart="135.33" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00072" type="motorcycle" route="route_sb_b" depart="137.41" departSpeed="max" departLane="best" departPosLat="-0.03"/>
+    <vehicle id="veh_free_flow_00019" type="motorcycle" route="route_eb_through" depart="138.77" departSpeed="max" departLane="best" departPosLat="-0.66"/>
+    <vehicle id="veh_free_flow_00050" type="motorcycle" route="route_wb_through" depart="144.21" departSpeed="max" departLane="best" departPosLat="-0.05"/>
+    <vehicle id="veh_free_flow_00101" type="motorcycle" route="route_na_to_eb" depart="144.70" departSpeed="max" departLane="best" departPosLat="0.54"/>
+    <vehicle id="veh_free_flow_00079" type="motorcycle" route="route_nb_b" depart="147.63" departSpeed="max" departLane="best" departPosLat="0.50"/>
+    <vehicle id="veh_free_flow_00112" type="car" route="route_nb_to_eb" depart="148.70" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00020" type="motorcycle" route="route_eb_through" depart="148.95" departSpeed="max" departLane="best" departPosLat="-0.24"/>
+    <vehicle id="veh_free_flow_00051" type="motorcycle" route="route_wb_through" depart="150.18" departSpeed="max" departLane="best" departPosLat="0.74"/>
+    <vehicle id="veh_free_flow_00080" type="motorcycle" route="route_nb_b" depart="151.91" departSpeed="max" departLane="best" departPosLat="0.01"/>
+    <vehicle id="veh_free_flow_00052" type="motorcycle" route="route_wb_through" depart="154.30" departSpeed="max" departLane="best" departPosLat="0.08"/>
+    <vehicle id="veh_free_flow_00073" type="motorcycle" route="route_sb_b" depart="154.91" departSpeed="max" departLane="best" departPosLat="-0.88"/>
+    <vehicle id="veh_free_flow_00118" type="motorcycle" route="route_nc_to_eb" depart="163.92" departSpeed="max" departLane="best" departPosLat="0.63"/>
+    <vehicle id="veh_free_flow_00053" type="motorcycle" route="route_wb_through" depart="164.11" departSpeed="max" departLane="best" departPosLat="-0.38"/>
+    <vehicle id="veh_free_flow_00108" type="car" route="route_sa_to_eb" depart="169.38" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00021" type="motorcycle" route="route_eb_through" depart="184.49" departSpeed="max" departLane="best" departPosLat="0.11"/>
+    <vehicle id="veh_free_flow_00074" type="truck" route="route_sb_b" depart="189.57" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00102" type="motorcycle" route="route_na_to_eb" depart="192.11" departSpeed="max" departLane="best" departPosLat="0.48"/>
+    <vehicle id="veh_free_flow_00119" type="motorcycle" route="route_nc_to_eb" depart="192.77" departSpeed="max" departLane="best" departPosLat="0.59"/>
+    <vehicle id="veh_free_flow_00022" type="car" route="route_eb_through" depart="193.49" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00094" type="motorcycle" route="route_nb_d" depart="199.25" departSpeed="max" departLane="best" departPosLat="0.63"/>
+    <vehicle id="veh_free_flow_00123" type="motorcycle" route="route_sc_to_eb" depart="201.07" departSpeed="max" departLane="best" departPosLat="0.88"/>
+    <vehicle id="veh_free_flow_00091" type="car" route="route_sb_d" depart="202.50" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00115" type="car" route="route_sb_to_eb" depart="203.98" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00054" type="motorcycle" route="route_wb_through" depart="204.02" departSpeed="max" departLane="best" departPosLat="-0.12"/>
+    <vehicle id="veh_free_flow_00120" type="motorcycle" route="route_nc_to_eb" depart="204.85" departSpeed="max" departLane="best" departPosLat="-0.61"/>
+    <vehicle id="veh_free_flow_00023" type="motorcycle" route="route_eb_through" depart="205.15" departSpeed="max" departLane="best" departPosLat="-0.94"/>
+    <vehicle id="veh_free_flow_00124" type="bus" route="route_sc_to_eb" depart="206.80" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00024" type="motorcycle" route="route_eb_through" depart="208.11" departSpeed="max" departLane="best" departPosLat="-0.58"/>
+    <vehicle id="veh_free_flow_00055" type="motorcycle" route="route_wb_through" depart="209.48" departSpeed="max" departLane="best" departPosLat="-0.55"/>
+    <vehicle id="veh_free_flow_00075" type="car" route="route_sb_b" depart="211.99" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00056" type="motorcycle" route="route_wb_through" depart="212.57" departSpeed="max" departLane="best" departPosLat="-0.54"/>
+    <vehicle id="veh_free_flow_00057" type="motorcycle" route="route_wb_through" depart="214.44" departSpeed="max" departLane="best" departPosLat="0.26"/>
+    <vehicle id="veh_free_flow_00125" type="bus" route="route_sc_to_eb" depart="216.00" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00058" type="suv" route="route_wb_through" depart="216.38" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00121" type="car" route="route_nc_to_eb" depart="223.46" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00095" type="motorcycle" route="route_nb_d" depart="225.14" departSpeed="max" departLane="best" departPosLat="0.88"/>
+    <vehicle id="veh_free_flow_00103" type="motorcycle" route="route_na_to_eb" depart="229.64" departSpeed="max" departLane="best" departPosLat="-0.98"/>
+    <vehicle id="veh_free_flow_00025" type="car" route="route_eb_through" depart="230.43" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00126" type="motorcycle" route="route_sc_to_eb" depart="230.43" departSpeed="max" departLane="best" departPosLat="-0.13"/>
+    <vehicle id="veh_free_flow_00059" type="motorcycle" route="route_wb_through" depart="231.09" departSpeed="max" departLane="best" departPosLat="-0.52"/>
+    <vehicle id="veh_free_flow_00104" type="car" route="route_na_to_eb" depart="233.30" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00026" type="motorcycle" route="route_eb_through" depart="233.37" departSpeed="max" departLane="best" departPosLat="-0.21"/>
+    <vehicle id="veh_free_flow_00096" type="motorcycle" route="route_nb_d" depart="235.63" departSpeed="max" departLane="best" departPosLat="-0.79"/>
+    <vehicle id="veh_free_flow_00060" type="motorcycle" route="route_wb_through" depart="239.37" departSpeed="max" departLane="best" departPosLat="-0.74"/>
+    <vehicle id="veh_free_flow_00069" type="motorcycle" route="route_sb_a" depart="247.48" departSpeed="max" departLane="best" departPosLat="0.72"/>
+    <vehicle id="veh_free_flow_00027" type="motorcycle" route="route_eb_through" depart="252.55" departSpeed="max" departLane="best" departPosLat="-0.47"/>
+    <vehicle id="veh_free_flow_00028" type="motorcycle" route="route_eb_through" depart="254.76" departSpeed="max" departLane="best" departPosLat="-0.47"/>
+    <vehicle id="veh_free_flow_00076" type="motorcycle" route="route_sb_b" depart="256.16" departSpeed="max" departLane="best" departPosLat="0.91"/>
+    <vehicle id="veh_free_flow_00061" type="motorcycle" route="route_wb_through" depart="259.90" departSpeed="max" departLane="best" departPosLat="-0.05"/>
+    <vehicle id="veh_free_flow_00029" type="car" route="route_eb_through" depart="261.61" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00030" type="motorcycle" route="route_eb_through" depart="265.58" departSpeed="max" departLane="best" departPosLat="1.00"/>
+    <vehicle id="veh_free_flow_00031" type="motorcycle" route="route_eb_through" depart="271.13" departSpeed="max" departLane="best" departPosLat="-0.91"/>
+    <vehicle id="veh_free_flow_00062" type="car" route="route_wb_through" depart="271.40" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00032" type="motorcycle" route="route_eb_through" depart="272.04" departSpeed="max" departLane="best" departPosLat="0.58"/>
+    <vehicle id="veh_free_flow_00063" type="motorcycle" route="route_wb_through" depart="272.99" departSpeed="max" departLane="best" departPosLat="-0.14"/>
+    <vehicle id="veh_free_flow_00033" type="motorcycle" route="route_eb_through" depart="276.31" departSpeed="max" departLane="best" departPosLat="-0.24"/>
+    <vehicle id="veh_free_flow_00109" type="motorcycle" route="route_sa_to_eb" depart="276.58" departSpeed="max" departLane="best" departPosLat="-0.50"/>
+    <vehicle id="veh_free_flow_00064" type="motorcycle" route="route_wb_through" depart="277.11" departSpeed="max" departLane="best" departPosLat="0.46"/>
+    <vehicle id="veh_free_flow_00086" type="motorcycle" route="route_sb_c" depart="278.17" departSpeed="max" departLane="best" departPosLat="0.43"/>
+    <vehicle id="veh_free_flow_00110" type="car" route="route_sa_to_eb" depart="281.65" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00065" type="truck" route="route_wb_through" depart="285.49" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00066" type="motorcycle" route="route_wb_through" depart="286.27" departSpeed="max" departLane="best" departPosLat="-0.32"/>
+    <vehicle id="veh_free_flow_00081" type="motorcycle" route="route_nb_b" depart="291.28" departSpeed="max" departLane="best" departPosLat="0.92"/>
+    <vehicle id="veh_free_flow_00127" type="motorcycle" route="route_sc_to_eb" depart="291.42" departSpeed="max" departLane="best" departPosLat="0.21"/>
+    <vehicle id="veh_free_flow_00097" type="motorcycle" route="route_nb_d" depart="294.25" departSpeed="max" departLane="best" departPosLat="0.21"/>
+    <vehicle id="veh_free_flow_00116" type="car" route="route_sb_to_eb" depart="297.33" departSpeed="max" departLane="best" departPosLat="0.0"/>
+    <vehicle id="veh_free_flow_00082" type="motorcycle" route="route_nb_b" depart="297.36" departSpeed="max" departLane="best" departPosLat="0.19"/>
+    <vehicle id="veh_free_flow_00087" type="motorcycle" route="route_sb_c" depart="298.01" departSpeed="max" departLane="best" departPosLat="0.34"/>
+</routes>
