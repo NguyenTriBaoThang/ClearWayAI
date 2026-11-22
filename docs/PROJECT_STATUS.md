@@ -38,7 +38,7 @@
 | **T13** | Vẽ hành lang động, mũi tên giao thông và HUD trực tiếp trên 3D | P0 | T11, T12 | **VERIFIED** | CorridorOverlay3D (4 modes PLANNED/ACTIVE/COMPLETED/BLOCKED, animated chevrons, AMB-339 3D callout, A–D node chain inspector), FlowArrows3D (approach arrows, conflict zone box, queue hotspots, RSU footprints), pytest (48/48) |
 | **T14** | Panel trên trái: V2I/V2X Communication & Hardware Status | P0 | T06 | **VERIFIED** | V2XHardwarePanel, HardwareStatus contract, 4-node pipeline, device inspector, honest provenance gating, nominal/degraded/offline fallback, pytest (55/55) |
 | **T15** | Panel trên giữa: bảng pha đèn Red/Yellow/Green theo từng hướng | P0 | T06, T12 | **VERIFIED** | PhaseTimingPanel, SignalApproachTiming contract, 4-approach split table, mini signal lenses, live countdown, NEMA inspector drawer, AMB-339 pre-emption, pytest (62/62) |
-| **T16** | Panel trên phải: Adaptive Traffic Signal & Queue Chart | P0 | T06, T12, T15 | **PLANNED** | Scheduled |
+| **T16** | Panel trên phải: Adaptive Traffic Signal & Queue Chart | P0 | T06, T12, T15 | **VERIFIED** | AdaptiveSignalPanel, TrafficAnalytics contract, Queue-vs-Capacity vector chart, -19% Delay KPI, PPO diagnostics drawer, multi-mode policy switcher, pytest (69/69) |
 | **T17** | Panel dưới trái: IoT sensor list + mini city map tương tác | P0 | T06, T08–T09 | **PLANNED** | Scheduled |
 | **T18** | Panel dưới phải: traffic analytics, gauge và cảnh báo | P0 | T06, T16 | **PLANNED** | Scheduled |
 | **T19** | Chức năng điều hành tương tác: sim controls, nhiệm vụ và inspector | P0 | T06–T18 | **PLANNED** | Scheduled |
@@ -117,6 +117,6 @@
 ---
 
 ## 3. Current Sprint Focus
-- **Current Milestone:** TASK 01–15 Complete & Verified (Phase A: 4/6, Phase B: 11/16).
-- **Next Dependent Task:** TASK 16 — Panel trên phải: Adaptive Traffic Signal & Queue Chart.
+- **Current Milestone:** TASK 01–16 Complete & Verified (Phase A: 4/6, Phase B: 12/16).
+- **Next Dependent Task:** TASK 17 — Panel dưới trái: IoT sensor list + mini city map tương tác.
 

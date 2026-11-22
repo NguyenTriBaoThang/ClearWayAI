@@ -8,15 +8,15 @@
 
 ## 📊 Sprint Progress Overview
 - **Total Tasks:** 60
-- **Verified Complete:** 15 (T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15)
+- **Verified Complete:** 16 (T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15, T16)
 - **In Progress:** 0
-- **Planned:** 45
-- **Phase Completion:** Phase A (4/6 complete), Phase B (11/16 complete)
+- **Planned:** 44
+- **Phase Completion:** Phase A (4/6 complete), Phase B (12/16 complete)
 
 ```mermaid
 pie title Task Completion by Status
-    "VERIFIED" : 15
-    "PLANNED" : 45
+    "VERIFIED" : 16
+    "PLANNED" : 44
 ```
 
 ---
@@ -40,7 +40,7 @@ pie title Task Completion by Status
 | **T13** | Phase B | Vẽ hành lang động, mũi tên giao thông và HUD trực tiếp trên 3D | **P0** | T11, T12 | **VERIFIED** | CorridorOverlay3D (4 modes, animated chevrons, AMB-339 3D callout, A–D node chain inspector), FlowArrows3D (approach arrows, conflict zone box, queue hotspots, RSU footprints), pytest (48/48) |
 | **T14** | Phase B | Panel trên trái: V2I/V2X Communication & Hardware Status | **P0** | T06 | **VERIFIED** | V2XHardwarePanel, HardwareStatus contract, 4-node pipeline, device inspector, honest provenance gating, nominal/degraded/offline fallback, pytest (55/55) |
 | **T15** | Phase B | Panel trên giữa: bảng pha đèn Red/Yellow/Green theo từng hướng | **P0** | T06, T12 | **VERIFIED** | PhaseTimingPanel, SignalApproachTiming contract, 4-approach split table, mini signal lenses, live countdown, NEMA inspector drawer, AMB-339 pre-emption, pytest (62/62) |
-| **T16** | Phase B | Panel trên phải: Adaptive Traffic Signal & Queue Chart | **P0** | T06, T12, T15 | `PLANNED` | Recharts/ECharts queue-vs-capacity chart |
+| **T16** | Phase B | Panel trên phải: Adaptive Traffic Signal & Queue Chart | **P0** | T06, T12, T15 | **VERIFIED** | AdaptiveSignalPanel, TrafficAnalytics contract, Queue-vs-Capacity vector chart, -19% Delay KPI, PPO diagnostics drawer, multi-mode policy switcher, pytest (69/69) |
 | **T17** | Phase B | Panel dưới trái: IoT sensor list + mini city map tương tác | **P0** | T06, T08–T09 | `PLANNED` | Interactive mini vector map & sensor toggles |
 | **T18** | Phase B | Panel dưới phải: traffic analytics, gauge và cảnh báo | **P0** | T06, T16 | `PLANNED` | Volume chart, radial gauge, anomaly alerts |
 | **T19** | Phase B | Chức năng điều hành tương tác: sim controls, nhiệm vụ và inspector | **P0** | T06–T18 | `PLANNED` | Start, pause, step, scenario selector, mission drawer |
