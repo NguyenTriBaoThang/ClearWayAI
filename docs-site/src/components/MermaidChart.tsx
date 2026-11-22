@@ -27,3 +27,4 @@ export const MermaidChart: React.FC<MermaidChartProps> = ({ chart }) => {
     </div>
   );
 };
+

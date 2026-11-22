@@ -50,7 +50,9 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-code, pre, .font-mono {
+code,
+pre,
+.font-mono {
   font-family: 'JetBrains Mono', monospace;
 }
 
@@ -59,13 +61,16 @@ code, pre, .font-mono {
   width: 6px;
   height: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--bg-primary);
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--border-color);
   border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-cyan);
 }
@@ -135,7 +140,8 @@ code, pre, .font-mono {
   color: var(--text-secondary);
 }
 
-.doc-prose ul, .doc-prose ol {
+.doc-prose ul,
+.doc-prose ol {
   margin-bottom: 14px;
   padding-left: 24px;
   color: var(--text-secondary);
