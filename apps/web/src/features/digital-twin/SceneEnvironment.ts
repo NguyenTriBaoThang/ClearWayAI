@@ -2,12 +2,14 @@ import * as THREE from 'three';
 import { RoadNetworkMesh } from './RoadNetworkMesh';
 import { CityEnvironmentMesh } from './CityEnvironmentMesh';
 import { TrafficVehicleManager } from './TrafficVehicleManager';
+import { TrafficSignal3D } from './TrafficSignal3D';
 
 /**
  * SceneEnvironment manages lighting, cyber grid, junction pedestal,
  * 3D road network geometry (asphalt, lanes, crosswalks, sidewalks),
  * 3D urban context (cyber towers, hospital facility, streetlights, trees, RSUs),
  * 3D traffic fleet (motorcycles, cars, SUVs, buses, trucks, AMB-339 ambulance, fire engine),
+ * 3D traffic signal poles & heads (Red/Yellow/Green conflict-free), pedestrians,
  * cardinal markers, and visual corridor ribbons for ClearWayAI.
  */
 export class SceneEnvironment {
@@ -15,6 +17,7 @@ export class SceneEnvironment {
   public roadNetwork: RoadNetworkMesh;
   public cityEnvironment: CityEnvironmentMesh;
   public vehicleManager: TrafficVehicleManager;
+  public trafficSignals: TrafficSignal3D;
 
   public keyLight!: THREE.DirectionalLight;
   public fillLight!: THREE.DirectionalLight;
@@ -40,6 +43,10 @@ export class SceneEnvironment {
     // 3. 3D Mixed Traffic Fleet (Vietnamese Motorcycles, Cars, Buses, Trucks, AMB-339)
     this.vehicleManager = new TrafficVehicleManager();
     this.scene.add(this.vehicleManager.group);
+
+    // 4. 3D Traffic Signals & Pedestrians (Conflict-Free Multi-Phase Heads)
+    this.trafficSignals = new TrafficSignal3D();
+    this.scene.add(this.trafficSignals.group);
 
     this.setupCardinalMarkers();
     this.setupCorridorRibbon();
@@ -160,6 +167,14 @@ export class SceneEnvironment {
     // 3. Update 3D traffic vehicles (strobes & corridor traversal)
     if (this.vehicleManager) {
       this.vehicleManager.update(timeMs);
+    }
+
+    // 4. Update 3D traffic signals and pedestrians
+    if (this.trafficSignals) {
+      this.trafficSignals.update(timeMs);
+    }
+
+    if (this.vehicleManager) {
       const amb = this.vehicleManager.vehicles.get('AMB-339');
       if (amb) {
         return amb.bundle.group.position;
@@ -178,6 +193,9 @@ export class SceneEnvironment {
     }
     if (this.vehicleManager) {
       this.vehicleManager.dispose();
+    }
+    if (this.trafficSignals) {
+      this.trafficSignals.dispose();
     }
     this.disposables.forEach((item) => {
       try {

@@ -20,6 +20,7 @@ import { StatusPill } from '../../components/StatusPill';
 import { SceneEnvironment } from './SceneEnvironment';
 import { SceneController, CameraPresetType, ProjectionMode, CameraStateMetrics } from './SceneController';
 import { VehicleSnapshot } from './VehicleTrajectorySource';
+import { InspectedSignalPole } from './TrafficSignal3D';
 
 interface DigitalTwinCanvasProps {
   intersectionId?: string;
@@ -48,10 +49,19 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
   const [showLayersMenu, setShowLayersMenu] = useState<boolean>(false);
   const [showMetrics, setShowMetrics] = useState<boolean>(true);
   const [selectedVehicle, setSelectedVehicle] = useState<VehicleSnapshot | null>(null);
+  const [selectedPole, setSelectedPole] = useState<InspectedSignalPole | null>(null);
+  const [phaseSnapshot, setPhaseSnapshot] = useState<{ ew: string; ns: string; ewSec: number; nsSec: number }>({
+    ew: 'green',
+    ns: 'red',
+    ewSec: 25,
+    nsSec: 30,
+  });
 
   const [layers, setLayers] = useState({
     vehicles: true,
     vehicleBadges: true,
+    trafficSignals: true,
+    pedestrians: true,
     roadMarkings: true,
     crosswalks: true,
     sidewalks: true,
@@ -144,6 +154,14 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
         setDrawCalls(renderer.info.render.calls);
         setTriangles(renderer.info.render.triangles);
         setCamMetrics(controller.getMetrics());
+
+        const sigSnap = environment.trafficSignals.controller.getSnapshotAtTime(now);
+        setPhaseSnapshot({
+          ew: sigSnap.eastWest.vehicularPhase,
+          ns: sigSnap.northSouth.vehicularPhase,
+          ewSec: sigSnap.eastWest.countdownSec,
+          nsSec: sigSnap.northSouth.countdownSec,
+        });
       }
     };
 
@@ -174,7 +192,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
     };
   }, []);
 
-  // Click Raycaster for Vehicle Inspection
+  // Click Raycaster for Vehicle & Signal Pole Inspection
   const handleCanvasClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!mountRef.current || !controllerRef.current || !environmentRef.current) return;
 
@@ -187,20 +205,38 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
     const raycaster = new THREE.Raycaster();
     raycaster.setFromCamera(mouse, controllerRef.current.activeCamera);
 
-    const intersects = raycaster.intersectObjects(
+    // 1. Raycast Vehicles
+    const vehicleIntersects = raycaster.intersectObjects(
       environmentRef.current.vehicleManager.group.children,
       true
     );
-
-    const hit = environmentRef.current.vehicleManager.findVehicleByIntersection(intersects);
-    if (hit) {
-      setSelectedVehicle(hit);
+    const vehicleHit = environmentRef.current.vehicleManager.findVehicleByIntersection(vehicleIntersects);
+    if (vehicleHit) {
+      setSelectedVehicle(vehicleHit);
+      setSelectedPole(null);
       if (onSelectEntity) {
-        onSelectEntity(hit.id, hit.vehicle_class);
+        onSelectEntity(vehicleHit.id, vehicleHit.vehicle_class);
       }
-    } else {
-      setSelectedVehicle(null);
+      return;
     }
+
+    // 2. Raycast Signal Poles
+    const poleIntersects = raycaster.intersectObjects(
+      environmentRef.current.trafficSignals.signalsGroup.children,
+      true
+    );
+    const poleHit = environmentRef.current.trafficSignals.findSignalPoleByIntersection(poleIntersects, performance.now());
+    if (poleHit) {
+      setSelectedPole(poleHit);
+      setSelectedVehicle(null);
+      if (onSelectEntity) {
+        onSelectEntity(poleHit.poleId, 'TRAFFIC_SIGNAL_POLE');
+      }
+      return;
+    }
+
+    setSelectedVehicle(null);
+    setSelectedPole(null);
   };
 
   // UI Handlers for Preset and Projection switching
@@ -243,6 +279,10 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
         environmentRef.current.vehicleManager.setVehiclesVisibility(nextState);
       } else if (layerKey === 'vehicleBadges') {
         environmentRef.current.vehicleManager.setShowBadges(nextState);
+      } else if (layerKey === 'trafficSignals') {
+        environmentRef.current.trafficSignals.setSignalsVisibility(nextState);
+      } else if (layerKey === 'pedestrians') {
+        environmentRef.current.trafficSignals.setPedestriansVisibility(nextState);
       } else if (layerKey === 'roadMarkings') {
         environmentRef.current.roadNetwork.setMarkingsVisibility(nextState);
       } else if (layerKey === 'crosswalks') {
@@ -313,7 +353,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
               <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#f1f5f9', letterSpacing: '0.04em' }}>
                 3D DIGITAL TWIN VIEWPORT
               </span>
-              <StatusPill label="VEHICLE MOTION ACTIVE" variant="cyan" size="xs" pulse />
+              <StatusPill label="SIGNALS & TRAFFIC ACTIVE" variant="cyan" size="xs" pulse />
             </div>
 
             <div style={{ fontSize: '0.70rem', color: '#94a3b8' }}>
@@ -334,6 +374,30 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
               <span>{drawCalls} calls</span>
               <span>|</span>
               <span>{triangles} tris</span>
+            </div>
+
+            {/* Realtime Signal Phase Mini Badge */}
+            <div
+              style={{
+                marginTop: '2px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                fontSize: '0.64rem',
+                backgroundColor: 'rgba(15, 23, 42, 0.7)',
+                padding: '2px 8px',
+                borderRadius: '4px',
+                border: '1px solid #1b2f5b',
+              }}
+            >
+              <span style={{ color: '#94a3b8' }}>Signal Phase:</span>
+              <span style={{ color: phaseSnapshot.ew === 'green' ? '#06d6a0' : phaseSnapshot.ew === 'yellow' ? '#ffd166' : '#ef4444', fontWeight: 600 }}>
+                5th Ave (EW): {phaseSnapshot.ew.toUpperCase()} {phaseSnapshot.ewSec}s
+              </span>
+              <span style={{ color: '#334155' }}>|</span>
+              <span style={{ color: phaseSnapshot.ns === 'green' ? '#06d6a0' : phaseSnapshot.ns === 'yellow' ? '#ffd166' : '#ef4444', fontWeight: 600 }}>
+                Oak St (NS): {phaseSnapshot.ns.toUpperCase()} {phaseSnapshot.nsSec}s
+              </span>
             </div>
 
             {/* Selected Vehicle Inspector Card */}
@@ -446,6 +510,86 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                     <Crosshair size={10} />
                     <span>Follow Cam</span>
                   </button>
+                </div>
+              </div>
+            )}
+
+            {/* Selected Signal Pole Inspector Card */}
+            {selectedPole && (
+              <div
+                style={{
+                  marginTop: '6px',
+                  backgroundColor: 'rgba(10, 25, 47, 0.95)',
+                  border: '1px solid #ffd166',
+                  borderRadius: '6px',
+                  padding: '6px 10px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '4px',
+                  fontSize: '0.68rem',
+                  color: '#e2e8f0',
+                  boxShadow: '0 4px 16px rgba(255, 209, 102, 0.25)',
+                  minWidth: '220px',
+                }}
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <ShieldCheck size={13} color="#ffd166" />
+                    <span style={{ color: '#94a3b8', fontSize: '0.62rem' }}>Signal Pole:</span>
+                    <span style={{ fontWeight: 800, color: '#ffd166', fontFamily: 'monospace' }}>
+                      {selectedPole.poleId}
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => setSelectedPole(null)}
+                    style={{ background: 'none', border: 'none', color: '#64748b', cursor: 'pointer', padding: 0 }}
+                  >
+                    <X size={12} />
+                  </button>
+                </div>
+
+                <div style={{ fontSize: '0.64rem', color: '#94a3b8' }}>
+                  Approach: <span style={{ color: '#00e5ff' }}>{selectedPole.approachName}</span>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4px', fontSize: '0.64rem' }}>
+                  <div>
+                    <span style={{ color: '#64748b' }}>Vehicular: </span>
+                    <span
+                      style={{
+                        color:
+                          selectedPole.vehicularPhase === 'green'
+                            ? '#06d6a0'
+                            : selectedPole.vehicularPhase === 'yellow'
+                            ? '#ffd166'
+                            : '#ef4444',
+                        fontWeight: 700,
+                        textTransform: 'uppercase',
+                      }}
+                    >
+                      ● {selectedPole.vehicularPhase} ({selectedPole.countdownSec}s)
+                    </span>
+                  </div>
+                  <div>
+                    <span style={{ color: '#64748b' }}>Crosswalk: </span>
+                    <span
+                      style={{
+                        color: selectedPole.pedestrianPhase === 'WALK' ? '#06d6a0' : '#ef4444',
+                        fontWeight: 600,
+                      }}
+                    >
+                      {selectedPole.pedestrianPhase}
+                    </span>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '4px', borderTop: '1px solid #1e293b', paddingTop: '4px' }}>
+                  <span style={{ fontSize: '0.60rem', color: '#06d6a0' }}>
+                    ✓ {selectedPole.conflictFreeStatus}
+                  </span>
+                  <span style={{ fontSize: '0.60rem', color: '#64748b' }}>
+                    Src: <span style={{ color: '#38bdf8' }}>{selectedPole.provenance}</span>
+                  </span>
                 </div>
               </div>
             )}
@@ -670,6 +814,26 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                     {layers.vehicleBadges && <Check size={10} color="#00e5ff" />}
                   </div>
                   <span>Vehicle Badges / Speeds</span>
+                </label>
+
+                <label
+                  onClick={() => handleToggleLayer('trafficSignals')}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', color: layers.trafficSignals ? '#00e5ff' : '#64748b' }}
+                >
+                  <div style={{ width: '12px', height: '12px', border: '1px solid #1b2f5b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {layers.trafficSignals && <Check size={10} color="#00e5ff" />}
+                  </div>
+                  <span>Traffic Signal Poles</span>
+                </label>
+
+                <label
+                  onClick={() => handleToggleLayer('pedestrians')}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', color: layers.pedestrians ? '#00e5ff' : '#64748b' }}
+                >
+                  <div style={{ width: '12px', height: '12px', border: '1px solid #1b2f5b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {layers.pedestrians && <Check size={10} color="#00e5ff" />}
+                  </div>
+                  <span>Pedestrians Crossing</span>
                 </label>
 
                 <label
