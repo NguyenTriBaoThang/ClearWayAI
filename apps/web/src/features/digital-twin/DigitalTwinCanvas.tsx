@@ -11,6 +11,7 @@ import {
   Video,
   Eye,
   Check,
+  Car,
 } from 'lucide-react';
 import { StatusPill } from '../../components/StatusPill';
 import { SceneEnvironment } from './SceneEnvironment';
@@ -24,6 +25,7 @@ interface DigitalTwinCanvasProps {
 
 export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
   intersectionId = 'INT-0457',
+  onSelectEntity,
   style,
 }) => {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -33,16 +35,18 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
   const [webglInitialized, setWebglInitialized] = useState<boolean>(false);
   const [fps, setFps] = useState<number>(60);
   const [renderMs, setRenderMs] = useState<number>(2.4);
-  const [drawCalls, setDrawCalls] = useState<number>(28);
-  const [triangles, setTriangles] = useState<number>(3820);
+  const [drawCalls, setDrawCalls] = useState<number>(32);
+  const [triangles, setTriangles] = useState<number>(5480);
 
   const [cameraPreset, setCameraPreset] = useState<CameraPresetType>('iso');
   const [projectionMode, setProjectionMode] = useState<ProjectionMode>('perspective');
   const [autoRotate, setAutoRotate] = useState<boolean>(false);
   const [showLayersMenu, setShowLayersMenu] = useState<boolean>(false);
   const [showMetrics, setShowMetrics] = useState<boolean>(true);
+  const [selectedVehicle, setSelectedVehicle] = useState<{ id: string; vehicleClass: string; speed: number } | null>(null);
 
   const [layers, setLayers] = useState({
+    vehicles: true,
     roadMarkings: true,
     crosswalks: true,
     sidewalks: true,
@@ -92,7 +96,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
       return;
     }
 
-    // 3. Scene Environment (Lighting, Grids, Road Network, City Buildings, Hospital, RSUs)
+    // 3. Scene Environment (Lighting, Grids, Road Network, City Buildings, Mixed Traffic Fleet)
     const environment = new SceneEnvironment(scene);
     environmentRef.current = environment;
 
@@ -119,10 +123,10 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
         lastTime = now;
       }
 
-      // Update environment animation (corridor pulsing, hospital beacon, waypoint marker motion)
+      // Update environment animation (vehicles, strobe lightbars, ambulance corridor motion)
       const waypointPos = environment.update(now);
 
-      // Update camera controller (interpolation, OrbitControls damping, chase)
+      // Update camera controller (interpolation, OrbitControls damping, chase cam)
       controller.update(waypointPos);
 
       // Render Active Camera View
@@ -165,6 +169,39 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
     };
   }, []);
 
+  // Click Raycaster for Vehicle Inspection
+  const handleCanvasClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!mountRef.current || !controllerRef.current || !environmentRef.current) return;
+
+    const rect = mountRef.current.getBoundingClientRect();
+    const mouse = new THREE.Vector2(
+      ((e.clientX - rect.left) / rect.width) * 2 - 1,
+      -((e.clientY - rect.top) / rect.height) * 2 + 1
+    );
+
+    const raycaster = new THREE.Raycaster();
+    raycaster.setFromCamera(mouse, controllerRef.current.activeCamera);
+
+    const intersects = raycaster.intersectObjects(
+      environmentRef.current.vehicleManager.group.children,
+      true
+    );
+
+    const hit = environmentRef.current.vehicleManager.findVehicleByIntersection(intersects);
+    if (hit) {
+      setSelectedVehicle({
+        id: hit.id,
+        vehicleClass: hit.vehicle_class,
+        speed: hit.speed_kmh,
+      });
+      if (onSelectEntity) {
+        onSelectEntity(hit.id, hit.vehicle_class);
+      }
+    } else {
+      setSelectedVehicle(null);
+    }
+  };
+
   // UI Handlers for Preset and Projection switching
   const handleSelectPreset = (preset: CameraPresetType) => {
     setCameraPreset(preset);
@@ -201,7 +238,9 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
     const nextState = !layers[layerKey];
     setLayers((prev) => ({ ...prev, [layerKey]: nextState }));
     if (environmentRef.current) {
-      if (layerKey === 'roadMarkings') {
+      if (layerKey === 'vehicles') {
+        environmentRef.current.vehicleManager.setVehiclesVisibility(nextState);
+      } else if (layerKey === 'roadMarkings') {
         environmentRef.current.roadNetwork.setMarkingsVisibility(nextState);
       } else if (layerKey === 'crosswalks') {
         environmentRef.current.roadNetwork.setCrosswalksVisibility(nextState);
@@ -219,6 +258,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
 
   return (
     <div
+      onClick={handleCanvasClick}
       style={{
         position: 'relative',
         width: '100%',
@@ -229,6 +269,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
         borderRadius: '8px',
         border: '1px solid #1b2f5b',
         boxShadow: '0 4px 20px rgba(0, 0, 0, 0.45)',
+        cursor: 'default',
         ...style,
       }}
     >
@@ -269,7 +310,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
               <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#f1f5f9', letterSpacing: '0.04em' }}>
                 3D DIGITAL TWIN VIEWPORT
               </span>
-              <StatusPill label="CITY TWIN ACTIVE" variant="cyan" size="xs" pulse />
+              <StatusPill label="VEHICLE FLEET ACTIVE" variant="cyan" size="xs" pulse />
             </div>
 
             <div style={{ fontSize: '0.70rem', color: '#94a3b8' }}>
@@ -277,7 +318,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
               <span style={{ color: '#00e5ff', fontFamily: 'monospace', fontWeight: 600 }}>
                 {intersectionId}
               </span>{' '}
-              (Oak St. & 5th Ave — Urban Medical & Tech District)
+              (Oak St. & 5th Ave — Mixed Traffic & Priority EV)
             </div>
 
             <div style={{ fontSize: '0.66rem', color: '#64748b', display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -291,6 +332,29 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
               <span>|</span>
               <span>{triangles} tris</span>
             </div>
+
+            {/* Selected Vehicle Inspector Chip */}
+            {selectedVehicle && (
+              <div
+                style={{
+                  marginTop: '4px',
+                  backgroundColor: 'rgba(0, 229, 255, 0.15)',
+                  border: '1px solid rgba(0, 229, 255, 0.4)',
+                  borderRadius: '4px',
+                  padding: '2px 6px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  fontSize: '0.65rem',
+                  color: '#00e5ff',
+                }}
+              >
+                <Car size={11} />
+                <span>
+                  Inspector: <strong>{selectedVehicle.id}</strong> ({selectedVehicle.vehicleClass}) • {selectedVehicle.speed} km/h
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Top-Right: Camera Presets & Interaction Controls */}
@@ -493,6 +557,16 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                 <div style={{ color: '#94a3b8', fontWeight: 600, borderBottom: '1px solid #1b2f5b', paddingBottom: '3px' }}>
                   Scene Layers
                 </div>
+
+                <label
+                  onClick={() => handleToggleLayer('vehicles')}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', color: layers.vehicles ? '#00e5ff' : '#64748b' }}
+                >
+                  <div style={{ width: '12px', height: '12px', border: '1px solid #1b2f5b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {layers.vehicles && <Check size={10} color="#00e5ff" />}
+                  </div>
+                  <span>3D Vehicle Fleet</span>
+                </label>
 
                 <label
                   onClick={() => handleToggleLayer('buildings')}

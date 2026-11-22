@@ -22,7 +22,8 @@
 
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@clearway/shared": ["../../packages/shared/src/index.ts"]
     }
   },
   "include": ["src"],

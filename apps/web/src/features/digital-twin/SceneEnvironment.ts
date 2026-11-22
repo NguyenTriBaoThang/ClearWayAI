@@ -1,17 +1,20 @@
 import * as THREE from 'three';
 import { RoadNetworkMesh } from './RoadNetworkMesh';
 import { CityEnvironmentMesh } from './CityEnvironmentMesh';
+import { TrafficVehicleManager } from './TrafficVehicleManager';
 
 /**
  * SceneEnvironment manages lighting, cyber grid, junction pedestal,
  * 3D road network geometry (asphalt, lanes, crosswalks, sidewalks),
  * 3D urban context (cyber towers, hospital facility, streetlights, trees, RSUs),
+ * 3D traffic fleet (motorcycles, cars, SUVs, buses, trucks, AMB-339 ambulance, fire engine),
  * cardinal markers, and visual corridor ribbons for ClearWayAI.
  */
 export class SceneEnvironment {
   public scene: THREE.Scene;
   public roadNetwork: RoadNetworkMesh;
   public cityEnvironment: CityEnvironmentMesh;
+  public vehicleManager: TrafficVehicleManager;
 
   public keyLight!: THREE.DirectionalLight;
   public fillLight!: THREE.DirectionalLight;
@@ -20,7 +23,6 @@ export class SceneEnvironment {
 
   private disposables: { dispose: () => void }[] = [];
   private corridorMaterial?: THREE.MeshBasicMaterial;
-  private waypointsMesh?: THREE.Mesh;
 
   constructor(scene: THREE.Scene) {
     this.scene = scene;
@@ -35,9 +37,12 @@ export class SceneEnvironment {
     this.cityEnvironment = new CityEnvironmentMesh();
     this.scene.add(this.cityEnvironment.group);
 
+    // 3. 3D Mixed Traffic Fleet (Vietnamese Motorcycles, Cars, Buses, Trucks, AMB-339)
+    this.vehicleManager = new TrafficVehicleManager();
+    this.scene.add(this.vehicleManager.group);
+
     this.setupCardinalMarkers();
     this.setupCorridorRibbon();
-    this.setupWaypointMarker();
   }
 
   private setupLighting(): void {
@@ -138,22 +143,6 @@ export class SceneEnvironment {
     this.disposables.push(lineGeo, lineMat);
   }
 
-  private setupWaypointMarker(): void {
-    // Dynamic vehicle waypoint marker (represents emergency ambulance AMB-339)
-    const markerGeo = new THREE.BoxGeometry(4.2, 1.6, 2.0);
-    const markerMat = new THREE.MeshStandardMaterial({
-      color: 0xef476f,
-      emissive: 0xef476f,
-      emissiveIntensity: 0.6,
-      roughness: 0.3,
-      metalness: 0.8,
-    });
-    this.waypointsMesh = new THREE.Mesh(markerGeo, markerMat);
-    this.waypointsMesh.position.set(-18, 0.8, 1.75);
-    this.scene.add(this.waypointsMesh);
-    this.disposables.push(markerGeo, markerMat);
-  }
-
   /**
    * Update dynamic scene effects on animation frame
    */
@@ -168,11 +157,13 @@ export class SceneEnvironment {
       this.cityEnvironment.update(timeMs);
     }
 
-    // 3. Animate ambulance waypoint traversing East-West along corridor (-35m to +35m)
-    if (this.waypointsMesh) {
-      const progress = ((timeMs * 0.006) % 70) - 35;
-      this.waypointsMesh.position.x = progress;
-      return this.waypointsMesh.position;
+    // 3. Update 3D traffic vehicles (strobes & corridor traversal)
+    if (this.vehicleManager) {
+      this.vehicleManager.update(timeMs);
+      const amb = this.vehicleManager.vehicles.get('AMB-339');
+      if (amb) {
+        return amb.bundle.group.position;
+      }
     }
 
     return new THREE.Vector3(0, 0, 0);
@@ -184,6 +175,9 @@ export class SceneEnvironment {
     }
     if (this.cityEnvironment) {
       this.cityEnvironment.dispose();
+    }
+    if (this.vehicleManager) {
+      this.vehicleManager.dispose();
     }
     this.disposables.forEach((item) => {
       try {
