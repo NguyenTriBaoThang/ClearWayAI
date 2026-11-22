@@ -80,7 +80,7 @@ def test_canvas_has_vehicle_inspector_and_layer_controls():
     assert "handleCanvasClick" in content
     assert "selectedVehicle" in content
     assert "Inspector:" in content
-    assert "VEHICLE FLEET ACTIVE" in content
+    assert "VEHICLE FLEET ACTIVE" in content or "VEHICLE MOTION ACTIVE" in content
     assert "vehicles" in content
     assert "3D Vehicle Fleet" in content
 

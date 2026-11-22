@@ -8,15 +8,15 @@
 
 ## 📊 Sprint Progress Overview
 - **Total Tasks:** 60
-- **Verified Complete:** 10 (T01, T02, T03, T04, T05, T06, T07, T08, T09, T10)
+- **Verified Complete:** 11 (T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11)
 - **In Progress:** 0
-- **Planned:** 50
-- **Phase Completion:** Phase A (4/6 complete), Phase B (6/16 complete)
+- **Planned:** 49
+- **Phase Completion:** Phase A (4/6 complete), Phase B (7/16 complete)
 
 ```mermaid
 pie title Task Completion by Status
-    "VERIFIED" : 10
-    "PLANNED" : 50
+    "VERIFIED" : 11
+    "PLANNED" : 49
 ```
 
 ---
@@ -35,7 +35,7 @@ pie title Task Completion by Status
 | **T08** | Phase B | Dựng đường giao lộ 3D: mặt đường, làn, vạch kẻ, crosswalk | **P0** | T07 | **VERIFIED** | RoadNetworkMesh, 4 orthogonal approaches (14m cross), zebra crosswalks (10 stripes/arm), stop lines, double yellow dividers, directional arrows, pytest (23/23) |
 | **T09** | Phase B | Dựng bối cảnh thành phố 3D chi tiết như ảnh | **P0** | T07, T08 | **VERIFIED** | CityEnvironmentMesh, 4 quadrant towers, Metropolitan Hospital with rooftop helipad & medical beacon, streetlights, low-poly trees, 4 V2X RSU nodes, pytest (28/28) |
 | **T10** | Phase B | Bộ tài sản 3D phương tiện Việt Nam và xe ưu tiên | **P0** | T07–T09 | **VERIFIED** | VehicleAssetFactory (7 classes), TrafficVehicleManager, raycast vehicle inspector, pytest (33/33) |
-| **T11** | Phase B | Chuyển động xe 3D theo lane graph và snapshot có ID | **P0** | T08–T10 | `PLANNED` | Vehicle motion interpolation & inspector |
+| **T11** | Phase B | Chuyển động xe 3D theo lane graph và snapshot có ID | **P0** | T08–T10 | **VERIFIED** | VehicleTrajectorySource, VehicleSnapshotFixture (42 deterministic vehicles), VehicleMotionSystem (anti-teleport, STALE detector, 3D speed badges), pytest (38/38) |
 | **T12** | Phase B | Đèn tín hiệu 3D, người đi bộ và logic chuyển pha trực quan | **P0** | T08–T11 | `PLANNED` | Signal poles, emissive heads, conflict-free transitions |
 | **T13** | Phase B | Vẽ hành lang động, mũi tên giao thông và HUD trực tiếp trên 3D | **P0** | T11, T12 | `PLANNED` | Corridor ribbon overlays, flow arrows, speed badges |
 | **T14** | Phase B | Panel trên trái: V2I/V2X Communication & Hardware Status | **P0** | T06 | `PLANNED` | HardwareStatus contract & telemetry cards |

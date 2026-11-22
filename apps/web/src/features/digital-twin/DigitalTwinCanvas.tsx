@@ -12,10 +12,14 @@ import {
   Eye,
   Check,
   Car,
+  Crosshair,
+  Activity,
+  X,
 } from 'lucide-react';
 import { StatusPill } from '../../components/StatusPill';
 import { SceneEnvironment } from './SceneEnvironment';
 import { SceneController, CameraPresetType, ProjectionMode, CameraStateMetrics } from './SceneController';
+import { VehicleSnapshot } from './VehicleTrajectorySource';
 
 interface DigitalTwinCanvasProps {
   intersectionId?: string;
@@ -43,10 +47,11 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
   const [autoRotate, setAutoRotate] = useState<boolean>(false);
   const [showLayersMenu, setShowLayersMenu] = useState<boolean>(false);
   const [showMetrics, setShowMetrics] = useState<boolean>(true);
-  const [selectedVehicle, setSelectedVehicle] = useState<{ id: string; vehicleClass: string; speed: number } | null>(null);
+  const [selectedVehicle, setSelectedVehicle] = useState<VehicleSnapshot | null>(null);
 
   const [layers, setLayers] = useState({
     vehicles: true,
+    vehicleBadges: true,
     roadMarkings: true,
     crosswalks: true,
     sidewalks: true,
@@ -189,11 +194,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
 
     const hit = environmentRef.current.vehicleManager.findVehicleByIntersection(intersects);
     if (hit) {
-      setSelectedVehicle({
-        id: hit.id,
-        vehicleClass: hit.vehicle_class,
-        speed: hit.speed_kmh,
-      });
+      setSelectedVehicle(hit);
       if (onSelectEntity) {
         onSelectEntity(hit.id, hit.vehicle_class);
       }
@@ -240,6 +241,8 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
     if (environmentRef.current) {
       if (layerKey === 'vehicles') {
         environmentRef.current.vehicleManager.setVehiclesVisibility(nextState);
+      } else if (layerKey === 'vehicleBadges') {
+        environmentRef.current.vehicleManager.setShowBadges(nextState);
       } else if (layerKey === 'roadMarkings') {
         environmentRef.current.roadNetwork.setMarkingsVisibility(nextState);
       } else if (layerKey === 'crosswalks') {
@@ -310,7 +313,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
               <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#f1f5f9', letterSpacing: '0.04em' }}>
                 3D DIGITAL TWIN VIEWPORT
               </span>
-              <StatusPill label="VEHICLE FLEET ACTIVE" variant="cyan" size="xs" pulse />
+              <StatusPill label="VEHICLE MOTION ACTIVE" variant="cyan" size="xs" pulse />
             </div>
 
             <div style={{ fontSize: '0.70rem', color: '#94a3b8' }}>
@@ -333,26 +336,117 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
               <span>{triangles} tris</span>
             </div>
 
-            {/* Selected Vehicle Inspector Chip */}
+            {/* Selected Vehicle Inspector Card */}
             {selectedVehicle && (
               <div
                 style={{
-                  marginTop: '4px',
-                  backgroundColor: 'rgba(0, 229, 255, 0.15)',
-                  border: '1px solid rgba(0, 229, 255, 0.4)',
-                  borderRadius: '4px',
-                  padding: '2px 6px',
+                  marginTop: '6px',
+                  backgroundColor: 'rgba(10, 25, 47, 0.95)',
+                  border: '1px solid #00e5ff',
+                  borderRadius: '6px',
+                  padding: '6px 10px',
                   display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  fontSize: '0.65rem',
-                  color: '#00e5ff',
+                  flexDirection: 'column',
+                  gap: '4px',
+                  fontSize: '0.68rem',
+                  color: '#e2e8f0',
+                  boxShadow: '0 4px 16px rgba(0, 229, 255, 0.25)',
+                  minWidth: '220px',
                 }}
               >
-                <Car size={11} />
-                <span>
-                  Inspector: <strong>{selectedVehicle.id}</strong> ({selectedVehicle.vehicleClass}) • {selectedVehicle.speed} km/h
-                </span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Car size={13} color="#00e5ff" />
+                    <span style={{ color: '#94a3b8', fontSize: '0.62rem' }}>Inspector:</span>
+                    <span style={{ fontWeight: 800, color: '#00e5ff', fontFamily: 'monospace' }}>
+                      {selectedVehicle.id}
+                    </span>
+                    <span style={{ fontSize: '0.62rem', color: '#94a3b8' }}>
+                      [{selectedVehicle.vehicle_class}]
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => setSelectedVehicle(null)}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      color: '#64748b',
+                      cursor: 'pointer',
+                      padding: 0,
+                    }}
+                  >
+                    <X size={12} />
+                  </button>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4px', fontSize: '0.64rem' }}>
+                  <div>
+                    <span style={{ color: '#64748b' }}>Speed: </span>
+                    <span style={{ color: '#06d6a0', fontWeight: 700, fontFamily: 'monospace' }}>
+                      {selectedVehicle.speed_kmh} km/h
+                    </span>
+                    <span style={{ color: '#64748b', fontSize: '0.60rem' }}>
+                      {' '}({selectedVehicle.speed_ms.toFixed(1)} m/s)
+                    </span>
+                  </div>
+                  <div>
+                    <span style={{ color: '#64748b' }}>Lane: </span>
+                    <span style={{ color: '#f1f5f9', fontFamily: 'monospace' }}>
+                      {selectedVehicle.current_lane_id}
+                    </span>
+                  </div>
+                  <div>
+                    <span style={{ color: '#64748b' }}>Heading: </span>
+                    <span style={{ color: '#f1f5f9', fontFamily: 'monospace' }}>
+                      {Math.round(selectedVehicle.heading)}°
+                    </span>
+                  </div>
+                  <div>
+                    <span style={{ color: '#64748b' }}>Status: </span>
+                    <span
+                      style={{
+                        color:
+                          selectedVehicle.status === 'STALE'
+                            ? '#ef4444'
+                            : selectedVehicle.status === 'PRIORITY_CORRIDOR'
+                            ? '#00e5ff'
+                            : selectedVehicle.status === 'WAITING_SIGNAL'
+                            ? '#ffd166'
+                            : '#06d6a0',
+                        fontWeight: 600,
+                      }}
+                    >
+                      {selectedVehicle.status}
+                    </span>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '4px', borderTop: '1px solid #1e293b', paddingTop: '4px' }}>
+                  <span style={{ fontSize: '0.60rem', color: '#64748b' }}>
+                    Src: <span style={{ color: '#38bdf8' }}>{selectedVehicle.provenance}</span>
+                  </span>
+                  <button
+                    onClick={() => {
+                      handleSelectPreset('chase');
+                    }}
+                    style={{
+                      backgroundColor: 'rgba(0, 229, 255, 0.15)',
+                      border: '1px solid rgba(0, 229, 255, 0.4)',
+                      borderRadius: '3px',
+                      color: '#00e5ff',
+                      fontSize: '0.62rem',
+                      fontWeight: 600,
+                      padding: '2px 6px',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                    }}
+                  >
+                    <Crosshair size={10} />
+                    <span>Follow Cam</span>
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -566,6 +660,16 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                     {layers.vehicles && <Check size={10} color="#00e5ff" />}
                   </div>
                   <span>3D Vehicle Fleet</span>
+                </label>
+
+                <label
+                  onClick={() => handleToggleLayer('vehicleBadges')}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', color: layers.vehicleBadges ? '#00e5ff' : '#64748b' }}
+                >
+                  <div style={{ width: '12px', height: '12px', border: '1px solid #1b2f5b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {layers.vehicleBadges && <Check size={10} color="#00e5ff" />}
+                  </div>
+                  <span>Vehicle Badges / Speeds</span>
                 </label>
 
                 <label

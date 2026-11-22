@@ -33,7 +33,7 @@
 | **T08** | Dựng đường giao lộ 3D: mặt đường, làn, vạch kẻ, crosswalk | P0 | T07 | **VERIFIED** | RoadNetworkMesh, 4 orthogonal approaches (14m cross), zebra crosswalks (10 stripes/arm), stop lines, double yellow dividers, directional arrows, pytest (23/23) |
 | **T09** | Dựng bối cảnh thành phố 3D chi tiết như ảnh | P0 | T07, T08 | **VERIFIED** | CityEnvironmentMesh, 4 quadrant towers, Metropolitan Hospital with rooftop helipad & medical beacon, streetlights, low-poly trees, 4 V2X RSU nodes, pytest (28/28) |
 | **T10** | Bộ tài sản 3D phương tiện Việt Nam và xe ưu tiên | P0 | T07–T09 | **VERIFIED** | VehicleAssetFactory (7 classes: motorcycle, sedan, SUV, bus, truck, AMB-339, fire engine), TrafficVehicleManager, raycast vehicle inspector, pytest (33/33) |
-| **T11** | Chuyển động xe 3D theo lane graph và snapshot có ID | P0 | T08–T10 | **PLANNED** | Scheduled |
+| **T11** | Chuyển động xe 3D theo lane graph và snapshot có ID | P0 | T08–T10 | **VERIFIED** | VehicleTrajectorySource, VehicleSnapshotFixture (42 deterministic vehicles, stop line compliance, turning arcs), VehicleMotionSystem (anti-teleport clamp, STALE detector, 3D speed badges), pytest (38/38) |
 | **T12** | Đèn tín hiệu 3D, người đi bộ và logic chuyển pha trực quan | P0 | T08–T11 | **PLANNED** | Scheduled |
 | **T13** | Vẽ hành lang động, mũi tên giao thông và HUD trực tiếp trên 3D | P0 | T11, T12 | **PLANNED** | Scheduled |
 | **T14** | Panel trên trái: V2I/V2X Communication & Hardware Status | P0 | T06 | **PLANNED** | Scheduled |
@@ -117,6 +117,6 @@
 ---
 
 ## 3. Current Sprint Focus
-- **Current Milestone:** TASK 01–10 Complete & Verified (Phase A: 4/6, Phase B: 6/16).
-- **Next Dependent Task:** TASK 11 — Chuyển động xe 3D theo lane graph và snapshot có ID.
+- **Current Milestone:** TASK 01–11 Complete & Verified (Phase A: 4/6, Phase B: 7/16).
+- **Next Dependent Task:** TASK 12 — Đèn tín hiệu 3D, người đi bộ và logic chuyển pha trực quan.
 

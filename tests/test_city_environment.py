@@ -86,7 +86,11 @@ def test_scene_environment_and_canvas_integration():
     with open(canvas_path, "r", encoding="utf-8") as f:
         canvas_content = f.read()
 
-    assert "CITY TWIN ACTIVE" in canvas_content or "VEHICLE FLEET ACTIVE" in canvas_content
+    assert (
+        "CITY TWIN ACTIVE" in canvas_content
+        or "VEHICLE FLEET ACTIVE" in canvas_content
+        or "VEHICLE MOTION ACTIVE" in canvas_content
+    )
     assert "buildings" in canvas_content
     assert "streetFurniture" in canvas_content
     assert "trees" in canvas_content
