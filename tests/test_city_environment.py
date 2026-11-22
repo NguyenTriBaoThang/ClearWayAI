@@ -91,3 +91,4 @@ def test_scene_environment_and_canvas_integration():
     assert "streetFurniture" in canvas_content
     assert "trees" in canvas_content
     assert "dashboard-target.png" not in canvas_content, "Scene must never use static target image!"
+
