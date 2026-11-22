@@ -20,7 +20,7 @@
 | **T01** | Xây dựng project/monorepo ClearWayAI từ đầu | P0 | None | **VERIFIED** | Monorepo scaffold, FastAPI /health & /status passing pytest (8/8), Vite web build passing, docker-compose config valid |
 | **T02** | Tạo GitHub repository chuyên nghiệp giống cấu trúc LocalExplorerAI | P0 | T01 | **VERIFIED** | GitHub Issue/PR templates, CONTRIBUTING, SECURITY, CODEOWNERS, .gitattributes LFS, TASK_BOARD |
 | **T03** | Tạo website Technical Documentation như LocalExplorerAI Docs | P0 | T01, T02 | **VERIFIED** | Docs-site built (24 technical chapters, dark/light, search, GitHub Pages workflow .github/workflows/docs-deploy.yml) |
-| **T04** | Viết ALL README.md cho toàn bộ monorepo | P0 | T01–T03 | **PLANNED** | Scheduled |
+| **T04** | Viết ALL README.md cho toàn bộ monorepo | P0 | T01–T03 | **VERIFIED** | Root README + 13 module READMEs, architecture templates, 28 markdown files link-checked (0 broken links) |
 | **T21** | Đặc tả hệ thống, ADR, schema và ranh giới an toàn | P0 | T01 | **PLANNED** | Scheduled |
 | **T22** | Thiết lập CI/CD, lint, tests và môi trường phát triển | P0 | T01–T21 | **PLANNED** | Scheduled |
 
@@ -117,6 +117,6 @@
 ---
 
 ## 3. Current Sprint Focus
-- **Current Milestone:** TASK 01, TASK 02 & TASK 03 Complete & Verified.
-- **Next Dependent Task:** TASK 04 — Viết ALL README.md cho toàn bộ monorepo.
+- **Current Milestone:** TASK 01, TASK 02, TASK 03 & TASK 04 Complete & Verified.
+- **Next Dependent Task:** TASK 05 — Khóa giao diện theo ảnh tham chiếu: UI blueprint và acceptance pixels.
 
