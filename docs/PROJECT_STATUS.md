@@ -36,7 +36,7 @@
 | **T11** | Chuyển động xe 3D theo lane graph và snapshot có ID | P0 | T08–T10 | **VERIFIED** | VehicleTrajectorySource, VehicleSnapshotFixture (42 deterministic vehicles, stop line compliance, turning arcs), VehicleMotionSystem (anti-teleport clamp, STALE detector, 3D speed badges), pytest (38/38) |
 | **T12** | Đèn tín hiệu 3D, người đi bộ và logic chuyển pha trực quan | P0 | T08–T11 | **VERIFIED** | SignalPhaseController (conflict-free safety matrix, NEMA 6-phase sequence, all-red intervals), TrafficSignal3D (4 mast poles, dual heads, mutual exclusion lenses, 8 crossing pedestrians, raycast pole inspector), pytest (43/43) |
 | **T13** | Vẽ hành lang động, mũi tên giao thông và HUD trực tiếp trên 3D | P0 | T11, T12 | **VERIFIED** | CorridorOverlay3D (4 modes PLANNED/ACTIVE/COMPLETED/BLOCKED, animated chevrons, AMB-339 3D callout, A–D node chain inspector), FlowArrows3D (approach arrows, conflict zone box, queue hotspots, RSU footprints), pytest (48/48) |
-| **T14** | Panel trên trái: V2I/V2X Communication & Hardware Status | P0 | T06 | **PLANNED** | Scheduled |
+| **T14** | Panel trên trái: V2I/V2X Communication & Hardware Status | P0 | T06 | **VERIFIED** | V2XHardwarePanel, HardwareStatus contract, 4-node pipeline, device inspector, honest provenance gating, nominal/degraded/offline fallback, pytest (55/55) |
 | **T15** | Panel trên giữa: bảng pha đèn Red/Yellow/Green theo từng hướng | P0 | T06, T12 | **PLANNED** | Scheduled |
 | **T16** | Panel trên phải: Adaptive Traffic Signal & Queue Chart | P0 | T06, T12, T15 | **PLANNED** | Scheduled |
 | **T17** | Panel dưới trái: IoT sensor list + mini city map tương tác | P0 | T06, T08–T09 | **PLANNED** | Scheduled |
@@ -117,6 +117,6 @@
 ---
 
 ## 3. Current Sprint Focus
-- **Current Milestone:** TASK 01–13 Complete & Verified (Phase A: 4/6, Phase B: 9/16).
-- **Next Dependent Task:** TASK 14 — Panel trên trái: V2I/V2X Communication & Hardware Status.
+- **Current Milestone:** TASK 01–14 Complete & Verified (Phase A: 4/6, Phase B: 10/16).
+- **Next Dependent Task:** TASK 15 — Panel trên giữa: bảng pha đèn Red/Yellow/Green theo từng hướng.
 
