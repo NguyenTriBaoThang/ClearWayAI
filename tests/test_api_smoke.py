@@ -4,7 +4,9 @@ import os
 import sys
 
 # Add apps/api/src to sys.path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "apps", "api", "src")))
+sys.path.insert(
+    0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "apps", "api", "src"))
+)
 
 from apps.api.src.main import health_check, root
 
@@ -26,6 +28,10 @@ def test_api_smoke_health():
 
 def test_reference_image_exists():
     """Ensure assets/reference/dashboard-target.png is present and has proper size."""
-    ref_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "assets", "reference", "dashboard-target.png"))
+    ref_path = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), "..", "assets", "reference", "dashboard-target.png")
+    )
     assert os.path.exists(ref_path), "assets/reference/dashboard-target.png must exist!"
-    assert os.path.getsize(ref_path) > 100000, "assets/reference/dashboard-target.png must not be empty!"
+    assert os.path.getsize(ref_path) > 100000, (
+        "assets/reference/dashboard-target.png must not be empty!"
+    )

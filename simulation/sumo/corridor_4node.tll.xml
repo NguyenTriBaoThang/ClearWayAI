@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+<tlLogics>
+    <tlLogic id="node_a" type="static" programID="0" offset="0">
+        <phase duration="35" state="GGGGgrrrrrGGGGgrrrrr" minDur="10" maxDur="65"/>
+        <phase duration="4" state="yyyyyrrrrryyyyyrrrrr"/>
+        <phase duration="2" state="rrrrrrrrrrrrrrrrrrrr"/>
+        <phase duration="25" state="rrrrrGGggrrrrrrGGggr" minDur="10" maxDur="45"/>
+        <phase duration="4" state="rrrrryyyyrrrrrryyyyr"/>
+        <phase duration="2" state="rrrrrrrrrrrrrrrrrrrr"/>
+    </tlLogic>
+    <tlLogic id="node_a" type="static" programID="preemption" offset="0">
+        <phase duration="50" state="GGGGgrrrrrrrrrrrrrrr" minDur="15" maxDur="90"/>
+        <phase duration="4" state="yyyyyrrrrrrrrrrrrrrr"/>
+        <phase duration="2" state="rrrrrrrrrrrrrrrrrrrr"/>
+    </tlLogic>
+    <tlLogic id="node_b" type="static" programID="0" offset="0">
+        <phase duration="35" state="GGGGgrrrrrGGGGgrrrrr" minDur="10" maxDur="65"/>
+        <phase duration="4" state="yyyyyrrrrryyyyyrrrrr"/>
+        <phase duration="2" state="rrrrrrrrrrrrrrrrrrrr"/>
+        <phase duration="25" state="rrrrrGGggrrrrrrGGggr" minDur="10" maxDur="45"/>
+        <phase duration="4" state="rrrrryyyyrrrrrryyyyr"/>
+        <phase duration="2" state="rrrrrrrrrrrrrrrrrrrr"/>
+    </tlLogic>
+    <tlLogic id="node_b" type="static" programID="preemption" offset="0">
+        <phase duration="50" state="GGGGgrrrrrrrrrrrrrrr" minDur="15" maxDur="90"/>
+        <phase duration="4" state="yyyyyrrrrrrrrrrrrrrr"/>
+        <phase duration="2" state="rrrrrrrrrrrrrrrrrrrr"/>
+    </tlLogic>
+    <tlLogic id="node_c" type="static" programID="0" offset="0">
+        <phase duration="35" state="GGGGgrrrrrGGGGgrrrrr" minDur="10" maxDur="65"/>
+        <phase duration="4" state="yyyyyrrrrryyyyyrrrrr"/>
+        <phase duration="2" state="rrrrrrrrrrrrrrrrrrrr"/>
+        <phase duration="25" state="rrrrrGGggrrrrrrGGggr" minDur="10" maxDur="45"/>
+        <phase duration="4" state="rrrrryyyyrrrrrryyyyr"/>
+        <phase duration="2" state="rrrrrrrrrrrrrrrrrrrr"/>
+    </tlLogic>
+    <tlLogic id="node_c" type="static" programID="preemption" offset="0">
+        <phase duration="50" state="GGGGgrrrrrrrrrrrrrrr" minDur="15" maxDur="90"/>
+        <phase duration="4" state="yyyyyrrrrrrrrrrrrrrr"/>
+        <phase duration="2" state="rrrrrrrrrrrrrrrrrrrr"/>
+    </tlLogic>
+    <tlLogic id="node_d" type="static" programID="0" offset="0">
+        <phase duration="35" state="GGGGgrrrrrGGGGgrrrrr" minDur="10" maxDur="65"/>
+        <phase duration="4" state="yyyyyrrrrryyyyyrrrrr"/>
+        <phase duration="2" state="rrrrrrrrrrrrrrrrrrrr"/>
+        <phase duration="25" state="rrrrrGGggrrrrrrGGggr" minDur="10" maxDur="45"/>
+        <phase duration="4" state="rrrrryyyyrrrrrryyyyr"/>
+        <phase duration="2" state="rrrrrrrrrrrrrrrrrrrr"/>
+    </tlLogic>
+    <tlLogic id="node_d" type="static" programID="preemption" offset="0">
+        <phase duration="50" state="GGGGgrrrrrrrrrrrrrrr" minDur="15" maxDur="90"/>
+        <phase duration="4" state="yyyyyrrrrrrrrrrrrrrr"/>
+        <phase duration="2" state="rrrrrrrrrrrrrrrrrrrr"/>
+    </tlLogic>
+</tlLogics>

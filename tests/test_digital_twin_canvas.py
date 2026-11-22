@@ -84,4 +84,3 @@ def test_canvas_component_hud_and_metrics():
 
     # Strict rule: No static screenshot fake
     assert "dashboard-target.png" not in content, "Scene must never use static target image!"
-

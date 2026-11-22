@@ -3,7 +3,9 @@
 import os
 
 WEB_SRC = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "apps", "web", "src"))
-SHARED_SRC = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "packages", "shared", "src"))
+SHARED_SRC = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "packages", "shared", "src")
+)
 
 
 def test_phase_timing_files_exist():
@@ -51,8 +53,8 @@ def test_four_approach_split_timing_values():
     # Values matching blueprint:
     assert "67" in content  # Red 67s (N/S) or Green 67s (E/W)
     assert "49" in content  # Green 49s (N/S) or Red 49s (E/W)
-    assert "4" in content   # Yellow 4s
-    assert "120" in content # Cycle 120s
+    assert "4" in content  # Yellow 4s
+    assert "120" in content  # Cycle 120s
     assert "41" in content  # Split 41%
     assert "56" in content  # Split 56%
 
@@ -105,4 +107,3 @@ def test_zero_static_fake_assets():
 
     assert "dashboard-target.png" not in content
     assert "placeholder.png" not in content
-

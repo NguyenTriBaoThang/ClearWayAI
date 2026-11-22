@@ -104,4 +104,3 @@ def test_digital_twin_canvas_status_updated():
     assert "roadMarkings" in content
     assert "crosswalks" in content
     assert "sidewalks" in content
-

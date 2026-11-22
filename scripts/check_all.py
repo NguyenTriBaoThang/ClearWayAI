@@ -16,6 +16,7 @@ from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 
+
 def run_step(step_name: str, cmd: list[str], cwd: Path = ROOT_DIR) -> bool:
     print(f"\n▶ Running [{step_name}]...")
     start_time = time.time()
@@ -33,7 +34,9 @@ def run_step(step_name: str, cmd: list[str], cwd: Path = ROOT_DIR) -> bool:
             # Check for Windows AppLocker / WDAC DLL block
             err_text = (result.stderr or "") + (result.stdout or "")
             if "Application Control policy" in err_text:
-                print(f"  ⚠️  [{step_name}] NOTICE: Windows Application Control policy blocked binary/DLL ({duration:.2f}s). Marked as PASS for local execution (validated in Linux CI).")
+                print(
+                    f"  ⚠️  [{step_name}] NOTICE: Windows Application Control policy blocked binary/DLL ({duration:.2f}s). Marked as PASS for local execution (validated in Linux CI)."
+                )
                 return True
             print(f"  ❌ [{step_name}] FAILED ({duration:.2f}s) with exit code {result.returncode}")
             if result.stdout:
@@ -47,6 +50,7 @@ def run_step(step_name: str, cmd: list[str], cwd: Path = ROOT_DIR) -> bool:
         print(f"  ⚠️  [{step_name}] SKIPPED: tool not found ({e})")
         return True
 
+
 def main():
     print("=" * 70)
     print("🚦 ClearWayAI - Monorepo Quality Gate Verification")
@@ -54,7 +58,10 @@ def main():
 
     stages = [
         ("Doc Links Verification", [sys.executable, "scripts/verify_markdown_links.py"]),
-        ("System Spec & Schemas Invariants", [sys.executable, "-m", "pytest", "tests/test_system_spec_and_schemas.py", "-q"]),
+        (
+            "System Spec & Schemas Invariants",
+            [sys.executable, "-m", "pytest", "tests/test_system_spec_and_schemas.py", "-q"],
+        ),
         ("Ruff Linter Check", [sys.executable, "-m", "ruff", "check", "."]),
         ("Mypy Typecheck (apps/api)", [sys.executable, "-m", "mypy", "apps/api/src"]),
         ("Pytest Test Matrix", [sys.executable, "-m", "pytest", "tests/", "-q"]),
@@ -83,6 +90,7 @@ def main():
     else:
         print("💥 Some checks failed. Please review errors above.")
         return 1
+
 
 if __name__ == "__main__":
     sys.exit(main())

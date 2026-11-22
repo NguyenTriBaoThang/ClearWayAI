@@ -13,13 +13,16 @@ def utc_now() -> datetime:
 
 # Domain Literals
 OperationalMode = Literal["SIMULATION", "OFFLINE_VIDEO", "SHADOW_ADVISORY", "AUTHORIZED_PILOT"]
-DataProvenance = Literal["DEMO_FIXTURE", "SUMO_SIMULATED", "OFFLINE_VIDEO", "SHADOW_ADVISORY", "LIVE_CONNECTED"]
+DataProvenance = Literal[
+    "DEMO_FIXTURE", "SUMO_SIMULATED", "OFFLINE_VIDEO", "SHADOW_ADVISORY", "LIVE_CONNECTED"
+]
 SignalLightColor = Literal["red", "yellow", "green"]
 VehicleType = Literal["motorcycle", "car", "suv", "bus", "truck", "ambulance", "fire_engine"]
 
 
 class HealthResponse(BaseModel):
     """Health check response schema."""
+
     status: Literal["healthy", "degraded", "unhealthy"] = "healthy"
     service: str = "clearway-api"
     version: str = "0.1.0"
@@ -29,6 +32,7 @@ class HealthResponse(BaseModel):
 
 class ModuleStatus(BaseModel):
     """Detailed status of individual system modules."""
+
     simulation: Literal["PLANNED", "IN_PROGRESS", "IMPLEMENTED", "VERIFIED"] = "PLANNED"
     ai_clearance: Literal["PLANNED", "IN_PROGRESS", "IMPLEMENTED", "VERIFIED"] = "PLANNED"
     traffic_signals: Literal["PLANNED", "IN_PROGRESS", "IMPLEMENTED", "VERIFIED"] = "PLANNED"
@@ -39,6 +43,7 @@ class ModuleStatus(BaseModel):
 
 class SystemStatusResponse(BaseModel):
     """System operational status schema adhering to safety and provenance rules."""
+
     status: Literal["operational", "degraded", "offline"] = "operational"
     mode: OperationalMode = "SIMULATION"
     simulation_only: bool = True
@@ -53,6 +58,7 @@ class SystemStatusResponse(BaseModel):
 
 class VehicleTelemetry(BaseModel):
     """Vehicle kinematics and class telemetry snapshot."""
+
     vehicle_id: str
     vehicle_class: VehicleType
     speed_kmh: float
@@ -68,6 +74,7 @@ class VehicleTelemetry(BaseModel):
 
 class SignalApproachTimingSchema(BaseModel):
     """Timing for an individual vehicular approach."""
+
     approach: str
     red_s: int
     yellow_s: int
@@ -79,6 +86,7 @@ class SignalApproachTimingSchema(BaseModel):
 
 class SignalStateSchema(BaseModel):
     """Comprehensive signal phase timing and coordination state."""
+
     intersection_id: str
     intersection_name: str
     cycle_time_s: int
@@ -90,6 +98,7 @@ class SignalStateSchema(BaseModel):
 
 class HardwareStatusSchema(BaseModel):
     """V2I / V2X hardware pipeline telemetry and channel diagnostics."""
+
     network_id: str
     obu_vehicles_online: int
     obu_pct: float
@@ -105,6 +114,7 @@ class HardwareStatusSchema(BaseModel):
 
 class EmergencyMissionSchema(BaseModel):
     """Active emergency vehicle corridor pre-clearance mission."""
+
     mission_id: str
     vehicle_id: str
     vehicle_type: Literal["ambulance", "firetruck"]
@@ -117,6 +127,7 @@ class EmergencyMissionSchema(BaseModel):
 
 class TrafficAnalyticsSchema(BaseModel):
     """Aggregated traffic performance indices and delay deltas."""
+
     intersection_id: str
     performance_index: float
     throughput_pct_change: float
@@ -131,6 +142,7 @@ class TrafficAnalyticsSchema(BaseModel):
 
 class TelemetrySnapshotSchema(BaseModel):
     """Full atomic intersection telemetry snapshot streamed over WebSocket."""
+
     intersection_id: str
     timestamp: datetime = Field(default_factory=utc_now)
     sim_time_sec: float

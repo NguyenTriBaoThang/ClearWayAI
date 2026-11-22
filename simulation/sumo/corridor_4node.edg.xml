@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<edges>
+    <edge id="edge_west_to_a" from="node_west_in" to="node_a" numLanes="3" speed="16.67" priority="7" width="3.2"/>
+    <edge id="edge_a_to_b" from="node_a" to="node_b" numLanes="3" speed="16.67" priority="7" width="3.2"/>
+    <edge id="edge_b_to_c" from="node_b" to="node_c" numLanes="3" speed="16.67" priority="7" width="3.2"/>
+    <edge id="edge_c_to_d" from="node_c" to="node_d" numLanes="3" speed="16.67" priority="7" width="3.2"/>
+    <edge id="edge_d_to_east" from="node_d" to="node_east_out" numLanes="3" speed="16.67" priority="7" width="3.2"/>
+    <edge id="edge_east_to_d" from="node_east_in" to="node_d" numLanes="3" speed="16.67" priority="7" width="3.2"/>
+    <edge id="edge_d_to_c" from="node_d" to="node_c" numLanes="3" speed="16.67" priority="7" width="3.2"/>
+    <edge id="edge_c_to_b" from="node_c" to="node_b" numLanes="3" speed="16.67" priority="7" width="3.2"/>
+    <edge id="edge_b_to_a" from="node_b" to="node_a" numLanes="3" speed="16.67" priority="7" width="3.2"/>
+    <edge id="edge_a_to_west" from="node_a" to="node_west_out" numLanes="3" speed="16.67" priority="7" width="3.2"/>
+    <edge id="edge_na_to_a" from="node_na_in" to="node_a" numLanes="2" speed="13.89" priority="5" width="3.2"/>
+    <edge id="edge_a_to_na" from="node_a" to="node_na_out" numLanes="2" speed="13.89" priority="5" width="3.2"/>
+    <edge id="edge_sa_to_a" from="node_sa_in" to="node_a" numLanes="2" speed="13.89" priority="5" width="3.2"/>
+    <edge id="edge_a_to_sa" from="node_a" to="node_sa_out" numLanes="2" speed="13.89" priority="5" width="3.2"/>
+    <edge id="edge_nb_to_b" from="node_nb_in" to="node_b" numLanes="2" speed="13.89" priority="5" width="3.2"/>
+    <edge id="edge_b_to_nb" from="node_b" to="node_nb_out" numLanes="2" speed="13.89" priority="5" width="3.2"/>
+    <edge id="edge_sb_to_b" from="node_sb_in" to="node_b" numLanes="2" speed="13.89" priority="5" width="3.2"/>
+    <edge id="edge_b_to_sb" from="node_b" to="node_sb_out" numLanes="2" speed="13.89" priority="5" width="3.2"/>
+    <edge id="edge_nc_to_c" from="node_nc_in" to="node_c" numLanes="2" speed="13.89" priority="5" width="3.2"/>
+    <edge id="edge_c_to_nc" from="node_c" to="node_nc_out" numLanes="2" speed="13.89" priority="5" width="3.2"/>
+    <edge id="edge_sc_to_c" from="node_sc_in" to="node_c" numLanes="2" speed="13.89" priority="5" width="3.2"/>
+    <edge id="edge_c_to_sc" from="node_c" to="node_sc_out" numLanes="2" speed="13.89" priority="5" width="3.2"/>
+    <edge id="edge_nd_to_d" from="node_nd_in" to="node_d" numLanes="2" speed="13.89" priority="5" width="3.2"/>
+    <edge id="edge_d_to_nd" from="node_d" to="node_nd_out" numLanes="2" speed="13.89" priority="5" width="3.2"/>
+    <edge id="edge_sd_to_d" from="node_sd_in" to="node_d" numLanes="2" speed="13.89" priority="5" width="3.2"/>
+    <edge id="edge_d_to_sd" from="node_d" to="node_sd_out" numLanes="2" speed="13.89" priority="5" width="3.2"/>
+</edges>

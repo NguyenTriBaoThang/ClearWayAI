@@ -86,10 +86,18 @@ def audit_gates():
     assert "renderer.info.render.calls" in canvas_src
     assert "renderer.info.render.triangles" in canvas_src
     assert "performance.now()" in canvas_src
-    print(f"  ✅ Dynamic FPS Profiler Active (Budget: >= {PERFORMANCE_BUDGETS['min_acceptable_fps']} FPS)")
-    print(f"  ✅ Render time instrumentation Active (Budget: <= {PERFORMANCE_BUDGETS['max_frame_render_ms']} ms)")
-    print(f"  ✅ Draw calls monitor Active (Budget: <= {PERFORMANCE_BUDGETS['max_draw_calls']} calls)")
-    print(f"  ✅ Triangle count monitor Active (Budget: <= {PERFORMANCE_BUDGETS['max_triangles']} triangles)")
+    print(
+        f"  ✅ Dynamic FPS Profiler Active (Budget: >= {PERFORMANCE_BUDGETS['min_acceptable_fps']} FPS)"
+    )
+    print(
+        f"  ✅ Render time instrumentation Active (Budget: <= {PERFORMANCE_BUDGETS['max_frame_render_ms']} ms)"
+    )
+    print(
+        f"  ✅ Draw calls monitor Active (Budget: <= {PERFORMANCE_BUDGETS['max_draw_calls']} calls)"
+    )
+    print(
+        f"  ✅ Triangle count monitor Active (Budget: <= {PERFORMANCE_BUDGETS['max_triangles']} triangles)"
+    )
 
     # 4. Audit Responsive Layout Rules
     print("\n[Step 4] Auditing CSS Responsive Breakpoints:")
@@ -112,4 +120,3 @@ def audit_gates():
 if __name__ == "__main__":
     success = audit_gates()
     sys.exit(0 if success else 1)
-

@@ -3,7 +3,9 @@
 import os
 
 WEB_SRC = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "apps", "web", "src"))
-SHARED_SRC = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "packages", "shared", "src"))
+SHARED_SRC = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "packages", "shared", "src")
+)
 
 
 def test_v2x_panel_files_exist():
@@ -119,4 +121,3 @@ def test_zero_static_fake_assets():
 
     assert "dashboard-target.png" not in content
     assert "placeholder.png" not in content
-

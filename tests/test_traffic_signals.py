@@ -114,4 +114,3 @@ def test_scene_environment_and_canvas_signal_integration():
 
     # Zero static fake rule
     assert "dashboard-target.png" not in canvas_content, "Scene must never use static target image!"
-

@@ -113,4 +113,3 @@ def test_digital_twin_canvas_vehicle_motion_and_inspector():
 
     # Zero static fake rule
     assert "dashboard-target.png" not in content, "Scene must never use static target image!"
-

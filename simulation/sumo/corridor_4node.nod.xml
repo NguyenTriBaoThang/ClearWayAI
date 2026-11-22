@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<nodes>
+    <node id="node_a" x="0.0" y="0.0" type="traffic_light" tl="node_a"/>
+    <node id="node_b" x="300.0" y="0.0" type="traffic_light" tl="node_b"/>
+    <node id="node_c" x="600.0" y="0.0" type="traffic_light" tl="node_c"/>
+    <node id="node_d" x="900.0" y="0.0" type="traffic_light" tl="node_d"/>
+    <node id="node_west_in" x="-200.0" y="4.8" type="priority"/>
+    <node id="node_west_out" x="-200.0" y="-4.8" type="priority"/>
+    <node id="node_east_in" x="1100.0" y="-4.8" type="priority"/>
+    <node id="node_east_out" x="1100.0" y="4.8" type="priority"/>
+    <node id="node_na_in" x="-3.2" y="200.0" type="priority"/>
+    <node id="node_na_out" x="3.2" y="200.0" type="priority"/>
+    <node id="node_sa_in" x="3.2" y="-200.0" type="priority"/>
+    <node id="node_sa_out" x="-3.2" y="-200.0" type="priority"/>
+    <node id="node_nb_in" x="296.8" y="200.0" type="priority"/>
+    <node id="node_nb_out" x="303.2" y="200.0" type="priority"/>
+    <node id="node_sb_in" x="303.2" y="-200.0" type="priority"/>
+    <node id="node_sb_out" x="296.8" y="-200.0" type="priority"/>
+    <node id="node_nc_in" x="596.8" y="200.0" type="priority"/>
+    <node id="node_nc_out" x="603.2" y="200.0" type="priority"/>
+    <node id="node_sc_in" x="603.2" y="-200.0" type="priority"/>
+    <node id="node_sc_out" x="596.8" y="-200.0" type="priority"/>
+    <node id="node_nd_in" x="896.8" y="200.0" type="priority"/>
+    <node id="node_nd_out" x="903.2" y="200.0" type="priority"/>
+    <node id="node_sd_in" x="903.2" y="-200.0" type="priority"/>
+    <node id="node_sd_out" x="896.8" y="-200.0" type="priority"/>
+</nodes>

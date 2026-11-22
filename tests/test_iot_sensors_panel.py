@@ -113,4 +113,3 @@ def test_zero_static_fake_assets():
 
     assert "dashboard-target.png" not in content
     assert "placeholder.png" not in content
-

@@ -7,11 +7,15 @@ import sys
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
+
 def check_markdown_links():
     md_files = []
     for root, _dirs, files in os.walk(REPO_ROOT):
         # Skip node_modules, .venv, dist, .git
-        if any(ignored in root for ignored in ["node_modules", ".venv", "dist", ".git", ".pytest_cache"]):
+        if any(
+            ignored in root
+            for ignored in ["node_modules", ".venv", "dist", ".git", ".pytest_cache"]
+        ):
             continue
         for file in files:
             if file.endswith(".md"):
@@ -19,7 +23,7 @@ def check_markdown_links():
 
     print(f"Scanning {len(md_files)} markdown files for internal relative links...")
     broken_links = []
-    link_pattern = re.compile(r'\[([^\]]+)\]\(([^)]+)\)')
+    link_pattern = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 
     for md_path in md_files:
         rel_md_path = os.path.relpath(md_path, REPO_ROOT)
@@ -29,7 +33,12 @@ def check_markdown_links():
         matches = link_pattern.findall(content)
         for text, target in matches:
             # Ignore web URLs, anchors, mailto
-            if target.startswith("http://") or target.startswith("https://") or target.startswith("#") or target.startswith("mailto:"):
+            if (
+                target.startswith("http://")
+                or target.startswith("https://")
+                or target.startswith("#")
+                or target.startswith("mailto:")
+            ):
                 continue
 
             # Strip query params and anchor
@@ -49,10 +58,12 @@ def check_markdown_links():
             print(f"  - In {source}: [{text}]({target}) -> Target not found: {resolved}")
         return False
     else:
-        print(f"\n✅ All internal relative links verified successfully across {len(md_files)} markdown files!")
+        print(
+            f"\n✅ All internal relative links verified successfully across {len(md_files)} markdown files!"
+        )
         return True
+
 
 if __name__ == "__main__":
     success = check_markdown_links()
     sys.exit(0 if success else 1)
-

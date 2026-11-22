@@ -8,15 +8,15 @@
 
 ## 📊 Sprint Progress Overview
 - **Total Tasks:** 60
-- **Verified Complete:** 22 (T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22)
+- **Verified Complete:** 23 (T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23)
 - **In Progress:** 0
-- **Planned:** 38
-- **Phase Completion:** Phase A (6/6 complete - 100% COMPLETE!), Phase B (16/16 complete - 100% COMPLETE!)
+- **Planned:** 37
+- **Phase Completion:** Phase A (6/6 complete - 100% COMPLETE!), Phase B (16/16 complete - 100% COMPLETE!), Phase C (1/5 complete)
 
 ```mermaid
 pie title Task Completion by Status
-    "VERIFIED" : 22
-    "PLANNED" : 38
+    "VERIFIED" : 23
+    "PLANNED" : 37
 ```
 
 ---
@@ -47,7 +47,7 @@ pie title Task Completion by Status
 | **T20** | Phase B | Visual fidelity gate: kiểm tra UI/3D giống ảnh và tối ưu FPS | **P0** | T05–T19 | **VERIFIED** | All 7 Regional Acceptance Gates verified, 60 FPS real-time profiler, <=8.0ms render, <=60 draw calls, zero static fake images, audit script passing, pytest (99/99) |
 | **T21** | Phase A | Đặc tả hệ thống, ADR, schema và ranh giới an toàn | **P0** | T01 | **VERIFIED** | SRS.md, SAFETY_BOUNDARIES.md, 6 ADRs, Pydantic & JSON Schemas, MMU interlock specification, pytest (104/104) |
 | **T22** | Phase A | Thiết lập CI/CD, lint, tests và môi trường phát triển | **P0** | T01–T21 | **VERIFIED** | GitHub Actions ci.yml & nightly-benchmark.yml, ruff, mypy, pre-commit, dev_setup.py, check_all.py, pytest (106/106) |
-| **T23** | Phase C | Dựng mạng SUMO 3–5 nút giao liên tiếp | **P0** | T01, T21–T22 | `PLANNED` | SUMO synthetic network .net.xml (A–D corridor) |
+| **T23** | Phase C | Dựng mạng SUMO 3–5 nút giao liên tiếp | **P0** | T01, T21–T22 | **VERIFIED** | Synthetic Oak-5th corridor (Nodes A–D), 26 edges, 4 NEMA traffic lights, E1/E2 detector network, Sublane SL2015 model, sumolib verified, pytest (113/113) |
 | **T24** | Phase C | Sinh giao thông hỗn hợp xe máy–ô tô và kịch bản tải | **P0** | T23 | `PLANNED` | Mixed traffic demand generator, sublane model |
 | **T25** | Phase C | Mô phỏng xe ưu tiên và cơ chế nhường đường trong SUMO | **P0** | T23, T24 | `PLANNED` | Emergency vehicle vTypes, bluelight behavior |
 | **T26** | Phase C | Xây SUMO/TraCI adapter có step, replay, telemetry | **P0** | T23–T25 | `PLANNED` | TraCI SimulationManager, snapshot exporter |

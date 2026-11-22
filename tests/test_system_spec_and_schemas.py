@@ -195,4 +195,3 @@ def test_json_schemas_exist_and_valid():
             data = json.load(f)
             assert "title" in data
             assert "type" in data or "properties" in data
-

@@ -47,7 +47,7 @@
 ### Phase C — SUMO Microscopic Simulation (Tasks 23–27)
 | Task ID | Task Description | Priority | Dependencies | Status | Verification Proof |
 | :--- | :--- | :---: | :---: | :---: | :--- |
-| **T23** | Dựng mạng SUMO 3–5 nút giao liên tiếp | P0 | T01, T21–T22 | **PLANNED** | Scheduled |
+| **T23** | Dựng mạng SUMO 3–5 nút giao liên tiếp | P0 | T01, T21–T22 | **VERIFIED** | Synthetic Oak-5th corridor (Nodes A–D), 26 edges, 4 NEMA traffic lights, E1/E2 detector network, Sublane SL2015 model, sumolib verified, pytest (113/113) |
 | **T24** | Sinh giao thông hỗn hợp xe máy–ô tô và kịch bản tải | P0 | T23 | **PLANNED** | Scheduled |
 | **T25** | Mô phỏng xe ưu tiên và cơ chế nhường đường trong SUMO | P0 | T23, T24 | **PLANNED** | Scheduled |
 | **T26** | Xây SUMO/TraCI adapter có step, replay, telemetry | P0 | T23–T25 | **PLANNED** | Scheduled |

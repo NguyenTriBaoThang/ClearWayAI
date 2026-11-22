@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<configuration>
+    <input>
+        <net-file value="corridor_4node.net.xml"/>
+        <additional-files value="corridor_4node.det.xml"/>
+    </input>
+    <time>
+        <begin value="0"/>
+        <step-length value="0.1"/>
+    </time>
+    <processing>
+        <lateral-resolution value="0.64"/>
+        <collision.action value="warn"/>
+        <time-to-teleport value="-1"/>
+    </processing>
+    <gui_only>
+        <start value="true"/>
+    </gui_only>
+</configuration>

@@ -23,8 +23,8 @@ def test_gate_1_topbar_global_navigation():
     assert "SIMULATION ONLY" in content
     assert "DEMO FIXTURE" in content
     assert "Host UTC" in content
-    assert re.search(r'>\s*4\s*<', content)
-    assert re.search(r'>\s*OP\s*<', content)
+    assert re.search(r">\s*4\s*<", content)
+    assert re.search(r">\s*OP\s*<", content)
 
 
 def test_gate_2_top_left_v2x_hardware():

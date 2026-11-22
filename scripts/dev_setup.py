@@ -10,10 +10,12 @@ from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 
+
 def print_banner():
     print("=" * 70)
     print("   🚦 ClearWayAI - Development Environment Setup & Validator")
     print("=" * 70)
+
 
 def check_python_version():
     print("[1/5] Checking Python version...")
@@ -24,6 +26,7 @@ def check_python_version():
         return False
     print("      ✅ Python version OK.")
     return True
+
 
 def check_tools():
     print("[2/5] Checking system prerequisites (Git, Node, pnpm)...")
@@ -38,6 +41,7 @@ def check_tools():
             if tool == "git":
                 all_ok = False
     return all_ok
+
 
 def setup_env_files():
     print("[3/5] Checking environment (.env) files...")
@@ -58,6 +62,7 @@ def setup_env_files():
             print(f"      ✅ Existing config preserved: {target.relative_to(ROOT_DIR)}")
     return True
 
+
 def check_python_packages():
     print("[4/5] Checking critical Python modules (FastAPI, Pydantic, Pytest, Ruff, Mypy)...")
     modules = ["fastapi", "pydantic", "pytest", "ruff", "mypy"]
@@ -68,6 +73,7 @@ def check_python_packages():
             print(f"      ✅ {mod}: installed")
         except Exception:
             import importlib.metadata
+
             try:
                 ver = importlib.metadata.version(mod)
                 print(f"      ✅ {mod}: installed (v{ver}, load restricted by host policy)")
@@ -76,8 +82,11 @@ def check_python_packages():
                 missing.append(mod)
 
     if missing:
-        print(f"\n      Tip: Run 'pip install -r requirements.txt' or 'pip install {' '.join(missing)}'")
+        print(
+            f"\n      Tip: Run 'pip install -r requirements.txt' or 'pip install {' '.join(missing)}'"
+        )
     return len(missing) == 0
+
 
 def summary(success: bool):
     print("[5/5] Setup summary & next actions...")
@@ -85,12 +94,15 @@ def summary(success: bool):
     if success:
         print("🎉 Development environment is ready!")
         print("   Quick start commands:")
-        print("     1. make dev        (or 'python -m uvicorn apps.api.src.main:app' and 'npm --prefix apps/web run dev')")
+        print(
+            "     1. make dev        (or 'python -m uvicorn apps.api.src.main:app' and 'npm --prefix apps/web run dev')"
+        )
         print("     2. python scripts/check_all.py  (run full verification suite)")
         print("     3. pytest                       (run all tests)")
     else:
         print("⚠️  Environment setup partially complete. Please install missing tools above.")
     print("=" * 70)
+
 
 def main():
     print_banner()
@@ -102,6 +114,7 @@ def main():
     overall = py_ok and env_ok and tools_ok and pkg_ok
     summary(overall)
     return 0 if overall else 1
+
 
 if __name__ == "__main__":
     sys.exit(main())
