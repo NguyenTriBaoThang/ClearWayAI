@@ -81,3 +81,4 @@ $$\hat{T}_{\text{clear}} = f_{\theta}\left( Q_L, \rho_{\text{moto}}, V_{\text{en
    - Green conflicts are rejected with an explicit error code.
    - Minimum green interval is non-negotiable ($T \ge 10\text{s}$).
    - Any network disconnection or software crash triggers a fail-safe revert to pre-programmed Webster cycle timings.
+

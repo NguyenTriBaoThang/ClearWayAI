@@ -60,3 +60,4 @@ pnpm --filter clearway-web preview
 - **True WebGL Canvas:** Renders a genuine Three.js WebGL canvas with perspective isometric camera, ground grid, directional lighting, and active FPS counter.
 - **No Fake Overlays:** Strictly does not use static screenshots or stock images as pseudo-3D scene representations.
 - **Unimplemented Routes:** Routes without connected backend modules display a clear `STATUS: NOT_IMPLEMENTED` card indicating the scheduled roadmap task.
+

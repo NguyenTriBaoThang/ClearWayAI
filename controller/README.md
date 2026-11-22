@@ -32,3 +32,4 @@ The Safety Gateway intercepts all proposed phase plans:
 $$\Delta t_{\text{trigger}} = \text{ETA}_{\text{EV}} - \hat{T}_{\text{clear}} - T_{\text{transition}} - T_{\text{buffer}}$$
 
 The corridor is opened just in time as the vehicle arrives, preventing empty green time and excessive private vehicle queuing.
+

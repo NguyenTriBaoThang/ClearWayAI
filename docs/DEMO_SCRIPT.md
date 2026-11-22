@@ -33,3 +33,4 @@ pnpm --filter clearway-web dev
 - **04:00 – 05:00 | Empirical Comparison & Conclusion:**
   - Show synchronized side-by-side comparison: Fixed-Time vs ClearWay AI.
   - Conclude with safety invariants: deterministic fail-safes and strict simulation isolation.
+

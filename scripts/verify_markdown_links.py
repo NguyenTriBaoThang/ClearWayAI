@@ -55,3 +55,4 @@ def check_markdown_links():
 if __name__ == "__main__":
     success = check_markdown_links()
     sys.exit(0 if success else 1)
+

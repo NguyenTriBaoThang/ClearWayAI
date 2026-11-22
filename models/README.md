@@ -21,3 +21,4 @@ models/
 - **Cryptographic Hashing:** All artifacts must have SHA256 checksums documented.
 - **Model Card Required:** Every model file must be accompanied by a model card following `docs/MODEL_CARD_TEMPLATE.md`.
 - **Git LFS Management:** Weights are excluded from standard Git commits and managed via Git LFS or external bucket storage.
+

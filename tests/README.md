@@ -34,3 +34,4 @@ All pull requests must pass:
 1. `pytest` unit & contract assertions (100% pass).
 2. TypeScript strict checks across all frontend and shared packages.
 3. Docker Compose configuration verification.
+

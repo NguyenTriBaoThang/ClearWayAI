@@ -32,3 +32,4 @@ All experiments are conducted across at least **10 independent random seeds** pe
 - Demand Scenarios: `Free` ($400\text{ veh/h/lane}$), `Normal` ($800\text{ veh/h/lane}$), `Peak` ($1200\text{ veh/h/lane}$), `Spillback` ($1600\text{ veh/h/lane}$).
 - Random Seeds: `[42, 101, 2024, 777, 999, 1337, 8888, 54321, 12345, 98765]`.
 - Report: Mean $\pm$ 95% Confidence Interval (Student's t-distribution).
+

@@ -31,3 +31,4 @@ simulation/
 # Run simulation step via CLI (requires SUMO installed)
 python -m simulation.traci.manager --scenario peak --seed 42
 ```
+

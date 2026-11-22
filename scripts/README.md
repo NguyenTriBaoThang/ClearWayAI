@@ -28,3 +28,4 @@ scripts/
 ```
 
 These scripts verify Python 3.10+, Node.js 18+, package managers, copy `.env.example` to `.env`, and install dependencies automatically.
+

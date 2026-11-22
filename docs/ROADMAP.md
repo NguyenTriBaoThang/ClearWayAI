@@ -85,3 +85,4 @@ A complete breakdown of the 60 engineering tasks from monorepo foundation to ful
   - T58: v0.1.0-mvp release packaging and competition submission dossier
   - T59: Reinforcement Learning (PPO) sandbox exploration (P2 Research)
   - T60: Real-camera shadow mode 3D localization (P2 Research)
+

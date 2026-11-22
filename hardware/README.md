@@ -21,3 +21,4 @@ hardware/
 - **Communication:** ESP32 communicates with the backend simulation server via local USB Serial or local MQTT broker.
 - **Fail-Safe Watchdog:** If communication drops for >2.0s, the ESP32 automatically drops into local autonomous fixed-time cycling with standard yellow/all-red intervals.
 - **Strict Isolation:** The testbench operates on 5V DC and is completely isolated from any public roadside infrastructure.
+

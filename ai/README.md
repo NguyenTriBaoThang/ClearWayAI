@@ -30,3 +30,4 @@ ai/
 - Large binary weights (`*.pt`, `*.onnx`) are tracked via Git LFS and stored in external artifact registries.
 - Models must maintain a verifiable SHA256 checksum and evaluation card (`MODEL_CARD_TEMPLATE.md`).
 - Unverified models remain flagged as `EXPERIMENTAL` and cannot actuate simulation phases.
+

@@ -21,3 +21,4 @@ data/
 - **Zero PII Policy:** All raw video inputs undergo automated face and license plate blurring.
 - **Scene-Based Splits:** Datasets are partitioned strictly by intersection scene and recording day to prevent temporal leakage across adjacent frames.
 - **Data Provenance:** Every sample file is labeled with its origin (`DEMO_FIXTURE`, `SUMO_SIMULATED`, `OFFLINE_VIDEO`, `SHADOW_ADVISORY`, or `LIVE_CONNECTED`).
+

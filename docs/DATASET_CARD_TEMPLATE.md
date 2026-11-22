@@ -34,3 +34,4 @@
 - **Split Strategy:** Scene-based split (Partitioned by intersection location and recording session).
 - **Leakage Prevention:** Adjacent frames within the same 5-minute video window are strictly kept within the same partition.
 - **Split Ratios:** Train: 70%, Validation: 15%, Test: 15%.
+
