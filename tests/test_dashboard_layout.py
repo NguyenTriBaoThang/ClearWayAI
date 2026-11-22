@@ -105,3 +105,4 @@ def test_css_variables_and_responsive_grids():
     assert "--accent-red: #ef476f;" in content
     assert ".dashboard-grid-top" in content
     assert ".dashboard-grid-bottom" in content
+

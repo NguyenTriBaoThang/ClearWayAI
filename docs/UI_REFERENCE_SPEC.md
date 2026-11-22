@@ -194,3 +194,4 @@ The interface represents the **ClearWay AI Smart City Operations Suite — Traff
 | **Standard Laptop** | `1440 × 900` | Full 3-tier view, padding: 8px, 3D viewport height ~380px. |
 | **Full HD Desktop** | `1920 × 1080` | Spacious 3-tier view, padding: 12px, 3D viewport height ~520px. |
 | **Small Display** | `1280 × 800` | Compact metrics, internal scroll on tables if needed. |
+

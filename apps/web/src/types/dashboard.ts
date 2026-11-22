@@ -37,3 +37,4 @@ export interface EmergencyCorridorStatus {
   clearancePct: number;
   routeLanes: string[];
 }
+
