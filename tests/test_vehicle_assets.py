@@ -86,3 +86,4 @@ def test_canvas_has_vehicle_inspector_and_layer_controls():
 
     # No static fakes
     assert "dashboard-target.png" not in content, "Scene must never use static target image!"
+
