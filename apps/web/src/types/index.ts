@@ -38,3 +38,4 @@ export interface HealthCheck {
   timestamp: string;
   environment: string;
 }
+

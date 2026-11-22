@@ -162,3 +162,4 @@ export const IoTSensorsCard: React.FC = () => {
     </div>
   );
 };
+

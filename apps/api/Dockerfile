@@ -20,3 +20,4 @@ ENV PYTHONPATH=/app:/app/apps/api/src
 EXPOSE 8000
 
 CMD ["uvicorn", "apps.api.src.main:app", "--host", "0.0.0.0", "--port", "8000"]
+

@@ -56,3 +56,4 @@ Write-Host "   - Backend: python -m uvicorn apps.api.src.main:app --reload --por
 Write-Host "   - Frontend: npm --prefix apps/web run dev" -ForegroundColor White
 Write-Host "   - Tests:    pytest -v" -ForegroundColor White
 Write-Host "==========================================================" -ForegroundColor Cyan
+

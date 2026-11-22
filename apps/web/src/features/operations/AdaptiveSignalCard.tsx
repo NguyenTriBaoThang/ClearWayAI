@@ -100,3 +100,4 @@ export const AdaptiveSignalCard: React.FC = () => {
     </div>
   );
 };
+

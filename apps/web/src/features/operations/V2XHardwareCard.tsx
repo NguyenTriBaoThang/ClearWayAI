@@ -101,3 +101,4 @@ const ActivityIcon: React.FC<{ size: number; color: string }> = ({ size, color }
     <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
   </svg>
 );
+

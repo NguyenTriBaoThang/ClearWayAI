@@ -158,3 +158,4 @@ export const AnalyticsCard: React.FC = () => {
     </div>
   );
 };
+

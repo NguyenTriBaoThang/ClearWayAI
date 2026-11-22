@@ -299,3 +299,4 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
     </div>
   );
 };
+

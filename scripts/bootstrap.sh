@@ -41,3 +41,4 @@ echo "   - Backend: python3 -m uvicorn apps.api.src.main:app --reload --port 800
 echo "   - Frontend: npm --prefix apps/web run dev"
 echo "   - Tests:    pytest -v"
 echo "=========================================================="
+

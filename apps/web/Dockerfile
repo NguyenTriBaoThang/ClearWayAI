@@ -19,3 +19,4 @@ COPY --from=builder /app/apps/web/dist /usr/share/nginx/html
 COPY apps/web/nginx.conf /etc/nginx/conf.d/default.conf 2>/dev/null || true
 EXPOSE 3000
 CMD ["nginx", "-g", "daemon off;"]
+
