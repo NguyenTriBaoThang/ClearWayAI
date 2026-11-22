@@ -607,3 +607,4 @@ export class TrafficSignal3D {
     this.pedestrians = [];
   }
 }
+
