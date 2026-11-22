@@ -98,6 +98,7 @@ def test_digital_twin_canvas_status_updated():
         or "VEHICLE FLEET ACTIVE" in content
         or "VEHICLE MOTION ACTIVE" in content
         or "SIGNALS & TRAFFIC ACTIVE" in content
+        or "CORRIDOR & HUD ACTIVE" in content
     )
     assert "LAYERS" in content
     assert "roadMarkings" in content

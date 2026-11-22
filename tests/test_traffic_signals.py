@@ -94,7 +94,7 @@ def test_scene_environment_and_canvas_signal_integration():
         canvas_content = f.read()
 
     # Active status pill
-    assert "SIGNALS & TRAFFIC ACTIVE" in canvas_content
+    assert "SIGNALS & TRAFFIC ACTIVE" in canvas_content or "CORRIDOR & HUD ACTIVE" in canvas_content
 
     # HUD Real-time Signal Phase Mini Badge
     assert "Signal Phase:" in canvas_content

@@ -8,15 +8,15 @@
 
 ## 📊 Sprint Progress Overview
 - **Total Tasks:** 60
-- **Verified Complete:** 12 (T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12)
+- **Verified Complete:** 13 (T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13)
 - **In Progress:** 0
-- **Planned:** 48
-- **Phase Completion:** Phase A (4/6 complete), Phase B (8/16 complete)
+- **Planned:** 47
+- **Phase Completion:** Phase A (4/6 complete), Phase B (9/16 complete)
 
 ```mermaid
 pie title Task Completion by Status
-    "VERIFIED" : 12
-    "PLANNED" : 48
+    "VERIFIED" : 13
+    "PLANNED" : 47
 ```
 
 ---
@@ -37,7 +37,7 @@ pie title Task Completion by Status
 | **T10** | Phase B | Bộ tài sản 3D phương tiện Việt Nam và xe ưu tiên | **P0** | T07–T09 | **VERIFIED** | VehicleAssetFactory (7 classes), TrafficVehicleManager, raycast vehicle inspector, pytest (33/33) |
 | **T11** | Phase B | Chuyển động xe 3D theo lane graph và snapshot có ID | **P0** | T08–T10 | **VERIFIED** | VehicleTrajectorySource, VehicleSnapshotFixture (42 deterministic vehicles), VehicleMotionSystem (anti-teleport, STALE detector, 3D speed badges), pytest (38/38) |
 | **T12** | Phase B | Đèn tín hiệu 3D, người đi bộ và logic chuyển pha trực quan | **P0** | T08–T11 | **VERIFIED** | SignalPhaseController (conflict-free safety matrix), TrafficSignal3D (4 mast poles, dual heads, mutual exclusion lenses, 8 pedestrians, raycast pole inspector), pytest (43/43) |
-| **T13** | Phase B | Vẽ hành lang động, mũi tên giao thông và HUD trực tiếp trên 3D | **P0** | T11, T12 | `PLANNED` | Corridor ribbon overlays, flow arrows, speed badges |
+| **T13** | Phase B | Vẽ hành lang động, mũi tên giao thông và HUD trực tiếp trên 3D | **P0** | T11, T12 | **VERIFIED** | CorridorOverlay3D (4 modes, animated chevrons, AMB-339 3D callout, A–D node chain inspector), FlowArrows3D (approach arrows, conflict zone box, queue hotspots, RSU footprints), pytest (48/48) |
 | **T14** | Phase B | Panel trên trái: V2I/V2X Communication & Hardware Status | **P0** | T06 | `PLANNED` | HardwareStatus contract & telemetry cards |
 | **T15** | Phase B | Panel trên giữa: bảng pha đèn Red/Yellow/Green theo từng hướng | **P0** | T06, T12 | `PLANNED` | Approach signal timing table & countdowns |
 | **T16** | Phase B | Panel trên phải: Adaptive Traffic Signal & Queue Chart | **P0** | T06, T12, T15 | `PLANNED` | Recharts/ECharts queue-vs-capacity chart |

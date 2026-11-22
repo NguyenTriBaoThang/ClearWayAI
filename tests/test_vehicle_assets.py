@@ -84,6 +84,7 @@ def test_canvas_has_vehicle_inspector_and_layer_controls():
         "VEHICLE FLEET ACTIVE" in content
         or "VEHICLE MOTION ACTIVE" in content
         or "SIGNALS & TRAFFIC ACTIVE" in content
+        or "CORRIDOR & HUD ACTIVE" in content
     )
     assert "vehicles" in content
     assert "3D Vehicle Fleet" in content

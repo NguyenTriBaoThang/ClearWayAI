@@ -91,6 +91,7 @@ def test_scene_environment_and_canvas_integration():
         or "VEHICLE FLEET ACTIVE" in canvas_content
         or "VEHICLE MOTION ACTIVE" in canvas_content
         or "SIGNALS & TRAFFIC ACTIVE" in canvas_content
+        or "CORRIDOR & HUD ACTIVE" in canvas_content
     )
     assert "buildings" in canvas_content
     assert "streetFurniture" in canvas_content

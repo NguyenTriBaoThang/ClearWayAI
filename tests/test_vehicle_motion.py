@@ -93,7 +93,11 @@ def test_digital_twin_canvas_vehicle_motion_and_inspector():
         content = f.read()
 
     # Status pill active
-    assert "VEHICLE MOTION ACTIVE" in content or "SIGNALS & TRAFFIC ACTIVE" in content
+    assert (
+        "VEHICLE MOTION ACTIVE" in content
+        or "SIGNALS & TRAFFIC ACTIVE" in content
+        or "CORRIDOR & HUD ACTIVE" in content
+    )
 
     # Layer toggles
     assert "vehicleBadges" in content

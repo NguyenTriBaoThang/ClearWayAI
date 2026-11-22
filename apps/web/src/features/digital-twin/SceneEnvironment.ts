@@ -3,6 +3,8 @@ import { RoadNetworkMesh } from './RoadNetworkMesh';
 import { CityEnvironmentMesh } from './CityEnvironmentMesh';
 import { TrafficVehicleManager } from './TrafficVehicleManager';
 import { TrafficSignal3D } from './TrafficSignal3D';
+import { CorridorOverlay3D } from './CorridorOverlay3D';
+import { FlowArrows3D } from './FlowArrows3D';
 
 /**
  * SceneEnvironment manages lighting, cyber grid, junction pedestal,
@@ -10,7 +12,8 @@ import { TrafficSignal3D } from './TrafficSignal3D';
  * 3D urban context (cyber towers, hospital facility, streetlights, trees, RSUs),
  * 3D traffic fleet (motorcycles, cars, SUVs, buses, trucks, AMB-339 ambulance, fire engine),
  * 3D traffic signal poles & heads (Red/Yellow/Green conflict-free), pedestrians,
- * cardinal markers, and visual corridor ribbons for ClearWayAI.
+ * 3D emergency corridor ribbons, directional flow arrows, conflict zone grid,
+ * cardinal markers, and visual overlays for ClearWayAI.
  */
 export class SceneEnvironment {
   public scene: THREE.Scene;
@@ -18,6 +21,8 @@ export class SceneEnvironment {
   public cityEnvironment: CityEnvironmentMesh;
   public vehicleManager: TrafficVehicleManager;
   public trafficSignals: TrafficSignal3D;
+  public corridorOverlay: CorridorOverlay3D;
+  public flowArrows: FlowArrows3D;
 
   public keyLight!: THREE.DirectionalLight;
   public fillLight!: THREE.DirectionalLight;
@@ -47,6 +52,14 @@ export class SceneEnvironment {
     // 4. 3D Traffic Signals & Pedestrians (Conflict-Free Multi-Phase Heads)
     this.trafficSignals = new TrafficSignal3D();
     this.scene.add(this.trafficSignals.group);
+
+    // 5. 3D Emergency Priority Corridor Overlay (Multi-Segment Neon Chevrons)
+    this.corridorOverlay = new CorridorOverlay3D();
+    this.scene.add(this.corridorOverlay.group);
+
+    // 6. 3D Flow Arrows, Conflict Zone Box, Sensor Footprints, and Queue Hotspots
+    this.flowArrows = new FlowArrows3D();
+    this.scene.add(this.flowArrows.group);
 
     this.setupCardinalMarkers();
     this.setupCorridorRibbon();
@@ -174,11 +187,26 @@ export class SceneEnvironment {
       this.trafficSignals.update(timeMs);
     }
 
+    let ambPos: THREE.Vector3 | undefined;
     if (this.vehicleManager) {
       const amb = this.vehicleManager.vehicles.get('AMB-339');
       if (amb) {
-        return amb.bundle.group.position;
+        ambPos = amb.bundle.group.position;
       }
+    }
+
+    // 5. Update 3D emergency corridor overlay (neon chevrons & vehicle callouts)
+    if (this.corridorOverlay) {
+      this.corridorOverlay.update(timeMs, ambPos);
+    }
+
+    // 6. Update 3D flow arrows, conflict zone pulsing, and sensor footprints
+    if (this.flowArrows) {
+      this.flowArrows.update(timeMs);
+    }
+
+    if (ambPos) {
+      return ambPos;
     }
 
     return new THREE.Vector3(0, 0, 0);
@@ -196,6 +224,12 @@ export class SceneEnvironment {
     }
     if (this.trafficSignals) {
       this.trafficSignals.dispose();
+    }
+    if (this.corridorOverlay) {
+      this.corridorOverlay.dispose();
+    }
+    if (this.flowArrows) {
+      this.flowArrows.dispose();
     }
     this.disposables.forEach((item) => {
       try {

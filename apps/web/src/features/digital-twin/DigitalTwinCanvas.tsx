@@ -21,6 +21,7 @@ import { SceneEnvironment } from './SceneEnvironment';
 import { SceneController, CameraPresetType, ProjectionMode, CameraStateMetrics } from './SceneController';
 import { VehicleSnapshot } from './VehicleTrajectorySource';
 import { InspectedSignalPole } from './TrafficSignal3D';
+import { CorridorPlanTelemetry } from './CorridorOverlay3D';
 
 interface DigitalTwinCanvasProps {
   intersectionId?: string;
@@ -50,6 +51,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
   const [showMetrics, setShowMetrics] = useState<boolean>(true);
   const [selectedVehicle, setSelectedVehicle] = useState<VehicleSnapshot | null>(null);
   const [selectedPole, setSelectedPole] = useState<InspectedSignalPole | null>(null);
+  const [selectedCorridor, setSelectedCorridor] = useState<CorridorPlanTelemetry | null>(null);
   const [phaseSnapshot, setPhaseSnapshot] = useState<{ ew: string; ns: string; ewSec: number; nsSec: number }>({
     ew: 'green',
     ns: 'red',
@@ -62,6 +64,12 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
     vehicleBadges: true,
     trafficSignals: true,
     pedestrians: true,
+    corridor: true,
+    flowArrows: true,
+    conflictZone: true,
+    sensorFootprints: true,
+    queueHotspots: true,
+    vehicleCallouts: true,
     roadMarkings: true,
     crosswalks: true,
     sidewalks: true,
@@ -229,14 +237,33 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
     if (poleHit) {
       setSelectedPole(poleHit);
       setSelectedVehicle(null);
+      setSelectedCorridor(null);
       if (onSelectEntity) {
         onSelectEntity(poleHit.poleId, 'TRAFFIC_SIGNAL_POLE');
       }
       return;
     }
 
+    // 3. Raycast Emergency Corridor Ribbon
+    const corridorIntersects = raycaster.intersectObjects(
+      environmentRef.current.corridorOverlay.group.children,
+      true
+    );
+    const corridorHit = corridorIntersects.find((h) => h.object.userData?.isCorridor);
+    if (corridorHit) {
+      const plan = environmentRef.current.corridorOverlay.getCorridorTelemetry(performance.now());
+      setSelectedCorridor(plan);
+      setSelectedVehicle(null);
+      setSelectedPole(null);
+      if (onSelectEntity) {
+        onSelectEntity(plan.corridorId, 'EMERGENCY_CORRIDOR');
+      }
+      return;
+    }
+
     setSelectedVehicle(null);
     setSelectedPole(null);
+    setSelectedCorridor(null);
   };
 
   // UI Handlers for Preset and Projection switching
@@ -283,6 +310,18 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
         environmentRef.current.trafficSignals.setSignalsVisibility(nextState);
       } else if (layerKey === 'pedestrians') {
         environmentRef.current.trafficSignals.setPedestriansVisibility(nextState);
+      } else if (layerKey === 'corridor') {
+        environmentRef.current.corridorOverlay.setVisibility(nextState);
+      } else if (layerKey === 'flowArrows') {
+        environmentRef.current.flowArrows.setFlowArrowsVisibility(nextState);
+      } else if (layerKey === 'conflictZone') {
+        environmentRef.current.flowArrows.setConflictZoneVisibility(nextState);
+      } else if (layerKey === 'sensorFootprints') {
+        environmentRef.current.flowArrows.setSensorFootprintsVisibility(nextState);
+      } else if (layerKey === 'queueHotspots') {
+        environmentRef.current.flowArrows.setQueueHotspotsVisibility(nextState);
+      } else if (layerKey === 'vehicleCallouts') {
+        environmentRef.current.corridorOverlay.setShowCallouts(nextState);
       } else if (layerKey === 'roadMarkings') {
         environmentRef.current.roadNetwork.setMarkingsVisibility(nextState);
       } else if (layerKey === 'crosswalks') {
@@ -353,7 +392,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
               <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#f1f5f9', letterSpacing: '0.04em' }}>
                 3D DIGITAL TWIN VIEWPORT
               </span>
-              <StatusPill label="SIGNALS & TRAFFIC ACTIVE" variant="cyan" size="xs" pulse />
+              <StatusPill label="CORRIDOR & HUD ACTIVE" variant="cyan" size="xs" pulse />
             </div>
 
             <div style={{ fontSize: '0.70rem', color: '#94a3b8' }}>
@@ -589,6 +628,109 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                   </span>
                   <span style={{ fontSize: '0.60rem', color: '#64748b' }}>
                     Src: <span style={{ color: '#38bdf8' }}>{selectedPole.provenance}</span>
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {/* Selected Emergency Corridor Inspector Card */}
+            {selectedCorridor && (
+              <div
+                style={{
+                  marginTop: '6px',
+                  backgroundColor: 'rgba(7, 16, 38, 0.96)',
+                  border: '1px solid #00f5d4',
+                  borderRadius: '6px',
+                  padding: '8px 10px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '5px',
+                  fontSize: '0.68rem',
+                  color: '#e2e8f0',
+                  boxShadow: '0 4px 18px rgba(0, 245, 212, 0.3)',
+                  minWidth: '260px',
+                }}
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <Flame size={13} color="#00f5d4" />
+                    <span style={{ color: '#94a3b8', fontSize: '0.62rem' }}>Corridor:</span>
+                    <span style={{ fontWeight: 800, color: '#00f5d4', fontFamily: 'monospace' }}>
+                      {selectedCorridor.corridorId}
+                    </span>
+                    <span
+                      style={{
+                        fontSize: '0.60rem',
+                        fontWeight: 700,
+                        padding: '1px 4px',
+                        borderRadius: '3px',
+                        backgroundColor:
+                          selectedCorridor.mode === 'BLOCKED'
+                            ? 'rgba(239, 68, 68, 0.2)'
+                            : 'rgba(0, 245, 212, 0.2)',
+                        color: selectedCorridor.mode === 'BLOCKED' ? '#ef4444' : '#00f5d4',
+                      }}
+                    >
+                      {selectedCorridor.mode}
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => setSelectedCorridor(null)}
+                    style={{ background: 'none', border: 'none', color: '#64748b', cursor: 'pointer', padding: 0 }}
+                  >
+                    <X size={12} />
+                  </button>
+                </div>
+
+                <div style={{ fontSize: '0.62rem', color: '#94a3b8' }}>
+                  Target: <strong style={{ color: '#f1f5f9' }}>{selectedCorridor.targetVehicleId}</strong> ({selectedCorridor.missionId})
+                </div>
+
+                <div style={{ fontSize: '0.60rem', color: '#cbd5e1', lineHeight: '1.2' }}>
+                  {selectedCorridor.reason}
+                </div>
+
+                {/* Node Progression Chain A–D */}
+                <div style={{ borderTop: '1px solid #1e293b', paddingTop: '4px', marginTop: '2px' }}>
+                  <div style={{ fontSize: '0.62rem', color: '#64748b', fontWeight: 600, marginBottom: '2px' }}>
+                    Corridor Intersections (A–D Chain):
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                    {selectedCorridor.nodes.map((node) => (
+                      <div
+                        key={node.id}
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                          fontSize: '0.60rem',
+                          padding: '1px 4px',
+                          borderRadius: '2px',
+                          backgroundColor:
+                            node.status === 'ACTIVE'
+                              ? 'rgba(0, 245, 212, 0.15)'
+                              : node.status === 'COMPLETED'
+                              ? 'rgba(16, 185, 129, 0.1)'
+                              : 'rgba(30, 41, 59, 0.4)',
+                        }}
+                      >
+                        <span style={{ color: node.status === 'ACTIVE' ? '#00f5d4' : '#94a3b8' }}>
+                          {node.name}
+                        </span>
+                        <span style={{ color: node.status === 'ACTIVE' ? '#06d6a0' : '#64748b', fontWeight: 600 }}>
+                          {node.phaseWindow}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '4px', borderTop: '1px solid #1e293b', paddingTop: '4px' }}>
+                  <span style={{ fontSize: '0.60rem', color: '#64748b' }}>
+                    Lead: <strong style={{ color: '#f1f5f9' }}>{selectedCorridor.clearanceDistanceM}m</strong> ({selectedCorridor.preemptionLeadSec}s)
+                  </span>
+                  <span style={{ fontSize: '0.60rem', color: '#38bdf8' }}>
+                    {selectedCorridor.provenance}
                   </span>
                 </div>
               </div>
@@ -834,6 +976,66 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                     {layers.pedestrians && <Check size={10} color="#00e5ff" />}
                   </div>
                   <span>Pedestrians Crossing</span>
+                </label>
+
+                <label
+                  onClick={() => handleToggleLayer('corridor')}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', color: layers.corridor ? '#00e5ff' : '#64748b' }}
+                >
+                  <div style={{ width: '12px', height: '12px', border: '1px solid #1b2f5b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {layers.corridor && <Check size={10} color="#00e5ff" />}
+                  </div>
+                  <span>Emergency Corridor Ribbon</span>
+                </label>
+
+                <label
+                  onClick={() => handleToggleLayer('flowArrows')}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', color: layers.flowArrows ? '#00e5ff' : '#64748b' }}
+                >
+                  <div style={{ width: '12px', height: '12px', border: '1px solid #1b2f5b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {layers.flowArrows && <Check size={10} color="#00e5ff" />}
+                  </div>
+                  <span>Traffic Flow Arrows</span>
+                </label>
+
+                <label
+                  onClick={() => handleToggleLayer('conflictZone')}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', color: layers.conflictZone ? '#00e5ff' : '#64748b' }}
+                >
+                  <div style={{ width: '12px', height: '12px', border: '1px solid #1b2f5b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {layers.conflictZone && <Check size={10} color="#00e5ff" />}
+                  </div>
+                  <span>Conflict Zone Box</span>
+                </label>
+
+                <label
+                  onClick={() => handleToggleLayer('sensorFootprints')}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', color: layers.sensorFootprints ? '#00e5ff' : '#64748b' }}
+                >
+                  <div style={{ width: '12px', height: '12px', border: '1px solid #1b2f5b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {layers.sensorFootprints && <Check size={10} color="#00e5ff" />}
+                  </div>
+                  <span>Sensor Footprints (RSU)</span>
+                </label>
+
+                <label
+                  onClick={() => handleToggleLayer('queueHotspots')}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', color: layers.queueHotspots ? '#00e5ff' : '#64748b' }}
+                >
+                  <div style={{ width: '12px', height: '12px', border: '1px solid #1b2f5b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {layers.queueHotspots && <Check size={10} color="#00e5ff" />}
+                  </div>
+                  <span>Queue Hotspots</span>
+                </label>
+
+                <label
+                  onClick={() => handleToggleLayer('vehicleCallouts')}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', color: layers.vehicleCallouts ? '#00e5ff' : '#64748b' }}
+                >
+                  <div style={{ width: '12px', height: '12px', border: '1px solid #1b2f5b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {layers.vehicleCallouts && <Check size={10} color="#00e5ff" />}
+                  </div>
+                  <span>Vehicle 3D Callouts</span>
                 </label>
 
                 <label
