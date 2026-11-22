@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Camera, Radio, Disc, Cpu, Compass, Layers } from 'lucide-react';
+import { Camera, Radio, Disc, Cpu, Compass } from 'lucide-react';
+import { PanelFrame } from '../../components/PanelFrame';
+import { StatusPill } from '../../components/StatusPill';
 
 export const IoTSensorsCard: React.FC = () => {
   const [layers, setLayers] = useState({
@@ -8,50 +10,45 @@ export const IoTSensorsCard: React.FC = () => {
     v2xNetwork: true,
     incidentEvent: true,
     emergencyCorridor: true,
-    parkingOccupancy: false,
   });
 
   const toggleLayer = (key: keyof typeof layers) => {
-    setLayers(prev => ({ ...prev, [key]: !prev[key] }));
+    setLayers((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
   return (
-    <div className="panel-card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <div className="panel-header">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Radio size={14} color="#00e5ff" />
-          <span>IoT Sensor Network & City Map Overview</span>
-        </div>
-        <span style={{ fontSize: '0.68rem', color: '#64748b' }}>Simulated Telemetry Topology</span>
-      </div>
-
-      <div style={{ display: 'grid', gridTemplateColumns: '170px 1fr', gap: '10px', padding: '10px', flex: 1 }}>
+    <PanelFrame
+      title="IoT Sensor Network & City Map Overview"
+      icon={<Radio size={15} />}
+      badge={<StatusPill label="Topology" variant="cyan" size="xs" />}
+    >
+      <div style={{ display: 'grid', gridTemplateColumns: '170px 1fr', gap: '8px', padding: '8px 10px', height: '100%' }}>
         {/* Left: Sensor Inventory & Layer Controls */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.72rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.70rem', justifyContent: 'space-between' }}>
           {/* Sensor Devices */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <Camera size={13} color="#ef476f" />
+              <Camera size={12} color="#ef476f" />
               <div style={{ flex: 1, color: '#e2e8f0' }}>Traffic Cameras</div>
               <div style={{ color: '#06d6a0', fontWeight: 600, fontFamily: 'monospace' }}>112/112</div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <Radio size={13} color="#00e5ff" />
+              <Radio size={12} color="#00e5ff" />
               <div style={{ flex: 1, color: '#e2e8f0' }}>LiDAR Sensors</div>
               <div style={{ color: '#06d6a0', fontWeight: 600, fontFamily: 'monospace' }}>48/48</div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <Disc size={13} color="#38bdf8" />
+              <Disc size={12} color="#38bdf8" />
               <div style={{ flex: 1, color: '#e2e8f0' }}>Loop Detectors</div>
               <div style={{ color: '#06d6a0', fontWeight: 600, fontFamily: 'monospace' }}>96/96</div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <Radio size={13} color="#ffd166" />
+              <Radio size={12} color="#ffd166" />
               <div style={{ flex: 1, color: '#e2e8f0' }}>RSUs (V2I)</div>
               <div style={{ color: '#06d6a0', fontWeight: 600, fontFamily: 'monospace' }}>42/42</div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <Cpu size={13} color="#06d6a0" />
+              <Cpu size={12} color="#06d6a0" />
               <div style={{ flex: 1, color: '#e2e8f0' }}>Signal Controllers</div>
               <div style={{ color: '#06d6a0', fontWeight: 600, fontFamily: 'monospace' }}>8/8</div>
             </div>
@@ -60,27 +57,19 @@ export const IoTSensorsCard: React.FC = () => {
           <div style={{ height: '1px', backgroundColor: '#1b2f5b' }} />
 
           {/* Layer Checkboxes */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-            <span style={{ fontSize: '0.68rem', color: '#94a3b8', fontWeight: 600 }}>Data Layers (City)</span>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', color: '#cbd5e1' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+            <span style={{ fontSize: '0.65rem', color: '#94a3b8', fontWeight: 600 }}>Data Layers</span>
+            <label style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer', color: '#cbd5e1' }}>
               <input type="checkbox" checked={layers.trafficFlow} onChange={() => toggleLayer('trafficFlow')} />
               <span>Traffic Flow</span>
             </label>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', color: '#cbd5e1' }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer', color: '#cbd5e1' }}>
               <input type="checkbox" checked={layers.sensorCoverage} onChange={() => toggleLayer('sensorCoverage')} />
               <span>Sensor Coverage</span>
             </label>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', color: '#cbd5e1' }}>
-              <input type="checkbox" checked={layers.v2xNetwork} onChange={() => toggleLayer('v2xNetwork')} />
-              <span>V2X Network</span>
-            </label>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', color: '#cbd5e1' }}>
-              <input type="checkbox" checked={layers.incidentEvent} onChange={() => toggleLayer('incidentEvent')} />
-              <span>Incident / Event</span>
-            </label>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', color: '#cbd5e1' }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer', color: '#cbd5e1' }}>
               <input type="checkbox" checked={layers.emergencyCorridor} onChange={() => toggleLayer('emergencyCorridor')} />
-              <span style={{ color: '#00f5d4' }}>Emergency Corridor</span>
+              <span style={{ color: '#00f5d4', fontWeight: 600 }}>Emergency Corridor</span>
             </label>
           </div>
         </div>
@@ -110,12 +99,14 @@ export const IoTSensorsCard: React.FC = () => {
             <path d="M 0 140 L 240 140" stroke="#12203e" strokeWidth="4" />
 
             {/* Emergency Corridor (Blue dotted route) */}
-            <path
-              d="M 40 90 L 120 90 L 200 90"
-              stroke="#00e5ff"
-              strokeWidth="3"
-              strokeDasharray="4,3"
-            />
+            {layers.emergencyCorridor && (
+              <path
+                d="M 40 90 L 120 90 L 200 90"
+                stroke="#00e5ff"
+                strokeWidth="3.5"
+                strokeDasharray="4,3"
+              />
+            )}
 
             {/* Nodes and Sensors */}
             <circle cx="120" cy="90" r="14" fill="rgba(0, 229, 255, 0.2)" stroke="#00e5ff" strokeWidth="1.5" />
@@ -141,25 +132,24 @@ export const IoTSensorsCard: React.FC = () => {
           <div
             style={{
               position: 'absolute',
-              top: '8px',
-              right: '8px',
+              top: '6px',
+              right: '6px',
               backgroundColor: 'rgba(11, 21, 45, 0.85)',
-              padding: '3px 6px',
+              padding: '2px 5px',
               borderRadius: '4px',
               border: '1px solid #1b2f5b',
-              fontSize: '0.62rem',
+              fontSize: '0.60rem',
               color: '#94a3b8',
               display: 'flex',
               alignItems: 'center',
               gap: '2px',
             }}
           >
-            <Compass size={12} color="#00e5ff" />
+            <Compass size={11} color="#00e5ff" />
             <span>N</span>
           </div>
         </div>
       </div>
-    </div>
+    </PanelFrame>
   );
 };
-

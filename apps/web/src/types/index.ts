@@ -39,3 +39,4 @@ export interface HealthCheck {
   environment: string;
 }
 
+export * from './dashboard';
