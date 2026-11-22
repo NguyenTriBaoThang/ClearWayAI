@@ -1,0 +1,26 @@
+# Global repository maintainers
+* @NguyenTriBaoThang
+
+# Frontend & 3D Digital Twin
+/apps/web/ @NguyenTriBaoThang
+/packages/shared/ @NguyenTriBaoThang
+
+# Backend API & WebSocket Event Bus
+/apps/api/ @NguyenTriBaoThang
+
+# AI Models & Clearance Estimation
+/ai/ @NguyenTriBaoThang
+/models/ @NguyenTriBaoThang
+
+# SUMO Simulation & TraCI Adapters
+/simulation/ @NguyenTriBaoThang
+
+# Controller & Safety Gateway
+/controller/ @NguyenTriBaoThang
+
+# Physical Hardware Model
+/hardware/ @NguyenTriBaoThang
+
+# Technical Documentation
+/docs/ @NguyenTriBaoThang
+/docs-site/ @NguyenTriBaoThang

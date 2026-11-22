@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: "ClearWay AI Documentation"
+    url: "https://nguyentribaothang.github.io/ClearWayAI/"
+    about: "Read comprehensive system architecture, safety specifications, and API guides."
+  - name: "Project Task Board"
+    url: "https://github.com/NguyenTriBaoThang/ClearWayAI/blob/main/docs/TASK_BOARD.md"
+    about: "Track the 60-Task roadmap and implementation progress."

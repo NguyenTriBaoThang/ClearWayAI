@@ -1,0 +1,38 @@
+changelog:
+  categories:
+    - title: "🚨 Critical Safety & Controller Fixes"
+      labels:
+        - "safety"
+        - "security"
+        - "controller"
+    - title: "✨ 3D Digital Twin & Visualization"
+      labels:
+        - "3d"
+        - "threejs"
+        - "ui"
+    - title: "🚦 SUMO Simulation & TraCI"
+      labels:
+        - "sumo"
+        - "simulation"
+        - "traffic"
+    - title: "🤖 AI Models & Clearance Prediction"
+      labels:
+        - "ai"
+        - "machine-learning"
+        - "yolo"
+        - "lstm"
+        - "xgboost"
+    - title: "⚡ Backend API & Streaming"
+      labels:
+        - "api"
+        - "fastapi"
+        - "websocket"
+    - title: "🛠 Dependency Updates & Infrastructure"
+      labels:
+        - "dependencies"
+        - "ci/cd"
+        - "docker"
+    - title: "📝 Documentation & Research Logs"
+      labels:
+        - "documentation"
+        - "research"

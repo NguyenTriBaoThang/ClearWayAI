@@ -1,0 +1,48 @@
+name: "🔬 Research & Simulation Experiment Proposal"
+description: "Propose an AI training run, traffic benchmark, or ablation study"
+title: "[EXP]: "
+labels: ["research", "experiment", "ai"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template to document scientific hypotheses, dataset splits, baseline controls, and evaluation metrics.
+  - type: input
+    id: experiment_id
+    attributes:
+      label: "Experiment ID / Task Code"
+      description: "Code identifier (e.g. EXP-CLEARANCE-01, Task 34, Task 51)"
+      placeholder: "e.g. EXP-LSTM-VS-XGB-01"
+    validations:
+      required: true
+  - type: textarea
+    id: hypothesis
+    attributes:
+      label: "Hypothesis & Objective"
+      description: "What mathematical or operational hypothesis is being evaluated?"
+    validations:
+      required: true
+  - type: textarea
+    id: dataset_provenance
+    attributes:
+      label: "Dataset Provenance & Split Strategy"
+      description: "Specify data source (SUMO synthetic vs video), split groups to prevent leakage, and sample size."
+    validations:
+      required: true
+  - type: textarea
+    id: baselines_metrics
+    attributes:
+      label: "Baselines & Primary Evaluation Metrics"
+      description: "What baselines (Fixed B0, Reactive B1, Corridor B2) are compared? What metrics (MAE, RMSE, EV Travel Time, Queue Length)?"
+    validations:
+      required: true
+  - type: dropdown
+    id: random_seeds
+    attributes:
+      label: "Reproducibility & Multi-Seed Protocol"
+      description: "Will this experiment run with fixed multi-seed evaluation?"
+      options:
+        - "Multi-seed protocol enabled (>= 10 seeds)"
+        - "Deterministic seed test (single seed verification)"
+    validations:
+      required: true

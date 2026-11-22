@@ -1,0 +1,41 @@
+name: "✨ Feature Request"
+description: "Suggest an idea or new capability for ClearWayAI"
+title: "[FEAT]: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for proposing a feature for ClearWayAI!
+  - type: input
+    id: related_task
+    attributes:
+      label: "Related Task Number (T01–T60)"
+      description: "If this feature relates to an existing roadmap task, specify the task code."
+      placeholder: "e.g. T13, T38, T44"
+  - type: textarea
+    id: problem
+    attributes:
+      label: "Problem or Operational Opportunity"
+      description: "A clear and concise description of what traffic operational challenge or user need this addresses."
+      placeholder: "As a traffic operator / emergency responder, I need..."
+    validations:
+      required: true
+  - type: textarea
+    id: proposed_solution
+    attributes:
+      label: "Proposed Solution & System Architecture Impact"
+      description: "Describe how this feature should work across UI / 3D / Simulation / AI / Controller."
+    validations:
+      required: true
+  - type: dropdown
+    id: safety_impact
+    attributes:
+      label: "Safety Invariant Impact"
+      description: "Does this proposal impact signal timing, conflict matrices, or emergency priority?"
+      options:
+        - "No safety impact (UI/Visual/Documentation only)"
+        - "Simulation-only logic impact (Tested in SUMO sandbox)"
+        - "Requires Safety Gateway validation (Signal timing / priority logic)"
+    validations:
+      required: true
