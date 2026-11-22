@@ -10,8 +10,7 @@ import {
   ShieldCheck,
   Video,
   Eye,
-  Maximize2,
-  Activity,
+  Check,
 } from 'lucide-react';
 import { StatusPill } from '../../components/StatusPill';
 import { SceneEnvironment } from './SceneEnvironment';
@@ -29,17 +28,26 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
 }) => {
   const mountRef = useRef<HTMLDivElement>(null);
   const controllerRef = useRef<SceneController | null>(null);
+  const environmentRef = useRef<SceneEnvironment | null>(null);
 
   const [webglInitialized, setWebglInitialized] = useState<boolean>(false);
   const [fps, setFps] = useState<number>(60);
   const [renderMs, setRenderMs] = useState<number>(2.4);
-  const [drawCalls, setDrawCalls] = useState<number>(18);
-  const [triangles, setTriangles] = useState<number>(1420);
+  const [drawCalls, setDrawCalls] = useState<number>(22);
+  const [triangles, setTriangles] = useState<number>(2450);
 
   const [cameraPreset, setCameraPreset] = useState<CameraPresetType>('iso');
   const [projectionMode, setProjectionMode] = useState<ProjectionMode>('perspective');
   const [autoRotate, setAutoRotate] = useState<boolean>(false);
+  const [showLayersMenu, setShowLayersMenu] = useState<boolean>(false);
   const [showMetrics, setShowMetrics] = useState<boolean>(true);
+
+  const [layers, setLayers] = useState({
+    roadMarkings: true,
+    crosswalks: true,
+    sidewalks: true,
+  });
+
   const [camMetrics, setCamMetrics] = useState<CameraStateMetrics>({
     position: { x: 46, y: 50, z: 46 },
     target: { x: 0, y: 0, z: 0 },
@@ -81,8 +89,9 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
       return;
     }
 
-    // 3. Scene Environment (Lighting, Grids, Elevated Pedestal, Markers)
+    // 3. Scene Environment (Lighting, Grids, Road Network, Crosswalks, Markers)
     const environment = new SceneEnvironment(scene);
+    environmentRef.current = environment;
 
     // 4. Scene Controller (Dual Cameras & OrbitControls)
     const controller = new SceneController(container, width, height);
@@ -185,6 +194,20 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
     handleSelectPreset('iso');
   };
 
+  const handleToggleLayer = (layerKey: keyof typeof layers) => {
+    const nextState = !layers[layerKey];
+    setLayers((prev) => ({ ...prev, [layerKey]: nextState }));
+    if (environmentRef.current) {
+      if (layerKey === 'roadMarkings') {
+        environmentRef.current.roadNetwork.setMarkingsVisibility(nextState);
+      } else if (layerKey === 'crosswalks') {
+        environmentRef.current.roadNetwork.setCrosswalksVisibility(nextState);
+      } else if (layerKey === 'sidewalks') {
+        environmentRef.current.roadNetwork.setSidewalksVisibility(nextState);
+      }
+    }
+  };
+
   return (
     <div
       style={{
@@ -237,15 +260,15 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
               <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#f1f5f9', letterSpacing: '0.04em' }}>
                 3D DIGITAL TWIN VIEWPORT
               </span>
-              <StatusPill label="ISOMETRIC ENGINE" variant="cyan" size="xs" pulse />
+              <StatusPill label="ROAD NETWORK ACTIVE" variant="cyan" size="xs" pulse />
             </div>
 
             <div style={{ fontSize: '0.70rem', color: '#94a3b8' }}>
-              Target Intersection:{' '}
+              Intersection:{' '}
               <span style={{ color: '#00e5ff', fontFamily: 'monospace', fontWeight: 600 }}>
                 {intersectionId}
               </span>{' '}
-              (Oak St. & 5th Ave)
+              (Oak St. & 5th Ave — 4 Arms, 14m Cross)
             </div>
 
             <div style={{ fontSize: '0.66rem', color: '#64748b', display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -360,7 +383,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
               {/* Projection Mode Switcher */}
               <button
                 onClick={handleToggleProjection}
-                title="Toggle Perspective vs Orthographic (Parallel) Projection"
+                title="Toggle Perspective vs Orthographic Projection"
                 style={{
                   backgroundColor: 'rgba(10, 17, 40, 0.88)',
                   backdropFilter: 'blur(8px)',
@@ -399,6 +422,28 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                 AUTO-ROT: {autoRotate ? 'ON' : 'OFF'}
               </button>
 
+              {/* Layers Dropdown Toggle */}
+              <button
+                onClick={() => setShowLayersMenu(!showLayersMenu)}
+                title="Toggle 3D Scene Layer Visibility"
+                style={{
+                  backgroundColor: showLayersMenu ? 'rgba(0, 229, 255, 0.2)' : 'rgba(10, 17, 40, 0.88)',
+                  backdropFilter: 'blur(8px)',
+                  border: '1px solid #1b2f5b',
+                  color: showLayersMenu ? '#00e5ff' : '#94a3b8',
+                  borderRadius: '5px',
+                  padding: '3px 8px',
+                  fontSize: '0.65rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '3px',
+                }}
+              >
+                <Layers size={11} /> LAYERS
+              </button>
+
               {/* Reset Camera Button */}
               <button
                 onClick={handleResetCamera}
@@ -418,6 +463,59 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                 <RotateCcw size={12} />
               </button>
             </div>
+
+            {/* Layer Visibility Menu Drawer */}
+            {showLayersMenu && (
+              <div
+                style={{
+                  backgroundColor: 'rgba(11, 21, 45, 0.95)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid #1b325f',
+                  borderRadius: '6px',
+                  padding: '8px 10px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '6px',
+                  fontSize: '0.66rem',
+                  boxShadow: '0 4px 16px rgba(0,0,0,0.5)',
+                  minWidth: '150px',
+                }}
+              >
+                <div style={{ color: '#94a3b8', fontWeight: 600, borderBottom: '1px solid #1b2f5b', paddingBottom: '3px' }}>
+                  Roadway Layers
+                </div>
+
+                <label
+                  onClick={() => handleToggleLayer('roadMarkings')}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', color: layers.roadMarkings ? '#00e5ff' : '#64748b' }}
+                >
+                  <div style={{ width: '12px', height: '12px', border: '1px solid #1b2f5b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {layers.roadMarkings && <Check size={10} color="#00e5ff" />}
+                  </div>
+                  <span>Lanes & Markings</span>
+                </label>
+
+                <label
+                  onClick={() => handleToggleLayer('crosswalks')}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', color: layers.crosswalks ? '#00e5ff' : '#64748b' }}
+                >
+                  <div style={{ width: '12px', height: '12px', border: '1px solid #1b2f5b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {layers.crosswalks && <Check size={10} color="#00e5ff" />}
+                  </div>
+                  <span>Zebra Crosswalks</span>
+                </label>
+
+                <label
+                  onClick={() => handleToggleLayer('sidewalks')}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', color: layers.sidewalks ? '#00e5ff' : '#64748b' }}
+                >
+                  <div style={{ width: '12px', height: '12px', border: '1px solid #1b2f5b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {layers.sidewalks && <Check size={10} color="#00e5ff" />}
+                  </div>
+                  <span>Corner Sidewalks</span>
+                </label>
+              </div>
+            )}
 
             {/* Camera Coordinates Overlay */}
             {showMetrics && (

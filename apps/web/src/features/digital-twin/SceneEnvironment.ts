@@ -1,11 +1,15 @@
 import * as THREE from 'three';
+import { RoadNetworkMesh } from './RoadNetworkMesh';
 
 /**
  * SceneEnvironment manages lighting, cyber grid, junction pedestal,
- * cardinal markers, and visual corridor ribbons for the ClearWayAI 3D Digital Twin.
+ * 3D road network geometry (asphalt, lanes, crosswalks, sidewalks),
+ * cardinal markers, and visual corridor ribbons for ClearWayAI.
  */
 export class SceneEnvironment {
   public scene: THREE.Scene;
+  public roadNetwork: RoadNetworkMesh;
+
   public keyLight!: THREE.DirectionalLight;
   public fillLight!: THREE.DirectionalLight;
   public ambientLight!: THREE.AmbientLight;
@@ -19,7 +23,11 @@ export class SceneEnvironment {
     this.scene = scene;
     this.setupLighting();
     this.setupGroundAndGrid();
-    this.setupJunctionPlatform();
+
+    // Instantiate and add procedural road network (asphalt, lanes, markings, crosswalks, sidewalks)
+    this.roadNetwork = new RoadNetworkMesh();
+    this.scene.add(this.roadNetwork.group);
+
     this.setupCardinalMarkers();
     this.setupCorridorRibbon();
     this.setupWaypointMarker();
@@ -75,60 +83,13 @@ export class SceneEnvironment {
     this.disposables.push(fineGrid.geometry, fineGrid.material as any);
   }
 
-  private setupJunctionPlatform(): void {
-    // Main elevated intersection pedestal
-    const platformGeo = new THREE.BoxGeometry(26, 0.4, 26);
-    const platformMat = new THREE.MeshStandardMaterial({
-      color: 0x0b1836,
-      roughness: 0.7,
-      metalness: 0.3,
-    });
-    const platform = new THREE.Mesh(platformGeo, platformMat);
-    platform.position.y = -0.1;
-    this.scene.add(platform);
-    this.disposables.push(platformGeo, platformMat);
-
-    // Glowing cyan edges for the pedestal
-    const edgesGeo = new THREE.EdgesGeometry(platformGeo);
-    const edgesMat = new THREE.LineBasicMaterial({ color: 0x00e5ff, linewidth: 2 });
-    const edgeLines = new THREE.LineSegments(edgesGeo, edgesMat);
-    edgeLines.position.copy(platform.position);
-    this.scene.add(edgeLines);
-    this.disposables.push(edgesGeo, edgesMat);
-
-    // Conflict zone central platform (the inner intersection box)
-    const innerBoxGeo = new THREE.BoxGeometry(16, 0.42, 16);
-    const innerBoxMat = new THREE.MeshStandardMaterial({
-      color: 0x0e2046,
-      roughness: 0.6,
-      metalness: 0.4,
-    });
-    const innerBox = new THREE.Mesh(innerBoxGeo, innerBoxMat);
-    innerBox.position.y = -0.09;
-    this.scene.add(innerBox);
-    this.disposables.push(innerBoxGeo, innerBoxMat);
-
-    const innerEdgesGeo = new THREE.EdgesGeometry(innerBoxGeo);
-    const innerEdgesMat = new THREE.LineBasicMaterial({ color: 0x00f5d4, linewidth: 1 });
-    const innerEdgeLines = new THREE.LineSegments(innerEdgesGeo, innerEdgesMat);
-    innerEdgeLines.position.copy(innerBox.position);
-    this.scene.add(innerEdgeLines);
-    this.disposables.push(innerEdgesGeo, innerEdgesMat);
-
-    // Center Coordinate Axis Helper
-    const axesHelper = new THREE.AxesHelper(7);
-    axesHelper.position.set(0, 0.15, 0);
-    this.scene.add(axesHelper);
-    this.disposables.push(axesHelper.geometry, axesHelper.material as any);
-  }
-
   private setupCardinalMarkers(): void {
     // 3D Cardinal Orientation Markers (N, S, E, W)
     const directions = [
-      { label: 'NORTH (Oak St. NB)', pos: new THREE.Vector3(0, 0.1, -16), color: 0x00e5ff },
-      { label: 'SOUTH (Oak St. SB)', pos: new THREE.Vector3(0, 0.1, 16), color: 0x00e5ff },
-      { label: 'EAST (5th Ave. EB)', pos: new THREE.Vector3(16, 0.1, 0), color: 0x00f5d4 },
-      { label: 'WEST (5th Ave. WB)', pos: new THREE.Vector3(-16, 0.1, 0), color: 0x00f5d4 },
+      { label: 'NORTH (Oak St. NB)', pos: new THREE.Vector3(0, 0.1, -22), color: 0x00e5ff },
+      { label: 'SOUTH (Oak St. SB)', pos: new THREE.Vector3(0, 0.1, 22), color: 0x00e5ff },
+      { label: 'EAST (5th Ave. EB)', pos: new THREE.Vector3(22, 0.1, 0), color: 0x00f5d4 },
+      { label: 'WEST (5th Ave. WB)', pos: new THREE.Vector3(-22, 0.1, 0), color: 0x00f5d4 },
     ];
 
     directions.forEach((dir) => {
@@ -143,26 +104,26 @@ export class SceneEnvironment {
 
   private setupCorridorRibbon(): void {
     // Emergency Priority Corridor Visual Ribbon (East-West path through junction)
-    const corridorGeo = new THREE.PlaneGeometry(50, 4.5);
+    const corridorGeo = new THREE.PlaneGeometry(80, 3.8);
     this.corridorMaterial = new THREE.MeshBasicMaterial({
       color: 0x00e5ff,
       transparent: true,
-      opacity: 0.22,
+      opacity: 0.18,
       side: THREE.DoubleSide,
       wireframe: false,
     });
     const corridorMesh = new THREE.Mesh(corridorGeo, this.corridorMaterial);
     corridorMesh.rotation.x = -Math.PI / 2;
-    corridorMesh.position.set(0, 0.02, 0);
+    corridorMesh.position.set(0, 0.032, 1.75); // Centered over East-West incoming lane
     this.scene.add(corridorMesh);
     this.disposables.push(corridorGeo, this.corridorMaterial);
 
-    // Border line guides for the corridor
+    // Glowing border line guides for the corridor
     const lineGeo = new THREE.BufferGeometry().setFromPoints([
-      new THREE.Vector3(-25, 0.05, -2.25),
-      new THREE.Vector3(25, 0.05, -2.25),
-      new THREE.Vector3(-25, 0.05, 2.25),
-      new THREE.Vector3(25, 0.05, 2.25),
+      new THREE.Vector3(-40, 0.035, -0.15),
+      new THREE.Vector3(40, 0.035, -0.15),
+      new THREE.Vector3(-40, 0.035, 3.65),
+      new THREE.Vector3(40, 0.035, 3.65),
     ]);
     const lineMat = new THREE.LineBasicMaterial({ color: 0x00f5d4 });
     const corridorLines = new THREE.LineSegments(lineGeo, lineMat);
@@ -181,7 +142,7 @@ export class SceneEnvironment {
       metalness: 0.8,
     });
     this.waypointsMesh = new THREE.Mesh(markerGeo, markerMat);
-    this.waypointsMesh.position.set(-18, 0.8, 0);
+    this.waypointsMesh.position.set(-18, 0.8, 1.75);
     this.scene.add(this.waypointsMesh);
     this.disposables.push(markerGeo, markerMat);
   }
@@ -192,12 +153,12 @@ export class SceneEnvironment {
   public update(timeMs: number): THREE.Vector3 {
     // 1. Subtle pulsing on emergency corridor ribbon
     if (this.corridorMaterial) {
-      this.corridorMaterial.opacity = 0.18 + 0.1 * Math.sin(timeMs * 0.003);
+      this.corridorMaterial.opacity = 0.16 + 0.1 * Math.sin(timeMs * 0.003);
     }
 
-    // 2. Animate ambulance waypoint traversing East-West along corridor (-22m to +22m)
+    // 2. Animate ambulance waypoint traversing East-West along corridor (-35m to +35m)
     if (this.waypointsMesh) {
-      const progress = ((timeMs * 0.006) % 44) - 22;
+      const progress = ((timeMs * 0.006) % 70) - 35;
       this.waypointsMesh.position.x = progress;
       return this.waypointsMesh.position;
     }
@@ -206,6 +167,9 @@ export class SceneEnvironment {
   }
 
   public dispose(): void {
+    if (this.roadNetwork) {
+      this.roadNetwork.dispose();
+    }
     this.disposables.forEach((item) => {
       try {
         item.dispose();
@@ -215,4 +179,3 @@ export class SceneEnvironment {
     });
   }
 }
-

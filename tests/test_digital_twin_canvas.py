@@ -29,8 +29,7 @@ def test_scene_environment_lighting_and_pedestal():
 
     # Grid & platform verification
     assert "THREE.GridHelper" in content
-    assert "THREE.EdgesGeometry" in content
-    assert "THREE.BoxGeometry" in content
+    assert "RoadNetworkMesh" in content
     assert "setupCardinalMarkers" in content
     assert "setupCorridorRibbon" in content
 
