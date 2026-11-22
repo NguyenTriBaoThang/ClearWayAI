@@ -1,0 +1,154 @@
+{
+  "$defs": {
+    "ModuleStatus": {
+      "description": "Detailed status of individual system modules.",
+      "properties": {
+        "simulation": {
+          "default": "PLANNED",
+          "enum": [
+            "PLANNED",
+            "IN_PROGRESS",
+            "IMPLEMENTED",
+            "VERIFIED"
+          ],
+          "title": "Simulation",
+          "type": "string"
+        },
+        "ai_clearance": {
+          "default": "PLANNED",
+          "enum": [
+            "PLANNED",
+            "IN_PROGRESS",
+            "IMPLEMENTED",
+            "VERIFIED"
+          ],
+          "title": "Ai Clearance",
+          "type": "string"
+        },
+        "traffic_signals": {
+          "default": "PLANNED",
+          "enum": [
+            "PLANNED",
+            "IN_PROGRESS",
+            "IMPLEMENTED",
+            "VERIFIED"
+          ],
+          "title": "Traffic Signals",
+          "type": "string"
+        },
+        "digital_twin": {
+          "default": "PLANNED",
+          "enum": [
+            "PLANNED",
+            "IN_PROGRESS",
+            "IMPLEMENTED",
+            "VERIFIED"
+          ],
+          "title": "Digital Twin",
+          "type": "string"
+        },
+        "v2x_telemetry": {
+          "default": "UNAVAILABLE",
+          "enum": [
+            "UNAVAILABLE",
+            "SIMULATED",
+            "CONNECTED"
+          ],
+          "title": "V2X Telemetry",
+          "type": "string"
+        },
+        "hardware_bridge": {
+          "default": "PLANNED",
+          "enum": [
+            "PLANNED",
+            "IN_PROGRESS",
+            "IMPLEMENTED",
+            "VERIFIED"
+          ],
+          "title": "Hardware Bridge",
+          "type": "string"
+        }
+      },
+      "title": "ModuleStatus",
+      "type": "object"
+    }
+  },
+  "description": "System operational status schema adhering to safety and provenance rules.",
+  "properties": {
+    "status": {
+      "default": "operational",
+      "enum": [
+        "operational",
+        "degraded",
+        "offline"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "mode": {
+      "default": "SIMULATION",
+      "enum": [
+        "SIMULATION",
+        "OFFLINE_VIDEO",
+        "SHADOW_ADVISORY",
+        "AUTHORIZED_PILOT"
+      ],
+      "title": "Mode",
+      "type": "string"
+    },
+    "simulation_only": {
+      "default": true,
+      "title": "Simulation Only",
+      "type": "boolean"
+    },
+    "public_signal_control_permitted": {
+      "default": false,
+      "title": "Public Signal Control Permitted",
+      "type": "boolean"
+    },
+    "data_provenance": {
+      "default": "DEMO_FIXTURE",
+      "enum": [
+        "DEMO_FIXTURE",
+        "SUMO_SIMULATED",
+        "OFFLINE_VIDEO",
+        "SHADOW_ADVISORY",
+        "LIVE_CONNECTED"
+      ],
+      "title": "Data Provenance",
+      "type": "string"
+    },
+    "demo_mode_enabled": {
+      "default": true,
+      "title": "Demo Mode Enabled",
+      "type": "boolean"
+    },
+    "modules": {
+      "$ref": "#/$defs/ModuleStatus"
+    },
+    "active_scenario": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": "demo-oak-5th-intersection",
+      "title": "Active Scenario"
+    },
+    "timestamp": {
+      "format": "date-time",
+      "title": "Timestamp",
+      "type": "string"
+    },
+    "message": {
+      "default": "ClearWayAI System Initialized. All live telemetry and control disabled pending verification.",
+      "title": "Message",
+      "type": "string"
+    }
+  },
+  "title": "SystemStatusResponse",
+  "type": "object"
+}

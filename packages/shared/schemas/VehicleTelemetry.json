@@ -1,0 +1,87 @@
+{
+  "description": "Vehicle kinematics and class telemetry snapshot.",
+  "properties": {
+    "vehicle_id": {
+      "title": "Vehicle Id",
+      "type": "string"
+    },
+    "vehicle_class": {
+      "enum": [
+        "motorcycle",
+        "car",
+        "suv",
+        "bus",
+        "truck",
+        "ambulance",
+        "fire_engine"
+      ],
+      "title": "Vehicle Class",
+      "type": "string"
+    },
+    "speed_kmh": {
+      "title": "Speed Kmh",
+      "type": "number"
+    },
+    "position_x": {
+      "title": "Position X",
+      "type": "number"
+    },
+    "position_y": {
+      "title": "Position Y",
+      "type": "number"
+    },
+    "position_z": {
+      "title": "Position Z",
+      "type": "number"
+    },
+    "heading_deg": {
+      "title": "Heading Deg",
+      "type": "number"
+    },
+    "lane_id": {
+      "title": "Lane Id",
+      "type": "string"
+    },
+    "is_priority_vehicle": {
+      "default": false,
+      "title": "Is Priority Vehicle",
+      "type": "boolean"
+    },
+    "mission_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Mission Id"
+    },
+    "provenance": {
+      "default": "DEMO_FIXTURE",
+      "enum": [
+        "DEMO_FIXTURE",
+        "SUMO_SIMULATED",
+        "OFFLINE_VIDEO",
+        "SHADOW_ADVISORY",
+        "LIVE_CONNECTED"
+      ],
+      "title": "Provenance",
+      "type": "string"
+    }
+  },
+  "required": [
+    "vehicle_id",
+    "vehicle_class",
+    "speed_kmh",
+    "position_x",
+    "position_y",
+    "position_z",
+    "heading_deg",
+    "lane_id"
+  ],
+  "title": "VehicleTelemetry",
+  "type": "object"
+}

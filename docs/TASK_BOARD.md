@@ -8,15 +8,15 @@
 
 ## 📊 Sprint Progress Overview
 - **Total Tasks:** 60
-- **Verified Complete:** 20 (T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20)
+- **Verified Complete:** 21 (T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21)
 - **In Progress:** 0
-- **Planned:** 40
-- **Phase Completion:** Phase A (4/6 complete), Phase B (16/16 complete - 100% COMPLETE!)
+- **Planned:** 39
+- **Phase Completion:** Phase A (5/6 complete), Phase B (16/16 complete - 100% COMPLETE!)
 
 ```mermaid
 pie title Task Completion by Status
-    "VERIFIED" : 20
-    "PLANNED" : 40
+    "VERIFIED" : 21
+    "PLANNED" : 39
 ```
 
 ---
@@ -45,7 +45,7 @@ pie title Task Completion by Status
 | **T18** | Phase B | Panel dưới phải: traffic analytics, gauge và cảnh báo | **P0** | T06, T16 | **VERIFIED** | OperationsAnalyticsPanel, TrafficAnalytics contract, 4-approach volume bars, travel times, 82/100 radial performance gauge, live anomaly alerts feed, pytest (83/83) |
 | **T19** | Phase B | Chức năng điều hành tương tác: sim controls, nhiệm vụ và inspector | **P0** | T06–T18 | **VERIFIED** | SimulationControls (play/pause/step/speed/scenarios), MissionDrawer (AMB-339 live ETA, 4-node chain, pre-emption toggle), UnifiedInspector (vehicles, signals, sensors, nodes, telemetry export), pytest (89/89) |
 | **T20** | Phase B | Visual fidelity gate: kiểm tra UI/3D giống ảnh và tối ưu FPS | **P0** | T05–T19 | **VERIFIED** | All 7 Regional Acceptance Gates verified, 60 FPS real-time profiler, <=8.0ms render, <=60 draw calls, zero static fake images, audit script passing, pytest (99/99) |
-| **T21** | Phase A | Đặc tả hệ thống, ADR, schema và ranh giới an toàn | **P0** | T01 | `PLANNED` | SRS.md, ADRs, Pydantic/JSON schemas |
+| **T21** | Phase A | Đặc tả hệ thống, ADR, schema và ranh giới an toàn | **P0** | T01 | **VERIFIED** | SRS.md, SAFETY_BOUNDARIES.md, 6 ADRs, Pydantic & JSON Schemas, MMU interlock specification, pytest (104/104) |
 | **T22** | Phase A | Thiết lập CI/CD, lint, tests và môi trường phát triển | **P0** | T01–T21 | `PLANNED` | GitHub Actions workflow, ruff, mypy, pre-commit |
 | **T23** | Phase C | Dựng mạng SUMO 3–5 nút giao liên tiếp | **P0** | T01, T21–T22 | `PLANNED` | SUMO synthetic network .net.xml (A–D corridor) |
 | **T24** | Phase C | Sinh giao thông hỗn hợp xe máy–ô tô và kịch bản tải | **P0** | T23 | `PLANNED` | Mixed traffic demand generator, sublane model |

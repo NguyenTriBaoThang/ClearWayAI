@@ -1,0 +1,66 @@
+{
+  "description": "Aggregated traffic performance indices and delay deltas.",
+  "properties": {
+    "intersection_id": {
+      "title": "Intersection Id",
+      "type": "string"
+    },
+    "performance_index": {
+      "title": "Performance Index",
+      "type": "number"
+    },
+    "throughput_pct_change": {
+      "title": "Throughput Pct Change",
+      "type": "number"
+    },
+    "avg_delay_pct_change": {
+      "title": "Avg Delay Pct Change",
+      "type": "number"
+    },
+    "stops_per_veh_pct_change": {
+      "title": "Stops Per Veh Pct Change",
+      "type": "number"
+    },
+    "occupancy_pct": {
+      "title": "Occupancy Pct",
+      "type": "number"
+    },
+    "avg_speed_kmh": {
+      "title": "Avg Speed Kmh",
+      "type": "number"
+    },
+    "avg_queue_m": {
+      "title": "Avg Queue M",
+      "type": "number"
+    },
+    "backlog_m": {
+      "title": "Backlog M",
+      "type": "number"
+    },
+    "provenance": {
+      "default": "DEMO_FIXTURE",
+      "enum": [
+        "DEMO_FIXTURE",
+        "SUMO_SIMULATED",
+        "OFFLINE_VIDEO",
+        "SHADOW_ADVISORY",
+        "LIVE_CONNECTED"
+      ],
+      "title": "Provenance",
+      "type": "string"
+    }
+  },
+  "required": [
+    "intersection_id",
+    "performance_index",
+    "throughput_pct_change",
+    "avg_delay_pct_change",
+    "stops_per_veh_pct_change",
+    "occupancy_pct",
+    "avg_speed_kmh",
+    "avg_queue_m",
+    "backlog_m"
+  ],
+  "title": "TrafficAnalyticsSchema",
+  "type": "object"
+}

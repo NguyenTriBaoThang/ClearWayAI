@@ -1,0 +1,491 @@
+{
+  "$defs": {
+    "EmergencyMissionSchema": {
+      "description": "Active emergency vehicle corridor pre-clearance mission.",
+      "properties": {
+        "mission_id": {
+          "title": "Mission Id",
+          "type": "string"
+        },
+        "vehicle_id": {
+          "title": "Vehicle Id",
+          "type": "string"
+        },
+        "vehicle_type": {
+          "enum": [
+            "ambulance",
+            "firetruck"
+          ],
+          "title": "Vehicle Type",
+          "type": "string"
+        },
+        "target_facility": {
+          "title": "Target Facility",
+          "type": "string"
+        },
+        "eta_hospital_min": {
+          "title": "Eta Hospital Min",
+          "type": "number"
+        },
+        "status": {
+          "enum": [
+            "ACTIVE",
+            "STANDBY",
+            "COMPLETED",
+            "CANCELLED"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "corridor_intersections": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Corridor Intersections",
+          "type": "array"
+        },
+        "provenance": {
+          "default": "DEMO_FIXTURE",
+          "enum": [
+            "DEMO_FIXTURE",
+            "SUMO_SIMULATED",
+            "OFFLINE_VIDEO",
+            "SHADOW_ADVISORY",
+            "LIVE_CONNECTED"
+          ],
+          "title": "Provenance",
+          "type": "string"
+        }
+      },
+      "required": [
+        "mission_id",
+        "vehicle_id",
+        "vehicle_type",
+        "target_facility",
+        "eta_hospital_min",
+        "status",
+        "corridor_intersections"
+      ],
+      "title": "EmergencyMissionSchema",
+      "type": "object"
+    },
+    "HardwareStatusSchema": {
+      "description": "V2I / V2X hardware pipeline telemetry and channel diagnostics.",
+      "properties": {
+        "network_id": {
+          "title": "Network Id",
+          "type": "string"
+        },
+        "obu_vehicles_online": {
+          "title": "Obu Vehicles Online",
+          "type": "integer"
+        },
+        "obu_pct": {
+          "title": "Obu Pct",
+          "type": "number"
+        },
+        "rsu_online": {
+          "title": "Rsu Online",
+          "type": "integer"
+        },
+        "rsu_pct": {
+          "title": "Rsu Pct",
+          "type": "number"
+        },
+        "edge_controllers_online": {
+          "title": "Edge Controllers Online",
+          "type": "integer"
+        },
+        "signal_controllers_online": {
+          "title": "Signal Controllers Online",
+          "type": "integer"
+        },
+        "v2x_status": {
+          "enum": [
+            "Active",
+            "Degraded",
+            "Offline",
+            "Simulated"
+          ],
+          "title": "V2X Status",
+          "type": "string"
+        },
+        "latency_ms": {
+          "title": "Latency Ms",
+          "type": "number"
+        },
+        "packet_loss_pct": {
+          "title": "Packet Loss Pct",
+          "type": "number"
+        },
+        "provenance": {
+          "default": "DEMO_FIXTURE",
+          "enum": [
+            "DEMO_FIXTURE",
+            "SUMO_SIMULATED",
+            "OFFLINE_VIDEO",
+            "SHADOW_ADVISORY",
+            "LIVE_CONNECTED"
+          ],
+          "title": "Provenance",
+          "type": "string"
+        }
+      },
+      "required": [
+        "network_id",
+        "obu_vehicles_online",
+        "obu_pct",
+        "rsu_online",
+        "rsu_pct",
+        "edge_controllers_online",
+        "signal_controllers_online",
+        "v2x_status",
+        "latency_ms",
+        "packet_loss_pct"
+      ],
+      "title": "HardwareStatusSchema",
+      "type": "object"
+    },
+    "SignalApproachTimingSchema": {
+      "description": "Timing for an individual vehicular approach.",
+      "properties": {
+        "approach": {
+          "title": "Approach",
+          "type": "string"
+        },
+        "red_s": {
+          "title": "Red S",
+          "type": "integer"
+        },
+        "yellow_s": {
+          "title": "Yellow S",
+          "type": "integer"
+        },
+        "green_s": {
+          "title": "Green S",
+          "type": "integer"
+        },
+        "cycle_s": {
+          "title": "Cycle S",
+          "type": "integer"
+        },
+        "split_pct": {
+          "title": "Split Pct",
+          "type": "integer"
+        },
+        "current_phase": {
+          "enum": [
+            "red",
+            "yellow",
+            "green"
+          ],
+          "title": "Current Phase",
+          "type": "string"
+        }
+      },
+      "required": [
+        "approach",
+        "red_s",
+        "yellow_s",
+        "green_s",
+        "cycle_s",
+        "split_pct",
+        "current_phase"
+      ],
+      "title": "SignalApproachTimingSchema",
+      "type": "object"
+    },
+    "SignalStateSchema": {
+      "description": "Comprehensive signal phase timing and coordination state.",
+      "properties": {
+        "intersection_id": {
+          "title": "Intersection Id",
+          "type": "string"
+        },
+        "intersection_name": {
+          "title": "Intersection Name",
+          "type": "string"
+        },
+        "cycle_time_s": {
+          "title": "Cycle Time S",
+          "type": "integer"
+        },
+        "current_phase_name": {
+          "title": "Current Phase Name",
+          "type": "string"
+        },
+        "next_phase_name": {
+          "title": "Next Phase Name",
+          "type": "string"
+        },
+        "approaches": {
+          "items": {
+            "$ref": "#/$defs/SignalApproachTimingSchema"
+          },
+          "title": "Approaches",
+          "type": "array"
+        },
+        "provenance": {
+          "default": "DEMO_FIXTURE",
+          "enum": [
+            "DEMO_FIXTURE",
+            "SUMO_SIMULATED",
+            "OFFLINE_VIDEO",
+            "SHADOW_ADVISORY",
+            "LIVE_CONNECTED"
+          ],
+          "title": "Provenance",
+          "type": "string"
+        }
+      },
+      "required": [
+        "intersection_id",
+        "intersection_name",
+        "cycle_time_s",
+        "current_phase_name",
+        "next_phase_name",
+        "approaches"
+      ],
+      "title": "SignalStateSchema",
+      "type": "object"
+    },
+    "TrafficAnalyticsSchema": {
+      "description": "Aggregated traffic performance indices and delay deltas.",
+      "properties": {
+        "intersection_id": {
+          "title": "Intersection Id",
+          "type": "string"
+        },
+        "performance_index": {
+          "title": "Performance Index",
+          "type": "number"
+        },
+        "throughput_pct_change": {
+          "title": "Throughput Pct Change",
+          "type": "number"
+        },
+        "avg_delay_pct_change": {
+          "title": "Avg Delay Pct Change",
+          "type": "number"
+        },
+        "stops_per_veh_pct_change": {
+          "title": "Stops Per Veh Pct Change",
+          "type": "number"
+        },
+        "occupancy_pct": {
+          "title": "Occupancy Pct",
+          "type": "number"
+        },
+        "avg_speed_kmh": {
+          "title": "Avg Speed Kmh",
+          "type": "number"
+        },
+        "avg_queue_m": {
+          "title": "Avg Queue M",
+          "type": "number"
+        },
+        "backlog_m": {
+          "title": "Backlog M",
+          "type": "number"
+        },
+        "provenance": {
+          "default": "DEMO_FIXTURE",
+          "enum": [
+            "DEMO_FIXTURE",
+            "SUMO_SIMULATED",
+            "OFFLINE_VIDEO",
+            "SHADOW_ADVISORY",
+            "LIVE_CONNECTED"
+          ],
+          "title": "Provenance",
+          "type": "string"
+        }
+      },
+      "required": [
+        "intersection_id",
+        "performance_index",
+        "throughput_pct_change",
+        "avg_delay_pct_change",
+        "stops_per_veh_pct_change",
+        "occupancy_pct",
+        "avg_speed_kmh",
+        "avg_queue_m",
+        "backlog_m"
+      ],
+      "title": "TrafficAnalyticsSchema",
+      "type": "object"
+    },
+    "VehicleTelemetry": {
+      "description": "Vehicle kinematics and class telemetry snapshot.",
+      "properties": {
+        "vehicle_id": {
+          "title": "Vehicle Id",
+          "type": "string"
+        },
+        "vehicle_class": {
+          "enum": [
+            "motorcycle",
+            "car",
+            "suv",
+            "bus",
+            "truck",
+            "ambulance",
+            "fire_engine"
+          ],
+          "title": "Vehicle Class",
+          "type": "string"
+        },
+        "speed_kmh": {
+          "title": "Speed Kmh",
+          "type": "number"
+        },
+        "position_x": {
+          "title": "Position X",
+          "type": "number"
+        },
+        "position_y": {
+          "title": "Position Y",
+          "type": "number"
+        },
+        "position_z": {
+          "title": "Position Z",
+          "type": "number"
+        },
+        "heading_deg": {
+          "title": "Heading Deg",
+          "type": "number"
+        },
+        "lane_id": {
+          "title": "Lane Id",
+          "type": "string"
+        },
+        "is_priority_vehicle": {
+          "default": false,
+          "title": "Is Priority Vehicle",
+          "type": "boolean"
+        },
+        "mission_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mission Id"
+        },
+        "provenance": {
+          "default": "DEMO_FIXTURE",
+          "enum": [
+            "DEMO_FIXTURE",
+            "SUMO_SIMULATED",
+            "OFFLINE_VIDEO",
+            "SHADOW_ADVISORY",
+            "LIVE_CONNECTED"
+          ],
+          "title": "Provenance",
+          "type": "string"
+        }
+      },
+      "required": [
+        "vehicle_id",
+        "vehicle_class",
+        "speed_kmh",
+        "position_x",
+        "position_y",
+        "position_z",
+        "heading_deg",
+        "lane_id"
+      ],
+      "title": "VehicleTelemetry",
+      "type": "object"
+    }
+  },
+  "description": "Full atomic intersection telemetry snapshot streamed over WebSocket.",
+  "properties": {
+    "intersection_id": {
+      "title": "Intersection Id",
+      "type": "string"
+    },
+    "timestamp": {
+      "format": "date-time",
+      "title": "Timestamp",
+      "type": "string"
+    },
+    "sim_time_sec": {
+      "title": "Sim Time Sec",
+      "type": "number"
+    },
+    "vehicles": {
+      "items": {
+        "$ref": "#/$defs/VehicleTelemetry"
+      },
+      "title": "Vehicles",
+      "type": "array"
+    },
+    "signals": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SignalStateSchema"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "hardware": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/HardwareStatusSchema"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "analytics": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/TrafficAnalyticsSchema"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "active_mission": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/EmergencyMissionSchema"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "provenance": {
+      "default": "DEMO_FIXTURE",
+      "enum": [
+        "DEMO_FIXTURE",
+        "SUMO_SIMULATED",
+        "OFFLINE_VIDEO",
+        "SHADOW_ADVISORY",
+        "LIVE_CONNECTED"
+      ],
+      "title": "Provenance",
+      "type": "string"
+    }
+  },
+  "required": [
+    "intersection_id",
+    "sim_time_sec"
+  ],
+  "title": "TelemetrySnapshotSchema",
+  "type": "object"
+}

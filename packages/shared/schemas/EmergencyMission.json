@@ -1,0 +1,69 @@
+{
+  "description": "Active emergency vehicle corridor pre-clearance mission.",
+  "properties": {
+    "mission_id": {
+      "title": "Mission Id",
+      "type": "string"
+    },
+    "vehicle_id": {
+      "title": "Vehicle Id",
+      "type": "string"
+    },
+    "vehicle_type": {
+      "enum": [
+        "ambulance",
+        "firetruck"
+      ],
+      "title": "Vehicle Type",
+      "type": "string"
+    },
+    "target_facility": {
+      "title": "Target Facility",
+      "type": "string"
+    },
+    "eta_hospital_min": {
+      "title": "Eta Hospital Min",
+      "type": "number"
+    },
+    "status": {
+      "enum": [
+        "ACTIVE",
+        "STANDBY",
+        "COMPLETED",
+        "CANCELLED"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "corridor_intersections": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Corridor Intersections",
+      "type": "array"
+    },
+    "provenance": {
+      "default": "DEMO_FIXTURE",
+      "enum": [
+        "DEMO_FIXTURE",
+        "SUMO_SIMULATED",
+        "OFFLINE_VIDEO",
+        "SHADOW_ADVISORY",
+        "LIVE_CONNECTED"
+      ],
+      "title": "Provenance",
+      "type": "string"
+    }
+  },
+  "required": [
+    "mission_id",
+    "vehicle_id",
+    "vehicle_type",
+    "target_facility",
+    "eta_hospital_min",
+    "status",
+    "corridor_intersections"
+  ],
+  "title": "EmergencyMissionSchema",
+  "type": "object"
+}

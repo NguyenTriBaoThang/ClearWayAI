@@ -1,0 +1,77 @@
+{
+  "description": "V2I / V2X hardware pipeline telemetry and channel diagnostics.",
+  "properties": {
+    "network_id": {
+      "title": "Network Id",
+      "type": "string"
+    },
+    "obu_vehicles_online": {
+      "title": "Obu Vehicles Online",
+      "type": "integer"
+    },
+    "obu_pct": {
+      "title": "Obu Pct",
+      "type": "number"
+    },
+    "rsu_online": {
+      "title": "Rsu Online",
+      "type": "integer"
+    },
+    "rsu_pct": {
+      "title": "Rsu Pct",
+      "type": "number"
+    },
+    "edge_controllers_online": {
+      "title": "Edge Controllers Online",
+      "type": "integer"
+    },
+    "signal_controllers_online": {
+      "title": "Signal Controllers Online",
+      "type": "integer"
+    },
+    "v2x_status": {
+      "enum": [
+        "Active",
+        "Degraded",
+        "Offline",
+        "Simulated"
+      ],
+      "title": "V2X Status",
+      "type": "string"
+    },
+    "latency_ms": {
+      "title": "Latency Ms",
+      "type": "number"
+    },
+    "packet_loss_pct": {
+      "title": "Packet Loss Pct",
+      "type": "number"
+    },
+    "provenance": {
+      "default": "DEMO_FIXTURE",
+      "enum": [
+        "DEMO_FIXTURE",
+        "SUMO_SIMULATED",
+        "OFFLINE_VIDEO",
+        "SHADOW_ADVISORY",
+        "LIVE_CONNECTED"
+      ],
+      "title": "Provenance",
+      "type": "string"
+    }
+  },
+  "required": [
+    "network_id",
+    "obu_vehicles_online",
+    "obu_pct",
+    "rsu_online",
+    "rsu_pct",
+    "edge_controllers_online",
+    "signal_controllers_online",
+    "v2x_status",
+    "latency_ms",
+    "packet_loss_pct"
+  ],
+  "title": "HardwareStatusSchema",
+  "type": "object"
+}

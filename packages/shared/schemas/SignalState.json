@@ -1,0 +1,105 @@
+{
+  "$defs": {
+    "SignalApproachTimingSchema": {
+      "description": "Timing for an individual vehicular approach.",
+      "properties": {
+        "approach": {
+          "title": "Approach",
+          "type": "string"
+        },
+        "red_s": {
+          "title": "Red S",
+          "type": "integer"
+        },
+        "yellow_s": {
+          "title": "Yellow S",
+          "type": "integer"
+        },
+        "green_s": {
+          "title": "Green S",
+          "type": "integer"
+        },
+        "cycle_s": {
+          "title": "Cycle S",
+          "type": "integer"
+        },
+        "split_pct": {
+          "title": "Split Pct",
+          "type": "integer"
+        },
+        "current_phase": {
+          "enum": [
+            "red",
+            "yellow",
+            "green"
+          ],
+          "title": "Current Phase",
+          "type": "string"
+        }
+      },
+      "required": [
+        "approach",
+        "red_s",
+        "yellow_s",
+        "green_s",
+        "cycle_s",
+        "split_pct",
+        "current_phase"
+      ],
+      "title": "SignalApproachTimingSchema",
+      "type": "object"
+    }
+  },
+  "description": "Comprehensive signal phase timing and coordination state.",
+  "properties": {
+    "intersection_id": {
+      "title": "Intersection Id",
+      "type": "string"
+    },
+    "intersection_name": {
+      "title": "Intersection Name",
+      "type": "string"
+    },
+    "cycle_time_s": {
+      "title": "Cycle Time S",
+      "type": "integer"
+    },
+    "current_phase_name": {
+      "title": "Current Phase Name",
+      "type": "string"
+    },
+    "next_phase_name": {
+      "title": "Next Phase Name",
+      "type": "string"
+    },
+    "approaches": {
+      "items": {
+        "$ref": "#/$defs/SignalApproachTimingSchema"
+      },
+      "title": "Approaches",
+      "type": "array"
+    },
+    "provenance": {
+      "default": "DEMO_FIXTURE",
+      "enum": [
+        "DEMO_FIXTURE",
+        "SUMO_SIMULATED",
+        "OFFLINE_VIDEO",
+        "SHADOW_ADVISORY",
+        "LIVE_CONNECTED"
+      ],
+      "title": "Provenance",
+      "type": "string"
+    }
+  },
+  "required": [
+    "intersection_id",
+    "intersection_name",
+    "cycle_time_s",
+    "current_phase_name",
+    "next_phase_name",
+    "approaches"
+  ],
+  "title": "SignalStateSchema",
+  "type": "object"
+}
