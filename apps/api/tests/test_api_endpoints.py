@@ -38,8 +38,8 @@ def client(tmp_path) -> TestClient:
     # Reset in-memory runners
     simulations._active_runners.clear()
 
-    with TestClient(app) as test_client:
-        yield test_client
+    test_client = TestClient(app)
+    yield test_client
 
     database.db = original_db
     simulations.db = original_db

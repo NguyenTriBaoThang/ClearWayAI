@@ -30,9 +30,7 @@ def create_simulation(req: SimulationCreateRequest) -> SimulationResponse:
 
     # Initialize simulation manager
     runner = SimulationManager(
-        scenario_id=req.scenario_id,
         step_length=0.1,
-        force_synthetic=req.use_synthetic_engine,
     )
     runner.start()
     _active_runners[sim_id] = runner
@@ -57,7 +55,7 @@ def create_simulation(req: SimulationCreateRequest) -> SimulationResponse:
         stopped_at=record.stopped_at,
         total_steps=record.total_steps,
         emergency_events=record.emergency_events,
-        metadata={"engine": "SyntheticCorridorEngine" if runner.is_synthetic else "TraCI"},
+        metadata={"engine": "SyntheticCorridorEngine"},
     )
 
 
@@ -120,19 +118,18 @@ def step_simulation(
     if not runner:
         # Re-attach or start runner if stopped
         runner = SimulationManager(
-            scenario_id=record.scenario_id,
             step_length=req.dt,
-            force_synthetic=True,
         )
         runner.start()
         _active_runners[simulation_id] = runner
 
     # Advance step
-    runner.step()
+    runner.step(dt=req.dt)
     sim_time = runner.get_sim_time()
-    active_count = len(runner.get_active_vehicles())
+    active_count = len(runner.engine.active_vehicles) if runner.engine else 0
+    curr_phase = runner.engine.current_phase if runner.engine else 0
     lights: dict[str, int] = {
-        nid: runner.get_traffic_light_state(nid) for nid in ["node_a", "node_b", "node_c", "node_d"]
+        nid: curr_phase for nid in ["node_a", "node_b", "node_c", "node_d"]
     }
 
     # Update database step counter
