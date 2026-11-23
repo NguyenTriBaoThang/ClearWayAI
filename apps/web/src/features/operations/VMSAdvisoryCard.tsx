@@ -16,8 +16,8 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { PanelFrame } from '../../components/ui/PanelFrame';
-import { StatusPill } from '../../components/ui/StatusPill';
+import { PanelFrame } from '../../components/PanelFrame';
+import { StatusPill } from '../../components/StatusPill';
 
 export interface VMSBoardItem {
   board_id: string;
@@ -162,7 +162,6 @@ export const VMSAdvisoryCard: React.FC<VMSAdvisoryCardProps> = ({
     <PanelFrame
       title="Variable Message Signs (VMS) Advisory"
       badge="Overhead Gantries"
-      variant="cyan"
     >
       <div className="space-y-2.5">
         <div className="flex items-center justify-between text-xs text-slate-400 pb-1 border-b border-slate-800">
@@ -217,9 +216,7 @@ export const VMSAdvisoryCard: React.FC<VMSAdvisoryCardProps> = ({
                     <span className="text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded bg-slate-800 text-slate-300">
                       {b.recommended_speed_kmh} km/h
                     </span>
-                    <StatusPill variant={pillVariant} size="sm">
-                      {b.mode}
-                    </StatusPill>
+                    <StatusPill label={b.mode} variant={pillVariant} size="sm" />
                   </div>
                 </div>
 

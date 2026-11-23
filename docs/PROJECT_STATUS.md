@@ -105,7 +105,7 @@
 ### Phase J — Demo, Release & Advanced Exploration (Tasks 53–60)
 | Task ID | Task Description | Priority | Dependencies | Status | Verification Proof |
 | :--- | :--- | :---: | :---: | :---: | :--- |
-| **T53** | Thiết kế bảng LED/VMS advisory hiển thị an toàn | P1 | T38–T44 | **PLANNED** | Scheduled |
+| **T53** | Thiết kế bảng LED/VMS advisory hiển thị an toàn | P1 | T38–T44 | **VERIFIED** | VMSManager bilingual driver guidance (VMS-A at -80m, VMS-B at 170m, VMS-C at 420m, VMS-D at 670m), 4 operational advisory modes (Nominal, Pre-clearance, Emergency Corridor, Recovery), REST API endpoints (/api/v1/corridor/vms, /vms/{node_id}), 3D VMSOverheadGantryMesh (steel truss, 1024x256 dynamic LED canvas texture, strobe flasher beacons), VMSAdvisoryCard.tsx operations card, pytest tests/test_vms_advisory_system.py (6/6), monorepo quality gates 5/5 PASS, production web build PASS |
 | **T54** | Xây mô hình vật lý 3–4 nút với ESP32 & đèn LED | P1 | T41, T43–T44, T50 | **PLANNED** | Scheduled |
 | **T55** | Bộ kịch bản demo hoàn chỉnh + video 5 phút + slide pitching | P0 | T44–T48, T50–T51 | **PLANNED** | Scheduled |
 | **T56** | Cập nhật Technical Documentation đầy đủ theo code thật | P0 | T03, T23–T55 | **PLANNED** | Scheduled |
@@ -117,7 +117,7 @@
 ---
 
 ## 3. Current Sprint Focus
-- **Current Milestone:** TASK 01–52 Complete & Verified (Phase A: 6/6, Phase B: 16/16, Phase C: 5/5, Phase D: 5/5, Phase E: 4/4, Phase F: 5/5, Phase G: 4/4, Phase H: 3/3, Phase I: 4/4 ALL 100% COMPLETE! — Total 52/60 tasks verified = 86.7% of master plan).
-- **Next Dependent Task:** TASK 53 — Thiết kế bảng LED/VMS advisory hiển thị an toàn (Phase J: Demo, Release & Advanced Exploration).
+- **Current Milestone:** TASK 01–53 Complete & Verified (Phase A: 6/6, Phase B: 16/16, Phase C: 5/5, Phase D: 5/5, Phase E: 4/4, Phase F: 5/5, Phase G: 4/4, Phase H: 3/3, Phase I: 4/4 ALL 100% COMPLETE!, Phase J: 1/8 complete - 12.5% — Total 53/60 tasks verified = 88.3% of master plan).
+- **Next Dependent Task:** TASK 54 — Xây mô hình vật lý 3–4 nút với ESP32 & đèn LED (Phase J: Demo, Release & Advanced Exploration).
 
 

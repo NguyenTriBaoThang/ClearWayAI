@@ -12,16 +12,15 @@ Verifies:
 
 from pathlib import Path
 
-from fastapi.testclient import TestClient
+import pytest
+from fastapi import HTTPException
 
-from apps.api.src.main import app
+from apps.api.src.routers.corridor import get_corridor_vms_status, get_node_vms_status
 from controller.vms.vms_manager import (
     VMS_GANTRY_TOPOLOGY,
     VMSAdvisoryMode,
     VMSManager,
 )
-
-client = TestClient(app)
 
 
 def test_vms_gantry_topology_and_coordinates():
@@ -129,25 +128,22 @@ def test_vms_manager_caution_recovery_evaluation():
 def test_vms_fastapi_endpoints():
     """Verify GET /api/v1/corridor/vms and /api/v1/corridor/vms/{node_id}."""
     # 1. Full corridor VMS endpoint
-    res_corridor = client.get("/api/v1/corridor/vms?sim_time=15.0")
-    assert res_corridor.status_code == 200
-    data_c = res_corridor.json()
-    assert "boards" in data_c
-    assert "node_a" in data_c["boards"]
-    assert "node_d" in data_c["boards"]
-    assert data_c["provenance"] == "CLEARWAY_VMS_ADVISORY"
+    res_corridor = get_corridor_vms_status(sim_time=15.0)
+    assert len(res_corridor.boards) == 4
+    assert "node_a" in res_corridor.boards
+    assert "node_d" in res_corridor.boards
+    assert res_corridor.provenance == "CLEARWAY_VMS_ADVISORY"
 
     # 2. Single board endpoint
-    res_node_a = client.get("/api/v1/corridor/vms/node_a?sim_time=15.0")
-    assert res_node_a.status_code == 200
-    data_a = res_node_a.json()
-    assert data_a["board_id"] == "VMS-A"
-    assert data_a["node_id"] == "node_a"
-    assert data_a["gantry_x_m"] == -80.0
+    res_node_a = get_node_vms_status(node_id="node_a", sim_time=15.0)
+    assert res_node_a.board_id == "VMS-A"
+    assert res_node_a.node_id == "node_a"
+    assert res_node_a.gantry_x_m == -80.0
 
     # 3. Unknown node 404
-    res_unknown = client.get("/api/v1/corridor/vms/unknown_node")
-    assert res_unknown.status_code == 404
+    with pytest.raises(HTTPException) as exc_info:
+        get_node_vms_status(node_id="unknown_node", sim_time=15.0)
+    assert exc_info.value.status_code == 404
 
 
 def test_vms_3d_modules_exist_and_structure():
