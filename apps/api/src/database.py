@@ -116,6 +116,41 @@ class SnapshotRecord:
         return asdict(self)
 
 
+@dataclass
+class DecisionAuditLogRecord:
+    """Database record for an explainable AI signal control decision."""
+
+    decision_id: str
+    timestamp: float
+    sim_time_sec: float
+    node_id: str
+    decision_type: str
+    commanded_phase: int
+    previous_phase: int = 0
+    mission_id: str | None = None
+    vehicle_id: str | None = None
+    ev_eta_sec: float = 0.0
+    queue_length_m: float = 0.0
+    queued_vehicle_count: int = 0
+    predicted_clearance_sec: float = 0.0
+    transition_time_sec: float = 0.0
+    safety_buffer_sec: float = 2.0
+    delta_trigger_sec: float = 0.0
+    confidence_score: float = 1.0
+    model_name: str = "gradient_boosting_champion"
+    explanation_narrative: str = ""
+    feature_attributions_json: str = "{}"
+    safety_status: str = "SAFE"
+    provenance: str = "CLEARWAY_EXPLAINABLE_AUDIT"
+
+    def to_dict(self) -> dict[str, Any]:
+        d = asdict(self)
+        d["feature_attributions"] = (
+            json.loads(self.feature_attributions_json) if self.feature_attributions_json else {}
+        )
+        return d
+
+
 class DatabaseManager:
     """Thread-safe SQLite database manager for ClearWayAI backend."""
 
@@ -209,6 +244,37 @@ class DatabaseManager:
             cursor.execute("""
                 CREATE INDEX IF NOT EXISTS idx_snapshots_sim_time
                 ON simulation_snapshots (simulation_id, sim_time_sec);
+            """)
+
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS decision_audit_logs (
+                    decision_id TEXT PRIMARY KEY,
+                    timestamp REAL NOT NULL,
+                    sim_time_sec REAL NOT NULL,
+                    node_id TEXT NOT NULL,
+                    decision_type TEXT NOT NULL,
+                    commanded_phase INTEGER NOT NULL,
+                    previous_phase INTEGER DEFAULT 0,
+                    mission_id TEXT,
+                    vehicle_id TEXT,
+                    ev_eta_sec REAL DEFAULT 0.0,
+                    queue_length_m REAL DEFAULT 0.0,
+                    queued_vehicle_count INTEGER DEFAULT 0,
+                    predicted_clearance_sec REAL DEFAULT 0.0,
+                    transition_time_sec REAL DEFAULT 0.0,
+                    safety_buffer_sec REAL DEFAULT 2.0,
+                    delta_trigger_sec REAL DEFAULT 0.0,
+                    confidence_score REAL DEFAULT 1.0,
+                    model_name TEXT DEFAULT 'gradient_boosting_champion',
+                    explanation_narrative TEXT NOT NULL,
+                    feature_attributions_json TEXT DEFAULT '{}',
+                    safety_status TEXT DEFAULT 'SAFE',
+                    provenance TEXT DEFAULT 'CLEARWAY_EXPLAINABLE_AUDIT'
+                );
+            """)
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_audit_node_sim_time
+                ON decision_audit_logs (node_id, sim_time_sec);
             """)
             conn.commit()
 
@@ -498,6 +564,184 @@ class DatabaseManager:
                 (simulation_id,),
             ).fetchone()
             return row["count"] if row else 0
+
+    # --- Explainable Decision Audit Operations ---
+    def log_decision_audit(self, record: DecisionAuditLogRecord) -> None:
+        with self._lock, self._get_connection() as conn:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO decision_audit_logs (
+                    decision_id, timestamp, sim_time_sec, node_id, decision_type, commanded_phase,
+                    previous_phase, mission_id, vehicle_id, ev_eta_sec, queue_length_m,
+                    queued_vehicle_count, predicted_clearance_sec, transition_time_sec,
+                    safety_buffer_sec, delta_trigger_sec, confidence_score, model_name,
+                    explanation_narrative, feature_attributions_json, safety_status, provenance
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    record.decision_id,
+                    record.timestamp,
+                    record.sim_time_sec,
+                    record.node_id,
+                    record.decision_type,
+                    record.commanded_phase,
+                    record.previous_phase,
+                    record.mission_id,
+                    record.vehicle_id,
+                    record.ev_eta_sec,
+                    record.queue_length_m,
+                    record.queued_vehicle_count,
+                    record.predicted_clearance_sec,
+                    record.transition_time_sec,
+                    record.safety_buffer_sec,
+                    record.delta_trigger_sec,
+                    record.confidence_score,
+                    record.model_name,
+                    record.explanation_narrative,
+                    record.feature_attributions_json,
+                    record.safety_status,
+                    record.provenance,
+                ),
+            )
+            conn.commit()
+
+    def get_decision_audit(self, decision_id: str) -> DecisionAuditLogRecord | None:
+        with self._lock, self._get_connection() as conn:
+            row = conn.execute(
+                "SELECT * FROM decision_audit_logs WHERE decision_id = ?",
+                (decision_id,),
+            ).fetchone()
+            if not row:
+                return None
+            return DecisionAuditLogRecord(
+                decision_id=row["decision_id"],
+                timestamp=row["timestamp"],
+                sim_time_sec=row["sim_time_sec"],
+                node_id=row["node_id"],
+                decision_type=row["decision_type"],
+                commanded_phase=row["commanded_phase"],
+                previous_phase=row["previous_phase"],
+                mission_id=row["mission_id"],
+                vehicle_id=row["vehicle_id"],
+                ev_eta_sec=row["ev_eta_sec"],
+                queue_length_m=row["queue_length_m"],
+                queued_vehicle_count=row["queued_vehicle_count"],
+                predicted_clearance_sec=row["predicted_clearance_sec"],
+                transition_time_sec=row["transition_time_sec"],
+                safety_buffer_sec=row["safety_buffer_sec"],
+                delta_trigger_sec=row["delta_trigger_sec"],
+                confidence_score=row["confidence_score"],
+                model_name=row["model_name"],
+                explanation_narrative=row["explanation_narrative"],
+                feature_attributions_json=row["feature_attributions_json"],
+                safety_status=row["safety_status"],
+                provenance=row["provenance"],
+            )
+
+    def query_decision_audits(
+        self,
+        node_id: str | None = None,
+        decision_type: str | None = None,
+        mission_id: str | None = None,
+        limit: int = 50,
+    ) -> list[DecisionAuditLogRecord]:
+        with self._lock, self._get_connection() as conn:
+            query = "SELECT * FROM decision_audit_logs WHERE 1=1"
+            params: list[Any] = []
+            if node_id:
+                query += " AND LOWER(node_id) = LOWER(?)"
+                params.append(node_id)
+            if decision_type:
+                query += " AND decision_type = ?"
+                params.append(decision_type)
+            if mission_id:
+                query += " AND mission_id = ?"
+                params.append(mission_id)
+            query += " ORDER BY sim_time_sec DESC, timestamp DESC LIMIT ?"
+            params.append(limit)
+
+            rows = conn.execute(query, tuple(params)).fetchall()
+            return [
+                DecisionAuditLogRecord(
+                    decision_id=row["decision_id"],
+                    timestamp=row["timestamp"],
+                    sim_time_sec=row["sim_time_sec"],
+                    node_id=row["node_id"],
+                    decision_type=row["decision_type"],
+                    commanded_phase=row["commanded_phase"],
+                    previous_phase=row["previous_phase"],
+                    mission_id=row["mission_id"],
+                    vehicle_id=row["vehicle_id"],
+                    ev_eta_sec=row["ev_eta_sec"],
+                    queue_length_m=row["queue_length_m"],
+                    queued_vehicle_count=row["queued_vehicle_count"],
+                    predicted_clearance_sec=row["predicted_clearance_sec"],
+                    transition_time_sec=row["transition_time_sec"],
+                    safety_buffer_sec=row["safety_buffer_sec"],
+                    delta_trigger_sec=row["delta_trigger_sec"],
+                    confidence_score=row["confidence_score"],
+                    model_name=row["model_name"],
+                    explanation_narrative=row["explanation_narrative"],
+                    feature_attributions_json=row["feature_attributions_json"],
+                    safety_status=row["safety_status"],
+                    provenance=row["provenance"],
+                )
+                for row in rows
+            ]
+
+    def get_decision_audit_summary(self) -> dict[str, Any]:
+        with self._lock, self._get_connection() as conn:
+            row_total = conn.execute("SELECT COUNT(*) as cnt FROM decision_audit_logs").fetchone()
+            total = row_total["cnt"] if row_total else 0
+            if total == 0:
+                return {
+                    "total_decisions": 0,
+                    "preemption_triggers": 0,
+                    "green_holds": 0,
+                    "mmu_interventions": 0,
+                    "anti_starvation_aborts": 0,
+                    "recoveries": 0,
+                    "avg_confidence": 1.0,
+                    "avg_delta_margin_sec": 0.0,
+                    "safe_ratio": 1.0,
+                }
+
+            triggers = conn.execute(
+                "SELECT COUNT(*) as c FROM decision_audit_logs WHERE decision_type = 'PRE_CLEARANCE_TRIGGER'"
+            ).fetchone()["c"]
+            holds = conn.execute(
+                "SELECT COUNT(*) as c FROM decision_audit_logs WHERE decision_type = 'GREEN_HOLD_EXTENDED'"
+            ).fetchone()["c"]
+            interventions = conn.execute(
+                "SELECT COUNT(*) as c FROM decision_audit_logs WHERE decision_type = 'MMU_SAFETY_OVERRIDE'"
+            ).fetchone()["c"]
+            aborts = conn.execute(
+                "SELECT COUNT(*) as c FROM decision_audit_logs WHERE decision_type = 'ANTI_STARVATION_ABORT'"
+            ).fetchone()["c"]
+            recoveries = conn.execute(
+                "SELECT COUNT(*) as c FROM decision_audit_logs WHERE decision_type = 'RECOVERY_INITIATED'"
+            ).fetchone()["c"]
+            safe_cnt = conn.execute(
+                "SELECT COUNT(*) as c FROM decision_audit_logs WHERE safety_status = 'SAFE'"
+            ).fetchone()["c"]
+            stats = conn.execute(
+                "SELECT AVG(confidence_score) as avg_c, AVG(delta_trigger_sec) as avg_d FROM decision_audit_logs"
+            ).fetchone()
+
+            avg_conf = stats["avg_c"] if stats and stats["avg_c"] is not None else 1.0
+            avg_delta = stats["avg_d"] if stats and stats["avg_d"] is not None else 0.0
+
+            return {
+                "total_decisions": total,
+                "preemption_triggers": triggers,
+                "green_holds": holds,
+                "mmu_interventions": interventions,
+                "anti_starvation_aborts": aborts,
+                "recoveries": recoveries,
+                "avg_confidence": round(avg_conf, 3),
+                "avg_delta_margin_sec": round(avg_delta, 2),
+                "safe_ratio": round(safe_cnt / total, 3),
+            }
 
 
 # Default global database instance

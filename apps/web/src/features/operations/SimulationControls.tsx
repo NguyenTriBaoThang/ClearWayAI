@@ -10,6 +10,7 @@ import {
   Clock,
   Gauge,
   CheckCircle,
+  Zap,
 } from 'lucide-react';
 import { StatusPill } from '../../components/StatusPill';
 
@@ -27,6 +28,7 @@ export interface SimulationControlsProps {
   onChangeScenario?: (scenario: SimulationScenarioId) => void;
   onOpenMissionDrawer?: () => void;
   onOpenInspector?: () => void;
+  onOpenAuditDrawer?: () => void;
   className?: string;
   style?: React.CSSProperties;
 }
@@ -39,6 +41,7 @@ export const SimulationControls: React.FC<SimulationControlsProps> = ({
   onChangeScenario,
   onOpenMissionDrawer,
   onOpenInspector,
+  onOpenAuditDrawer,
   className = '',
   style,
 }) => {
@@ -247,8 +250,30 @@ export const SimulationControls: React.FC<SimulationControlsProps> = ({
         </div>
       </div>
 
-      {/* Right: Operational Modals / Drawers (Mission Control & Unified Inspector) */}
+      {/* Right: Operational Modals / Drawers (Mission Control & Unified Inspector & AI Audit) */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+        <button
+          type="button"
+          onClick={onOpenAuditDrawer}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '4px',
+            backgroundColor: 'rgba(255, 209, 102, 0.15)',
+            border: '1px solid #ffd166',
+            color: '#ffd166',
+            borderRadius: '4px',
+            padding: '4px 8px',
+            cursor: 'pointer',
+            fontSize: '0.68rem',
+            fontWeight: 700,
+          }}
+          title="Open AI Decision Audit & Explainability Logs"
+        >
+          <Zap size={12} />
+          <span>AI Audit</span>
+        </button>
+
         <button
           type="button"
           onClick={onOpenMissionDrawer}

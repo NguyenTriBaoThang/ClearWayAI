@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
+import json
 import time
 
 from fastapi import APIRouter, Query
 
 from ai.state.traffic_state_estimator import ApproachTrafficState
-from apps.api.src.database import SignalLogRecord, db
+from apps.api.src.database import DecisionAuditLogRecord, SignalLogRecord, db
 from apps.api.src.routers.missions import mission_manager
 from apps.api.src.schemas import (
     CorridorPlanResponse,
@@ -17,6 +18,7 @@ from apps.api.src.schemas import (
     RecoveryStatusResponse,
     SafetyAuditResponse,
 )
+from controller.audit.decision_audit import DecisionType, decision_audit_service
 from controller.recovery.recovery_controller import PostClearanceRecoveryController
 from controller.safety.signal_safety_gateway import SignalSafetyGateway
 from controller.scheduler.corridor_coordinator import MovingHorizonCorridorCoordinator
@@ -108,6 +110,40 @@ def evaluate_preclearance(req: PreclearanceEvaluateRequest) -> PreclearanceDecis
     )
     db.log_signal_event(log_rec)
 
+    # Log explainable decision audit record
+    audit_rec = decision_audit_service.record_preclearance_decision(
+        decision=decision,
+        mission=mission,
+        approach_state=approach_state,
+        sim_time_sec=req.sim_time,
+    )
+    db.log_decision_audit(
+        DecisionAuditLogRecord(
+            decision_id=audit_rec.decision_id,
+            timestamp=audit_rec.timestamp,
+            sim_time_sec=audit_rec.sim_time_sec,
+            node_id=audit_rec.node_id,
+            decision_type=str(audit_rec.decision_type),
+            commanded_phase=audit_rec.commanded_phase,
+            previous_phase=audit_rec.previous_phase,
+            mission_id=audit_rec.mission_id,
+            vehicle_id=audit_rec.vehicle_id,
+            ev_eta_sec=audit_rec.ev_eta_sec,
+            queue_length_m=audit_rec.queue_length_m,
+            queued_vehicle_count=audit_rec.queued_vehicle_count,
+            predicted_clearance_sec=audit_rec.predicted_clearance_sec,
+            transition_time_sec=audit_rec.transition_time_sec,
+            safety_buffer_sec=audit_rec.safety_buffer_sec,
+            delta_trigger_sec=audit_rec.delta_trigger_sec,
+            confidence_score=audit_rec.confidence_score,
+            model_name=audit_rec.model_name,
+            explanation_narrative=audit_rec.explanation_narrative,
+            feature_attributions_json=json.dumps(audit_rec.feature_attributions),
+            safety_status=str(audit_rec.safety_status),
+            provenance=audit_rec.provenance,
+        )
+    )
+
     return PreclearanceDecisionResponse(
         node_id=decision.node_id,
         state=str(decision.state),
@@ -142,6 +178,41 @@ def initiate_recovery(req: RecoveryInitiateRequest) -> RecoveryStatusResponse:
         details_json=f'{{"initial_debt": {status.initial_green_debt_sec:.1f}, "cycle": {status.current_recovery_cycle}}}',
     )
     db.log_signal_event(log_rec)
+
+    # Log explainable recovery decision audit
+    rec_audit = decision_audit_service.record_decision(
+        node_id=req.node_id,
+        decision_type=DecisionType.RECOVERY_INITIATED,
+        commanded_phase=status.commanded_phase,
+        sim_time_sec=req.sim_time,
+        override_reason=status.reason,
+    )
+    db.log_decision_audit(
+        DecisionAuditLogRecord(
+            decision_id=rec_audit.decision_id,
+            timestamp=rec_audit.timestamp,
+            sim_time_sec=rec_audit.sim_time_sec,
+            node_id=rec_audit.node_id,
+            decision_type=str(rec_audit.decision_type),
+            commanded_phase=rec_audit.commanded_phase,
+            previous_phase=rec_audit.previous_phase,
+            mission_id=None,
+            vehicle_id=None,
+            ev_eta_sec=0.0,
+            queue_length_m=req.cross_queue_meters,
+            queued_vehicle_count=int(req.cross_queue_meters / 5.0),
+            predicted_clearance_sec=0.0,
+            transition_time_sec=0.0,
+            safety_buffer_sec=2.0,
+            delta_trigger_sec=0.0,
+            confidence_score=1.0,
+            model_name="post_clearance_recovery",
+            explanation_narrative=rec_audit.explanation_narrative,
+            feature_attributions_json=json.dumps(rec_audit.feature_attributions),
+            safety_status=str(rec_audit.safety_status),
+            provenance=rec_audit.provenance,
+        )
+    )
 
     return RecoveryStatusResponse(
         node_id=status.node_id,

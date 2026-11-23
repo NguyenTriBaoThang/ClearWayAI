@@ -8,12 +8,14 @@ import { DigitalTwinCanvas } from '../features/digital-twin/DigitalTwinCanvas';
 import { SimulationControls } from '../features/operations/SimulationControls';
 import { MissionDrawer } from '../features/operations/MissionDrawer';
 import { UnifiedInspector } from '../features/operations/UnifiedInspector';
+import { DecisionAuditDrawer } from '../features/operations/DecisionAuditDrawer';
 import { CorridorOperationsView } from '../features/corridor/CorridorOperationsView';
 import { OperationsProvider, useOperations } from '../features/dashboard/OperationsContext';
 
 const DashboardContent: React.FC = () => {
   const [isMissionDrawerOpen, setIsMissionDrawerOpen] = useState<boolean>(false);
   const [isInspectorOpen, setIsInspectorOpen] = useState<boolean>(false);
+  const [isAuditDrawerOpen, setIsAuditDrawerOpen] = useState<boolean>(false);
   const [viewportMode, setViewportMode] = useState<'3D' | 'CORRIDOR_2D'>('3D');
   const operations = useOperations();
 
@@ -120,6 +122,7 @@ const DashboardContent: React.FC = () => {
             onChangeSpeed={operations.setPlaybackSpeed}
             onOpenMissionDrawer={() => setIsMissionDrawerOpen(true)}
             onOpenInspector={() => setIsInspectorOpen(true)}
+            onOpenAuditDrawer={() => setIsAuditDrawerOpen(true)}
           />
         </div>
       </div>
@@ -139,6 +142,11 @@ const DashboardContent: React.FC = () => {
       <UnifiedInspector
         isOpen={isInspectorOpen}
         onClose={() => setIsInspectorOpen(false)}
+      />
+
+      <DecisionAuditDrawer
+        isOpen={isAuditDrawerOpen}
+        onClose={() => setIsAuditDrawerOpen(false)}
       />
     </div>
   );

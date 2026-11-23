@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from apps.api.src.config import settings
 from apps.api.src.routers import (
+    audit_router,
     clearance_router,
     corridor_router,
     missions_router,
@@ -37,6 +38,7 @@ app.include_router(missions_router)
 app.include_router(clearance_router)
 app.include_router(corridor_router)
 app.include_router(replay_router)
+app.include_router(audit_router)
 
 
 # Mount WebSocket Realtime Streaming Endpoints

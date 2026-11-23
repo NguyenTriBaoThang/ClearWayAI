@@ -23,6 +23,10 @@ import {
   SafetyAuditResult,
   ReplayStatusResult,
   SnapshotListResult,
+  DecisionAuditItem,
+  DecisionAuditListResult,
+  DecisionAuditSummary,
+  ExplainDecisionResult,
 } from '../types';
 
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
@@ -378,6 +382,245 @@ export async function listSnapshots(simulationId: string, limit = 100): Promise<
   try {
     const res = await fetch(`${API_BASE_URL}/api/v1/simulations/${simulationId}/snapshots?limit=${limit}`);
     return await handleResponse<SnapshotListResult>(res, fallback);
+  } catch {
+    return fallback;
+  }
+}
+
+// --- Task 49 Explainable AI Decision Audit & Telemetry ---
+
+export async function fetchDecisionAudits(params?: {
+  nodeId?: string;
+  decisionType?: string;
+  missionId?: string;
+  limit?: number;
+}): Promise<DecisionAuditListResult> {
+  const fallback: DecisionAuditListResult = {
+    total_count: 4,
+    returned_count: 4,
+    decisions: [
+      {
+        decision_id: 'dec-fixture-01',
+        timestamp: Date.now() / 1000,
+        sim_time_sec: 14.2,
+        node_id: 'node_a',
+        decision_type: 'PRE_CLEARANCE_TRIGGER',
+        commanded_phase: 0,
+        previous_phase: 3,
+        mission_id: 'EM-2026-088',
+        vehicle_id: 'AMB-339',
+        ev_eta_sec: 22.5,
+        queue_length_m: 35.0,
+        queued_vehicle_count: 8,
+        predicted_clearance_sec: 14.5,
+        transition_time_sec: 5.0,
+        safety_buffer_sec: 2.0,
+        delta_trigger_sec: -1.0,
+        confidence_score: 0.985,
+        model_name: 'gradient_boosting_champion',
+        explanation_narrative:
+          'Actuated pre-clearance green phase at node_a: AMB-339 ETA is 22.5s. Standing queue of 8 vehicles (35.0m) requires 14.5s clearance plus 5.0s transition and 2.0s buffer. Trigger delta Δt is -1.0s (<= 0), actuating green wave to guarantee zero-stop arrival.',
+        feature_attributions: {
+          delta_margin_sec: -1.0,
+          ev_eta_sec: 22.5,
+          queue_clearance_demand_sec: 14.5,
+          transition_overhead_sec: 5.0,
+          safety_buffer_sec: 2.0,
+          clearance_ratio: 0.674,
+          queue_storage_ratio: 0.233,
+        },
+        safety_status: 'SAFE',
+        provenance: 'CLEARWAY_EXPLAINABLE_AUDIT',
+      },
+      {
+        decision_id: 'dec-fixture-02',
+        timestamp: Date.now() / 1000,
+        sim_time_sec: 28.5,
+        node_id: 'node_b',
+        decision_type: 'GREEN_HOLD_EXTENDED',
+        commanded_phase: 0,
+        previous_phase: 0,
+        mission_id: 'EM-2026-088',
+        vehicle_id: 'AMB-339',
+        ev_eta_sec: 16.0,
+        queue_length_m: 12.0,
+        queued_vehicle_count: 3,
+        predicted_clearance_sec: 5.4,
+        transition_time_sec: 0.0,
+        safety_buffer_sec: 2.0,
+        delta_trigger_sec: -8.6,
+        confidence_score: 0.992,
+        model_name: 'gradient_boosting_champion',
+        explanation_narrative:
+          'Extended green wave hold at node_b: AMB-339 within approach corridor window (16.0s remaining). Maintaining progression green until stopline crossing.',
+        feature_attributions: {
+          delta_margin_sec: -8.6,
+          ev_eta_sec: 16.0,
+          queue_clearance_demand_sec: 5.4,
+          transition_overhead_sec: 0.0,
+          safety_buffer_sec: 2.0,
+          clearance_ratio: 0.730,
+          queue_storage_ratio: 0.080,
+        },
+        safety_status: 'SAFE',
+        provenance: 'CLEARWAY_EXPLAINABLE_AUDIT',
+      },
+      {
+        decision_id: 'dec-fixture-03',
+        timestamp: Date.now() / 1000,
+        sim_time_sec: 42.0,
+        node_id: 'node_c',
+        decision_type: 'PRE_CLEARANCE_TRIGGER',
+        commanded_phase: 0,
+        previous_phase: 3,
+        mission_id: 'EM-2026-088',
+        vehicle_id: 'AMB-339',
+        ev_eta_sec: 21.0,
+        queue_length_m: 28.0,
+        queued_vehicle_count: 6,
+        predicted_clearance_sec: 11.2,
+        transition_time_sec: 5.0,
+        safety_buffer_sec: 2.0,
+        delta_trigger_sec: -2.8,
+        confidence_score: 0.988,
+        model_name: 'gradient_boosting_champion',
+        explanation_narrative:
+          'Actuated pre-clearance green phase at node_c: AMB-339 ETA is 21.0s. Queue of 6 vehicles (28.0m) requires 11.2s clearance plus 5.0s transition and 2.0s buffer. Trigger delta Δt is -2.8s (<= 0), actuating green wave.',
+        feature_attributions: {
+          delta_margin_sec: -2.8,
+          ev_eta_sec: 21.0,
+          queue_clearance_demand_sec: 11.2,
+          transition_overhead_sec: 5.0,
+          safety_buffer_sec: 2.0,
+          clearance_ratio: 0.615,
+          queue_storage_ratio: 0.187,
+        },
+        safety_status: 'SAFE',
+        provenance: 'CLEARWAY_EXPLAINABLE_AUDIT',
+      },
+      {
+        decision_id: 'dec-fixture-04',
+        timestamp: Date.now() / 1000,
+        sim_time_sec: 58.0,
+        node_id: 'node_a',
+        decision_type: 'RECOVERY_INITIATED',
+        commanded_phase: 3,
+        previous_phase: 0,
+        mission_id: 'EM-2026-088',
+        vehicle_id: 'AMB-339',
+        ev_eta_sec: 0.0,
+        queue_length_m: 32.0,
+        queued_vehicle_count: 6,
+        predicted_clearance_sec: 0.0,
+        transition_time_sec: 0.0,
+        safety_buffer_sec: 2.0,
+        delta_trigger_sec: 0.0,
+        confidence_score: 1.0,
+        model_name: 'post_clearance_recovery',
+        explanation_narrative:
+          'Initiated 3-cycle green debt recovery at node_a: Compensating cross-street approaches for preemption delay with dynamic bonus splits.',
+        feature_attributions: {
+          delta_margin_sec: 0.0,
+          ev_eta_sec: 0.0,
+          queue_clearance_demand_sec: 0.0,
+          transition_overhead_sec: 0.0,
+          safety_buffer_sec: 2.0,
+          clearance_ratio: 0.0,
+          queue_storage_ratio: 0.213,
+        },
+        safety_status: 'SAFE',
+        provenance: 'CLEARWAY_EXPLAINABLE_AUDIT',
+      },
+    ],
+  };
+
+  try {
+    const query = new URLSearchParams();
+    if (params?.nodeId) query.set('node_id', params.nodeId);
+    if (params?.decisionType) query.set('decision_type', params.decisionType);
+    if (params?.missionId) query.set('mission_id', params.missionId);
+    if (params?.limit) query.set('limit', String(params.limit));
+
+    const res = await fetch(`${API_BASE_URL}/api/v1/audit/decisions?${query.toString()}`);
+    return await handleResponse<DecisionAuditListResult>(res, fallback);
+  } catch {
+    return fallback;
+  }
+}
+
+export async function fetchDecisionById(decisionId: string): Promise<DecisionAuditItem | null> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/v1/audit/decisions/${decisionId}`);
+    return await handleResponse<DecisionAuditItem | null>(res, null);
+  } catch {
+    return null;
+  }
+}
+
+export async function fetchDecisionSummary(): Promise<DecisionAuditSummary> {
+  const fallback: DecisionAuditSummary = {
+    total_decisions: 18,
+    preemption_triggers: 8,
+    green_holds: 6,
+    mmu_interventions: 0,
+    anti_starvation_aborts: 0,
+    recoveries: 4,
+    avg_confidence: 0.988,
+    avg_delta_margin_sec: -3.2,
+    safe_ratio: 1.0,
+  };
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/v1/audit/summary`);
+    return await handleResponse<DecisionAuditSummary>(res, fallback);
+  } catch {
+    return fallback;
+  }
+}
+
+export async function explainDecision(req: {
+  nodeId: string;
+  evEtaSec: number;
+  queueLengthM: number;
+  queuedVehicleCount: number;
+  currentSignalPhase?: number;
+  phaseElapsedSec?: number;
+  vehicleId?: string;
+  simTimeSec?: number;
+}): Promise<ExplainDecisionResult> {
+  const fallback: ExplainDecisionResult = {
+    decision_type: req.evEtaSec <= 20.0 ? 'PRE_CLEARANCE_TRIGGER' : 'NOMINAL_MAINTAINED',
+    should_actuate: req.evEtaSec <= 20.0,
+    commanded_phase: req.evEtaSec <= 20.0 ? 0 : (req.currentSignalPhase ?? 3),
+    delta_trigger_sec: Number((req.evEtaSec - (req.queuedVehicleCount * 1.8 + 7.0)).toFixed(2)),
+    ev_eta_sec: req.evEtaSec,
+    predicted_clearance_sec: Number((req.queuedVehicleCount * 1.8).toFixed(2)),
+    transition_time_sec: 5.0,
+    safety_buffer_sec: 2.0,
+    explanation_narrative: `Simulated explainability result for ${req.nodeId}`,
+    feature_attributions: {
+      delta_margin_sec: Number((req.evEtaSec - (req.queuedVehicleCount * 1.8 + 7.0)).toFixed(2)),
+      ev_eta_sec: req.evEtaSec,
+      queue_clearance_demand_sec: Number((req.queuedVehicleCount * 1.8).toFixed(2)),
+    },
+    safety_status: 'SAFE',
+    provenance: 'CLEARWAY_EXPLAINABLE_AUDIT',
+  };
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/v1/audit/explain`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        node_id: req.nodeId,
+        ev_eta_sec: req.evEtaSec,
+        queue_length_m: req.queueLengthM,
+        queued_vehicle_count: req.queuedVehicleCount,
+        current_signal_phase: req.currentSignalPhase ?? 3,
+        phase_elapsed_sec: req.phaseElapsedSec ?? 12.0,
+        vehicle_id: req.vehicleId ?? 'AMB-339',
+        sim_time_sec: req.simTimeSec ?? 14.5,
+      }),
+    });
+    return await handleResponse<ExplainDecisionResult>(res, fallback);
   } catch {
     return fallback;
   }

@@ -154,3 +154,72 @@ export interface WSEventMessage {
   data?: Record<string, unknown>;
 }
 
+export type DecisionType =
+  | 'PRE_CLEARANCE_TRIGGER'
+  | 'GREEN_HOLD_EXTENDED'
+  | 'ANTI_STARVATION_ABORT'
+  | 'MMU_SAFETY_OVERRIDE'
+  | 'RECOVERY_INITIATED'
+  | 'NOMINAL_MAINTAINED'
+  | 'CASCADE_WAVE_ARMED'
+  | 'EV_CLEARED_RELEASE';
+
+export interface DecisionAuditItem {
+  decision_id: string;
+  timestamp: number;
+  sim_time_sec: number;
+  node_id: string;
+  decision_type: DecisionType | string;
+  commanded_phase: number;
+  previous_phase: number;
+  mission_id?: string | null;
+  vehicle_id?: string | null;
+  ev_eta_sec: number;
+  queue_length_m: number;
+  queued_vehicle_count: number;
+  predicted_clearance_sec: number;
+  transition_time_sec: number;
+  safety_buffer_sec: number;
+  delta_trigger_sec: number;
+  confidence_score: number;
+  model_name: string;
+  explanation_narrative: string;
+  feature_attributions: Record<string, number>;
+  safety_status: 'SAFE' | 'OVERRIDDEN_BY_MMU' | 'WATCHDOG_TRIPPED' | string;
+  provenance: string;
+}
+
+export interface DecisionAuditListResult {
+  total_count: number;
+  returned_count: number;
+  decisions: DecisionAuditItem[];
+}
+
+export interface DecisionAuditSummary {
+  total_decisions: number;
+  preemption_triggers: number;
+  green_holds: number;
+  mmu_interventions: number;
+  anti_starvation_aborts: number;
+  recoveries: number;
+  avg_confidence: number;
+  avg_delta_margin_sec: number;
+  safe_ratio: number;
+}
+
+export interface ExplainDecisionResult {
+  decision_type: string;
+  should_actuate: boolean;
+  commanded_phase: number;
+  delta_trigger_sec: number;
+  ev_eta_sec: number;
+  predicted_clearance_sec: number;
+  transition_time_sec: number;
+  safety_buffer_sec: number;
+  explanation_narrative: string;
+  feature_attributions: Record<string, number>;
+  safety_status: string;
+  provenance: string;
+}
+
+

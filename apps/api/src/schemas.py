@@ -494,3 +494,85 @@ class WSEventMessage(BaseModel):
     simulation_id: str | None = None
     timestamp: float
     data: dict[str, Any] | None = None
+
+
+# --- Task 49 Explainable Decision Audit Schemas ---
+class DecisionAuditSchema(BaseModel):
+    """Detailed explainable decision audit record."""
+
+    decision_id: str
+    timestamp: float
+    sim_time_sec: float
+    node_id: str
+    decision_type: str
+    commanded_phase: int
+    previous_phase: int = 0
+    mission_id: str | None = None
+    vehicle_id: str | None = None
+    ev_eta_sec: float = 0.0
+    queue_length_m: float = 0.0
+    queued_vehicle_count: int = 0
+    predicted_clearance_sec: float = 0.0
+    transition_time_sec: float = 0.0
+    safety_buffer_sec: float = 2.0
+    delta_trigger_sec: float = 0.0
+    confidence_score: float = 1.0
+    model_name: str = "gradient_boosting_champion"
+    explanation_narrative: str
+    feature_attributions: dict[str, float] = Field(default_factory=dict)
+    safety_status: str = "SAFE"
+    provenance: str = "CLEARWAY_EXPLAINABLE_AUDIT"
+
+
+class DecisionAuditListResponse(BaseModel):
+    """Paginated or filtered list of decision audit records."""
+
+    total_count: int
+    returned_count: int
+    decisions: list[DecisionAuditSchema]
+
+
+class DecisionAuditSummaryResponse(BaseModel):
+    """Corridor-wide decision audit statistical indices."""
+
+    total_decisions: int
+    preemption_triggers: int
+    green_holds: int
+    mmu_interventions: int
+    anti_starvation_aborts: int
+    recoveries: int
+    avg_confidence: float
+    avg_delta_margin_sec: float
+    safe_ratio: float
+
+
+class ExplainDecisionRequest(BaseModel):
+    """On-the-fly decision explainability evaluation request."""
+
+    node_id: str = "node_a"
+    ev_eta_sec: float = 22.5
+    queue_length_m: float = 35.0
+    queued_vehicle_count: int = 8
+    predicted_clearance_sec: float | None = None
+    current_signal_phase: int = 3
+    phase_elapsed_sec: float = 12.0
+    vehicle_id: str = "AMB-339"
+    sim_time_sec: float = 14.5
+
+
+class ExplainDecisionResponse(BaseModel):
+    """On-the-fly decision explanation with narrative and feature attribution breakdown."""
+
+    decision_type: str
+    should_actuate: bool
+    commanded_phase: int
+    delta_trigger_sec: float
+    ev_eta_sec: float
+    predicted_clearance_sec: float
+    transition_time_sec: float
+    safety_buffer_sec: float
+    explanation_narrative: str
+    feature_attributions: dict[str, float]
+    safety_status: str
+    provenance: str = "CLEARWAY_EXPLAINABLE_AUDIT"
+
