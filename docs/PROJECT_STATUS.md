@@ -98,7 +98,7 @@
 | Task ID | Task Description | Priority | Dependencies | Status | Verification Proof |
 | :--- | :--- | :---: | :---: | :---: | :--- |
 | **T49** | Telemetry, event logs và phân tích giải thích quyết định AI | P1 | T36, T39–T44 | **VERIFIED** | ExplainableDecisionAuditService (natural language narrative generation, feature attributions breakdown, anti-starvation aborts, MMU overrides), DecisionAuditLogRecord SQLite table & indices, REST API endpoints (/api/v1/audit/decisions, /summary, /explain), DecisionAuditDrawer (real-time stream, formula inspector, NEMA TS2 verification badge), pytest tests/test_ai_decision_audit.py (6/6), monorepo quality gates 5/5 PASS |
-| **T50** | Kiểm thử end-to-end UI → Backend → AI → SUMO → 3D | P0 | T32, T36, T41–T48, T20 | **PLANNED** | Scheduled |
+| **T50** | Kiểm thử end-to-end UI → Backend → AI → SUMO → 3D | P0 | T32, T36, T41–T48, T20 | **VERIFIED** | End-to-End multi-tier test suite (Stage 1: UI/Operator dispatch AMB-339; Stage 2: ML clearance prediction & JIT preclearance; Stage 3: SUMO stepping & SQLite snapshots; Stage 4: 3D Digital Twin SumoTrajectorySource & CorridorSyncBridge; Stage 5: sub-250ms control loop latency (mean 0.38ms <= 250ms) & zero-hazard MMU arbitration; Stage 6: audit trail integrity), pytest tests/test_end_to_end_pipeline.py (6/6), monorepo quality gates 5/5 PASS, production web build PASS |
 | **T51** | Thực nghiệm khoa học, sensitivity, seeds và ablation | P0 | T27, T34–T36, T39–T41, T48 | **PLANNED** | Scheduled |
 | **T52** | Security, privacy, fail-safe và threat modelling | P0 | T21, T28, T41–T43, T50 | **PLANNED** | Scheduled |
 
@@ -117,7 +117,7 @@
 ---
 
 ## 3. Current Sprint Focus
-- **Current Milestone:** TASK 01–49 Complete & Verified (Phase A: 6/6, Phase B: 16/16, Phase C: 5/5, Phase D: 5/5, Phase E: 4/4, Phase F: 5/5, Phase G: 4/4, Phase H: 3/3 ALL 100% COMPLETE!, Phase I: 1/4 (25.0% COMPLETE) — Total 49/60 tasks verified = 81.7% of master plan).
-- **Next Dependent Task:** TASK 50 — Kiểm thử end-to-end UI → Backend → AI → SUMO → 3D (Phase I: Telemetry, Testing & Scientific Evaluation).
+- **Current Milestone:** TASK 01–50 Complete & Verified (Phase A: 6/6, Phase B: 16/16, Phase C: 5/5, Phase D: 5/5, Phase E: 4/4, Phase F: 5/5, Phase G: 4/4, Phase H: 3/3 ALL 100% COMPLETE!, Phase I: 2/4 (50.0% COMPLETE) — Total 50/60 tasks verified = 83.3% of master plan).
+- **Next Dependent Task:** TASK 51 — Thực nghiệm khoa học, sensitivity, seeds và ablation (Phase I: Telemetry, Testing & Scientific Evaluation).
 
 

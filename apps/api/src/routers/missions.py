@@ -199,9 +199,10 @@ def get_mission_eta(
         m.current_speed_mps = rec.current_speed_mps
         m.status = MissionStatus(rec.status)
 
+    weather_str = weather if isinstance(weather, str) else "clear"
     eta_report = eta_evaluator.compute_multi_node_eta(
         mission=m,
-        weather=weather,
+        weather=weather_str,
     )
 
     node_schemas: dict[str, NodeETASchema] = {
