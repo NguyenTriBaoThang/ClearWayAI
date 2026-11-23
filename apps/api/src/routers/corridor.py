@@ -42,8 +42,9 @@ def get_corridor_coordination_plan(
     t_now = sim_time if sim_time is not None else time.time()
     active_mission = mission_manager.get_active_mission()
 
-    report = corridor_coordinator.coordinate(
+    report = corridor_coordinator.update_corridor(
         mission=active_mission,
+        traffic_states=None,
         sim_time=t_now,
         weather=weather,
     )
@@ -164,8 +165,9 @@ def audit_corridor_safety(
     active_mission = mission_manager.get_active_mission()
 
     # Get commanded phases from coordinator
-    plan = corridor_coordinator.coordinate(
+    plan = corridor_coordinator.update_corridor(
         mission=active_mission,
+        traffic_states=None,
         sim_time=t_now,
     )
 
@@ -196,4 +198,3 @@ def audit_corridor_safety(
         timestamp_sec=audit.timestamp_sec,
         provenance=audit.provenance,
     )
-

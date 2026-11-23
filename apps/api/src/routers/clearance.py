@@ -108,4 +108,3 @@ def get_model_registry_catalog() -> ModelRegistryCatalogResponse:
         champion_sequential=champ_seq,
         models=model_schemas,
     )
-

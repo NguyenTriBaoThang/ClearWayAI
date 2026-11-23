@@ -34,7 +34,6 @@ from controller.mission.eta_estimator import (
 from controller.scheduler.preclearance_controller import (
     PreclearanceConfig,
     PreclearanceController,
-    PreclearanceDecision,
     PreclearanceState,
 )
 
@@ -321,7 +320,7 @@ class MovingHorizonCorridorCoordinator:
                 active_horizon_nodes.append(nid)
 
         # 4. Evaluate each node with moving horizon & spillback coordination
-        schedules: dict[str, NodeCoordinationSchedule] = {}
+        schedules = {}
         commanded_phases: dict[str, int] = {}
         spillback_alerts: list[str] = []
         active_holds_count = 0
@@ -366,7 +365,7 @@ class MovingHorizonCorridorCoordinator:
             effective_sim_time = sim_time
             app_state = states_map.get(nid)
 
-            dec: PreclearanceDecision = self.controller.evaluate_node(
+            dec = self.controller.evaluate_node(
                 node_id=nid,
                 mission=mission,
                 approach_state=app_state,

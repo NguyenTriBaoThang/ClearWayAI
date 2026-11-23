@@ -202,7 +202,7 @@ class YOLOInferenceEngine:
         if self.weights_path and self.weights_path.is_file():
             try:
                 # Try importing ultralytics if available
-                from ultralytics import YOLO  # type: ignore
+                from ultralytics import YOLO  # type: ignore[import-not-found,unused-ignore]
 
                 self._model = YOLO(str(self.weights_path))
                 self.is_real_model_loaded = True

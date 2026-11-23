@@ -128,9 +128,7 @@ def step_simulation(
     sim_time = runner.get_sim_time()
     active_count = len(runner.engine.active_vehicles) if runner.engine else 0
     curr_phase = runner.engine.current_phase if runner.engine else 0
-    lights: dict[str, int] = {
-        nid: curr_phase for nid in ["node_a", "node_b", "node_c", "node_d"]
-    }
+    lights: dict[str, int] = dict.fromkeys(["node_a", "node_b", "node_c", "node_d"], curr_phase)
 
     # Update database step counter
     new_step_count = record.total_steps + 1

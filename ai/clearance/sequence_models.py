@@ -372,8 +372,8 @@ class ClearanceLSTM:
 
                 t_step += 1
                 for k in params:
-                    m[k] = beta1 * m[k] + (1 - beta1) * grads[k]
-                    v_opt[k] = beta2 * v_opt[k] + (1 - beta2) * (grads[k] ** 2)
+                    m[k] = (beta1 * m[k] + (1 - beta1) * grads[k]).astype(np.float32)
+                    v_opt[k] = (beta2 * v_opt[k] + (1 - beta2) * (grads[k] ** 2)).astype(np.float32)
                     m_hat = m[k] / (1 - beta1**t_step)
                     v_hat = v_opt[k] / (1 - beta2**t_step)
                     params[k] -= self.lr * m_hat / (np.sqrt(v_hat) + eps)
@@ -656,8 +656,8 @@ class ClearanceGRU:
 
                 t_step += 1
                 for k in params:
-                    m[k] = beta1 * m[k] + (1 - beta1) * grads[k]
-                    v_opt[k] = beta2 * v_opt[k] + (1 - beta2) * (grads[k] ** 2)
+                    m[k] = (beta1 * m[k] + (1 - beta1) * grads[k]).astype(np.float32)
+                    v_opt[k] = (beta2 * v_opt[k] + (1 - beta2) * (grads[k] ** 2)).astype(np.float32)
                     m_hat = m[k] / (1 - beta1**t_step)
                     v_hat = v_opt[k] / (1 - beta2**t_step)
                     params[k] -= self.lr * m_hat / (np.sqrt(v_hat) + eps)

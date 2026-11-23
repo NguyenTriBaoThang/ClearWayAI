@@ -394,4 +394,3 @@ class DatabaseManager:
 
 # Default global database instance
 db = DatabaseManager()
-
