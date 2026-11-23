@@ -69,6 +69,8 @@ data/processed/*
 !data/processed/.gitkeep
 !data/processed/yolo/
 !data/processed/yolo/**
+!data/processed/clearance/
+!data/processed/clearance/**
 *.mp4
 *.avi
 *.mov

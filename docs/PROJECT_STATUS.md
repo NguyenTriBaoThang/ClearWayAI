@@ -65,7 +65,7 @@
 ### Phase E — Clearance Prediction & AI Models (Tasks 33–36)
 | Task ID | Task Description | Priority | Dependencies | Status | Verification Proof |
 | :--- | :--- | :---: | :---: | :---: | :--- |
-| **T33** | Định nghĩa clearance time và sinh label thực nghiệm | P0 | T24–T27, T32 | **PLANNED** | Scheduled |
+| **T33** | Định nghĩa clearance time và sinh label thực nghiệm | P0 | T24–T27, T32 | **VERIFIED** | CLEARANCE_TIME_SPEC.md (T_clear formulation, shockwave discharge), QueueDischargeSimulator, clearance_ground_truth.csv (600 episodes), ClearanceFeaturePipeline, pytest (211/211) |
 | **T34** | Train baseline Linear/RandomForest/XGBoost dự báo clearance | P0 | T33 | **PLANNED** | Scheduled |
 | **T35** | Train LSTM/GRU dự báo clearance từ chuỗi trạng thái | P0 | T33, T34 | **PLANNED** | Scheduled |
 | **T36** | Model Registry, chọn model thắng và fallback khi AI kém tin cậy | P0 | T34, T35 | **PLANNED** | Scheduled |

@@ -1,0 +1,44 @@
+{
+  "dataset_version": "1.0.0",
+  "total_samples": 600,
+  "target_variable": "clearance_time_sec",
+  "features": [
+    "scenario_id",
+    "node_id",
+    "approach_id",
+    "queue_length_m",
+    "queued_vehicle_count",
+    "motorcycle_ratio",
+    "heavy_vehicle_count",
+    "approach_occupancy",
+    "downstream_occupancy",
+    "weather",
+    "hour_of_day",
+    "provenance",
+    "clearance_time_sec"
+  ],
+  "target_summary": {
+    "mean_clearance_sec": 18.31,
+    "min_clearance_sec": 0.0,
+    "max_clearance_sec": 67.06,
+    "std_clearance_sec": 15.45
+  },
+  "scenarios_represented": [
+    "free_flow",
+    "normal",
+    "peak",
+    "spillback"
+  ],
+  "nodes_represented": [
+    "node_a",
+    "node_d",
+    "node_b",
+    "node_c"
+  ],
+  "weather_distribution": {
+    "clear": 332,
+    "overcast": 119,
+    "rain": 105,
+    "haze": 44
+  }
+}
