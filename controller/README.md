@@ -10,7 +10,7 @@ Contains the core moving-horizon multi-intersection corridor coordinator and the
 controller/
 ├── mission/                # Emergency Mission lifecycle manager & Multi-Node ETA estimator (Task 37)
 ├── safety/                 # Deterministic Signal Safety Gateway & Conflict Matrices
-├── scheduler/              # Moving-horizon multi-node pre-clearance scheduler (Task 38)
+├── scheduler/              # Moving-horizon multi-node pre-clearance scheduler & corridor coordinator (Tasks 38 & 39)
 ├── recovery/               # Post-transit smooth recovery state machine (Task 40)
 └── README.md
 ```
@@ -34,7 +34,7 @@ Managed via `controller/mission/`:
 
 ## 3. Just-In-Time Pre-Clearance Algorithm (Task 38 VERIFIED)
 
-Managed via `controller/scheduler/`:
+Managed via `controller/scheduler/preclearance_controller.py`:
 - **Pre-Clearance Trigger Formulation:**
   $$\Delta t_{\text{trigger}} = \text{ETA}_{\text{EV}} - \hat{T}_{\text{clear}} - T_{\text{transition}} - T_{\text{buffer}}$$
   - $\text{ETA}_{\text{EV}}$: Kinematic arrival time evaluated by `MultiNodeETAEvaluator`.
@@ -56,18 +56,33 @@ Managed via `controller/scheduler/`:
       HOLDING_GREEN --> MONITORING: Watchdog Timeout (>60s)
   ```
 
-- **JIT Advantage vs. Baselines:**
-  - **B1 (Reactive Local Opticom, 100m):** Triggers too late when queues exceed 50m, forcing emergency vehicles to brake behind discharging queues.
-  - **B2 (Corridor Coordination Green-Wave):** Locks all corridor intersections prematurely when vehicle enters at $x = -200\text{m}$, creating massive cross-street congestion.
-  - **ClearWayAI JIT:** Actuates each intersection *dynamically* based on its queue length $\hat{T}_{\text{clear}}$, achieving zero emergency stop delay while minimizing side-street disruption.
 - **Fail-Safe & Anti-Starvation Guards:**
   - Maximum green hold watchdog ($60.0\text{s}$) aborts preemption if the emergency vehicle breaks down or stalls.
   - Automatic fallback to Tier 1 Kinematic Shockwave or Tier 2 Safe Default ($25.0\text{s}$) if AI perception or state confidence degrades.
-- **Latency SLA:** Corridor-wide multi-intersection evaluation executes in $< 1.5\text{ ms}$.
 
 ---
 
-## 4. Signal Safety Gateway Invariants
+## 4. Moving-Horizon Corridor Coordinator (Task 39 VERIFIED)
+
+Managed via `controller/scheduler/corridor_coordinator.py`:
+- **Moving-Horizon Coordination Window:**
+  - Spatial lookahead horizon ($H_{\text{dist}} = 750.0\text{m}$) and temporal horizon ($H_{\text{time}} = 45.0\text{s}$).
+  - Nodes outside the moving horizon remain in nominal Webster fixed-time or adaptive signal cycles, avoiding premature network-wide cross-street gridlock.
+- **Cascading Green Wave Offset Synchronization:**
+  - Dynamic inter-node offset:
+    $$\Delta t_{\text{offset}}(k, k+1) = \text{ETA}(k+1) - \text{ETA}(k) \approx \frac{300\text{ m}}{18.5\text{ m/s}} \approx 16.2\text{ s}$$
+  - Green wave band cascades smoothly along Nodes A $\to$ B $\to$ C $\to$ D, opening green just-in-time as the vehicle progresses.
+- **Queue Spillback Detection & Pre-emptive Flushing:**
+  - Monitors link storage occupancy ($L_{\text{queue}} > 0.5 \times \text{LinkLength}$, e.g. $> 150\text{m}$ on a 300m link).
+  - Pre-emptively advances downstream node trigger time by $\Delta t_{\text{advance}} = \min(12.0\text{s}, \frac{L_{\text{queue}} - 150}{v_{\text{discharge}}})$ to flush downstream queues before the upstream platoon arrives.
+- **Immediate Tail Recovery Handoff:**
+  - As soon as the emergency vehicle clears an intersection stopline by $15\text{m}$, that node is immediately freed from green hold and marked as `CLEARED`, handing off to the recovery controller.
+- **Corridor Lifecycle State Machine:**
+  `STANDBY` $\to$ `CORRIDOR_ARMED` $\to$ `ACTIVE_GREEN_WAVE` $\to$ `TRANSIT_IN_PROGRESS` $\to$ `ALL_CLEARED`.
+
+---
+
+## 5. Signal Safety Gateway Invariants
 
 The Safety Gateway intercepts all proposed phase plans:
 1. **Green Conflict Matrix:** Prevents conflicting traffic movements from showing Green at the same time.

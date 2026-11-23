@@ -75,7 +75,7 @@
 | :--- | :--- | :---: | :---: | :---: | :--- |
 | **T37** | Mô phỏng nhiệm vụ xe ưu tiên và tính ETA nhiều nút | P0 | T21, T25–T26 | **VERIFIED** | EmergencyMissionManager (lifecycle state machine PENDING -> DISPATCHED -> APPROACHING -> CORRIDOR_TRANSIT -> ARRIVED), MultiNodeETAEvaluator (kinematic acceleration, traffic drag, weather friction), Nodes A–D & Hospital ETAs, sub-millisecond latency (<0.5ms), pytest (243/243) |
 | **T38** | Lập thuật toán pre-clearance dựa ETA & clearance prediction | P0 | T27, T36–T37 | **VERIFIED** | PreclearanceController (JIT delta trigger formula, deterministic state machine, 60s anti-starvation watchdog, multi-tier fallback integration), latency < 2ms, pytest |
-| **T39** | Điều phối trước nhiều nút giao trên hành lang A–D | P0 | T37, T38 | **PLANNED** | Scheduled |
+| **T39** | Điều phối trước nhiều nút giao trên hành lang A–D | P0 | T37, T38 | **VERIFIED** | MovingHorizonCorridorCoordinator (moving horizon window, cascading wave offsets, queue spillback detection & pre-emptive flushing, tail recovery handoff), sub-50ms latency, pytest |
 | **T40** | Recovery controller sau khi xe ưu tiên qua | P0 | T39 | **PLANNED** | Scheduled |
 | **T41** | Bộ kiểm tra tín hiệu và fail-safe độc lập | P0 | T21, T38–T40 | **PLANNED** | Scheduled |
 
@@ -117,6 +117,6 @@
 ---
 
 ## 3. Current Sprint Focus
-- **Current Milestone:** TASK 01–38 Complete & Verified (Phase A: 6/6, Phase B: 16/16, Phase C: 5/5, Phase D: 5/5, Phase E: 4/4 ALL 100% COMPLETE!, Phase F: 2/5 — Total 38/60 tasks verified = 63.3% of master plan).
-- **Next Dependent Task:** TASK 39 — Điều phối trước nhiều nút giao trên hành lang A–D (Phase F: Coordination & Safety Controller).
+- **Current Milestone:** TASK 01–39 Complete & Verified (Phase A: 6/6, Phase B: 16/16, Phase C: 5/5, Phase D: 5/5, Phase E: 4/4 ALL 100% COMPLETE!, Phase F: 3/5 — Total 39/60 tasks verified = 65.0% of master plan).
+- **Next Dependent Task:** TASK 40 — Recovery controller sau khi xe ưu tiên qua (Phase F: Coordination & Safety Controller).
 

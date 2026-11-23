@@ -6,6 +6,13 @@ and machine-learning clearance time predictions.
 
 from __future__ import annotations
 
+from controller.scheduler.corridor_coordinator import (
+    CorridorCoordinationReport,
+    CorridorCoordinationStatus,
+    CorridorCoordinatorConfig,
+    MovingHorizonCorridorCoordinator,
+    NodeCoordinationSchedule,
+)
 from controller.scheduler.preclearance_controller import (
     CorridorPreclearancePlan,
     PreclearanceConfig,
@@ -15,10 +22,14 @@ from controller.scheduler.preclearance_controller import (
 )
 
 __all__ = [
+    "CorridorCoordinationReport",
+    "CorridorCoordinationStatus",
+    "CorridorCoordinatorConfig",
     "CorridorPreclearancePlan",
+    "MovingHorizonCorridorCoordinator",
+    "NodeCoordinationSchedule",
     "PreclearanceConfig",
     "PreclearanceController",
     "PreclearanceDecision",
     "PreclearanceState",
 ]
-

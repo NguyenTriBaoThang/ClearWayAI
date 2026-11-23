@@ -15,6 +15,13 @@ from controller.mission.eta_estimator import (
     MultiNodeETAReport,
     NodeETAResult,
 )
+from controller.scheduler.corridor_coordinator import (
+    CorridorCoordinationReport,
+    CorridorCoordinationStatus,
+    CorridorCoordinatorConfig,
+    MovingHorizonCorridorCoordinator,
+    NodeCoordinationSchedule,
+)
 from controller.scheduler.preclearance_controller import (
     CorridorPreclearancePlan,
     PreclearanceConfig,
@@ -24,13 +31,18 @@ from controller.scheduler.preclearance_controller import (
 )
 
 __all__ = [
+    "CorridorCoordinationReport",
+    "CorridorCoordinationStatus",
+    "CorridorCoordinatorConfig",
     "CorridorPreclearancePlan",
     "EmergencyMission",
     "EmergencyMissionManager",
     "EmergencyVehicleType",
     "MissionStatus",
+    "MovingHorizonCorridorCoordinator",
     "MultiNodeETAEvaluator",
     "MultiNodeETAReport",
+    "NodeCoordinationSchedule",
     "NodeETAResult",
     "PreclearanceConfig",
     "PreclearanceController",
