@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import time
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, HTTPException, Query, status
 
 from ai.state.traffic_state_estimator import ApproachTrafficState
 from apps.api.src.database import DecisionAuditLogRecord, SignalLogRecord, db
@@ -17,12 +17,15 @@ from apps.api.src.schemas import (
     RecoveryInitiateRequest,
     RecoveryStatusResponse,
     SafetyAuditResponse,
+    VMSBoardStatusResponse,
+    VMSCorridorStatusResponse,
 )
 from controller.audit.decision_audit import DecisionType, decision_audit_service
 from controller.recovery.recovery_controller import PostClearanceRecoveryController
 from controller.safety.signal_safety_gateway import SignalSafetyGateway
 from controller.scheduler.corridor_coordinator import MovingHorizonCorridorCoordinator
 from controller.scheduler.preclearance_controller import PreclearanceController
+from controller.vms.vms_manager import vms_manager
 
 router = APIRouter(prefix="/api/v1/corridor", tags=["Corridor Coordination"])
 
@@ -269,3 +272,55 @@ def audit_corridor_safety(
         timestamp_sec=audit.timestamp_sec,
         provenance=audit.provenance,
     )
+
+
+@router.get("/vms", response_model=VMSCorridorStatusResponse)
+def get_corridor_vms_status(
+    sim_time: float | None = Query(default=None, description="Simulation timestamp"),
+) -> VMSCorridorStatusResponse:
+    """Get real-time bilingual safety advisory status for all 4 overhead VMS gantries."""
+    t_now = sim_time if sim_time is not None else time.time()
+    active_mission = mission_manager.get_active_mission()
+    ev_active = bool(active_mission and active_mission.is_active)
+    ev_x = active_mission.current_position_m if ev_active and active_mission else None
+    ev_spd = active_mission.current_speed_mps if ev_active and active_mission else None
+    ev_id = active_mission.vehicle_id if ev_active and active_mission else "AMB-339"
+
+    corridor_vms = vms_manager.evaluate_corridor(
+        ev_active=ev_active,
+        ev_x=ev_x,
+        ev_speed_mps=ev_spd,
+        ev_id=ev_id,
+        sim_time=t_now,
+    )
+    return VMSCorridorStatusResponse(**corridor_vms.to_dict())
+
+
+@router.get("/vms/{node_id}", response_model=VMSBoardStatusResponse)
+def get_node_vms_status(
+    node_id: str,
+    sim_time: float | None = Query(default=None, description="Simulation timestamp"),
+) -> VMSBoardStatusResponse:
+    """Get real-time safety advisory status for a specific overhead VMS gantry (node_a through node_d)."""
+    t_now = sim_time if sim_time is not None else time.time()
+    active_mission = mission_manager.get_active_mission()
+    ev_active = bool(active_mission and active_mission.is_active)
+    ev_x = active_mission.current_position_m if ev_active and active_mission else None
+    ev_spd = active_mission.current_speed_mps if ev_active and active_mission else None
+    ev_id = active_mission.vehicle_id if ev_active and active_mission else "AMB-339"
+
+    try:
+        board_status = vms_manager.evaluate_board(
+            node_id=node_id,
+            ev_active=ev_active,
+            ev_x=ev_x,
+            ev_speed_mps=ev_spd,
+            ev_id=ev_id,
+            sim_time=t_now,
+        )
+    except KeyError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"VMS board for node '{node_id}' not found. Valid nodes: node_a, node_b, node_c, node_d.",
+        ) from None
+    return VMSBoardStatusResponse(**board_status.to_dict())

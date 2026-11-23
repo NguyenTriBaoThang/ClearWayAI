@@ -11,6 +11,7 @@
 
 import * as THREE from 'three';
 import { ARTERIAL_NODES } from './MultiIntersectionRoadNetwork';
+import { VMSBoardStatusInput, VMSOverheadGantryMesh } from './VMSOverheadGantryMesh';
 
 export class CorridorCityEnvironment {
   public group: THREE.Group;
@@ -19,6 +20,8 @@ export class CorridorCityEnvironment {
   public streetlightsGroup: THREE.Group;
   public treesGroup: THREE.Group;
   public rsuPolesGroup: THREE.Group;
+  public vmsGantriesGroup: THREE.Group;
+  public vmsGantries: VMSOverheadGantryMesh[] = [];
 
   private disposables: { dispose: () => void }[] = [];
   private beaconMaterial?: THREE.MeshBasicMaterial;
@@ -37,12 +40,15 @@ export class CorridorCityEnvironment {
     this.treesGroup.name = 'BoulevardTrees';
     this.rsuPolesGroup = new THREE.Group();
     this.rsuPolesGroup.name = 'V2XRSUPoles';
+    this.vmsGantriesGroup = new THREE.Group();
+    this.vmsGantriesGroup.name = 'VMSOverheadGantries';
 
     this.group.add(this.buildingsGroup);
     this.group.add(this.hospitalGroup);
     this.group.add(this.streetlightsGroup);
     this.group.add(this.treesGroup);
     this.group.add(this.rsuPolesGroup);
+    this.group.add(this.vmsGantriesGroup);
 
     this.buildCityBlockBuildings();
     this.buildTraumaCenterHospital();
@@ -50,6 +56,7 @@ export class CorridorCityEnvironment {
     this.buildStreetlights();
     this.buildBoulevardTrees();
     this.buildWestFeederPortal();
+    this.buildVMSGantries();
   }
 
   /**
@@ -303,11 +310,59 @@ export class CorridorCityEnvironment {
     this.buildingsGroup.add(line);
   }
 
+  /**
+   * 7. Overhead Variable Message Signs (VMS) Gantries Ahead of Intersections A-D
+   */
+  private buildVMSGantries(): void {
+    const gantryConfigs = [
+      { boardId: 'VMS-A', nodeId: 'node_a', xMeters: -80.0 },
+      { boardId: 'VMS-B', nodeId: 'node_b', xMeters: 170.0 },
+      { boardId: 'VMS-C', nodeId: 'node_c', xMeters: 420.0 },
+      { boardId: 'VMS-D', nodeId: 'node_d', xMeters: 670.0 },
+    ];
+
+    for (const cfg of gantryConfigs) {
+      const gantry = new VMSOverheadGantryMesh(cfg.boardId, cfg.nodeId, cfg.xMeters, 14.0);
+      this.vmsGantries.push(gantry);
+      this.vmsGantriesGroup.add(gantry.group);
+      this.disposables.push(gantry);
+    }
+  }
+
+  public updateVMS(
+    advisories?: Record<string, VMSBoardStatusInput>,
+    timeSec: number = 0,
+  ): void {
+    for (const gantry of this.vmsGantries) {
+      if (advisories && advisories[gantry.nodeId]) {
+        gantry.updateAdvisory(advisories[gantry.nodeId], timeSec);
+      } else {
+        // Default nominal advisory
+        gantry.updateAdvisory(
+          {
+            board_id: gantry.boardId,
+            node_id: gantry.nodeId,
+            gantry_x_m: gantry.gantryX,
+            target_stopline_x: gantry.gantryX + 80.0,
+            mode: 'NOMINAL',
+            message_line_1_vi: 'CHÚC QUÝ KHÁCH BÌNH AN',
+            message_line_2_en: 'SPEED LIMIT 50 KM/H',
+            recommended_speed_kmh: 50,
+            flashing_strobe: false,
+            chevron_direction: 'NONE',
+          },
+          timeSec,
+        );
+      }
+    }
+  }
+
   public update(timeMs: number): void {
     if (this.beaconMaterial) {
       const pulse = Math.sin(timeMs * 0.008);
       this.beaconMaterial.color.setHex(pulse > 0 ? 0xef476f : 0x7f1d1d);
     }
+    this.updateVMS(undefined, timeMs / 1000.0);
   }
 
   public setBuildingsVisibility(visible: boolean): void {
@@ -318,6 +373,7 @@ export class CorridorCityEnvironment {
   public setStreetFurnitureVisibility(visible: boolean): void {
     this.streetlightsGroup.visible = visible;
     this.rsuPolesGroup.visible = visible;
+    this.vmsGantriesGroup.visible = visible;
   }
 
   public setTreesVisibility(visible: boolean): void {
@@ -325,6 +381,9 @@ export class CorridorCityEnvironment {
   }
 
   public dispose(): void {
+    for (const g of this.vmsGantries) {
+      g.dispose();
+    }
     for (const d of this.disposables) {
       d.dispose();
     }

@@ -575,3 +575,34 @@ class ExplainDecisionResponse(BaseModel):
     feature_attributions: dict[str, float]
     safety_status: str
     provenance: str = "CLEARWAY_EXPLAINABLE_AUDIT"
+
+
+# 9. Variable Message Sign (VMS) Advisory Schemas
+class VMSBoardStatusResponse(BaseModel):
+    """Real-time advisory status for an individual overhead VMS gantry board."""
+
+    board_id: str
+    node_id: str
+    gantry_x_m: float
+    target_stopline_x: float
+    mode: str
+    message_line_1_vi: str
+    message_line_2_en: str
+    recommended_speed_kmh: int
+    flashing_strobe: bool
+    chevron_direction: str
+    ev_distance_m: float | None = None
+    ev_eta_sec: float | None = None
+    timestamp_sec: float
+
+
+class VMSCorridorStatusResponse(BaseModel):
+    """Corridor-wide collection of all 4 overhead VMS advisory displays."""
+
+    corridor_status: str
+    boards: dict[str, VMSBoardStatusResponse]
+    active_emergency: bool
+    emergency_vehicle_id: str | None = None
+    emergency_position_m: float | None = None
+    timestamp_sec: float
+    provenance: str = "CLEARWAY_VMS_ADVISORY"
