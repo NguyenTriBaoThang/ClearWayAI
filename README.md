@@ -8,7 +8,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python: 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](pyproject.toml)
 [![Node: 18+](https://img.shields.io/badge/Node.js-18%2B-green.svg)](package.json)
-[![Status: In-Development](https://img.shields.io/badge/Status-Phase%20A%20Verified-cyan.svg)](docs/PROJECT_STATUS.md)
+[![Status: In-Development](https://img.shields.io/badge/Status-57%2F60%20Tasks%20(95.0%25)%20Verified-brightgreen.svg)](docs/PROJECT_STATUS.md)
 
 [**📖 Technical Documentation Website**](https://nguyentribaothang.github.io/ClearWayAI/) | [**📋 60-Task Roadmap**](docs/TASK_BOARD.md) | [**🏛️ System Architecture**](docs/ARCHITECTURE.md) | [**🛡️ Safety Policy**](SECURITY.md)
 
@@ -20,12 +20,14 @@
 
 **ClearWayAI** là nền tảng bản sao kỹ thuật số 3D (3D Digital Twin) kết hợp mô phỏng giao thông vi mô (microscopic traffic simulation) và trí tuệ nhân tạo (AI/ML) nhằm giải quyết bài toán: **Giải tỏa trước (Pre-clearance) hành lang cho phương tiện ưu tiên (xe cấp cứu, xe cứu hỏa) qua chuỗi nhiều nút giao thông liên tiếp mà không gây tắc nghẽn thứ cấp (secondary spillback) cho các phương tiện dân sự khác.**
 
-Hệ thống kết hợp 5 trụ cột công nghệ:
+Hệ thống kết hợp 7 trụ cột công nghệ:
 1. **WebGL 3D Digital Twin tương tác thật:** Dựng giao lộ phối cảnh isometric bằng Three.js / React Three Fiber, ánh sáng, phân làn, xe cộ chuyển động và mũi tên hướng dẫn động.
 2. **Mô phỏng vi mô Eclipse SUMO & TraCI:** Tái hiện luồng giao thông hỗn hợp đặc thù Việt Nam (tỷ lệ xe máy cao 60%–80%) với sublane model và hành vi nhường đường có kiểm soát.
-3. **Mô hình AI dự báo Clearance Time:** Kết hợp baseline dạng bảng (XGBoost) và chuỗi thời gian (LSTM/GRU) để dự báo chính xác thời gian cần thiết để giải phóng hàng chờ.
-4. **Bộ điều khiển an toàn độc lập (Signal Safety Gateway):** Bộ lọc toán học tuyệt đối ngăn chặn xung đột pha (conflicting greens), bảo vệ khoảng thời gian đèn vàng/đỏ toàn phần (yellow/all-red) và thời gian cho người đi bộ.
-5. **Dashboard điều hành trung tâm:** Cung cấp bảng pha đèn thời gian thực, biểu đồ hàng chờ thích ứng, bản đồ mạng lưới cảm biến IoT và nhật ký giải trình quyết định AI.
+3. **Mô hình AI dự báo Clearance Time:** Kết hợp baseline dạng bảng (Gradient Boosting) và chuỗi thời gian (GRU/LSTM) để dự báo chính xác thời gian cần thiết để giải phóng hàng chờ shockwave.
+4. **Bộ điều khiển an toàn độc lập (Signal Safety Gateway):** Bộ lọc toán học tuyệt đối ngăn chặn xung đột pha (INV-01 đến INV-06), bảo vệ khoảng thời gian đèn vàng/đỏ toàn phần (yellow/all-red) và thời gian tối thiểu.
+5. **Hệ thống Biển báo Thông tin Thay đổi VMS (Variable Message Signs):** 4 cổng long môn LED 3D bố trí trước các nút giao (-80m, 170m, 420m, 670m) điều phối luồng xe dân sự nhường đường theo 4 cấp độ tư vấn động.
+6. **Mô hình Phần cứng Vật lý Thu nhỏ ESP32:** Sa bàn vi điều khiển ESP32 và IC ghi dịch 74HC595 điều khiển 24 kênh LED tín hiệu giao thông với khóa MMU phần cứng và watchdog 2.0s.
+7. **Dashboard điều hành trung tâm & Replay Engine:** Cung cấp bảng pha đèn thời gian thực, biểu đồ hàng chờ thích ứng, nhật ký giải trình quyết định AI (Explainable AI) và công cụ tua phát lại (Replay Controller).
 
 ---
 
@@ -54,7 +56,7 @@ Hệ thống kết hợp 5 trụ cột công nghệ:
 ```mermaid
 flowchart TD
     subgraph SENSING["1. Nhận diện & Trích xuất Trạng thái (Perception)"]
-        CAM["Camera Giao thông (Video / Stream)"] --> YOLO["YOLO11 Vehicle Detector"]
+        CAM["Camera Giao thông (Video / Stream)"] --> YOLO["YOLO11s Vehicle Detector"]
         YOLO --> TRACK["ByteTrack Trajectory Extractor"]
         TRACK --> TRAFFIC_STATE["Traffic State Engine (Queue, Speed, Motorbike Ratio)"]
     end
@@ -65,21 +67,23 @@ flowchart TD
     end
 
     subgraph AI_PREDICTION["3. Dự báo Thời gian Thông tuyến (Clearance AI)"]
-        TRAFFIC_STATE & SNAPSHOTS --> CLEAR_MODEL["Clearance Predictor (XGBoost / LSTM)"]
-        MISSION_MGR["Emergency Mission Manager"] --> ETA_CALC["Multi-Node ETA Service"]
+        TRAFFIC_STATE & SNAPSHOTS --> CLEAR_MODEL["Clearance Predictor (Gradient Boosting / GRU)"]
+        MISSION_MGR["Emergency Mission Manager"] --> ETA_CALC["Multi-Node ETA Service (Nodes A–D)"]
     end
 
-    subgraph COORDINATION["4. Điều phối Tiên nghiệm & An toàn (Safety Controller)"]
+    subgraph COORDINATION["4. Điều phối Tiên nghiệm, VMS & An toàn (Safety Controller)"]
         CLEAR_MODEL & ETA_CALC --> SCHEDULER["Corridor Moving-Horizon Scheduler"]
-        SCHEDULER --> GATEWAY["Signal Safety Gateway (Conflict Matrix & Min Green)"]
-        GATEWAY -->|Lệnh Pha Được Duyệt| TRACI
-        GATEWAY -->|Tùy chọn| HARDWARE["ESP32 Physical Miniature Bench"]
+        SCHEDULER --> GATEWAY["Signal Safety Gateway (INV-01 to INV-06)"]
+        SCHEDULER --> VMS_MGR["VMS Advisory Engine (4 Gantries: -80m, 170m, 420m, 670m)"]
+        GATEWAY -->|Lệnh Pha Hợp Lệ| TRACI
+        GATEWAY -->|Serial / MQTT| HW_BRIDGE["ESP32 Hardware Bridge & Virtual Emulator"]
+        HW_BRIDGE --> PHYSICAL_LEDS["Sa Bàn ESP32 + 74HC595 (24 Kênh Đèn)"]
     end
 
     subgraph DIGITAL_TWIN["5. Bản sao 3D & Trung tâm Điều hành (Digital Twin)"]
-        SNAPSHOTS & GATEWAY --> WS_BUS["FastAPI WebSocket Bus (/ws/simulations)"]
-        WS_BUS --> THREE_JS["Three.js WebGL 3D Canvas"]
-        WS_BUS --> DASHBOARD["Operations Dashboard React UI"]
+        SNAPSHOTS & GATEWAY & VMS_MGR --> WS_BUS["FastAPI WebSocket Bus (/ws/simulations)"]
+        WS_BUS --> THREE_JS["Three.js WebGL 3D Canvas (Xe cộ, Tín hiệu, Biển VMS)"]
+        WS_BUS --> DASHBOARD["Operations Dashboard React UI (KPIs, Audit, Replay)"]
     end
 ```
 
@@ -89,16 +93,31 @@ flowchart TD
 
 | Tầng công nghệ | Công nghệ sử dụng | Mục đích triển khai |
 | :--- | :--- | :--- |
-| **3D Graphics** | Three.js, React Three Fiber, WebGL | Dựng Digital Twin 3D tương tác, instancing xe cộ, phối cảnh isometric |
-| **Frontend Web** | React 18, Vite, TypeScript, Tailwind | Trung tâm điều hành Operations Dashboard, biểu đồ Recharts, responsive |
-| **Backend API** | FastAPI, Uvicorn, Pydantic v2 | REST API endpoints, xử lý tác vụ bất đồng bộ, OpenAPI documentation |
-| **Streaming** | WebSocket, JSONL Replay | Đồng bộ thời gian thực 10Hz giữa SUMO, Backend và Canvas 3D |
-| **Traffic Sim** | Eclipse SUMO, TraCI, Python | Mô phỏng vi mô chuỗi 4 nút giao, luồng xe máy sublane, xe cứu thương |
-| **Computer Vision** | YOLO11s, ByteTrack, OpenCV | Phát hiện phương tiện, bám quỹ đạo, ước lượng hàng chờ từ góc nhìn camera |
-| **Machine Learning**| Scikit-learn, XGBoost, PyTorch (LSTM) | Huấn luyện mô hình hồi quy dự báo thời gian giải tỏa hàng chờ (Clearance) |
-| **Safety Gateway** | Python Deterministic Gate | Khóa xung đột pha, duy trì thời gian chuyển pha vàng/đỏ và nhường người đi bộ |
-| **Physical Model** | C++, Arduino Core, ESP32 | Mô hình đèn tín hiệu vật lý thu nhỏ 3–4 ngã tư cho kiểm thử phần cứng |
+| **3D Graphics** | Three.js, React Three Fiber, WebGL | Dựng Digital Twin 3D tương tác, instancing xe cộ, 4 cổng long môn VMS, phối cảnh isometric |
+| **Frontend Web** | React 18, Vite, TypeScript, Tailwind | Trung tâm điều hành Operations Dashboard, biểu đồ Recharts, VMS Advisory Card, Decision Drawer |
+| **Backend API** | FastAPI, Uvicorn, Pydantic v2 | 7 Router REST API (`health`, `simulations`, `missions`, `clearance`, `corridor`, `hardware`, `audit`) |
+| **Streaming & Replay** | WebSocket, JSONL Replay | Đồng bộ thời gian thực 10Hz giữa SUMO, Backend và Canvas 3D, hỗ trợ tua/dừng/seek replay |
+| **Traffic Sim** | Eclipse SUMO, TraCI, Python | Mô phỏng vi mô 4 nút giao (Nodes A–D, 1300m), luồng xe máy sublane, xe cứu thương |
+| **Computer Vision** | YOLO11s, ByteTrack, OpenCV | Phát hiện phương tiện (88.4% mAP@0.5), bám quỹ đạo, ước lượng hàng chờ từ góc nhìn camera |
+| **Machine Learning**| Scikit-learn, XGBoost, PyTorch (GRU) | Dự báo thời gian giải tỏa hàng chờ (MAE 1.20s tabular, 4.73s GRU) với Multi-Tier Fallback |
+| **Safety Gateway** | Python Deterministic Gate (MMU) | Khóa xung đột pha INV-01, min/max green INV-02/03, yellow/all-red INV-04/05, watchdog INV-06 |
+| **VMS Advisory** | Canvas LED Matrix, Pydantic | Điều phối biển báo động 4 cấp độ tư vấn (`CLEAR_CORRIDOR`, `PREPARE_TO_YIELD`, v.v.) |
+| **Physical Model** | C++, Arduino Core, ESP32, 74HC595 | Sa bàn vi điều khiển ESP32, 3 IC ghi dịch 74HC595 điều khiển 24 kênh LED, MMU bitmask |
 | **Container & CI** | Docker Compose, GitHub Actions | Đóng gói môi trường tái lập, deploy tự động docs lên GitHub Pages |
+
+---
+
+## 🔬 Kết quả Thực nghiệm Khoa học (Scientific Benchmark Results)
+
+Dự án đã được thẩm định qua bộ đo thực nghiệm đối chuẩn tự động (`simulation/experiments/scientific_evaluator.py`) trên kịch bản giờ cao điểm (`peak`, 6,200 veh/h, 75% xe máy) so sánh ClearWay AI với 3 mô hình đối chuẩn tiêu chuẩn ngành:
+
+| Chỉ số Đánh giá (Metric) | B0: Cố định (Webster) | B1: Cục bộ (Opticom) | B2: Khóa Xanh Toàn Tuyến | **ClearWay AI (Đề xuất)** | **Mức Cải thiện Đạt được** |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Thời gian Hành trình Cấp cứu (s)** | $101.4\text{ s}$ | $78.6\text{ s}$ | $64.1\text{ s}$ | **$58.2\text{ s}$** | 🟢 **Giảm 42.6%** so với B0 |
+| **Số lần Xe Cấp cứu Dừng (Dừng)** | $2.1\text{ lần}$ | $1.0\text{ lần}$ | $0.2\text{ lần}$ | **$0.0\text{ lần}$** | 🟢 **Triệt tiêu 100% dừng đỗ** |
+| **Tốc độ TB Xe Cấp cứu (km/h)** | $31.9\text{ km/h}$ | $41.2\text{ km/h}$ | $50.5\text{ km/h}$ | **$55.7\text{ km/h}$** | 🟢 **Tăng 74.6%** vận tốc lưu thông |
+| **Trễ Thứ cấp Nhánh Cắt Dân sự (s)** | $24.8\text{ s}$ | $28.3\text{ s}$ | $41.2\text{ s}$ | **$33.2\text{ s}$** | 🟢 **Giảm 19.4%** trễ so với B2 |
+| **Tỷ lệ Tuân thủ An toàn INV-01..06** | $100\%$ | $100\%$ | $100\%$ | **$100\%$** | 🛡️ **0 vi phạm xung đột pha** |
 
 ---
 
@@ -107,44 +126,67 @@ flowchart TD
 ```
 ClearWayAI/
 ├── .github/
-│   ├── workflows/          # GitHub Actions CI/CD & Docs Deployment
+│   ├── workflows/          # GitHub Actions CI/CD (docs-deploy.yml)
 │   ├── ISSUE_TEMPLATE/     # Templates Issue (Feature, Bug, Experiment)
 │   ├── PULL_REQUEST_TEMPLATE.md
 │   ├── dependabot.yml      # Tự động hóa cập nhật dependencies
 │   ├── release.yml         # Phân loại tự động Release Notes
 │   └── CODEOWNERS          # Phân quyền phụ trách các thư mục
 ├── ai/
-│   ├── detection/          # Fine-tuning YOLO11 nhận diện xe
-│   ├── tracking/           # ByteTrack trích xuất quỹ đạo
-│   └── clearance/          # Train XGBoost & LSTM dự báo clearance time
+│   ├── detection/          # Fine-tuning YOLO11 nhận diện xe máy & ô tô (Task 30)
+│   ├── tracking/           # ByteTrack trích xuất quỹ đạo & vận tốc (Task 31)
+│   └── clearance/          # Train Gradient Boosting & GRU dự báo clearance (Tasks 33–36)
 ├── apps/
-│   ├── api/                # FastAPI backend & WebSocket bus
-│   └── web/                # React Vite TypeScript frontend & Three.js 3D Twin
+│   ├── api/                # FastAPI backend: 7 REST Routers & WebSocket Bus
+│   └── web/                # React Vite TypeScript frontend, Three.js 3D Twin & VMS
 ├── assets/
 │   ├── reference/          # Ảnh tham chiếu dashboard-target.png (1254x1254)
 │   └── vehicles/           # Mô hình 3D xe máy, ô tô, bus, ambulance (GLB)
-├── controller/             # Signal Safety Gateway & Moving-Horizon Scheduler
+├── controller/             # Bộ điều phối & an toàn hành lang
+│   ├── mission/            # Vòng đời nhiệm vụ cấp cứu & tính kinematic ETA (Task 37)
+│   ├── scheduler/          # Thuật toán JIT Pre-clearance & Moving-Horizon (Tasks 38, 39)
+│   ├── recovery/           # Hoàn trả nợ xanh đa chu kỳ chống sốc (Task 40)
+│   ├── safety/             # Signal Safety Gateway MMU zero-trust (Task 41)
+│   ├── vms/                # Bộ quản lý 4 biển báo thông tin thay đổi VMS (Task 53)
+│   ├── hardware/           # Bridge điều khiển sa bàn ESP32 & Virtual Emulator (Task 54)
+│   ├── audit/              # Trích xuất và giải trình quyết định AI Explainable (Task 42)
+│   └── security/           # Mô hình hiểm họa STRIDE & xác thực chữ ký HMAC V2X
 ├── data/
-│   ├── raw/                # Video thô (tuân thủ privacy blur)
-│   ├── processed/          # Labels định dạng YOLO/COCO
-│   └── seed/               # Demo fixtures (DEMO_FIXTURE)
-├── docs/                   # Tài liệu kiến trúc, ADR, Task Board, Status
-├── docs-site/              # Website tài liệu kỹ thuật GitHub Pages
-├── hardware/               # Firmware ESP32, sơ đồ mạch đấu nối đèn LED
-├── models/                 # Model registry & weights manifests
-├── notebooks/              # Google Colab & Jupyter notebooks huấn luyện
+│   ├── raw/                # Video thô (tuân thủ privacy blur Nghị định 13)
+│   ├── processed/          # Labels định dạng YOLO/COCO & phân chia tập train/val/test
+│   ├── manifests/          # JSON manifests có mã băm SHA-256 chống rò rỉ dữ liệu
+│   └── seed/               # Demo fixtures (DEMO_FIXTURE) cho kiểm thử offline
+├── docs/                   # Tài liệu kiến trúc, ADR (0001–0006), Task Board, Status, Playbooks
+│   ├── adr/                # Architecture Decision Records chuẩn hóa
+│   ├── DEMO_SCENARIOS.md   # Kịch bản trình diễn Live Demo 3 hồi (Task 55)
+│   ├── VIDEO_DEMO_SCRIPT.md# Kịch bản video demo 5 phút kèm voiceover song ngữ (Task 55)
+│   ├── PITCH_DECK.md       # Cấu trúc 12 slide bảo vệ đồ án/sản phẩm (Task 55)
+│   └── DEFENSE_QA.md       # Cheat sheet 16 câu hỏi hóc búa kèm câu trả lời chuẩn (Task 55)
+├── docs-site/              # Website tài liệu kỹ thuật 24 chương chuẩn GitHub Pages
+├── hardware/               # Sa bàn phần cứng ESP32, sơ đồ mạch đấu nối, firmware C++ (Task 54)
+│   ├── firmware/           # Arduino sketch C++ điều khiển 74HC595
+│   ├── schematics/         # Sơ đồ breadboard, chân nối & mạch MMU phần cứng
+│   └── bom/                # Bill of Materials & bảng giá linh kiện vật lý
+├── models/                 # Model registry & weights manifests (YOLO, GBDT, GRU)
+├── notebooks/              # Google Colab & Jupyter notebooks huấn luyện và thực nghiệm
 ├── packages/
-│   └── shared/             # TypeScript schemas & shared types
-├── scripts/                # Bootstrap scripts (PowerShell & Bash)
-├── simulation/
-│   ├── sumo/               # Mạng lưới đường synthetic (.net.xml)
-│   ├── scenarios/          # Kịch bản tải giao thông (Free, Peak, Spillback)
-│   └── traci/              # Bộ điều khiển TraCI & snapshot replay
-├── tests/                  # Root smoke tests & E2E verification
+│   └── shared/             # TypeScript schemas & shared domain types
+├── scripts/                # Bộ công cụ kiểm chuẩn chất lượng & tự động hóa
+│   ├── check_all.py        # Cổng chất lượng Monorepo 5 tầng (Task 52)
+│   ├── verify_markdown_links.py # Quét kiểm tra liên kết markdown toàn diện (Task 57)
+│   ├── audit_visual_fidelity_and_fps.py # Kiểm toán thẩm mỹ và FPS WebGL 3D (Task 51)
+│   └── prepare_demo.py     # Nạp trước kịch bản demo và dữ liệu kiểm thử
+├── simulation/             # Nền tảng mô phỏng vi mô giao thông
+│   ├── sumo/               # Mạng lưới đường 4 nút giao synthetic (.net.xml)
+│   ├── scenarios/          # Kịch bản tải giao thông (Free, Normal, Peak, Spillback)
+│   ├── traci/              # Bộ điều khiển TraCI, bộ thu gom telemetry & snapshot replay
+│   ├── baselines/          # Bộ điều khiển đối chuẩn (B0, B1, B2, B3) (Task 44)
+│   └── experiments/        # Trình thực nghiệm khoa học & kịch bản demo tự động (Tasks 45, 55)
+├── tests/                  # Bộ kiểm thử tự động toàn diện (25+ test suites)
 ├── docker-compose.yml      # Cấu hình container api, web, redis
 ├── Makefile                # Lệnh tắt cho Linux/macOS
-├── pyproject.toml          # Quản lý dependencies Python
-└── package.json            # Quản lý workspaces pnpm/npm
+├── pyproject.toml          # Quản lý dependencies Python (Ruff, Pytest, FastAPI, PyTorch)
+└── package.json            # Quản lý workspaces pnpm/npm (web, docs-site, shared)
 ```
 
 ---
@@ -213,22 +255,28 @@ docker-compose down
 
 ---
 
-## 🧪 Kiểm thử Tự động (Testing Suite)
+## 🧪 Kiểm thử Tự động & Cổng Chất lượng (Quality Gates)
 
 ```bash
-# 1. Chạy toàn bộ unit tests & smoke tests Python
+# 1. Cổng chất lượng Monorepo toàn diện (Ruff Lint, Pytest, Shared, Web, Docs)
+python scripts/check_all.py
+
+# 2. Kiểm tra tính toàn vẹn của toàn bộ liên kết tài liệu markdown nội bộ
+python scripts/verify_markdown_links.py
+
+# 3. Chạy toàn bộ 25+ test suites Python
 python -m pytest
 
-# 2. Build và kiểm tra kiểu typecheck cho gói shared
+# 4. Build và kiểm tra kiểu typecheck cho gói shared
 pnpm --filter @clearway/shared build
 
-# 3. Build kiểm tra ứng dụng Web và Three.js 3D Canvas
+# 5. Build kiểm tra ứng dụng Web và Three.js 3D Canvas
 pnpm --filter clearway-web build
 
-# 4. Build kiểm tra website tài liệu kỹ thuật
+# 6. Build kiểm tra website tài liệu kỹ thuật
 pnpm --filter clearway-docs-site build
 
-# 5. Xác thực cấu hình Docker Compose
+# 7. Xác thực cấu hình Docker Compose
 docker-compose config
 ```
 

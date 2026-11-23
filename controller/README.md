@@ -9,9 +9,13 @@ Contains the core moving-horizon multi-intersection corridor coordinator and the
 ```
 controller/
 ├── mission/                # Emergency Mission lifecycle manager & Multi-Node ETA estimator (Task 37)
-├── safety/                 # Deterministic Signal Safety Gateway & Conflict Matrices (Task 41)
 ├── scheduler/              # Moving-horizon multi-node pre-clearance scheduler & corridor coordinator (Tasks 38 & 39)
 ├── recovery/               # Post-transit smooth recovery state machine (Task 40)
+├── safety/                 # Deterministic Signal Safety Gateway & Conflict Matrices (Task 41)
+├── vms/                    # Variable Message Signs (VMS) advisory engine ahead of 4 nodes (Task 53)
+├── hardware/               # ESP32 serial bridge, virtual emulator & interactive testbench CLI (Task 54)
+├── audit/                  # Explainable AI decision audit logger & narrative generator (Task 42)
+├── security/               # STRIDE threat model, V2X HMAC signature validation & anti-replay
 └── README.md
 ```
 
@@ -117,3 +121,52 @@ Emulates a zero-trust hardware **Malfunction Management Unit (MMU)** / **Conflic
 6. **INV-06 (Heartbeat Watchdog & Communication Loss Fallback):**
    - If telemetry or heartbeat signal is lost for $> 2.0\text{s}$, autonomously reverts to `FALLBACK_WEBSTER` localized fixed-time coordination.
 - **Latency SLA:** Hardware-level sub-millisecond evaluation ($< 0.1\text{ ms}$).
+
+---
+
+## 7. Variable Message Signs (VMS) Advisory System (Task 53 VERIFIED)
+
+Managed via `controller/vms/vms_manager.py`:
+- **Physical Gantry Placement:** 4 overhead gantries installed upstream of each intersection:
+  - Gantry 1: $x = -80.0\text{ m}$ (Ahead of Node A at $x = 0\text{ m}$)
+  - Gantry 2: $x = 170.0\text{ m}$ (Ahead of Node B at $x = 250\text{ m}$)
+  - Gantry 3: $x = 420.0\text{ m}$ (Ahead of Node C at $x = 500\text{ m}$)
+  - Gantry 4: $x = 670.0\text{ m}$ (Ahead of Node D at $x = 750\text{ m}$)
+- **4-Stage Advisory Hierarchy:**
+  1. `CLEAR_CORRIDOR` (Red banner, flashing): Activated when EV is $0\text{--}180\text{ m}$ upstream; prompts civil motorists to clear the center/left lane.
+  2. `PREPARE_TO_YIELD` (Amber banner): Activated when EV is $180\text{--}350\text{ m}$ upstream; advises merging right.
+  3. `CAUTION_EMERGENCY` (Yellow banner): Activated when EV is $350\text{--}550\text{ m}$ upstream; warns approaching traffic.
+  4. `NORMAL_SPEED` (Green banner): Nominal speed limit advisory ($50\text{--}60\text{ km/h}$) during non-emergency periods.
+- **Fail-Safe Override:** Operators can manually lock, override, or restore automated VMS logic via REST API (`/api/v1/corridor/vms`).
+
+---
+
+## 8. ESP32 Physical Testbench Integration (Task 54 VERIFIED)
+
+Managed via `controller/hardware/esp32_bridge.py` and `testbench_cli.py`:
+- **Dual Mode Bridge:** Auto-detects connected serial ports (`COMx` or `/dev/ttyUSBx`) at 115200 baud. If no physical microcontroller is detected, seamlessly switches to `VirtualESP32Emulator` to ensure continuous zero-dependency development and automated test passing.
+- **Hardware-in-the-Loop Protocol:** Translates software phase states into binary frames driving 24 independent physical LED channels across Nodes A–D via three 74HC595 shift registers.
+- **Safety Interlocks:** Synchronously monitors hardware MMU conflict trips and watchdog status (INV-06 timeout at 2.0s).
+
+---
+
+## 9. Explainable AI Decision Audit (Task 42 VERIFIED)
+
+Managed via `controller/audit/decision_audit.py`:
+- **Real-Time Mathematical Traceability:**
+  Every automated phase intervention is recorded with an immutable audit log detailing:
+  - $\Delta t_{\text{trigger}} = \text{ETA}_{\text{EV}} - \hat{T}_{\text{clear}} - T_{\text{trans}} - T_{\text{buf}}$
+  - SHAP/Feature attribution weights: Queue Length ($45\%$), Motorcycle Ratio ($25\%$), Upstream Inflow ($18\%$), Weather/Friction ($12\%$).
+  - Natural language decision narrative: English and Vietnamese human-readable explanation.
+  - Zero-Trust MMU verification stamp.
+- **REST Endpoints:** `/api/v1/audit/decisions`, `/api/v1/audit/summary`, `/api/v1/audit/explain`.
+
+---
+
+## 10. V2X Cryptographic Security & Anti-Replay
+
+Managed via `controller/security/`:
+- **STRIDE Threat Modeling:** Systematic mitigation against Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, and Elevation of Privilege.
+- **HMAC-SHA256 Authenticity:** Every priority preemption request emitted by emergency vehicles is signed with a dynamic HMAC token.
+- **Anti-Replay Nonce Window:** Rejects priority messages with timestamps drifting $> 2.0\text{s}$ or repeated nonces to prevent replay attacks.
+

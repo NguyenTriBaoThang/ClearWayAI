@@ -14,14 +14,15 @@ apps/api/
 │   ├── database.py         # Thread-safe SQLite persistence layer (simulations, missions, signal logs, clearance, snapshots)
 │   ├── schemas.py          # Complete Pydantic schemas adhering to domain contracts
 │   ├── websocket.py        # Real-time WebSocket connection manager & pub/sub broadcaster
-│   ├── routers/            # Modular REST API endpoints
+│   ├── routers/            # Modular REST API endpoints (7 Routers)
 │   │   ├── __init__.py
 │   │   ├── simulations.py  # Lifecycle (create, list, get, step, stop)
 │   │   ├── missions.py     # Priority mission dispatch, telemetry, multi-node ETA
 │   │   ├── clearance.py    # AI clearance predictions & Model Registry catalog
-│   │   ├── corridor.py     # Moving-horizon coordination, JIT trigger, recovery, MMU safety audit
+│   │   ├── corridor.py     # Moving-horizon coordination, JIT trigger, recovery, VMS & MMU safety audit
 │   │   ├── replay.py       # Deterministic telemetry replay, snapshots querying & playback controls
-│   │   └── audit.py        # Explainable AI decision audit trails, feature attributions & summary metrics
+│   │   ├── audit.py        # Explainable AI decision audit trails, feature attributions & summary metrics
+│   │   └── hardware.py     # ESP32 miniature physical testbench integration & diagnostics
 │   └── main.py             # FastAPI entrypoint, CORS, route handlers, WebSocket mounts
 ├── tests/
 │   ├── __init__.py
@@ -53,10 +54,15 @@ apps/api/
 | **Missions** | `POST` | `/api/v1/missions/{id}/telemetry` | Update vehicle coordinates and velocity |
 | **Clearance AI** | `POST` | `/api/v1/clearance/predict` | Predict queue shockwave clearance duration via ML champion |
 | **Clearance AI** | `GET` | `/api/v1/clearance/registry` | Query Model Registry catalog and fallback hierarchy |
-| **Corridor** | `GET` | `/api/v1/corridor/plan` | Query real-time moving-horizon coordination plan |
-| **Corridor** | `POST` | `/api/v1/corridor/preclearance/evaluate` | Evaluate JIT trigger $\Delta t_{\text{trigger}}$ for intersection |
-| **Corridor** | `POST` | `/api/v1/corridor/recovery/initiate` | Initiate multi-cycle smooth post-clearance recovery |
-| **Corridor** | `GET` | `/api/v1/corridor/safety/audit` | Execute hardware-level MMU zero-trust safety audit |
+| **Corridor & VMS** | `GET` | `/api/v1/corridor/plan` | Query real-time moving-horizon coordination plan |
+| **Corridor & VMS** | `POST` | `/api/v1/corridor/preclearance/evaluate` | Evaluate JIT trigger $\Delta t_{\text{trigger}}$ for intersection |
+| **Corridor & VMS** | `POST` | `/api/v1/corridor/recovery/initiate` | Initiate multi-cycle smooth post-clearance recovery |
+| **Corridor & VMS** | `GET` | `/api/v1/corridor/safety/audit` | Execute hardware-level MMU zero-trust safety audit |
+| **Corridor & VMS** | `GET` | `/api/v1/corridor/vms` | Query active advisory states across 4 VMS gantries (-80m, 170m, 420m, 670m) |
+| **Corridor & VMS** | `POST` | `/api/v1/corridor/vms/{gantry_id}/override` | Manually override VMS gantry advisory state & text |
+| **Corridor & VMS** | `POST` | `/api/v1/corridor/vms/reset` | Reset all VMS gantries to automated corridor coordination |
+| **Physical Hardware** | `GET` | `/api/v1/hardware/status` | Query ESP32 connection state, watchdog age, and 24-channel LED states |
+| **Physical Hardware** | `POST` | `/api/v1/hardware/test` | Trigger hardware self-test pattern (`CHASE`, `GREEN_WAVE`, `ALL_RED`) |
 | **AI Decision Audit** | `GET` | `/api/v1/audit/decisions` | Stream explainable AI decision audit logs with filters |
 | **AI Decision Audit** | `GET` | `/api/v1/audit/decisions/{id}` | Retrieve single decision narrative & feature attributions |
 | **AI Decision Audit** | `GET` | `/api/v1/audit/summary` | Corridor-wide decision statistics & safety ratio |

@@ -109,7 +109,7 @@
 | **T54** | Xây mô hình vật lý 3–4 nút với ESP32 & đèn LED | P1 | T41, T43–T44, T50 | **VERIFIED** | ESP32 C++ firmware (clearway_esp32_firmware.ino), 74HC595 shift register & direct GPIO support, hardware MMU conflict interlock (INV-03), hardware watchdog timeout (INV-06 2000ms), ESP32HardwareBridge and VirtualESP32Emulator (controller/hardware/esp32_bridge.py), breadboard wiring diagrams (hardware/schematics/breadboard_wiring.md), bill of materials (hardware/bom/BILL_OF_MATERIALS.md), testbench CLI (controller/hardware/testbench_cli.py), REST API endpoints (/api/v1/hardware/status, /command, /sync, /telemetry), pytest tests/test_esp32_hardware_bridge.py (8/8), monorepo quality gates 5/5 PASS |
 | **T55** | Bộ kịch bản demo hoàn chỉnh + video 5 phút + slide pitching | P0 | T44–T48, T50–T51 | **VERIFIED** | Demo playbook (docs/DEMO_SCENARIOS.md - 3 scenarios, click-by-click, camera presets ISO/TOP/CHASE), 5-minute video storyboard & bilingual voiceover script (docs/VIDEO_DEMO_SCRIPT.md - 6 acts 00:00-05:00), 12-slide pitch deck (docs/PITCH_DECK.md), defense Q&A cheat sheet (docs/DEFENSE_QA.md - 16 questions), automated demo scenario orchestrator (simulation/experiments/demo_scenario_runner.py), demo_timeline.json artifact, pytest tests/test_demo_scenarios_and_pitch.py (5/5 PASS), monorepo quality gates 5/5 PASS |
 | **T56** | Cập nhật Technical Documentation đầy đủ theo code thật | P0 | T03, T23–T55 | **VERIFIED** | Synchronized all 24 chapters in docs-site/src/data/docsContent.ts with real codebase (6-tier architecture, 7 REST routers, 6 safety invariants INV-01..06, ESP32 hardware testbench, VMS gantries, 10-seed benchmarks, Decree 13/2023/ND-CP Zero-PII), all 24 chapters marked VERIFIED, docs-site production build PASS (dist/index.html & dist/assets/ generated in 8.49s), pytest tests/test_technical_documentation_sync.py (3/3 PASS), monorepo quality gates 5/5 PASS |
-| **T57** | Viết lại ALL README theo hệ thống cuối cùng | P0 | T04, T50–T56 | **PLANNED** | Scheduled |
+| **T57** | Viết lại ALL README theo hệ thống cuối cùng | P0 | T04, T50–T56 | **VERIFIED** | Comprehensive synchronization of all 19 project-owned README.md files (root, apps/api, apps/web, hardware, controller, simulation, tests, scripts, ai, data, models, notebooks, packages/shared, docs-site, docs/adr, simulation/sumo, traci, baselines, scenarios) reflecting final architecture, VMS gantries, ESP32 physical testbench, 7 REST routers, INV-01..06 safety invariants, scientific benchmarks (-42.6% delay, 0 stops), all 55 markdown files relative link checked (0 broken links), pytest tests/test_all_readmes_integrity.py (4/4 PASS), monorepo quality gates 5/5 PASS |
 | **T58** | Đóng gói release MVP, deployment và hồ sơ nộp thi | P0 | T02–T22, T50–T57 | **PLANNED** | Scheduled |
 | **T59** | PPO Reinforcement Learning điều phối đa nút trong sandbox | P2 | T39–T41, T51 | **PLANNED** | Research track |
 | **T60** | Camera thật → định vị xe lên 3D và kiểm định digital twin | P2 | T28–T32, T46–T47 | **PLANNED** | Research track |
@@ -117,8 +117,8 @@
 ---
 
 ## 3. Current Sprint Focus
-- **Current Milestone:** TASK 01–56 Complete & Verified (Phase A: 6/6, Phase B: 16/16, Phase C: 5/5, Phase D: 5/5, Phase E: 4/4, Phase F: 5/5, Phase G: 4/4, Phase H: 3/3, Phase I: 4/4 ALL 100% COMPLETE!, Phase J: 4/8 complete - 50.0% — Total 56/60 tasks verified = 93.3% of master plan).
-- **Next Dependent Task:** TASK 57 — Viết lại ALL README theo hệ thống cuối cùng (Phase J: Demo, Release & Advanced Exploration).
+- **Current Milestone:** TASK 01–57 Complete & Verified (Phase A: 6/6, Phase B: 16/16, Phase C: 5/5, Phase D: 5/5, Phase E: 4/4, Phase F: 5/5, Phase G: 4/4, Phase H: 3/3, Phase I: 4/4 ALL 100% COMPLETE!, Phase J: 5/8 complete - 62.5% — Total 57/60 tasks verified = 95.0% of master plan).
+- **Next Dependent Task:** TASK 58 — Đóng gói release MVP, deployment và hồ sơ nộp thi (Phase J: Demo, Release & Advanced Exploration).
 
 
 
