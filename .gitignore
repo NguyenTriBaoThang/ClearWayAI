@@ -67,6 +67,8 @@ data/raw/*
 !data/raw/.gitkeep
 data/processed/*
 !data/processed/.gitkeep
+!data/processed/yolo/
+!data/processed/yolo/**
 *.mp4
 *.avi
 *.mov

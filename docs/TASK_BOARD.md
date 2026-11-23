@@ -8,15 +8,15 @@
 
 ## 📊 Sprint Progress Overview
 - **Total Tasks:** 60
-- **Verified Complete:** 28 (T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28)
+- **Verified Complete:** 29 (T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29)
 - **In Progress:** 0
-- **Planned:** 32
-- **Phase Completion:** Phase A (6/6 complete - 100% COMPLETE!), Phase B (16/16 complete - 100% COMPLETE!), Phase C (5/5 complete - 100% COMPLETE!), Phase D (1/5 complete - 20%)
+- **Planned:** 31
+- **Phase Completion:** Phase A (6/6 complete - 100% COMPLETE!), Phase B (16/16 complete - 100% COMPLETE!), Phase C (5/5 complete - 100% COMPLETE!), Phase D (2/5 complete - 40%)
 
 ```mermaid
 pie title Task Completion by Status
-    "VERIFIED" : 28
-    "PLANNED" : 32
+    "VERIFIED" : 29
+    "PLANNED" : 31
 ```
 
 ---
@@ -53,7 +53,7 @@ pie title Task Completion by Status
 | **T26** | Phase C | Xây SUMO/TraCI adapter có step, replay, telemetry | **P0** | T23–T25 | **VERIFIED** | SimulationManager dual-engine (TraCI + SyntheticCorridorEngine), TelemetryCollector (TelemetrySnapshotSchema), SnapshotExporter (JSONL), ReplayController, pytest (129/129) |
 | **T27** | Phase C | Cài đặt 3 baseline để so sánh công bằng | **P0** | T24–T26 | **VERIFIED** | B0 Fixed-Time (Webster), B1 Reactive Local (100m Opticom), B2 Corridor Coordination (Green-Wave), BenchmarkRunner, pytest (134/134) |
 | **T28** | Phase D | Thiết lập thu thập video giao thông và pháp lý dữ liệu | **P0** | T21, T22 | **VERIFIED** | DATA_GOVERNANCE.md (Decree 13 compliant), 4 JSON manifests, anonymize.py, validate_manifests.py, pytest (149/149) |
-| **T29** | Phase D | Thiết kế nhãn và chia train/val/test chống leakage | **P0** | T28 | `PLANNED` | ANNOTATION_GUIDE.md, scene-based splits |
+| **T29** | Phase D | Thiết kế nhãn và chia train/val/test chống leakage | **P0** | T28 | **VERIFIED** | ANNOTATION_GUIDE.md (7 classes, zero temporal/spatial leakage), dataset.yaml, splits.json, leakage audit passed, pytest (163/163) |
 | **T30** | Phase D | Fine-tune YOLO để nhận diện phương tiện trong giao thông Việt Nam | **P0** | T28, T29 | `PLANNED` | YOLO fine-tuning pipeline, weights manifest |
 | **T31** | Phase D | Theo dõi xe bằng ByteTrack và trích quỹ đạo | **P0** | T30 | `PLANNED` | ByteTrack wrapper, trajectory extraction |
 | **T32** | Phase D | Hiệu chỉnh camera và tính các chỉ số Traffic State | **P0** | T29, T31 | `PLANNED` | Homography calibration, queue/density estimators |

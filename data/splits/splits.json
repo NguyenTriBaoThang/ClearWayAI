@@ -1,0 +1,100 @@
+{
+  "dataset_version": "1.0.0",
+  "partition_strategy": "scene_and_camera_disjoint",
+  "zero_leakage_verified": true,
+  "classes": [
+    "motorcycle",
+    "car",
+    "suv",
+    "bus",
+    "truck",
+    "ambulance",
+    "fire_engine"
+  ],
+  "splits": {
+    "train": {
+      "scene_ids": ["SCENE_HCMC_D1_01"],
+      "camera_ids": ["CAM_ITS_HCMC_0104"],
+      "location": "Ho Chi Minh City, District 1 (Nguyen Thi Minh Khai & Pasteur)",
+      "weather": "clear",
+      "time_of_day": "morning_peak",
+      "samples": [
+        "hcmc_d1_0001",
+        "hcmc_d1_0002",
+        "hcmc_d1_0003",
+        "hcmc_d1_0004",
+        "hcmc_d1_0005"
+      ],
+      "class_counts": {
+        "motorcycle": 28,
+        "car": 6,
+        "suv": 4,
+        "bus": 2,
+        "truck": 2,
+        "ambulance": 1,
+        "fire_engine": 0
+      }
+    },
+    "val": {
+      "scene_ids": ["SCENE_HCMC_D5_02"],
+      "camera_ids": ["CAM_ITS_HCMC_0522"],
+      "location": "Ho Chi Minh City, District 5 (Nguyen Tri Phuong & An Duong Vuong)",
+      "weather": "rain",
+      "time_of_day": "evening_peak",
+      "samples": [
+        "hcmc_d5_0001",
+        "hcmc_d5_0002"
+      ],
+      "class_counts": {
+        "motorcycle": 14,
+        "car": 3,
+        "suv": 2,
+        "bus": 0,
+        "truck": 1,
+        "ambulance": 0,
+        "fire_engine": 0
+      }
+    },
+    "test": {
+      "scene_ids": ["SCENE_HN_HK_03"],
+      "camera_ids": ["CAM_ITS_HN_0019"],
+      "location": "Hanoi, Hoan Kiem (Trang Tien & Dinh Tien Hoang)",
+      "weather": "clear",
+      "time_of_day": "night",
+      "samples": [
+        "hn_hk_0001",
+        "hn_hk_0002"
+      ],
+      "class_counts": {
+        "motorcycle": 11,
+        "car": 3,
+        "suv": 1,
+        "bus": 1,
+        "truck": 0,
+        "ambulance": 0,
+        "fire_engine": 1
+      }
+    },
+    "synthetic_benchmark": {
+      "scene_ids": ["SCENE_SYNTH_CORRIDOR_04"],
+      "camera_ids": ["CAM_VIRTUAL_CORRIDOR_01"],
+      "location": "Digital Twin Oak-5th Corridor (SUMO Microscopic)",
+      "weather": "clear",
+      "time_of_day": "peak",
+      "samples": [
+        "synth_corridor_0001",
+        "synth_corridor_0002"
+      ],
+      "class_counts": {
+        "motorcycle": 12,
+        "car": 4,
+        "suv": 2,
+        "bus": 1,
+        "truck": 1,
+        "ambulance": 1,
+        "fire_engine": 1
+      }
+    }
+  }
+}
+

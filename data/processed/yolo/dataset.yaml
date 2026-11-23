@@ -1,0 +1,18 @@
+# ClearWayAI Vietnamese Mixed Traffic Detection Dataset (YOLOv8 / YOLOv11)
+# Strictly partitioned by Scene & Camera ID to prevent Temporal & Spatial Leakage.
+
+path: data/processed/yolo
+train: images/train
+val: images/val
+test: images/test
+
+nc: 7
+names:
+  0: motorcycle
+  1: car
+  2: suv
+  3: bus
+  4: truck
+  5: ambulance
+  6: fire_engine
+
