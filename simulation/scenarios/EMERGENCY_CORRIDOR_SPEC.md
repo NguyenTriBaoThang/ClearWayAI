@@ -68,3 +68,4 @@ Pre-generated scenario presets:
 | **Corridor Transit Time (1300m)** | $185.7\text{ s}$ | **$70.3\text{ s}$** | **$-62.1\%$ travel time** |
 | **Deceleration Events** | $3\text{--}5$ stops | **$0$ stops** | Zero braking |
 | **Overall Corridor Delay** | Spillback shockwaves | **$-19\%$ network delay** | No secondary gridlock |
+
