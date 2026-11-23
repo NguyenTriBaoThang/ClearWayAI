@@ -128,15 +128,22 @@ class PostClearanceRecoveryController:
         self.master_offsets = master_cycle_offsets or dict(self.DEFAULT_MASTER_OFFSETS)
 
         # Internal tracking per intersection node
-        self._node_states: dict[str, RecoveryState] = dict.fromkeys(self.intersections, RecoveryState.INACTIVE)
+        self._node_states: dict[str, RecoveryState] = dict.fromkeys(
+            self.intersections, RecoveryState.INACTIVE
+        )
         self._initial_debts: dict[str, float] = dict.fromkeys(self.intersections, 0.0)
         self._remaining_debts: dict[str, float] = dict.fromkeys(self.intersections, 0.0)
         self._cycle_counters: dict[str, int] = dict.fromkeys(self.intersections, 0)
         self._recovery_start_times: dict[str, float | None] = dict.fromkeys(self.intersections)
         self._cycle_start_times: dict[str, float] = dict.fromkeys(self.intersections, 0.0)
         self._phase_start_times: dict[str, float] = dict.fromkeys(self.intersections, 0.0)
-        self._current_phases: dict[str, int] = dict.fromkeys(self.intersections, self.config.arterial_phase_green)
-        self._current_cycle_splits: dict[str, tuple[float, float]] = dict.fromkeys(self.intersections, (self.config.nominal_arterial_green_sec, self.config.nominal_cross_green_sec))
+        self._current_phases: dict[str, int] = dict.fromkeys(
+            self.intersections, self.config.arterial_phase_green
+        )
+        self._current_cycle_splits: dict[str, tuple[float, float]] = dict.fromkeys(
+            self.intersections,
+            (self.config.nominal_arterial_green_sec, self.config.nominal_cross_green_sec),
+        )
 
     def reset(self) -> None:
         """Reset all internal recovery tracking to inactive initial state."""
@@ -443,9 +450,7 @@ class PostClearanceRecoveryController:
 
                 # Setup next recovery cycle split
                 cycles_left = max(1, cfg.recovery_cycles_budget - next_cycle + 1)
-                bonus_next = min(
-                    cfg.max_bonus_per_cycle_sec, round(new_rem_debt / cycles_left, 2)
-                )
+                bonus_next = min(cfg.max_bonus_per_cycle_sec, round(new_rem_debt / cycles_left, 2))
                 art_next = max(
                     cfg.min_arterial_green_sec, cfg.nominal_arterial_green_sec - bonus_next
                 )

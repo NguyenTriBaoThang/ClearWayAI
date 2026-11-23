@@ -100,11 +100,20 @@ Managed via `controller/recovery/recovery_controller.py`:
 
 ---
 
-## 6. Signal Safety Gateway Invariants
+## 6. Independent Signal Safety Gateway (Task 41 VERIFIED)
 
-The Safety Gateway intercepts all proposed phase plans:
-1. **Green Conflict Matrix:** Prevents conflicting traffic movements from showing Green at the same time.
-2. **Minimum Green Time:** Protects driver safety by enforcing a minimum green duration ($T_{\text{min\_green}} \ge 10\text{s}$).
-3. **Mandatory Yellow & All-Red:** Enforces yellow (3–4s) and all-red clearance intervals (2s).
-4. **Pedestrian Protection:** Guarantees minimum walk and pedestrian clearance timers.
-5. **Fail-Safe Watchdog:** Reverts automatically to fixed-time fallback if heartbeats expire (>2s).
+Managed via `controller/safety/signal_safety_gateway.py`:
+Emulates a zero-trust hardware **Malfunction Management Unit (MMU)** / **Conflict Monitor Unit (CMU)** intercepting all proposed phase commands before execution:
+1. **INV-01 (Conflict-Free Vehicular Mutual Exclusion):**
+   - Intercepts and blocks conflicting green-green and green-yellow commands; trips immediately to `FAILSAFE_ALL_RED`.
+2. **INV-02 (Minimum Green Interval Enforcement):**
+   - Enforces $T_{\text{min\_green}} \ge 10.0\text{s}$. Clamps early truncation attempts safely to Green.
+3. **INV-03 (Maximum Green Ceiling Enforcement):**
+   - Enforces $T_{\text{max\_green}} \le 75.0\text{s}$. Forces transition to Yellow to prevent cross-street starvation.
+4. **INV-04 (Mandatory Yellow Change Interval):**
+   - Enforces ITE kinematic stopping interval ($T_{\text{yellow}} \ge 3.0\text{s}$). Prohibits skipping or truncating Yellow.
+5. **INV-05 (Mandatory All-Red Clearance Interval):**
+   - Enforces intersection box clearance interval ($T_{\text{all\_red}} \ge 2.0\text{s}$) before granting conflicting green.
+6. **INV-06 (Heartbeat Watchdog & Communication Loss Fallback):**
+   - If telemetry or heartbeat signal is lost for $> 2.0\text{s}$, autonomously reverts to `FALLBACK_WEBSTER` localized fixed-time coordination.
+- **Latency SLA:** Hardware-level sub-millisecond evaluation ($< 0.1\text{ ms}$).

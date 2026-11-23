@@ -22,6 +22,16 @@ from controller.recovery.recovery_controller import (
     RecoveryConfig,
     RecoveryState,
 )
+from controller.safety.signal_safety_gateway import (
+    CorridorSafetyAudit,
+    GatewayOperationalMode,
+    GatewayTripReason,
+    SafetyGatewayConfig,
+    SafetyGatewayReport,
+    SafetyInterventionRecord,
+    SignalColor,
+    SignalSafetyGateway,
+)
 from controller.scheduler.corridor_coordinator import (
     CorridorCoordinationReport,
     CorridorCoordinationStatus,
@@ -43,9 +53,12 @@ __all__ = [
     "CorridorCoordinatorConfig",
     "CorridorPreclearancePlan",
     "CorridorRecoveryReport",
+    "CorridorSafetyAudit",
     "EmergencyMission",
     "EmergencyMissionManager",
     "EmergencyVehicleType",
+    "GatewayOperationalMode",
+    "GatewayTripReason",
     "MissionStatus",
     "MovingHorizonCorridorCoordinator",
     "MultiNodeETAEvaluator",
@@ -60,4 +73,9 @@ __all__ = [
     "PreclearanceState",
     "RecoveryConfig",
     "RecoveryState",
+    "SafetyGatewayConfig",
+    "SafetyGatewayReport",
+    "SafetyInterventionRecord",
+    "SignalColor",
+    "SignalSafetyGateway",
 ]

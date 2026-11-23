@@ -8,15 +8,15 @@
 
 ## 📊 Sprint Progress Overview
 - **Total Tasks:** 60
-- **Verified Complete:** 40 (T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40)
+- **Verified Complete:** 41 (T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41)
 - **In Progress:** 0
-- **Planned:** 20
-- **Phase Completion:** Phase A (6/6 complete - 100% COMPLETE!), Phase B (16/16 complete - 100% COMPLETE!), Phase C (5/5 complete - 100% COMPLETE!), Phase D (5/5 complete - 100% COMPLETE!), Phase E (4/4 complete - 100% COMPLETE!), Phase F (4/5 complete - 80%)
+- **Planned:** 19
+- **Phase Completion:** Phase A (6/6 complete - 100% COMPLETE!), Phase B (16/16 complete - 100% COMPLETE!), Phase C (5/5 complete - 100% COMPLETE!), Phase D (5/5 complete - 100% COMPLETE!), Phase E (4/4 complete - 100% COMPLETE!), Phase F (5/5 complete - 100% COMPLETE!)
 
 ```mermaid
 pie title Task Completion by Status
-    "VERIFIED" : 40
-    "PLANNED" : 20
+    "VERIFIED" : 41
+    "PLANNED" : 19
 ```
 
 ---
@@ -65,7 +65,7 @@ pie title Task Completion by Status
 | **T38** | Phase F | Lập thuật toán pre-clearance dựa ETA & clearance prediction | **P0** | T27, T36–T37 | **VERIFIED** | PreclearanceController (JIT delta trigger, deterministic state machine MONITORING->ARMED->TRANSITIONING->HOLDING_GREEN->EV_PASSING->CLEARED), anti-starvation 60s watchdog, sub-2ms latency |
 | **T39** | Phase F | Điều phối trước nhiều nút giao trên hành lang A–D | **P0** | T37, T38 | **VERIFIED** | MovingHorizonCorridorCoordinator (750m spatial / 45s temporal moving horizon, cascading green-wave offsets, queue spillback pre-emptive flushing, tail clearance release), pytest (7/7) |
 | **T40** | Phase F | Recovery controller sau khi xe ưu tiên qua | **P0** | T39 | **VERIFIED** | PostClearanceRecoveryController (cross-street green debt calculation, 3-cycle smooth amortization, master clock offset resync, 180s watchdog), pytest (8/8) |
-| **T41** | Phase F | Bộ kiểm tra tín hiệu và fail-safe độc lập | **P0** | T21, T38–T40 | `PLANNED` | Independent Signal Safety Gateway |
+| **T41** | Phase F | Bộ kiểm tra tín hiệu và fail-safe độc lập | **P0** | T21, T38–T40 | **VERIFIED** | SignalSafetyGateway (MMU emulation, INV-01 to INV-06: conflict-free mutual exclusion, min green 10s, max green 75s, yellow 3s, all-red 2s, 2s heartbeat watchdog), pytest (8/8) — Phase F 100% COMPLETE! |
 | **T42** | Phase G | Backend FastAPI, database và API contracts | **P0** | T21, T26, T36–T41 | `PLANNED` | Full FastAPI endpoints, SQLite/Postgres schemas |
 | **T43** | Phase G | Realtime event stream WebSocket, snapshots và replay | **P0** | T26, T42 | `PLANNED` | WebSocket stream /ws/simulations/{id} |
 | **T44** | Phase G | Thiết kế Dashboard điều hành thực tế, responsive | **P0** | T01, T42–T43, T05–T20 | `PLANNED` | Production operations center integration |

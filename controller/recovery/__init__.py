@@ -25,4 +25,3 @@ __all__ = [
     "RecoveryConfig",
     "RecoveryState",
 ]
-
