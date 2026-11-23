@@ -401,7 +401,7 @@ class UnifiedClearancePredictor:
 
     def predict(
         self,
-        states: ApproachTrafficState | list[ApproachTrafficState] | dict[str, Any],
+        states: ApproachTrafficState | list[ApproachTrafficState] | dict[str, Any] | None = None,
         scenario_id: str = "normal",
         node_id: str = "node_b",
         weather: str = "clear",
