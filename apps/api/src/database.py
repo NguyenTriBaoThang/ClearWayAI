@@ -99,6 +99,23 @@ class ClearancePredictionRecord:
         return asdict(self)
 
 
+@dataclass
+class SnapshotRecord:
+    """Database record for a serialized telemetry snapshot."""
+
+    id: int | None
+    simulation_id: str
+    sim_time_sec: float
+    timestamp: str
+    active_vehicles_count: int
+    current_phase: int
+    emergency_active: bool
+    snapshot_json: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
 class DatabaseManager:
     """Thread-safe SQLite database manager for ClearWayAI backend."""
 
@@ -175,6 +192,23 @@ class DatabaseManager:
                     fallback_used INTEGER NOT NULL,
                     fallback_tier TEXT
                 );
+            """)
+
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS simulation_snapshots (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    simulation_id TEXT NOT NULL,
+                    sim_time_sec REAL NOT NULL,
+                    timestamp TEXT NOT NULL,
+                    active_vehicles_count INTEGER DEFAULT 0,
+                    current_phase INTEGER DEFAULT 0,
+                    emergency_active INTEGER DEFAULT 0,
+                    snapshot_json TEXT NOT NULL
+                );
+            """)
+            cursor.execute("""
+                CREATE INDEX IF NOT EXISTS idx_snapshots_sim_time
+                ON simulation_snapshots (simulation_id, sim_time_sec);
             """)
             conn.commit()
 
@@ -390,6 +424,80 @@ class DatabaseManager:
                 ),
             )
             conn.commit()
+
+    # --- Snapshot Operations ---
+    def save_snapshot(
+        self,
+        simulation_id: str,
+        sim_time_sec: float,
+        timestamp: str,
+        active_vehicles_count: int,
+        current_phase: int,
+        emergency_active: bool,
+        snapshot_json: str,
+    ) -> int:
+        with self._lock, self._get_connection() as conn:
+            cursor = conn.execute(
+                """
+                INSERT INTO simulation_snapshots (
+                    simulation_id, sim_time_sec, timestamp, active_vehicles_count,
+                    current_phase, emergency_active, snapshot_json
+                ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    simulation_id,
+                    sim_time_sec,
+                    timestamp,
+                    active_vehicles_count,
+                    current_phase,
+                    1 if emergency_active else 0,
+                    snapshot_json,
+                ),
+            )
+            conn.commit()
+            return cursor.lastrowid or 0
+
+    def get_snapshots(
+        self,
+        simulation_id: str,
+        start_time: float | None = None,
+        end_time: float | None = None,
+        limit: int = 100,
+    ) -> list[SnapshotRecord]:
+        with self._lock, self._get_connection() as conn:
+            query = "SELECT * FROM simulation_snapshots WHERE simulation_id = ?"
+            params: list[Any] = [simulation_id]
+            if start_time is not None:
+                query += " AND sim_time_sec >= ?"
+                params.append(start_time)
+            if end_time is not None:
+                query += " AND sim_time_sec <= ?"
+                params.append(end_time)
+            query += " ORDER BY sim_time_sec ASC LIMIT ?"
+            params.append(limit)
+
+            rows = conn.execute(query, tuple(params)).fetchall()
+            return [
+                SnapshotRecord(
+                    id=row["id"],
+                    simulation_id=row["simulation_id"],
+                    sim_time_sec=row["sim_time_sec"],
+                    timestamp=row["timestamp"],
+                    active_vehicles_count=row["active_vehicles_count"],
+                    current_phase=row["current_phase"],
+                    emergency_active=bool(row["emergency_active"]),
+                    snapshot_json=row["snapshot_json"],
+                )
+                for row in rows
+            ]
+
+    def count_snapshots(self, simulation_id: str) -> int:
+        with self._lock, self._get_connection() as conn:
+            row = conn.execute(
+                "SELECT COUNT(*) as count FROM simulation_snapshots WHERE simulation_id = ?",
+                (simulation_id,),
+            ).fetchone()
+            return row["count"] if row else 0
 
 
 # Default global database instance

@@ -11,20 +11,23 @@ apps/api/
 ├── src/
 │   ├── __init__.py
 │   ├── config.py           # Pydantic environment configuration
-│   ├── database.py         # Thread-safe SQLite persistence layer (simulations, missions, signal logs, clearance)
+│   ├── database.py         # Thread-safe SQLite persistence layer (simulations, missions, signal logs, clearance, snapshots)
 │   ├── schemas.py          # Complete Pydantic schemas adhering to domain contracts
+│   ├── websocket.py        # Real-time WebSocket connection manager & pub/sub broadcaster
 │   ├── routers/            # Modular REST API endpoints
 │   │   ├── __init__.py
 │   │   ├── simulations.py  # Lifecycle (create, list, get, step, stop)
 │   │   ├── missions.py     # Priority mission dispatch, telemetry, multi-node ETA
 │   │   ├── clearance.py    # AI clearance predictions & Model Registry catalog
-│   │   └── corridor.py     # Moving-horizon coordination, JIT trigger, recovery, MMU safety audit
-│   └── main.py             # FastAPI entrypoint, CORS, route handlers
+│   │   ├── corridor.py     # Moving-horizon coordination, JIT trigger, recovery, MMU safety audit
+│   │   └── replay.py       # Deterministic telemetry replay, snapshots querying & playback controls
+│   └── main.py             # FastAPI entrypoint, CORS, route handlers, WebSocket mounts
 ├── tests/
 │   ├── __init__.py
 │   ├── test_health.py      # Health check endpoint tests
 │   ├── test_status.py      # System safety mode and provenance tests
-│   └── test_api_endpoints.py # Comprehensive endpoint lifecycle, validation & 404 tests
+│   ├── test_api_endpoints.py # Comprehensive endpoint lifecycle, validation & 404 tests
+│   └── test_websocket_stream.py # WebSocket pub/sub, client commands, DB snapshots & replay tests
 ├── Dockerfile              # Production Python container image
 └── README.md
 ```
@@ -53,6 +56,16 @@ apps/api/
 | **Corridor** | `POST` | `/api/v1/corridor/preclearance/evaluate` | Evaluate JIT trigger $\Delta t_{\text{trigger}}$ for intersection |
 | **Corridor** | `POST` | `/api/v1/corridor/recovery/initiate` | Initiate multi-cycle smooth post-clearance recovery |
 | **Corridor** | `GET` | `/api/v1/corridor/safety/audit` | Execute hardware-level MMU zero-trust safety audit |
+| **Replay & Snapshots** | `POST` | `/api/v1/simulations/{id}/replay/load` | Load simulation snapshots into in-memory ReplayController |
+| **Replay & Snapshots** | `POST` | `/api/v1/simulations/{id}/replay/play` | Start continuous replay playback |
+| **Replay & Snapshots** | `POST` | `/api/v1/simulations/{id}/replay/pause` | Pause replay playback |
+| **Replay & Snapshots** | `POST` | `/api/v1/simulations/{id}/replay/seek` | Seek replay buffer to target timestamp |
+| **Replay & Snapshots** | `POST` | `/api/v1/simulations/{id}/replay/speed` | Adjust playback speed multiplier (0.5x, 1.0x, 2.0x, 4.0x) |
+| **Replay & Snapshots** | `POST` | `/api/v1/simulations/{id}/replay/step` | Step replay forward by `dt` seconds |
+| **Replay & Snapshots** | `GET` | `/api/v1/simulations/{id}/replay/status` | Query playback status, timestamp, and buffer size |
+| **Replay & Snapshots** | `GET` | `/api/v1/simulations/{id}/snapshots` | Query historical persisted snapshots with time window filter |
+| **WebSocket Stream** | `WS` | `/ws/simulations/{id}` | Real-time bidirectional telemetry & control stream for simulation |
+| **WebSocket Stream** | `WS` | `/ws/telemetry` | Global real-time telemetry stream across all active simulations |
 
 ---
 

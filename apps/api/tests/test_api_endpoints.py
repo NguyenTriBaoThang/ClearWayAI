@@ -16,7 +16,7 @@ from fastapi import HTTPException
 
 from apps.api.src.database import DatabaseManager
 from apps.api.src.main import app
-from apps.api.src.routers import clearance, corridor, missions, simulations
+from apps.api.src.routers import clearance, corridor, missions, replay, simulations
 from apps.api.src.schemas import (
     ClearancePredictRequest,
     MissionCreateRequest,
@@ -41,9 +41,11 @@ def setup_test_db(tmp_path):
     missions.db = test_db
     clearance.db = test_db
     corridor.db = test_db
+    replay.db = test_db
 
-    # Clean in-memory runners
+    # Clean in-memory runners & replays
     simulations._active_runners.clear()
+    replay._active_replays.clear()
 
     yield test_db
 
@@ -52,6 +54,7 @@ def setup_test_db(tmp_path):
     missions.db = orig_db
     clearance.db = orig_db
     corridor.db = orig_db
+    replay.db = orig_db
 
 
 def test_routes_registered_in_app() -> None:
@@ -89,6 +92,16 @@ def test_routes_registered_in_app() -> None:
     assert "/api/v1/corridor/preclearance/evaluate" in paths
     assert "/api/v1/corridor/recovery/initiate" in paths
     assert "/api/v1/corridor/safety/audit" in paths
+
+    # Replay & Snapshots router
+    assert "/api/v1/simulations/{simulation_id}/replay/load" in paths
+    assert "/api/v1/simulations/{simulation_id}/replay/play" in paths
+    assert "/api/v1/simulations/{simulation_id}/replay/pause" in paths
+    assert "/api/v1/simulations/{simulation_id}/replay/seek" in paths
+    assert "/api/v1/simulations/{simulation_id}/replay/speed" in paths
+    assert "/api/v1/simulations/{simulation_id}/replay/step" in paths
+    assert "/api/v1/simulations/{simulation_id}/replay/status" in paths
+    assert "/api/v1/simulations/{simulation_id}/snapshots" in paths
 
 
 def test_simulation_lifecycle() -> None:

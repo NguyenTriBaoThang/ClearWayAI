@@ -14,6 +14,7 @@ from apps.api.src.schemas import (
     SimulationStepRequest,
     SimulationStepResponse,
 )
+from apps.api.src.websocket import ws_manager
 from simulation.traci.manager import SimulationManager
 
 router = APIRouter(prefix="/api/v1/simulations", tags=["Simulations"])
@@ -124,7 +125,7 @@ def step_simulation(
         _active_runners[simulation_id] = runner
 
     # Advance step
-    runner.step(dt=req.dt)
+    snapshot = runner.step(dt=req.dt)
     sim_time = runner.get_sim_time()
     active_count = len(runner.engine.active_vehicles) if runner.engine else 0
     curr_phase = runner.engine.current_phase if runner.engine else 0
@@ -133,6 +134,20 @@ def step_simulation(
     # Update database step counter
     new_step_count = record.total_steps + 1
     db.update_simulation_step(simulation_id, new_step_count)
+
+    # Persist telemetry snapshot to SQLite
+    db.save_snapshot(
+        simulation_id=simulation_id,
+        sim_time_sec=sim_time,
+        timestamp=snapshot.timestamp.isoformat(),
+        active_vehicles_count=active_count,
+        current_phase=curr_phase,
+        emergency_active=req.active_mission_id is not None,
+        snapshot_json=snapshot.model_dump_json(),
+    )
+
+    # Broadcast over WebSocket stream
+    ws_manager.broadcast_snapshot_sync(simulation_id, snapshot)
 
     return SimulationStepResponse(
         simulation_id=simulation_id,

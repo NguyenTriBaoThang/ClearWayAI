@@ -67,7 +67,7 @@ pie title Task Completion by Status
 | **T40** | Phase F | Recovery controller sau khi xe ưu tiên qua | **P0** | T39 | **VERIFIED** | PostClearanceRecoveryController (cross-street green debt calculation, 3-cycle smooth amortization, master clock offset resync, 180s watchdog), pytest (8/8) |
 | **T41** | Phase F | Bộ kiểm tra tín hiệu và fail-safe độc lập | **P0** | T21, T38–T40 | **VERIFIED** | SignalSafetyGateway (MMU emulation, INV-01 to INV-06: conflict-free mutual exclusion, min green 10s, max green 75s, yellow 3s, all-red 2s, 2s heartbeat watchdog), pytest (8/8) — Phase F 100% COMPLETE! |
 | **T42** | Phase G | Backend FastAPI, database và API contracts | **P0** | T21, T26, T36–T41 | **VERIFIED** | Full FastAPI REST endpoints (/simulations, /missions, /clearance, /corridor), thread-safe SQLite persistence, pytest (10/10), all 5 gates PASS |
-| **T43** | Phase G | Realtime event stream WebSocket, snapshots và replay | **P0** | T26, T42 | `PLANNED` | WebSocket stream /ws/simulations/{id} |
+| **T43** | Phase G | Realtime event stream WebSocket, snapshots và replay | **P0** | T26, T42 | **VERIFIED** | WebSocketManager (/ws/simulations/{id}, /ws/telemetry), client filter & dispatch, SQLite snapshots table, ReplayController API (/replay/load, play, pause, seek, speed, step, status), pytest (18/18) |
 | **T44** | Phase G | Thiết kế Dashboard điều hành thực tế, responsive | **P0** | T01, T42–T43, T05–T20 | `PLANNED` | Production operations center integration |
 | **T45** | Phase G | Bản đồ 2D tuyến A–D và timeline điều phối | **P0** | T39, T42–T44 | `PLANNED` | 2D corridor route map, action timeline |
 | **T46** | Phase H | Xây thế giới 3D WebGL đầu tiên cho 4 nút giao | **P0** | T23, T44, T07–T20 | `PLANNED` | Multi-intersection 3D road network |

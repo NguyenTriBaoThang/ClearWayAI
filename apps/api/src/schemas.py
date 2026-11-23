@@ -384,3 +384,113 @@ class SafetyAuditResponse(BaseModel):
     total_interventions_corridor: int
     timestamp_sec: float
     provenance: str = "INDEPENDENT_SIGNAL_SAFETY_GATEWAY"
+
+
+# 5. Snapshot & Replay Schemas (Task 43)
+class ReplayLoadRequest(BaseModel):
+    """Request payload to load recorded simulation snapshots into replay buffer."""
+
+    log_path: str | None = None
+    start_time: float | None = None
+    end_time: float | None = None
+    limit: int = Field(default=1000, ge=1, le=50000)
+
+
+class ReplayLoadResponse(BaseModel):
+    """Response payload following loading replay snapshots."""
+
+    simulation_id: str
+    snapshot_count: int
+    duration_sec: float
+    start_time_sec: float
+    end_time_sec: float
+    status: str = "LOADED"
+
+
+class ReplayStatusResponse(BaseModel):
+    """Response payload indicating current state of replay controller."""
+
+    simulation_id: str
+    is_playing: bool
+    playback_speed: float
+    current_time_sec: float
+    current_index: int
+    total_snapshots: int
+
+
+class ReplaySeekRequest(BaseModel):
+    """Request payload to seek replay to target simulation timestamp."""
+
+    target_time_sec: float = Field(ge=0.0)
+
+
+class ReplaySeekResponse(BaseModel):
+    """Response payload after seeking replay timestamp."""
+
+    simulation_id: str
+    current_time_sec: float
+    current_index: int
+    total_snapshots: int
+    snapshot: TelemetrySnapshotSchema | None = None
+
+
+class ReplaySpeedRequest(BaseModel):
+    """Request payload to set replay playback speed."""
+
+    speed_multiplier: float = Field(default=1.0, gt=0.0, le=16.0)
+
+
+class ReplayStepRequest(BaseModel):
+    """Request payload to step replay forward by dt."""
+
+    dt: float = Field(default=0.1, gt=0.0, le=5.0)
+
+
+class ReplayStepResponse(BaseModel):
+    """Response payload after stepping replay controller."""
+
+    simulation_id: str
+    current_time_sec: float
+    current_index: int
+    is_playing: bool
+    snapshot: TelemetrySnapshotSchema | None = None
+
+
+class SnapshotItemSchema(BaseModel):
+    """Summary item of a historical simulation snapshot."""
+
+    id: int | None = None
+    simulation_id: str
+    sim_time_sec: float
+    timestamp: str
+    active_vehicles_count: int
+    current_phase: int
+    emergency_active: bool
+
+
+class SnapshotListResponse(BaseModel):
+    """Response payload for querying recorded snapshots."""
+
+    simulation_id: str
+    total_count: int
+    returned_count: int
+    snapshots: list[SnapshotItemSchema]
+
+
+class WSClientCommand(BaseModel):
+    """Command payload sent by client over WebSocket."""
+
+    action: str
+    filter: dict[str, Any] | None = None
+    dt: float | None = 0.1
+    time: float | None = None
+    multiplier: float | None = 1.0
+
+
+class WSEventMessage(BaseModel):
+    """Event message emitted over WebSocket to clients."""
+
+    event: str
+    simulation_id: str | None = None
+    timestamp: float
+    data: dict[str, Any] | None = None

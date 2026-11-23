@@ -1,6 +1,6 @@
 """FastAPI Application Entrypoint for ClearWayAI."""
 
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 
 from apps.api.src.config import settings
@@ -8,9 +8,11 @@ from apps.api.src.routers import (
     clearance_router,
     corridor_router,
     missions_router,
+    replay_router,
     simulations_router,
 )
 from apps.api.src.schemas import HealthResponse, ModuleStatus, SystemStatusResponse, utc_now
+from apps.api.src.websocket import ws_manager
 
 app = FastAPI(
     title=settings.APP_NAME,
@@ -34,6 +36,38 @@ app.include_router(simulations_router)
 app.include_router(missions_router)
 app.include_router(clearance_router)
 app.include_router(corridor_router)
+app.include_router(replay_router)
+
+
+# Mount WebSocket Realtime Streaming Endpoints
+@app.websocket("/ws/simulations/{simulation_id}")
+async def websocket_simulation_endpoint(websocket: WebSocket, simulation_id: str):
+    """Real-time bidirectional WebSocket stream for a specific simulation episode."""
+    await ws_manager.connect(websocket, channel=simulation_id)
+    try:
+        while True:
+            data = await websocket.receive_json()
+            response = await ws_manager.handle_client_message(websocket, simulation_id, data)
+            await websocket.send_json(response)
+    except (WebSocketDisconnect, RuntimeError):
+        await ws_manager.disconnect(websocket, channel=simulation_id)
+    except Exception:
+        await ws_manager.disconnect(websocket, channel=simulation_id)
+
+
+@app.websocket("/ws/telemetry")
+async def websocket_telemetry_endpoint(websocket: WebSocket):
+    """Global real-time telemetry stream across all active simulations."""
+    await ws_manager.connect(websocket, channel="telemetry")
+    try:
+        while True:
+            data = await websocket.receive_json()
+            response = await ws_manager.handle_client_message(websocket, "telemetry", data)
+            await websocket.send_json(response)
+    except (WebSocketDisconnect, RuntimeError):
+        await ws_manager.disconnect(websocket, channel="telemetry")
+    except Exception:
+        await ws_manager.disconnect(websocket, channel="telemetry")
 
 
 @app.get("/", tags=["Root"])
@@ -45,6 +79,8 @@ def root():
         "docs": "/docs",
         "health": "/health",
         "system_status": "/api/v1/system/status",
+        "websocket_telemetry": "/ws/telemetry",
+        "websocket_simulations": "/ws/simulations/{id}",
         "safety_mode": settings.SAFETY_MODE,
         "provenance": settings.DATA_PROVENANCE,
     }

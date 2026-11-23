@@ -83,7 +83,7 @@
 | Task ID | Task Description | Priority | Dependencies | Status | Verification Proof |
 | :--- | :--- | :---: | :---: | :---: | :--- |
 | **T42** | Backend FastAPI, database và API contracts | P0 | T21, T26, T36–T41 | **VERIFIED** | FastAPI REST routers (/simulations, /missions, /clearance, /corridor, /safety), thread-safe SQLite DatabaseManager, domain schemas, pytest apps/api/tests/ (10/10), monorepo quality gates 5/5 PASS |
-| **T43** | Realtime event stream WebSocket, snapshots và replay | P0 | T26, T42 | **PLANNED** | Scheduled |
+| **T43** | Realtime event stream WebSocket, snapshots và replay | P0 | T26, T42 | **VERIFIED** | WebSocketManager (/ws/simulations/{id}, /ws/telemetry), client filter & dispatch, SQLite snapshots table, ReplayController API (/replay/load, play, pause, seek, speed, step, status), pytest apps/api/tests/ (18/18), monorepo quality gates 5/5 PASS |
 | **T44** | Thiết kế Dashboard điều hành thực tế, responsive | P0 | T01, T42–T43, T05–T20 | **PLANNED** | Shell ready |
 | **T45** | Bản đồ 2D tuyến A–D và timeline điều phối | P0 | T39, T42–T44 | **PLANNED** | Scheduled |
 
@@ -117,6 +117,6 @@
 ---
 
 ## 3. Current Sprint Focus
-- **Current Milestone:** TASK 01–42 Complete & Verified (Phase A: 6/6, Phase B: 16/16, Phase C: 5/5, Phase D: 5/5, Phase E: 4/4, Phase F: 5/5 ALL 100% COMPLETE!; Phase G: 1/4 — Total 42/60 tasks verified = 70.0% of master plan).
-- **Next Dependent Task:** TASK 43 — Realtime event stream WebSocket, snapshots và replay (Phase G: Full-Stack Backend & Integration).
+- **Current Milestone:** TASK 01–43 Complete & Verified (Phase A: 6/6, Phase B: 16/16, Phase C: 5/5, Phase D: 5/5, Phase E: 4/4, Phase F: 5/5 ALL 100% COMPLETE!; Phase G: 2/4 — Total 43/60 tasks verified = 71.7% of master plan).
+- **Next Dependent Task:** TASK 44 — Thiết kế Dashboard điều hành thực tế, responsive (Phase G: Full-Stack Backend & Integration).
 
