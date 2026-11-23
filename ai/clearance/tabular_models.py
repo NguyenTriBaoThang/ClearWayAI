@@ -10,7 +10,10 @@ Enforces zero spatial/temporal leakage via node-based splitting.
 
 from __future__ import annotations
 
+import contextlib
+import importlib
 import json
+import sys
 import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -25,6 +28,18 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 from ai.clearance.features import ClearanceFeaturePipeline
 from ai.state.traffic_state_estimator import ApproachTrafficState
+
+
+def _ensure_unpickle_compat() -> None:
+    """Register module aliases in sys.modules for cross-platform scikit-learn unpickling."""
+    aliases = {
+        "_loss": "sklearn._loss._loss",
+        "_tree": "sklearn.tree._tree",
+    }
+    for alias, target in aliases.items():
+        if alias not in sys.modules:
+            with contextlib.suppress(ImportError, AttributeError):
+                sys.modules[alias] = importlib.import_module(target)
 
 
 @dataclass
@@ -171,6 +186,7 @@ class ClearancePredictor:
     @classmethod
     def load(cls, model_path: Path | str) -> ClearancePredictor:
         """Load bundled model and feature pipeline from disk."""
+        _ensure_unpickle_compat()
         data = joblib.load(model_path)
         p = Path(model_path)
         return cls(

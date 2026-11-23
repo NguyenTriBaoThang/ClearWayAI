@@ -39,8 +39,11 @@ else:
 from ai.clearance.dataset_generator import QueueDischargeSimulator
 from ai.clearance.features import ClearanceFeaturePipeline
 from ai.clearance.sequence_models import SequencePredictor
-from ai.clearance.tabular_models import ClearancePredictor
+from ai.clearance.tabular_models import ClearancePredictor, _ensure_unpickle_compat
 from ai.state.traffic_state_estimator import ApproachTrafficState
+
+# Register scikit-learn Cython unpickle compatibility aliases
+_ensure_unpickle_compat()
 
 
 class ModelRole(StrEnum):
