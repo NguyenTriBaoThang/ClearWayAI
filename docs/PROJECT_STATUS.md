@@ -100,7 +100,7 @@
 | **T49** | Telemetry, event logs và phân tích giải thích quyết định AI | P1 | T36, T39–T44 | **VERIFIED** | ExplainableDecisionAuditService (natural language narrative generation, feature attributions breakdown, anti-starvation aborts, MMU overrides), DecisionAuditLogRecord SQLite table & indices, REST API endpoints (/api/v1/audit/decisions, /summary, /explain), DecisionAuditDrawer (real-time stream, formula inspector, NEMA TS2 verification badge), pytest tests/test_ai_decision_audit.py (6/6), monorepo quality gates 5/5 PASS |
 | **T50** | Kiểm thử end-to-end UI → Backend → AI → SUMO → 3D | P0 | T32, T36, T41–T48, T20 | **VERIFIED** | End-to-End multi-tier test suite (Stage 1: UI/Operator dispatch AMB-339; Stage 2: ML clearance prediction & JIT preclearance; Stage 3: SUMO stepping & SQLite snapshots; Stage 4: 3D Digital Twin SumoTrajectorySource & CorridorSyncBridge; Stage 5: sub-250ms control loop latency (mean 0.38ms <= 250ms) & zero-hazard MMU arbitration; Stage 6: audit trail integrity), pytest tests/test_end_to_end_pipeline.py (6/6), monorepo quality gates 5/5 PASS, production web build PASS |
 | **T51** | Thực nghiệm khoa học, sensitivity, seeds và ablation | P0 | T27, T34–T36, T39–T41, T48 | **VERIFIED** | B3ClearWayController (Moving-Horizon + ML JIT + 3-cycle recovery + MMU), ScientificBenchmarkRunner (10 seeds, Student-t 95% CI, B0 vs B1 vs B2 vs B3), Sensitivity sweeps (volume 400-1600 veh/h, fleet mix 30-90% moto, weather clear/rain), Systematic ablation (w/o ML clearance, w/o Moving-Horizon, w/o recovery), pytest tests/test_scientific_experiments_and_ablation.py (6/6), monorepo quality gates 5/5 PASS |
-| **T52** | Security, privacy, fail-safe và threat modelling | P0 | T21, T28, T41–T43, T50 | **PLANNED** | Scheduled |
+| **T52** | Security, privacy, fail-safe và threat modelling | P0 | T21, T28, T41–T43, T50 | **VERIFIED** | Formal STRIDE threat model (docs/THREAT_MODEL.md, ISO/SAE 21434), V2XMessageAuthenticator (IEEE 1609.2 HMAC signatures, anti-replay nonce sliding cache, kinematic plausibility filter), FailSafeWatchdog (INV-06 500ms heartbeat timeout autonomous Webster fallback), ZeroPIIAuditor (Decree 13/2023/ND-CP Vietnamese plate & PII scanner, 14-day retention), pytest tests/test_security_privacy_and_failsafe.py (10/10), monorepo quality gates 5/5 PASS — Phase I 100% COMPLETE! |
 
 ### Phase J — Demo, Release & Advanced Exploration (Tasks 53–60)
 | Task ID | Task Description | Priority | Dependencies | Status | Verification Proof |
@@ -117,7 +117,7 @@
 ---
 
 ## 3. Current Sprint Focus
-- **Current Milestone:** TASK 01–51 Complete & Verified (Phase A: 6/6, Phase B: 16/16, Phase C: 5/5, Phase D: 5/5, Phase E: 4/4, Phase F: 5/5, Phase G: 4/4, Phase H: 3/3 ALL 100% COMPLETE!, Phase I: 3/4 (75.0% COMPLETE) — Total 51/60 tasks verified = 85.0% of master plan).
-- **Next Dependent Task:** TASK 52 — Security, privacy, fail-safe và threat modelling (Phase I: Telemetry, Testing & Scientific Evaluation).
+- **Current Milestone:** TASK 01–52 Complete & Verified (Phase A: 6/6, Phase B: 16/16, Phase C: 5/5, Phase D: 5/5, Phase E: 4/4, Phase F: 5/5, Phase G: 4/4, Phase H: 3/3, Phase I: 4/4 ALL 100% COMPLETE! — Total 52/60 tasks verified = 86.7% of master plan).
+- **Next Dependent Task:** TASK 53 — Thiết kế bảng LED/VMS advisory hiển thị an toàn (Phase J: Demo, Release & Advanced Exploration).
 
 
