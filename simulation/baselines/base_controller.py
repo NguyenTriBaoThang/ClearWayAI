@@ -77,4 +77,3 @@ class BaseSignalController(ABC):
             return {"eb": "red", "wb": "red", "nb": "yellow", "sb": "yellow"}
         else:
             return {"eb": "red", "wb": "red", "nb": "red", "sb": "red"}
-

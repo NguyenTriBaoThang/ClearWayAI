@@ -1,0 +1,42 @@
+{
+  "manifest_version": "1.0.0",
+  "video_id": "VID_20261123_HCMC_D5_002",
+  "provenance": "OFFLINE_VIDEO",
+  "location": {
+    "city": "Ho Chi Minh City",
+    "district": "District 5",
+    "intersection_name": "Nguyen Tri Phuong & An Duong Vuong",
+    "camera_id": "CAM_ITS_HCMC_0522",
+    "gps_coordinates": [10.7554, 106.6672]
+  },
+  "time_period": {
+    "start_utc": "2026-11-23T10:15:00Z",
+    "end_utc": "2026-11-23T10:17:00Z",
+    "time_of_day": "evening_peak"
+  },
+  "weather_condition": "rain",
+  "video_spec": {
+    "resolution": [1920, 1080],
+    "fps": 30.0,
+    "duration_seconds": 120.0,
+    "format": "mp4",
+    "codec": "h264"
+  },
+  "privacy_compliance": {
+    "face_blurred": true,
+    "license_plate_blurred": true,
+    "decree_13_compliant": true,
+    "anonymizer_version": "ClearWay-Scrub-1.2.0"
+  },
+  "integrity": {
+    "sha256_raw": "a7c858e6e5898d975a5e3d7a8d05e3a35c59f77f5255447a1c7c94541ec5de22",
+    "sha256_anonymized": "b9116e029323efda42cf6f6b53a0058b738c82301c23f2b1897c8446c6ec2d01",
+    "file_size_bytes": 32189440
+  },
+  "traffic_characteristics": {
+    "dominant_vehicle": "motorcycle",
+    "motorcycle_percentage": 72.0,
+    "estimated_density": "high",
+    "estimated_flow_rate_vph": 3800
+  }
+}

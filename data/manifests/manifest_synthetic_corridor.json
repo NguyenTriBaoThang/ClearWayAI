@@ -1,0 +1,42 @@
+{
+  "manifest_version": "1.0.0",
+  "video_id": "VID_20261123_SYNTH_CORRIDOR_004",
+  "provenance": "SUMO_SIMULATED",
+  "location": {
+    "city": "Digital Twin Corridor",
+    "district": "Synthetic Urban Core",
+    "intersection_name": "Oak-5th 4-Intersection Arterial",
+    "camera_id": "CAM_VIRTUAL_CORRIDOR_01",
+    "gps_coordinates": [10.7700, 106.6900]
+  },
+  "time_period": {
+    "start_utc": "2026-11-23T08:00:00Z",
+    "end_utc": "2026-11-23T08:05:00Z",
+    "time_of_day": "peak"
+  },
+  "weather_condition": "clear",
+  "video_spec": {
+    "resolution": [1920, 1080],
+    "fps": 30.0,
+    "duration_seconds": 300.0,
+    "format": "mp4",
+    "codec": "h264"
+  },
+  "privacy_compliance": {
+    "face_blurred": false,
+    "license_plate_blurred": false,
+    "decree_13_compliant": true,
+    "anonymizer_version": "NotApplicable-Synthetic"
+  },
+  "integrity": {
+    "sha256_raw": "8f48032274472933f34250b1e3582466b6370a1104d4873714978fce9093fc58",
+    "sha256_anonymized": "8f48032274472933f34250b1e3582466b6370a1104d4873714978fce9093fc58",
+    "file_size_bytes": 78912400
+  },
+  "traffic_characteristics": {
+    "dominant_vehicle": "motorcycle",
+    "motorcycle_percentage": 75.0,
+    "estimated_density": "high",
+    "estimated_flow_rate_vph": 4200
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "manifest_version": "1.0.0",
+  "video_id": "VID_20261123_HCMC_D1_001",
+  "provenance": "OFFLINE_VIDEO",
+  "location": {
+    "city": "Ho Chi Minh City",
+    "district": "District 1",
+    "intersection_name": "Nguyen Thi Minh Khai & Pasteur",
+    "camera_id": "CAM_ITS_HCMC_0104",
+    "gps_coordinates": [10.7769, 106.6953]
+  },
+  "time_period": {
+    "start_utc": "2026-11-23T01:00:00Z",
+    "end_utc": "2026-11-23T01:03:00Z",
+    "time_of_day": "morning_peak"
+  },
+  "weather_condition": "clear",
+  "video_spec": {
+    "resolution": [1920, 1080],
+    "fps": 30.0,
+    "duration_seconds": 180.0,
+    "format": "mp4",
+    "codec": "h264"
+  },
+  "privacy_compliance": {
+    "face_blurred": true,
+    "license_plate_blurred": true,
+    "decree_13_compliant": true,
+    "anonymizer_version": "ClearWay-Scrub-1.2.0"
+  },
+  "integrity": {
+    "sha256_raw": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sha256_anonymized": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+    "file_size_bytes": 48259104
+  },
+  "traffic_characteristics": {
+    "dominant_vehicle": "motorcycle",
+    "motorcycle_percentage": 76.5,
+    "estimated_density": "high",
+    "estimated_flow_rate_vph": 4350
+  }
+}
