@@ -8,15 +8,15 @@
 
 ## 📊 Sprint Progress Overview
 - **Total Tasks:** 60
-- **Verified Complete:** 31 (T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31)
+- **Verified Complete:** 32 (T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32)
 - **In Progress:** 0
-- **Planned:** 29
-- **Phase Completion:** Phase A (6/6 complete - 100% COMPLETE!), Phase B (16/16 complete - 100% COMPLETE!), Phase C (5/5 complete - 100% COMPLETE!), Phase D (4/5 complete - 80%)
+- **Planned:** 28
+- **Phase Completion:** Phase A (6/6 complete - 100% COMPLETE!), Phase B (16/16 complete - 100% COMPLETE!), Phase C (5/5 complete - 100% COMPLETE!), Phase D (5/5 complete - 100% COMPLETE!)
 
 ```mermaid
 pie title Task Completion by Status
-    "VERIFIED" : 31
-    "PLANNED" : 29
+    "VERIFIED" : 32
+    "PLANNED" : 28
 ```
 
 ---
@@ -56,7 +56,7 @@ pie title Task Completion by Status
 | **T29** | Phase D | Thiết kế nhãn và chia train/val/test chống leakage | **P0** | T28 | **VERIFIED** | ANNOTATION_GUIDE.md (7 classes, zero temporal/spatial leakage), dataset.yaml, splits.json, leakage audit passed, pytest (163/163) |
 | **T30** | Phase D | Fine-tune YOLO để nhận diện phương tiện trong giao thông Việt Nam | **P0** | T28, T29 | **VERIFIED** | YOLOInferenceEngine, NMS, metrics (mAP@0.5=88.4%), train_yolo.py, weights_manifest.json, pytest (181/181) |
 | **T31** | Phase D | Theo dõi xe bằng ByteTrack và trích quỹ đạo | **P0** | T30 | **VERIFIED** | ByteTracker, KalmanFilter, TrajectoryTracker, VirtualTripwire, pytest (191/191) |
-| **T32** | Phase D | Hiệu chỉnh camera và tính các chỉ số Traffic State | **P0** | T29, T31 | `PLANNED` | Homography calibration, queue/density estimators |
+| **T32** | Phase D | Hiệu chỉnh camera và tính các chỉ số Traffic State | **P0** | T29, T31 | **VERIFIED** | Homography calibration, TrafficStateEstimator, 4 profiles, pytest (200/200) — Phase D 100% COMPLETE! |
 | **T33** | Phase E | Định nghĩa clearance time và sinh label thực nghiệm | **P0** | T24–T27, T32 | `PLANNED` | Clearance time ground-truth dataset from SUMO |
 | **T34** | Phase E | Train baseline Linear/RandomForest/XGBoost dự báo clearance | **P0** | T33 | `PLANNED` | Tabular clearance models, MAE/RMSE eval |
 | **T35** | Phase E | Train LSTM/GRU dự báo clearance từ chuỗi trạng thái | **P0** | T33, T34 | `PLANNED` | PyTorch sequence clearance models |

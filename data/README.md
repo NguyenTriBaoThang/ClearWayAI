@@ -8,6 +8,11 @@ Houses synthetic seed fixtures, dataset manifests, privacy scrubber pipelines, Y
 
 ```
 data/
+├── calibration/            # 4-point Planar Homography calibration profiles
+│   ├── cam_hcmc_d1.json         # HCMC D1 (14m x 80m approach ground plane)
+│   ├── cam_hcmc_d5.json         # HCMC D5 (16m x 75m approach ground plane)
+│   ├── cam_hanoi_hk.json        # Hanoi Hoan Kiem (12m x 70m approach ground plane)
+│   └── cam_synth_corridor.json  # Digital Twin corridor approach profile
 ├── manifests/              # Immutable JSON metadata manifests with SHA-256 digests
 │   ├── manifest_hcmc_d1_peak.json       # HCMC D1 morning peak (76.5% motorcycles)
 │   ├── manifest_hcmc_d5_rain.json       # HCMC D5 evening rain & wet reflections

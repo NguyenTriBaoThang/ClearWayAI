@@ -1,0 +1,66 @@
+{
+  "camera_id": "CAM_ITS_HN_0019",
+  "intersection_name": "Trang Tien & Dinh Tien Hoang, Hanoi",
+  "approach_direction": "NB",
+  "image_resolution": [
+    1920,
+    1080
+  ],
+  "roadway_width_m": 12.0,
+  "approach_length_m": 70.0,
+  "stopline_y_m": 0.0,
+  "source_points_pixel": [
+    [
+      680.0,
+      920.0
+    ],
+    [
+      1240.0,
+      920.0
+    ],
+    [
+      1030.0,
+      460.0
+    ],
+    [
+      890.0,
+      460.0
+    ]
+  ],
+  "destination_points_meters": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      12.0,
+      0.0
+    ],
+    [
+      12.0,
+      70.0
+    ],
+    [
+      0.0,
+      70.0
+    ]
+  ],
+  "homography_matrix": [
+    [
+      -0.04285714285711026,
+      -0.019565217391298347,
+      47.14285714282945
+    ],
+    [
+      1.0541639390974272e-14,
+      0.07608695652173929,
+      -70.00000000001374
+    ],
+    [
+      4.9033607486175086e-15,
+      -0.0032608695652232896,
+      1.0
+    ]
+  ],
+  "reprojection_error_m": 0.0
+}

@@ -1,0 +1,66 @@
+{
+  "camera_id": "CAM_ITS_HCMC_0522",
+  "intersection_name": "Nguyen Tri Phuong & An Duong Vuong, HCMC",
+  "approach_direction": "WB",
+  "image_resolution": [
+    1920,
+    1080
+  ],
+  "roadway_width_m": 16.0,
+  "approach_length_m": 75.0,
+  "stopline_y_m": 0.0,
+  "source_points_pixel": [
+    [
+      580.0,
+      980.0
+    ],
+    [
+      1340.0,
+      980.0
+    ],
+    [
+      1080.0,
+      520.0
+    ],
+    [
+      840.0,
+      520.0
+    ]
+  ],
+  "destination_points_meters": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      16.0,
+      0.0
+    ],
+    [
+      16.0,
+      75.0
+    ],
+    [
+      0.0,
+      75.0
+    ]
+  ],
+  "homography_matrix": [
+    [
+      -0.04599999999981051,
+      -0.025999999999963892,
+      52.15999999985471
+    ],
+    [
+      -2.115846679473128e-14,
+      0.11249999999951223,
+      -110.24999999948666
+    ],
+    [
+      -1.3912880015036497e-15,
+      -0.0032499999999877193,
+      1.0
+    ]
+  ],
+  "reprojection_error_m": 0.0
+}

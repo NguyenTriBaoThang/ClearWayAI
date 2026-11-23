@@ -33,4 +33,3 @@ __all__ = [
     "TrajectoryTracker",
     "line_segments_intersect",
 ]
-

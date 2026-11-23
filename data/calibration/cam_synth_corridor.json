@@ -1,0 +1,66 @@
+{
+  "camera_id": "CAM_VIRTUAL_CORRIDOR_01",
+  "intersection_name": "Oak-5th 4-Intersection Arterial",
+  "approach_direction": "EB",
+  "image_resolution": [
+    1920,
+    1080
+  ],
+  "roadway_width_m": 14.0,
+  "approach_length_m": 80.0,
+  "stopline_y_m": 0.0,
+  "source_points_pixel": [
+    [
+      600.0,
+      960.0
+    ],
+    [
+      1320.0,
+      960.0
+    ],
+    [
+      1060.0,
+      480.0
+    ],
+    [
+      860.0,
+      480.0
+    ]
+  ],
+  "destination_points_meters": [
+    [
+      0.0,
+      0.0
+    ],
+    [
+      14.0,
+      0.0
+    ],
+    [
+      14.0,
+      80.0
+    ],
+    [
+      0.0,
+      80.0
+    ]
+  ],
+  "homography_matrix": [
+    [
+      -0.043750000000081724,
+      -0.02369791666667072,
+      49.000000000052914
+    ],
+    [
+      9.272943000419874e-15,
+      0.10416666666687367,
+      -100.00000000020466
+    ],
+    [
+      -1.4349366142007155e-15,
+      -0.0033854166666696275,
+      1.0
+    ]
+  ],
+  "reprojection_error_m": 0.0
+}

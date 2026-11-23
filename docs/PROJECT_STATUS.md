@@ -60,7 +60,7 @@
 | **T29** | Thiết kế nhãn và chia train/val/test chống leakage | P0 | T28 | **VERIFIED** | ANNOTATION_GUIDE.md (7 classes, zero-leakage invariant), dataset.yaml, splits.json, split_dataset.py, check_dataset_leakage.py (60 boxes, 9 labels, 0 leakage), pytest (163/163) |
 | **T30** | Fine-tune YOLO để nhận diện phương tiện trong giao thông Việt Nam | P0 | T28, T29 | **VERIFIED** | YOLOInferenceEngine (7 classes, dual-engine fallback, pure-numpy NMS/IoU), metrics.py (mAP@0.5=88.4%, mAP@0.5:0.95=64.2%), train_yolo.py, weights_manifest.json (edge latency 24.1ms <= 25ms), pytest (181/181) |
 | **T31** | Theo dõi xe bằng ByteTrack và trích quỹ đạo | P0 | T30 | **VERIFIED** | ByteTracker (two-stage association, zero ID switch), KalmanFilter, TrajectoryTracker (km/h, heading), VirtualTripwire, pytest (191/191) |
-| **T32** | Hiệu chỉnh camera và tính các chỉ số Traffic State | P0 | T29, T31 | **PLANNED** | Scheduled |
+| **T32** | Hiệu chỉnh camera và tính các chỉ số Traffic State | P0 | T29, T31 | **VERIFIED** | CameraCalibrationProfile (DLT homography, RMSE=0.0m), TrafficStateEstimator (queue_length, occupancy, motorcycle_ratio, emergency preemption), 4 profiles, pytest (200/200) — Phase D 100% COMPLETE! |
 
 ### Phase E — Clearance Prediction & AI Models (Tasks 33–36)
 | Task ID | Task Description | Priority | Dependencies | Status | Verification Proof |
