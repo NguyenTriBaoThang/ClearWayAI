@@ -606,3 +606,53 @@ class VMSCorridorStatusResponse(BaseModel):
     emergency_position_m: float | None = None
     timestamp_sec: float
     provenance: str = "CLEARWAY_VMS_ADVISORY"
+
+
+# 10. ESP32 Physical Hardware Miniature Bench Schemas (Task 54)
+class ESP32BridgeStatusResponse(BaseModel):
+    """Status of the physical ESP32 bridge or virtual hardware emulator."""
+
+    connected: bool
+    mode: str
+    port: str
+    baudrate: int
+    watchdog_ok: bool
+    mmu_ok: bool
+    active_nodes: list[str]
+    watchdog_age_sec: float
+    transport: str = "EMULATOR"
+    provenance: str = "REALTIME_HARDWARE"
+
+
+class ESP32CommandRequest(BaseModel):
+    """Command payload sent to physical ESP32 or emulator."""
+
+    command: Literal["LAMP_TEST", "RESET_FAULTS", "HEARTBEAT"]
+    params: dict[str, Any] = Field(default_factory=dict)
+
+
+class ESP32SyncRequest(BaseModel):
+    """Synchronization of corridor intersection phases to physical LEDs."""
+
+    nodes: dict[str, dict[str, str]]
+    emergency: bool = False
+    simulation_id: str | None = None
+
+
+class ESP32TelemetryResponse(BaseModel):
+    """Full hardware register telemetry snapshot from ESP32."""
+
+    mode: str
+    fault_code: str
+    mmu_tripped: bool
+    watchdog_age_sec: float
+    watchdog_ok: bool
+    emergency_strobe: bool
+    packet_seq: int
+    total_frames: int
+    nodes: dict[str, Any]
+    transport: str
+    port: str
+    baudrate: int
+    provenance: str = "REALTIME_HARDWARE"
+

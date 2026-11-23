@@ -8,6 +8,7 @@ from apps.api.src.routers import (
     audit_router,
     clearance_router,
     corridor_router,
+    hardware_router,
     missions_router,
     replay_router,
     simulations_router,
@@ -39,6 +40,7 @@ app.include_router(clearance_router)
 app.include_router(corridor_router)
 app.include_router(replay_router)
 app.include_router(audit_router)
+app.include_router(hardware_router)
 
 
 # Mount WebSocket Realtime Streaming Endpoints

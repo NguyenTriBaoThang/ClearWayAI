@@ -4,6 +4,15 @@ Implements multi-intersection corridor coordination, emergency vehicle pre-clear
 ETA estimation, signal phase scheduling, post-clearance recovery, and independent safety gating.
 """
 
+from controller.hardware.esp32_bridge import (
+    ESP32HardwareBridge,
+    HardwareBridgeConfig,
+    HardwareFaultCode,
+    HardwareMode,
+    NodeSignalHardware,
+    SignalLEDColor,
+    VirtualESP32Emulator,
+)
 from controller.mission.emergency_mission import (
     EmergencyMission,
     EmergencyMissionManager,
@@ -57,8 +66,12 @@ __all__ = [
     "EmergencyMission",
     "EmergencyMissionManager",
     "EmergencyVehicleType",
+    "ESP32HardwareBridge",
     "GatewayOperationalMode",
     "GatewayTripReason",
+    "HardwareBridgeConfig",
+    "HardwareFaultCode",
+    "HardwareMode",
     "MissionStatus",
     "MovingHorizonCorridorCoordinator",
     "MultiNodeETAEvaluator",
@@ -66,6 +79,7 @@ __all__ = [
     "NodeCoordinationSchedule",
     "NodeETAResult",
     "NodeRecoveryStatus",
+    "NodeSignalHardware",
     "PostClearanceRecoveryController",
     "PreclearanceConfig",
     "PreclearanceController",
@@ -77,5 +91,7 @@ __all__ = [
     "SafetyGatewayReport",
     "SafetyInterventionRecord",
     "SignalColor",
+    "SignalLEDColor",
     "SignalSafetyGateway",
+    "VirtualESP32Emulator",
 ]
