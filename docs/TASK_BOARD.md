@@ -8,15 +8,15 @@
 
 ## 📊 Sprint Progress Overview
 - **Total Tasks:** 60
-- **Verified Complete:** 33 (T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33)
+- **Verified Complete:** 34 (T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34)
 - **In Progress:** 0
-- **Planned:** 27
-- **Phase Completion:** Phase A (6/6 complete - 100% COMPLETE!), Phase B (16/16 complete - 100% COMPLETE!), Phase C (5/5 complete - 100% COMPLETE!), Phase D (5/5 complete - 100% COMPLETE!), Phase E (1/4 complete - 25%)
+- **Planned:** 26
+- **Phase Completion:** Phase A (6/6 complete - 100% COMPLETE!), Phase B (16/16 complete - 100% COMPLETE!), Phase C (5/5 complete - 100% COMPLETE!), Phase D (5/5 complete - 100% COMPLETE!), Phase E (2/4 complete - 50%)
 
 ```mermaid
 pie title Task Completion by Status
-    "VERIFIED" : 33
-    "PLANNED" : 27
+    "VERIFIED" : 34
+    "PLANNED" : 26
 ```
 
 ---
@@ -58,7 +58,7 @@ pie title Task Completion by Status
 | **T31** | Phase D | Theo dõi xe bằng ByteTrack và trích quỹ đạo | **P0** | T30 | **VERIFIED** | ByteTracker, KalmanFilter, TrajectoryTracker, VirtualTripwire, pytest (191/191) |
 | **T32** | Phase D | Hiệu chỉnh camera và tính các chỉ số Traffic State | **P0** | T29, T31 | **VERIFIED** | Homography calibration, TrafficStateEstimator, 4 profiles, pytest (200/200) — Phase D 100% COMPLETE! |
 | **T33** | Phase E | Định nghĩa clearance time và sinh label thực nghiệm | **P0** | T24–T27, T32 | **VERIFIED** | CLEARANCE_TIME_SPEC.md, QueueDischargeSimulator, 600 episodes dataset, ClearanceFeaturePipeline, pytest (211/211) |
-| **T34** | Phase E | Train baseline Linear/RandomForest/XGBoost dự báo clearance | **P0** | T33 | `PLANNED` | Tabular clearance models, MAE/RMSE eval |
+| **T34** | Phase E | Train baseline Linear/RandomForest/XGBoost dự báo clearance | **P0** | T33 | **VERIFIED** | GradientBoosting (MAE=1.202s, R²=0.985), RandomForest, Ridge, pytest (216/216) |
 | **T35** | Phase E | Train LSTM/GRU dự báo clearance từ chuỗi trạng thái | **P0** | T33, T34 | `PLANNED` | PyTorch sequence clearance models |
 | **T36** | Phase E | Model Registry, chọn model thắng và fallback khi AI kém tin cậy | **P0** | T34, T35 | `PLANNED` | Model registry service, heuristic fallbacks |
 | **T37** | Phase F | Mô phỏng nhiệm vụ xe ưu tiên và tính ETA nhiều nút | **P0** | T21, T25–T26 | `PLANNED` | EmergencyMission manager, multi-node ETA service |

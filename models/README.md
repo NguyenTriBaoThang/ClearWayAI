@@ -33,7 +33,19 @@ Fine-tuned on Vietnamese mixed traffic (Task 30) across 7 classes:
 
 ---
 
-## 3. Registry Policies
+## 3. Clearance Prediction Models (Task 34 VERIFIED)
+
+Trained on 600 empirical episodes with strict node-based zero-leakage validation (Train: Nodes A & B, Val: Node C, Test: Node D):
+
+| Model | Test MAE | Test RMSE | Test $R^2$ | Inference Latency | Status |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Linear Regression (Ridge)** | 2.420 s | 3.722 s | 0.9480 | 0.105 ms | Baseline |
+| **Random Forest** | 1.415 s | 2.344 s | 0.9794 | 14.580 ms | Non-linear ensemble |
+| **Gradient Boosting** ★ | **1.202 s** | **1.997 s** | **0.9850** | **0.542 ms** | **Production Winner** |
+
+---
+
+## 4. Registry Policies
 
 - **Cryptographic Hashing:** All artifacts must have SHA-256 checksums documented in `weights_manifest.json`.
 - **Git LFS Management:** Weights are excluded from standard Git commits and managed via Git LFS or external bucket storage.

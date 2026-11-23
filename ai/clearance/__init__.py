@@ -11,6 +11,11 @@ from ai.clearance.features import (
     TARGET_COLUMN,
     ClearanceFeaturePipeline,
 )
+from ai.clearance.tabular_models import (
+    ClearancePredictor,
+    ModelBenchmarkResult,
+    TabularModelTrainer,
+)
 
 __all__ = [
     "QueueDischargeConfig",
@@ -20,5 +25,7 @@ __all__ = [
     "NUMERICAL_FEATURES",
     "CATEGORICAL_FEATURES",
     "TARGET_COLUMN",
+    "TabularModelTrainer",
+    "ClearancePredictor",
+    "ModelBenchmarkResult",
 ]
-

@@ -136,4 +136,3 @@ class ClearanceFeaturePipeline:
         test_df = df[df["node_id"].isin(te_nodes)].copy()
 
         return train_df, val_df, test_df
-
