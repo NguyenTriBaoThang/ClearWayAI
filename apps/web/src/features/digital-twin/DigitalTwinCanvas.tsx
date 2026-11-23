@@ -45,6 +45,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
   const [triangles, setTriangles] = useState<number>(5480);
 
   const [cameraPreset, setCameraPreset] = useState<CameraPresetType>('iso');
+  const [corridorMode, setCorridorMode] = useState<boolean>(true);
   const [projectionMode, setProjectionMode] = useState<ProjectionMode>('perspective');
   const [autoRotate, setAutoRotate] = useState<boolean>(false);
   const [showLayersMenu, setShowLayersMenu] = useState<boolean>(false);
@@ -298,6 +299,14 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
     handleSelectPreset('iso');
   };
 
+  const handleToggleCorridorMode = () => {
+    const nextState = !corridorMode;
+    setCorridorMode(nextState);
+    if (environmentRef.current) {
+      environmentRef.current.setCorridorMode(nextState);
+    }
+  };
+
   const handleToggleLayer = (layerKey: keyof typeof layers) => {
     const nextState = !layers[layerKey];
     setLayers((prev) => ({ ...prev, [layerKey]: nextState }));
@@ -308,6 +317,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
         environmentRef.current.vehicleManager.setShowBadges(nextState);
       } else if (layerKey === 'trafficSignals') {
         environmentRef.current.trafficSignals.setSignalsVisibility(nextState);
+        environmentRef.current.multiSignals.setSignalsVisibility(nextState);
       } else if (layerKey === 'pedestrians') {
         environmentRef.current.trafficSignals.setPedestriansVisibility(nextState);
       } else if (layerKey === 'corridor') {
@@ -324,16 +334,22 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
         environmentRef.current.corridorOverlay.setShowCallouts(nextState);
       } else if (layerKey === 'roadMarkings') {
         environmentRef.current.roadNetwork.setMarkingsVisibility(nextState);
+        environmentRef.current.corridorRoadNetwork.setMarkingsVisibility(nextState);
       } else if (layerKey === 'crosswalks') {
         environmentRef.current.roadNetwork.setCrosswalksVisibility(nextState);
+        environmentRef.current.corridorRoadNetwork.setCrosswalksVisibility(nextState);
       } else if (layerKey === 'sidewalks') {
         environmentRef.current.roadNetwork.setSidewalksVisibility(nextState);
+        environmentRef.current.corridorRoadNetwork.setSidewalksVisibility(nextState);
       } else if (layerKey === 'buildings') {
         environmentRef.current.cityEnvironment.setBuildingsVisibility(nextState);
+        environmentRef.current.corridorCity.setBuildingsVisibility(nextState);
       } else if (layerKey === 'streetFurniture') {
         environmentRef.current.cityEnvironment.setStreetFurnitureVisibility(nextState);
+        environmentRef.current.corridorCity.setStreetFurnitureVisibility(nextState);
       } else if (layerKey === 'trees') {
         environmentRef.current.cityEnvironment.setTreesVisibility(nextState);
+        environmentRef.current.corridorCity.setTreesVisibility(nextState);
       }
     }
   };
@@ -831,8 +847,137 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
               </button>
             </div>
 
+            {/* Corridor Node Jump Presets Bar */}
+            <div
+              style={{
+                backgroundColor: 'rgba(10, 17, 40, 0.88)',
+                backdropFilter: 'blur(8px)',
+                border: '1px solid #1b2f5b',
+                borderRadius: '6px',
+                padding: '3px',
+                display: 'flex',
+                gap: '3px',
+              }}
+            >
+              <button
+                onClick={() => handleSelectPreset('corridor')}
+                title="Corridor 1,000m Overview (5th Ave)"
+                style={{
+                  backgroundColor: cameraPreset === 'corridor' ? 'rgba(0, 245, 212, 0.2)' : 'transparent',
+                  border: cameraPreset === 'corridor' ? '1px solid #00f5d4' : '1px solid transparent',
+                  color: cameraPreset === 'corridor' ? '#00f5d4' : '#94a3b8',
+                  borderRadius: '4px',
+                  padding: '3px 7px',
+                  fontSize: '0.66rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                }}
+              >
+                CORRIDOR
+              </button>
+              <button
+                onClick={() => handleSelectPreset('nodeA')}
+                title="Node A (Maple St, 0m)"
+                style={{
+                  backgroundColor: cameraPreset === 'nodeA' ? 'rgba(0, 229, 255, 0.2)' : 'transparent',
+                  border: cameraPreset === 'nodeA' ? '1px solid #00e5ff' : '1px solid transparent',
+                  color: cameraPreset === 'nodeA' ? '#00e5ff' : '#94a3b8',
+                  borderRadius: '4px',
+                  padding: '3px 6px',
+                  fontSize: '0.64rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                }}
+              >
+                NODE A
+              </button>
+              <button
+                onClick={() => handleSelectPreset('nodeB')}
+                title="Node B (Oak St / INT-0457, 250m)"
+                style={{
+                  backgroundColor: cameraPreset === 'nodeB' ? 'rgba(0, 229, 255, 0.2)' : 'transparent',
+                  border: cameraPreset === 'nodeB' ? '1px solid #00e5ff' : '1px solid transparent',
+                  color: cameraPreset === 'nodeB' ? '#00e5ff' : '#94a3b8',
+                  borderRadius: '4px',
+                  padding: '3px 6px',
+                  fontSize: '0.64rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                }}
+              >
+                NODE B
+              </button>
+              <button
+                onClick={() => handleSelectPreset('nodeC')}
+                title="Node C (Pine St, 500m)"
+                style={{
+                  backgroundColor: cameraPreset === 'nodeC' ? 'rgba(0, 229, 255, 0.2)' : 'transparent',
+                  border: cameraPreset === 'nodeC' ? '1px solid #00e5ff' : '1px solid transparent',
+                  color: cameraPreset === 'nodeC' ? '#00e5ff' : '#94a3b8',
+                  borderRadius: '4px',
+                  padding: '3px 6px',
+                  fontSize: '0.64rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                }}
+              >
+                NODE C
+              </button>
+              <button
+                onClick={() => handleSelectPreset('nodeD')}
+                title="Node D (Elm St, 750m)"
+                style={{
+                  backgroundColor: cameraPreset === 'nodeD' ? 'rgba(0, 229, 255, 0.2)' : 'transparent',
+                  border: cameraPreset === 'nodeD' ? '1px solid #00e5ff' : '1px solid transparent',
+                  color: cameraPreset === 'nodeD' ? '#00e5ff' : '#94a3b8',
+                  borderRadius: '4px',
+                  padding: '3px 6px',
+                  fontSize: '0.64rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                }}
+              >
+                NODE D
+              </button>
+              <button
+                onClick={() => handleSelectPreset('hospital')}
+                title="Trauma Center Hospital (850m)"
+                style={{
+                  backgroundColor: cameraPreset === 'hospital' ? 'rgba(239, 71, 111, 0.2)' : 'transparent',
+                  border: cameraPreset === 'hospital' ? '1px solid #ef476f' : '1px solid transparent',
+                  color: cameraPreset === 'hospital' ? '#ef476f' : '#94a3b8',
+                  borderRadius: '4px',
+                  padding: '3px 6px',
+                  fontSize: '0.64rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                }}
+              >
+                TRAUMA CTR
+              </button>
+            </div>
+
             {/* Projection & Controls Secondary Row */}
             <div style={{ display: 'flex', gap: '4px' }}>
+              {/* Projection Mode Switcher */}
+              <button
+                onClick={handleToggleCorridorMode}
+                title="Toggle 1,000m Arterial Corridor World vs Single Intersection"
+                style={{
+                  backgroundColor: corridorMode ? 'rgba(0, 245, 212, 0.15)' : 'rgba(10, 17, 40, 0.88)',
+                  backdropFilter: 'blur(8px)',
+                  border: `1px solid ${corridorMode ? '#00f5d4' : '#1b2f5b'}`,
+                  color: corridorMode ? '#00f5d4' : '#94a3b8',
+                  borderRadius: '5px',
+                  padding: '3px 8px',
+                  fontSize: '0.65rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                }}
+              >
+                CORRIDOR: {corridorMode ? '4-NODE' : 'SINGLE'}
+              </button>
+
               {/* Projection Mode Switcher */}
               <button
                 onClick={handleToggleProjection}

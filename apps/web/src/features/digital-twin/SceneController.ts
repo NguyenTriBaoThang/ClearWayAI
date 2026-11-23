@@ -1,7 +1,17 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-export type CameraPresetType = 'iso' | 'top' | 'close' | 'chase';
+export type CameraPresetType =
+  | 'iso'
+  | 'top'
+  | 'close'
+  | 'chase'
+  | 'corridor'
+  | 'nodeA'
+  | 'nodeB'
+  | 'nodeC'
+  | 'nodeD'
+  | 'hospital';
 export type ProjectionMode = 'perspective' | 'orthographic';
 
 export interface CameraStateMetrics {
@@ -49,6 +59,30 @@ export class SceneController {
       pos: new THREE.Vector3(-18, 8, 10),
       target: new THREE.Vector3(-18, 0.8, 0),
     },
+    corridor: {
+      pos: new THREE.Vector3(375, 160, 280),
+      target: new THREE.Vector3(375, 0, 0),
+    },
+    nodeA: {
+      pos: new THREE.Vector3(32, 28, 32),
+      target: new THREE.Vector3(0, 0, 0),
+    },
+    nodeB: {
+      pos: new THREE.Vector3(282, 28, 32),
+      target: new THREE.Vector3(250, 0, 0),
+    },
+    nodeC: {
+      pos: new THREE.Vector3(532, 28, 32),
+      target: new THREE.Vector3(500, 0, 0),
+    },
+    nodeD: {
+      pos: new THREE.Vector3(782, 28, 32),
+      target: new THREE.Vector3(750, 0, 0),
+    },
+    hospital: {
+      pos: new THREE.Vector3(880, 36, 42),
+      target: new THREE.Vector3(850, 6, 0),
+    },
   };
 
   private targetCamPos: THREE.Vector3 = new THREE.Vector3().copy(this.PRESETS.iso.pos);
@@ -91,7 +125,7 @@ export class SceneController {
     // Strict boundary gates: never flip camera underground
     this.controls.maxPolarAngle = Math.PI / 2.05; // ~87.7 deg
     this.controls.minDistance = 15;
-    this.controls.maxDistance = 180;
+    this.controls.maxDistance = 900;
     this.controls.target.copy(this.PRESETS.iso.target);
     this.controls.update();
 

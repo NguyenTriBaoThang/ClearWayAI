@@ -5,6 +5,9 @@ import { TrafficVehicleManager } from './TrafficVehicleManager';
 import { TrafficSignal3D } from './TrafficSignal3D';
 import { CorridorOverlay3D } from './CorridorOverlay3D';
 import { FlowArrows3D } from './FlowArrows3D';
+import { MultiIntersectionRoadNetwork } from './MultiIntersectionRoadNetwork';
+import { CorridorCityEnvironment } from './CorridorCityEnvironment';
+import { MultiSignalController } from './MultiSignalController';
 
 /**
  * SceneEnvironment manages lighting, cyber grid, junction pedestal,
@@ -13,7 +16,7 @@ import { FlowArrows3D } from './FlowArrows3D';
  * 3D traffic fleet (motorcycles, cars, SUVs, buses, trucks, AMB-339 ambulance, fire engine),
  * 3D traffic signal poles & heads (Red/Yellow/Green conflict-free), pedestrians,
  * 3D emergency corridor ribbons, directional flow arrows, conflict zone grid,
- * cardinal markers, and visual overlays for ClearWayAI.
+ * multi-intersection arterial corridor (Nodes A–D, Trauma Center), and visual overlays.
  */
 export class SceneEnvironment {
   public scene: THREE.Scene;
@@ -23,6 +26,12 @@ export class SceneEnvironment {
   public trafficSignals: TrafficSignal3D;
   public corridorOverlay: CorridorOverlay3D;
   public flowArrows: FlowArrows3D;
+
+  // Multi-Intersection Arterial Corridor Components (Task 46)
+  public corridorRoadNetwork: MultiIntersectionRoadNetwork;
+  public corridorCity: CorridorCityEnvironment;
+  public multiSignals: MultiSignalController;
+  public isCorridorMode: boolean = true;
 
   public keyLight!: THREE.DirectionalLight;
   public fillLight!: THREE.DirectionalLight;
@@ -61,8 +70,21 @@ export class SceneEnvironment {
     this.flowArrows = new FlowArrows3D();
     this.scene.add(this.flowArrows.group);
 
+    // 7. Multi-Intersection Arterial Corridor (Nodes A, B, C, D + Trauma Center)
+    this.corridorRoadNetwork = new MultiIntersectionRoadNetwork();
+    this.scene.add(this.corridorRoadNetwork.group);
+
+    this.corridorCity = new CorridorCityEnvironment();
+    this.scene.add(this.corridorCity.group);
+
+    this.multiSignals = new MultiSignalController();
+    this.scene.add(this.multiSignals.group);
+
     this.setupCardinalMarkers();
     this.setupCorridorRibbon();
+
+    // Default to Corridor View (1,000m 4-intersection model)
+    this.setCorridorMode(true);
   }
 
   private setupLighting(): void {
@@ -84,6 +106,15 @@ export class SceneEnvironment {
     // 4. Hemisphere Light - cyan sky to deep navy ground
     this.hemiLight = new THREE.HemisphereLight(0x00e5ff, 0x070d1e, 0.45);
     this.scene.add(this.hemiLight);
+
+    // 5. Corridor-Wide Directional Lights (Arterial 1,000m span illumination)
+    const corridorKey = new THREE.DirectionalLight(0x00f5d4, 0.9);
+    corridorKey.position.set(375, 110, 75);
+    this.scene.add(corridorKey);
+
+    const corridorFill = new THREE.DirectionalLight(0xffd166, 0.45);
+    corridorFill.position.set(375, 80, -75);
+    this.scene.add(corridorFill);
   }
 
   private setupGroundAndGrid(): void {
@@ -98,6 +129,17 @@ export class SceneEnvironment {
     ground.rotation.x = -Math.PI / 2;
     ground.position.y = -0.3;
     ground.receiveShadow = true;
+    this.scene.add(ground);
+    this.disposables.push(groundGeo, groundMat);
+
+    // Corridor Extended Ground Base Plane (spanning -200m to 1050m)
+    const corridorGroundGeo = new THREE.PlaneGeometry(1400, 240);
+    const corridorGround = new THREE.Mesh(corridorGroundGeo, groundMat);
+    corridorGround.rotation.x = -Math.PI / 2;
+    corridorGround.position.set(375, -0.31, 0);
+    corridorGround.receiveShadow = true;
+    this.scene.add(corridorGround);
+    this.disposables.push(corridorGroundGeo);
     this.scene.add(ground);
     this.disposables.push(groundGeo, groundMat);
 
@@ -164,6 +206,35 @@ export class SceneEnvironment {
   }
 
   /**
+   * Toggle between 1,000m multi-intersection arterial corridor and single-intersection view
+   */
+  public setCorridorMode(enabled: boolean): void {
+    this.isCorridorMode = enabled;
+
+    // Toggle multi-intersection arterial corridor
+    if (this.corridorRoadNetwork) {
+      this.corridorRoadNetwork.group.visible = enabled;
+    }
+    if (this.corridorCity) {
+      this.corridorCity.group.visible = enabled;
+    }
+    if (this.multiSignals) {
+      this.multiSignals.setSignalsVisibility(enabled);
+    }
+
+    // Toggle single-intersection standalone elements
+    if (this.roadNetwork) {
+      this.roadNetwork.group.visible = !enabled;
+    }
+    if (this.cityEnvironment) {
+      this.cityEnvironment.group.visible = !enabled;
+    }
+    if (this.trafficSignals) {
+      this.trafficSignals.setSignalsVisibility(!enabled);
+    }
+  }
+
+  /**
    * Update dynamic scene effects on animation frame
    */
   public update(timeMs: number): THREE.Vector3 {
@@ -205,6 +276,14 @@ export class SceneEnvironment {
       this.flowArrows.update(timeMs);
     }
 
+    // 7. Update Corridor City (Beacon strobe) & Multi-Signal Controller
+    if (this.corridorCity) {
+      this.corridorCity.update(timeMs);
+    }
+    if (this.multiSignals) {
+      this.multiSignals.update(timeMs);
+    }
+
     if (ambPos) {
       return ambPos;
     }
@@ -230,6 +309,15 @@ export class SceneEnvironment {
     }
     if (this.flowArrows) {
       this.flowArrows.dispose();
+    }
+    if (this.corridorRoadNetwork) {
+      this.corridorRoadNetwork.dispose();
+    }
+    if (this.corridorCity) {
+      this.corridorCity.dispose();
+    }
+    if (this.multiSignals) {
+      this.multiSignals.dispose();
     }
     this.disposables.forEach((item) => {
       try {
