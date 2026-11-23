@@ -149,3 +149,4 @@ Every video sequence stored in the ClearWayAI data repository must be accompanie
 - [x] Scene-based partitioning enforced (no temporal leakage across adjacent frames).
 - [x] SHA-256 cryptographic hashes logged in JSON manifests.
 - [x] Clear data provenance tagging (`OFFLINE_VIDEO` vs `SUMO_SIMULATED` vs `DEMO_FIXTURE`).
+
