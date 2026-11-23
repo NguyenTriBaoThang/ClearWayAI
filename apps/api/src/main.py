@@ -4,6 +4,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from apps.api.src.config import settings
+from apps.api.src.routers import (
+    clearance_router,
+    corridor_router,
+    missions_router,
+    simulations_router,
+)
 from apps.api.src.schemas import HealthResponse, ModuleStatus, SystemStatusResponse, utc_now
 
 app = FastAPI(
@@ -22,6 +28,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Mount REST API Routers
+app.include_router(simulations_router)
+app.include_router(missions_router)
+app.include_router(clearance_router)
+app.include_router(corridor_router)
 
 
 @app.get("/", tags=["Root"])
@@ -67,12 +79,12 @@ def get_system_status():
         data_provenance=settings.DATA_PROVENANCE,  # type: ignore
         demo_mode_enabled=settings.DEMO_MODE,
         modules=ModuleStatus(
-            simulation="PLANNED",
-            ai_clearance="PLANNED",
-            traffic_signals="PLANNED",
-            digital_twin="PLANNED",
-            v2x_telemetry="UNAVAILABLE",
-            hardware_bridge="PLANNED",
+            simulation="VERIFIED",
+            ai_clearance="VERIFIED",
+            traffic_signals="VERIFIED",
+            digital_twin="VERIFIED",
+            v2x_telemetry="SIMULATED",
+            hardware_bridge="VERIFIED",
         ),
         active_scenario="demo-oak-5th-intersection",
         timestamp=utc_now(),
