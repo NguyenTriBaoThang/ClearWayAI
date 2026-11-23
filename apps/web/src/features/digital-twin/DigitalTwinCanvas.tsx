@@ -595,10 +595,10 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                           selectedVehicle.status === 'STALE'
                             ? '#ef4444'
                             : selectedVehicle.status === 'PRIORITY_CORRIDOR'
-                            ? '#00e5ff'
-                            : selectedVehicle.status === 'WAITING_SIGNAL'
-                            ? '#ffd166'
-                            : '#06d6a0',
+                              ? '#00e5ff'
+                              : selectedVehicle.status === 'WAITING_SIGNAL'
+                                ? '#ffd166'
+                                : '#06d6a0',
                         fontWeight: 600,
                       }}
                     >
@@ -683,8 +683,8 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                           selectedPole.vehicularPhase === 'green'
                             ? '#06d6a0'
                             : selectedPole.vehicularPhase === 'yellow'
-                            ? '#ffd166'
-                            : '#ef4444',
+                              ? '#ffd166'
+                              : '#ef4444',
                         fontWeight: 700,
                         textTransform: 'uppercase',
                       }}
@@ -793,8 +793,8 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                             node.status === 'ACTIVE'
                               ? 'rgba(0, 245, 212, 0.15)'
                               : node.status === 'COMPLETED'
-                              ? 'rgba(16, 185, 129, 0.1)'
-                              : 'rgba(30, 41, 59, 0.4)',
+                                ? 'rgba(16, 185, 129, 0.1)'
+                                : 'rgba(30, 41, 59, 0.4)',
                         }}
                       >
                         <span style={{ color: node.status === 'ACTIVE' ? '#00f5d4' : '#94a3b8' }}>

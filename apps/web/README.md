@@ -14,7 +14,7 @@ apps/web/
 │   ├── features/
 │   │   ├── corridor/       # 2D Corridor Route Map & Moving-Horizon Coordination Timeline
 │   │   ├── dashboard/      # Operations Center real-time context (OperationsContext.tsx)
-│   │   ├── digital-twin/   # Three.js WebGL canvas (DigitalTwinCanvas, SumoTrajectorySource, CorridorSyncBridge, MultiIntersectionRoadNetwork, CorridorCityEnvironment, MultiSignalController, SceneController)
+│   │   ├── digital-twin/   # Three.js WebGL canvas (DigitalTwinCanvas, DualSimulationComparison, SumoTrajectorySource, CorridorSyncBridge, MultiIntersectionRoadNetwork, SceneController)
 │   │   └── operations/     # Blueprint cards (V2X, PhaseTiming, AdaptiveSignal, IoT, Analytics, Controls, Drawers)
 │   ├── layout/             # Shell, TopBar (clocks, modes, WebSocket status), Sidebar navigation
 │   ├── pages/              # Route pages (DashboardPage, DigitalTwinPage, SimulationPage, ExperimentsPage)
@@ -63,6 +63,7 @@ pnpm --filter clearway-web preview
 - **1,000m Arterial Corridor World:** Full procedural 3D model spanning 5th Avenue across 4 sequential intersections (Node A: Maple St 0m, Node B: Oak St / INT-0457 250m, Node C: Pine St 500m, Node D: Elm St 750m) and the Metropolitan Trauma Center Hospital (850m).
 - **SUMO-to-3D Real-Time Telemetry Sync:** Ingests live microscopic simulation snapshots via WebSocket/REST with coordinate mapping (SUMO x/y -> 3D X/Z), linear interpolation, and dead-reckoning extrapolation.
 - **Dynamic Preemption Green Waves:** Coordinates 16 physical signal poles and green wave hold upon approach of priority emergency vehicle (AMB-339) with 3.5s failover watchdog to fixture.
+- **Split-View 3D Simulation Comparison:** Synchronized side-by-side dual viewport comparing Baseline B0 (Fixed-Time Webster, 2 stops, 108s) against ClearWay AI (Moving-Horizon Pre-clearance, 0 stops, 60s, -44.4% delay) with linked cameras and live KPI delta overlay.
 - **Physical Signal Infrastructure:** 16 physical 3D mast signal poles across all 4 intersections with independent phase control and preemption hold.
 - **Corridor Camera Presets:** Smooth lerp transitions between full corridor overview (`corridor`), individual intersection close-ups (`nodeA`, `nodeB`, `nodeC`, `nodeD`), trauma center (`hospital`), and vehicle chase (`chase`).
 - **No Fake Overlays:** Strictly does not use static screenshots or stock images as pseudo-3D scene representations.
