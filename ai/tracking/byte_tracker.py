@@ -10,8 +10,20 @@ Hungarian matching process, preventing lost tracks during dense motorcycle occlu
 
 from __future__ import annotations
 
-from enum import StrEnum
+import sys
 from typing import Any
+
+if sys.version_info >= (3, 11):
+    from enum import StrEnum
+else:
+    from enum import Enum
+
+    class StrEnum(str, Enum):
+        """Python 3.10 compatibility backport for StrEnum."""
+
+        def __str__(self) -> str:
+            return str(self.value)
+
 
 import numpy as np
 from scipy.optimize import linear_sum_assignment

@@ -6,10 +6,21 @@ tracking lifecycle state transitions, spatial-temporal corridor routing, and tel
 
 from __future__ import annotations
 
+import sys
 import time
 from dataclasses import asdict, dataclass, field
-from enum import StrEnum
 from typing import Any
+
+if sys.version_info >= (3, 11):
+    from enum import StrEnum
+else:
+    from enum import Enum
+
+    class StrEnum(str, Enum):
+        """Python 3.10 compatibility backport for StrEnum."""
+
+        def __str__(self) -> str:
+            return str(self.value)
 
 
 class MissionStatus(StrEnum):

@@ -14,7 +14,11 @@ import os
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-import sumolib
+import pytest
+
+sumolib = pytest.importorskip(
+    "sumolib", reason="sumolib is required for SUMO network/scenario tests"
+)
 
 from simulation.scenarios.emergency_behavior import EmergencyCorridorAnalyzer
 from simulation.scenarios.emergency_mission import (

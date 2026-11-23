@@ -1,7 +1,13 @@
 """Data schemas for ClearWayAI API adhering to shared domain contracts."""
 
-from datetime import UTC, datetime
+import sys
+from datetime import datetime, timezone
 from typing import Any, Literal
+
+if sys.version_info >= (3, 11):
+    from datetime import UTC
+else:
+    UTC = timezone.utc
 
 from pydantic import BaseModel, Field
 

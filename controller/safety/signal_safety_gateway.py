@@ -15,9 +15,20 @@ Enforces formal safety invariants:
 
 from __future__ import annotations
 
+import sys
 from dataclasses import asdict, dataclass
-from enum import StrEnum
 from typing import Any
+
+if sys.version_info >= (3, 11):
+    from enum import StrEnum
+else:
+    from enum import Enum
+
+    class StrEnum(str, Enum):
+        """Python 3.10 compatibility backport for StrEnum."""
+
+        def __str__(self) -> str:
+            return str(self.value)
 
 
 class SignalColor(StrEnum):
@@ -185,10 +196,14 @@ class SignalSafetyGateway:
         self.node_ids = node_ids or ["node_a", "node_b", "node_c", "node_d"]
 
         # Hardware-emulated internal registers
-        self._current_phases: dict[str, int] = dict.fromkeys(self.node_ids, self.config.arterial_phase_green)
+        self._current_phases: dict[str, int] = dict.fromkeys(
+            self.node_ids, self.config.arterial_phase_green
+        )
         self._phase_start_times: dict[str, float] = dict.fromkeys(self.node_ids, 0.0)
         self._last_heartbeats: dict[str, float] = dict.fromkeys(self.node_ids, 0.0)
-        self._operational_modes: dict[str, GatewayOperationalMode] = dict.fromkeys(self.node_ids, GatewayOperationalMode.NORMAL_PASSTHROUGH)
+        self._operational_modes: dict[str, GatewayOperationalMode] = dict.fromkeys(
+            self.node_ids, GatewayOperationalMode.NORMAL_PASSTHROUGH
+        )
         self._interventions: list[SafetyInterventionRecord] = []
         self._interventions_count: dict[str, int] = dict.fromkeys(self.node_ids, 0)
 

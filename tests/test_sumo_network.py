@@ -13,7 +13,11 @@ Verifies:
 import os
 import xml.etree.ElementTree as ET
 
-import sumolib
+import pytest
+
+sumolib = pytest.importorskip(
+    "sumolib", reason="sumolib is required for SUMO network/scenario tests"
+)
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SUMO_DIR = os.path.join(REPO_ROOT, "simulation", "sumo")

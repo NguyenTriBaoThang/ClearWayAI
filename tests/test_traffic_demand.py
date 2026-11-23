@@ -14,7 +14,11 @@ Verifies:
 import os
 import xml.etree.ElementTree as ET
 
-import sumolib
+import pytest
+
+sumolib = pytest.importorskip(
+    "sumolib", reason="sumolib is required for SUMO network/scenario tests"
+)
 
 from simulation.scenarios.generate_demand import (
     generate_demand,

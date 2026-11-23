@@ -18,11 +18,23 @@ from __future__ import annotations
 
 import hashlib
 import json
+import sys
 import time
 from dataclasses import asdict, dataclass
-from enum import StrEnum
 from pathlib import Path
 from typing import Any
+
+if sys.version_info >= (3, 11):
+    from enum import StrEnum
+else:
+    from enum import Enum
+
+    class StrEnum(str, Enum):
+        """Python 3.10 compatibility backport for StrEnum."""
+
+        def __str__(self) -> str:
+            return str(self.value)
+
 
 from ai.clearance.dataset_generator import QueueDischargeSimulator
 from ai.clearance.features import ClearanceFeaturePipeline
