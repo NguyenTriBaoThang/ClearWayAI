@@ -136,7 +136,10 @@ class ExplainableDecisionAuditService:
             )
 
         if decision_type == DecisionType.MMU_SAFETY_OVERRIDE:
-            reason = override_reason or "Conflicting vehicular green or violation of minimum yellow duration"
+            reason = (
+                override_reason
+                or "Conflicting vehicular green or violation of minimum yellow duration"
+            )
             return (
                 f"Conflict Monitor Unit (MMU) Gateway intervened at {node_id}: {reason}. "
                 f"Overrode planned phase to safe all-red clearance interval."
@@ -183,7 +186,9 @@ class ExplainableDecisionAuditService:
         queue_length_m: float,
     ) -> dict[str, float]:
         """Quantify relative factor attributions leading to the trigger decision."""
-        total_time_demand = max(0.1, predicted_clearance_sec + transition_time_sec + safety_buffer_sec)
+        total_time_demand = max(
+            0.1, predicted_clearance_sec + transition_time_sec + safety_buffer_sec
+        )
         return {
             "delta_margin_sec": round(delta_trigger_sec, 2),
             "ev_eta_sec": round(ev_eta_sec, 2),
@@ -292,9 +297,7 @@ class ExplainableDecisionAuditService:
             d_type = DecisionType.ANTI_STARVATION_ABORT
             s_status = SafetyStatus.WATCHDOG_TRIPPED
         elif getattr(decision, "should_actuate", False):
-            if "HOLDING" in state_str:
-                d_type = DecisionType.GREEN_HOLD_EXTENDED
-            elif "PASSING" in state_str:
+            if "HOLDING" in state_str or "PASSING" in state_str:
                 d_type = DecisionType.GREEN_HOLD_EXTENDED
             else:
                 d_type = DecisionType.PRE_CLEARANCE_TRIGGER
@@ -315,7 +318,9 @@ class ExplainableDecisionAuditService:
             node_id=getattr(decision, "node_id", "node_a"),
             decision_type=d_type,
             commanded_phase=getattr(decision, "commanded_phase", 0),
-            sim_time_sec=sim_time_sec if sim_time_sec is not None else getattr(decision, "timestamp_sec", 0.0),
+            sim_time_sec=sim_time_sec
+            if sim_time_sec is not None
+            else getattr(decision, "timestamp_sec", 0.0),
             mission_id=m_id,
             vehicle_id=v_id,
             ev_eta_sec=getattr(decision, "ev_eta_sec", 0.0),
@@ -372,11 +377,19 @@ class ExplainableDecisionAuditService:
                 "safe_ratio": 1.0,
             }
 
-        triggers = sum(1 for r in self._history if r.decision_type == DecisionType.PRE_CLEARANCE_TRIGGER)
+        triggers = sum(
+            1 for r in self._history if r.decision_type == DecisionType.PRE_CLEARANCE_TRIGGER
+        )
         holds = sum(1 for r in self._history if r.decision_type == DecisionType.GREEN_HOLD_EXTENDED)
-        interventions = sum(1 for r in self._history if r.decision_type == DecisionType.MMU_SAFETY_OVERRIDE)
-        aborts = sum(1 for r in self._history if r.decision_type == DecisionType.ANTI_STARVATION_ABORT)
-        recoveries = sum(1 for r in self._history if r.decision_type == DecisionType.RECOVERY_INITIATED)
+        interventions = sum(
+            1 for r in self._history if r.decision_type == DecisionType.MMU_SAFETY_OVERRIDE
+        )
+        aborts = sum(
+            1 for r in self._history if r.decision_type == DecisionType.ANTI_STARVATION_ABORT
+        )
+        recoveries = sum(
+            1 for r in self._history if r.decision_type == DecisionType.RECOVERY_INITIATED
+        )
         safe_count = sum(1 for r in self._history if r.safety_status == SafetyStatus.SAFE)
 
         avg_conf = sum(r.confidence_score for r in self._history) / total

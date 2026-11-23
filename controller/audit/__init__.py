@@ -15,4 +15,3 @@ __all__ = [
     "SafetyStatus",
     "decision_audit_service",
 ]
-

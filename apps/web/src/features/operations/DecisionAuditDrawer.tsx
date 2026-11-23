@@ -90,17 +90,17 @@ export const DecisionAuditDrawer: React.FC<DecisionAuditDrawerProps> = ({
       case 'PRE_CLEARANCE_TRIGGER':
         return <StatusPill label="PRE-CLEARANCE TRIGGER" variant="amber" size="xs" pulse />;
       case 'GREEN_HOLD_EXTENDED':
-        return <StatusPill label="GREEN WAVE HOLD" variant="emerald" size="xs" />;
+        return <StatusPill label="GREEN WAVE HOLD" variant="green" size="xs" />;
       case 'ANTI_STARVATION_ABORT':
-        return <StatusPill label="WATCHDOG ABORT" variant="rose" size="xs" pulse />;
+        return <StatusPill label="WATCHDOG ABORT" variant="red" size="xs" pulse />;
       case 'MMU_SAFETY_OVERRIDE':
-        return <StatusPill label="MMU SAFETY OVERRIDE" variant="rose" size="xs" pulse />;
+        return <StatusPill label="MMU SAFETY OVERRIDE" variant="red" size="xs" pulse />;
       case 'RECOVERY_INITIATED':
         return <StatusPill label="RECOVERY DEBT CYCLE" variant="cyan" size="xs" />;
       case 'EV_CLEARED_RELEASE':
-        return <StatusPill label="EV CLEARED RELEASE" variant="gray" size="xs" />;
+        return <StatusPill label="EV CLEARED RELEASE" variant="neutral" size="xs" />;
       default:
-        return <StatusPill label="NOMINAL CYCLE" variant="gray" size="xs" />;
+        return <StatusPill label="NOMINAL CYCLE" variant="neutral" size="xs" />;
     }
   };
 

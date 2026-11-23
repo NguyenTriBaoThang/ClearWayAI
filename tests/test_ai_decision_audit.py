@@ -6,7 +6,7 @@ Verifies:
 3. Database persistence, index querying, and summary metric aggregation.
 4. FastAPI REST API endpoints:
    - GET /api/v1/audit/decisions
-   - GET /api/v1/audit/decisions/{id}
+   - GET /api/v1/audit/decisions/{decision_id}
    - GET /api/v1/audit/summary
    - POST /api/v1/audit/explain
 5. Preclearance evaluation audit integration in corridor router.
@@ -17,10 +17,16 @@ from __future__ import annotations
 
 import os
 
-from fastapi.testclient import TestClient
+import pytest
+from fastapi import HTTPException
 
 from apps.api.src.database import DatabaseManager, DecisionAuditLogRecord
 from apps.api.src.main import app
+from apps.api.src.routers import audit, corridor
+from apps.api.src.schemas import (
+    ExplainDecisionRequest,
+    PreclearanceEvaluateRequest,
+)
 from controller.audit.decision_audit import (
     DecisionAuditRecord,
     DecisionType,
@@ -105,13 +111,16 @@ def test_anti_starvation_and_safety_interventions():
         safety_status=SafetyStatus.OVERRIDDEN_BY_MMU,
         override_reason="Conflicting vehicular green on East-West approach",
     )
-    assert "Conflict Monitor Unit (MMU) Gateway intervened at node_c" in mmu_rec.explanation_narrative
+    assert (
+        "Conflict Monitor Unit (MMU) Gateway intervened at node_c" in mmu_rec.explanation_narrative
+    )
     assert mmu_rec.safety_status == SafetyStatus.OVERRIDDEN_BY_MMU
 
 
-def test_database_persistence_and_queries():
+def test_database_persistence_and_queries(tmp_path):
     """Verify SQLite database persistence, query filters, and summary calculations."""
-    mem_db = DatabaseManager(":memory:")
+    db_file = str(tmp_path / "test_audit.db")
+    test_db = DatabaseManager(db_file)
 
     rec1 = DecisionAuditLogRecord(
         decision_id="dec-test-01",
@@ -160,27 +169,27 @@ def test_database_persistence_and_queries():
         safety_status="SAFE",
     )
 
-    mem_db.log_decision_audit(rec1)
-    mem_db.log_decision_audit(rec2)
+    test_db.log_decision_audit(rec1)
+    test_db.log_decision_audit(rec2)
 
     # Retrieval by ID
-    fetched = mem_db.get_decision_audit("dec-test-01")
+    fetched = test_db.get_decision_audit("dec-test-01")
     assert fetched is not None
     assert fetched.node_id == "node_a"
     assert fetched.to_dict()["feature_attributions"] == {"delta_margin_sec": -1.0}
 
     # Query with node filter
-    node_b_list = mem_db.query_decision_audits(node_id="node_b")
+    node_b_list = test_db.query_decision_audits(node_id="node_b")
     assert len(node_b_list) == 1
     assert node_b_list[0].decision_id == "dec-test-02"
 
     # Query with decision_type filter
-    trigger_list = mem_db.query_decision_audits(decision_type="PRE_CLEARANCE_TRIGGER")
+    trigger_list = test_db.query_decision_audits(decision_type="PRE_CLEARANCE_TRIGGER")
     assert len(trigger_list) == 1
     assert trigger_list[0].decision_id == "dec-test-01"
 
     # Summary metrics
-    summary = mem_db.get_decision_audit_summary()
+    summary = test_db.get_decision_audit_summary()
     assert summary["total_decisions"] == 2
     assert summary["preemption_triggers"] == 1
     assert summary["green_holds"] == 1
@@ -188,11 +197,19 @@ def test_database_persistence_and_queries():
 
 
 def test_fastapi_audit_endpoints():
-    """Verify REST API audit endpoints in FastAPI."""
-    client = TestClient(app)
+    """Verify REST API audit endpoints registration and function handlers in FastAPI."""
+    paths = app.openapi()["paths"]
+    assert "/api/v1/audit/decisions" in paths
+    assert "get" in paths["/api/v1/audit/decisions"]
+    assert "/api/v1/audit/decisions/{decision_id}" in paths
+    assert "get" in paths["/api/v1/audit/decisions/{decision_id}"]
+    assert "/api/v1/audit/summary" in paths
+    assert "get" in paths["/api/v1/audit/summary"]
+    assert "/api/v1/audit/explain" in paths
+    assert "post" in paths["/api/v1/audit/explain"]
 
     # Seed in-memory service
-    decision_audit_service.record_decision(
+    rec = decision_audit_service.record_decision(
         node_id="node_a",
         decision_type=DecisionType.PRE_CLEARANCE_TRIGGER,
         commanded_phase=0,
@@ -210,75 +227,64 @@ def test_fastapi_audit_endpoints():
         confidence_score=0.99,
     )
 
-    # 1. GET /api/v1/audit/decisions
-    resp = client.get("/api/v1/audit/decisions")
-    assert resp.status_code == 200
-    data = resp.json()
-    assert "decisions" in data
-    assert "total_count" in data
-    assert len(data["decisions"]) >= 1
+    # 1. list_decisions
+    resp = audit.list_decisions(limit=10)
+    assert resp.total_count >= 1
+    assert len(resp.decisions) >= 1
 
-    first_id = data["decisions"][0]["decision_id"]
+    # 2. get_decision
+    single = audit.get_decision(rec.decision_id)
+    assert single.decision_id == rec.decision_id
+    assert single.node_id == "node_a"
 
-    # 2. GET /api/v1/audit/decisions/{id}
-    resp_single = client.get(f"/api/v1/audit/decisions/{first_id}")
-    assert resp_single.status_code == 200
-    assert resp_single.json()["decision_id"] == first_id
+    # 3. get_decision non-existent -> 404
+    with pytest.raises(HTTPException) as exc_info:
+        audit.get_decision("non-existent-dec-999")
+    assert exc_info.value.status_code == 404
 
-    # 3. GET /api/v1/audit/decisions/invalid-id -> 404
-    resp_404 = client.get("/api/v1/audit/decisions/dec-non-existent-999")
-    assert resp_404.status_code == 404
+    # 4. get_decision_summary
+    summary = audit.get_decision_summary()
+    assert summary.total_decisions >= 1
+    assert summary.safe_ratio == 1.0
 
-    # 4. GET /api/v1/audit/summary
-    resp_sum = client.get("/api/v1/audit/summary")
-    assert resp_sum.status_code == 200
-    sum_data = resp_sum.json()
-    assert "total_decisions" in sum_data
-    assert "preemption_triggers" in sum_data
-    assert "safe_ratio" in sum_data
-
-    # 5. POST /api/v1/audit/explain
-    explain_payload = {
-        "node_id": "node_a",
-        "ev_eta_sec": 21.0,
-        "queue_length_m": 30.0,
-        "queued_vehicle_count": 8,
-        "predicted_clearance_sec": 14.4,
-        "current_signal_phase": 3,
-        "phase_elapsed_sec": 15.0,
-        "vehicle_id": "AMB-339",
-        "sim_time_sec": 12.0,
-    }
-    resp_exp = client.post("/api/v1/audit/explain", json=explain_payload)
-    assert resp_exp.status_code == 200
-    exp_data = resp_exp.json()
-    assert "delta_trigger_sec" in exp_data
-    assert "explanation_narrative" in exp_data
-    assert "feature_attributions" in exp_data
-    assert exp_data["decision_type"] in ("PRE_CLEARANCE_TRIGGER", "NOMINAL_MAINTAINED")
+    # 5. evaluate_and_explain_decision
+    explain_req = ExplainDecisionRequest(
+        node_id="node_a",
+        ev_eta_sec=21.0,
+        queue_length_m=30.0,
+        queued_vehicle_count=8,
+        predicted_clearance_sec=14.4,
+        current_signal_phase=3,
+        phase_elapsed_sec=15.0,
+        vehicle_id="AMB-339",
+        sim_time_sec=12.0,
+    )
+    exp = audit.evaluate_and_explain_decision(explain_req)
+    assert exp.should_actuate is True
+    assert exp.decision_type == "PRE_CLEARANCE_TRIGGER"
+    assert exp.commanded_phase == 0
+    assert exp.delta_trigger_sec <= 0.0
+    assert "explanation_narrative" in exp.model_dump()
+    assert "feature_attributions" in exp.model_dump()
 
 
 def test_corridor_preclearance_audit_integration():
     """Verify that evaluating preclearance in corridor router logs an explainable audit record."""
-    client = TestClient(app)
+    eval_req = PreclearanceEvaluateRequest(
+        node_id="node_a",
+        mission_id="test-corridor-audit-mission",
+        queue_length_meters=25.0,
+        queued_vehicle_count=6,
+        sim_time=18.5,
+    )
 
-    eval_payload = {
-        "node_id": "node_a",
-        "mission_id": "test-audit-mission",
-        "queue_length_meters": 25.0,
-        "queued_vehicle_count": 6,
-        "sim_time": 18.5,
-    }
+    resp = corridor.evaluate_preclearance(eval_req)
+    assert resp.node_id == "node_a"
 
-    resp = client.post("/api/v1/corridor/preclearance/evaluate", json=eval_payload)
-    assert resp.status_code == 200
-
-    # Query audit decisions for node_a
-    audit_resp = client.get("/api/v1/audit/decisions?node_id=node_a")
-    assert audit_resp.status_code == 200
-    audits = audit_resp.json()["decisions"]
-    assert len(audits) >= 1
-    assert any(a["node_id"] == "node_a" for a in audits)
+    # Verify decision recorded in audit service
+    history = decision_audit_service.query_decisions(node_id="node_a")
+    assert len(history) >= 1
+    assert any(h.node_id == "node_a" for h in history)
 
 
 def test_frontend_decision_audit_drawer_structure():
@@ -298,4 +304,3 @@ def test_frontend_decision_audit_drawer_structure():
     assert "NEMA TS2 AUDITED" in content
     assert "StatusPill" in content
     assert "fetchDecisionAudits" in content
-

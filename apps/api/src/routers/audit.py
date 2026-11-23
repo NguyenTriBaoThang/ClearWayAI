@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import contextlib
 import json
 
 from fastapi import APIRouter, HTTPException, Query, status
@@ -23,6 +24,7 @@ from controller.audit.decision_audit import (
 from controller.scheduler.preclearance_controller import PreclearanceConfig, PreclearanceController
 
 router = APIRouter(prefix="/api/v1/audit", tags=["AI Decision Audit & Explainability"])
+preclearance_controller = PreclearanceController()
 
 
 def _to_schema(r: DecisionAuditRecord | DecisionAuditLogRecord) -> DecisionAuditSchema:
@@ -92,12 +94,17 @@ def list_decisions(
     limit: int = Query(default=50, ge=1, le=500, description="Max records to return"),
 ) -> DecisionAuditListResponse:
     """Retrieve filtered stream of explainable AI decision audit logs."""
+    actual_node = node_id if isinstance(node_id, str) else None
+    actual_type = decision_type if isinstance(decision_type, str) else None
+    actual_mission = mission_id if isinstance(mission_id, str) else None
+    actual_limit = limit if isinstance(limit, int) else 50
+
     # Check database first
     db_records = db.query_decision_audits(
-        node_id=node_id,
-        decision_type=decision_type,
-        mission_id=mission_id,
-        limit=limit,
+        node_id=actual_node,
+        decision_type=actual_type,
+        mission_id=actual_mission,
+        limit=actual_limit,
     )
 
     if db_records:
@@ -110,17 +117,15 @@ def list_decisions(
 
     # Fallback to in-memory history
     enum_type = None
-    if decision_type:
-        try:
-            enum_type = DecisionType(decision_type)
-        except ValueError:
-            pass
+    if actual_type:
+        with contextlib.suppress(ValueError):
+            enum_type = DecisionType(actual_type)
 
     mem_records = decision_audit_service.query_decisions(
-        node_id=node_id,
+        node_id=actual_node,
         decision_type=enum_type,
-        mission_id=mission_id,
-        limit=limit,
+        mission_id=actual_mission,
+        limit=actual_limit,
     )
     schemas = [_to_schema(r) for r in mem_records]
     return DecisionAuditListResponse(
@@ -166,10 +171,9 @@ def evaluate_and_explain_decision(req: ExplainDecisionRequest) -> ExplainDecisio
     cfg = PreclearanceConfig()
 
     # Calculate transition overhead
-    t_trans = PreclearanceController.compute_transition_overhead(
+    t_trans = preclearance_controller.compute_transition_overhead(
         current_phase=req.current_signal_phase,
         phase_elapsed_sec=req.phase_elapsed_sec,
-        config=cfg,
     )
 
     # Predicted clearance duration

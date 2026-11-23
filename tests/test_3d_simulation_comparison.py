@@ -122,4 +122,3 @@ def test_digital_twin_page_view_mode_switcher():
     # Conditional render
     assert "DigitalTwinCanvas" in content
     assert "DualSimulationComparison" in content
-

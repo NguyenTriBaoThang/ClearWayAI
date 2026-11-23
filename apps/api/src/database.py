@@ -157,12 +157,18 @@ class DatabaseManager:
     def __init__(self, db_path: str = ":memory:") -> None:
         self.db_path = db_path
         self._lock = threading.Lock()
+        self._memory_conn: sqlite3.Connection | None = None
         if self.db_path != ":memory:":
             p = Path(self.db_path)
             p.parent.mkdir(parents=True, exist_ok=True)
+        else:
+            self._memory_conn = sqlite3.connect(":memory:", check_same_thread=False)
+            self._memory_conn.row_factory = sqlite3.Row
         self._init_db()
 
     def _get_connection(self) -> sqlite3.Connection:
+        if self._memory_conn is not None:
+            return self._memory_conn
         conn = sqlite3.connect(self.db_path, check_same_thread=False)
         conn.row_factory = sqlite3.Row
         return conn
@@ -648,17 +654,17 @@ class DatabaseManager:
         with self._lock, self._get_connection() as conn:
             query = "SELECT * FROM decision_audit_logs WHERE 1=1"
             params: list[Any] = []
-            if node_id:
+            if node_id and isinstance(node_id, str):
                 query += " AND LOWER(node_id) = LOWER(?)"
                 params.append(node_id)
-            if decision_type:
+            if decision_type and isinstance(decision_type, str):
                 query += " AND decision_type = ?"
                 params.append(decision_type)
-            if mission_id:
+            if mission_id and isinstance(mission_id, str):
                 query += " AND mission_id = ?"
                 params.append(mission_id)
             query += " ORDER BY sim_time_sec DESC, timestamp DESC LIMIT ?"
-            params.append(limit)
+            params.append(int(limit) if isinstance(limit, (int, float)) else 50)
 
             rows = conn.execute(query, tuple(params)).fetchall()
             return [

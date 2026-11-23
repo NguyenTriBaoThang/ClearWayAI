@@ -64,6 +64,7 @@ pnpm --filter clearway-web preview
 - **SUMO-to-3D Real-Time Telemetry Sync:** Ingests live microscopic simulation snapshots via WebSocket/REST with coordinate mapping (SUMO x/y -> 3D X/Z), linear interpolation, and dead-reckoning extrapolation.
 - **Dynamic Preemption Green Waves:** Coordinates 16 physical signal poles and green wave hold upon approach of priority emergency vehicle (AMB-339) with 3.5s failover watchdog to fixture.
 - **Split-View 3D Simulation Comparison:** Synchronized side-by-side dual viewport comparing Baseline B0 (Fixed-Time Webster, 2 stops, 108s) against ClearWay AI (Moving-Horizon Pre-clearance, 0 stops, 60s, -44.4% delay) with linked cameras and live KPI delta overlay.
+- **Explainable AI Decision Audit & Telemetry:** Real-time transparent inference logs (`DecisionAuditDrawer.tsx`) breaking down mathematical JIT pre-clearance formulation ($\Delta t = \text{ETA} - \hat{T}_{\text{clear}} - T_{\text{trans}} - T_{\text{buf}}$), feature attribution weights, natural language decision narratives, and NEMA TS2 MMU safety verification status.
 - **Physical Signal Infrastructure:** 16 physical 3D mast signal poles across all 4 intersections with independent phase control and preemption hold.
 - **Corridor Camera Presets:** Smooth lerp transitions between full corridor overview (`corridor`), individual intersection close-ups (`nodeA`, `nodeB`, `nodeC`, `nodeD`), trauma center (`hospital`), and vehicle chase (`chase`).
 - **No Fake Overlays:** Strictly does not use static screenshots or stock images as pseudo-3D scene representations.

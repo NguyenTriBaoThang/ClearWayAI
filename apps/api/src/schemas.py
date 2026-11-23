@@ -575,4 +575,3 @@ class ExplainDecisionResponse(BaseModel):
     feature_attributions: dict[str, float]
     safety_status: str
     provenance: str = "CLEARWAY_EXPLAINABLE_AUDIT"
-

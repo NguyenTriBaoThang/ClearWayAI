@@ -20,7 +20,8 @@ apps/api/
 │   │   ├── missions.py     # Priority mission dispatch, telemetry, multi-node ETA
 │   │   ├── clearance.py    # AI clearance predictions & Model Registry catalog
 │   │   ├── corridor.py     # Moving-horizon coordination, JIT trigger, recovery, MMU safety audit
-│   │   └── replay.py       # Deterministic telemetry replay, snapshots querying & playback controls
+│   │   ├── replay.py       # Deterministic telemetry replay, snapshots querying & playback controls
+│   │   └── audit.py        # Explainable AI decision audit trails, feature attributions & summary metrics
 │   └── main.py             # FastAPI entrypoint, CORS, route handlers, WebSocket mounts
 ├── tests/
 │   ├── __init__.py
@@ -56,6 +57,10 @@ apps/api/
 | **Corridor** | `POST` | `/api/v1/corridor/preclearance/evaluate` | Evaluate JIT trigger $\Delta t_{\text{trigger}}$ for intersection |
 | **Corridor** | `POST` | `/api/v1/corridor/recovery/initiate` | Initiate multi-cycle smooth post-clearance recovery |
 | **Corridor** | `GET` | `/api/v1/corridor/safety/audit` | Execute hardware-level MMU zero-trust safety audit |
+| **AI Decision Audit** | `GET` | `/api/v1/audit/decisions` | Stream explainable AI decision audit logs with filters |
+| **AI Decision Audit** | `GET` | `/api/v1/audit/decisions/{id}` | Retrieve single decision narrative & feature attributions |
+| **AI Decision Audit** | `GET` | `/api/v1/audit/summary` | Corridor-wide decision statistics & safety ratio |
+| **AI Decision Audit** | `POST` | `/api/v1/audit/explain` | On-the-fly decision explainability & mathematical proof |
 | **Replay & Snapshots** | `POST` | `/api/v1/simulations/{id}/replay/load` | Load simulation snapshots into in-memory ReplayController |
 | **Replay & Snapshots** | `POST` | `/api/v1/simulations/{id}/replay/play` | Start continuous replay playback |
 | **Replay & Snapshots** | `POST` | `/api/v1/simulations/{id}/replay/pause` | Pause replay playback |
