@@ -22,21 +22,37 @@ import { SceneController, CameraPresetType, ProjectionMode, CameraStateMetrics }
 import { VehicleSnapshot } from './VehicleTrajectorySource';
 import { InspectedSignalPole } from './TrafficSignal3D';
 import { CorridorPlanTelemetry } from './CorridorOverlay3D';
+import { CorridorSyncBridge, SyncTelemetry } from './CorridorSyncBridge';
+import { useSafeOperations } from '../dashboard/OperationsContext';
 
 interface DigitalTwinCanvasProps {
   intersectionId?: string;
   onSelectEntity?: (id: string, type: string) => void;
+  liveSnapshot?: any;
   style?: React.CSSProperties;
 }
 
 export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
   intersectionId = 'INT-0457',
   onSelectEntity,
+  liveSnapshot,
   style,
 }) => {
+  const operations = useSafeOperations();
   const mountRef = useRef<HTMLDivElement>(null);
   const controllerRef = useRef<SceneController | null>(null);
   const environmentRef = useRef<SceneEnvironment | null>(null);
+  const bridgeRef = useRef<CorridorSyncBridge | null>(null);
+
+  const [syncTelemetry, setSyncTelemetry] = useState<SyncTelemetry>({
+    mode: 'LIVE_SUMO',
+    status: 'SYNCED',
+    activeVehiclesCount: 0,
+    simTimeSec: 0,
+    lastPacketAgeMs: 0,
+    preemptionActive: false,
+    activeNodePhases: { node_a: 0, node_b: 0, node_c: 0, node_d: 0 },
+  });
 
   const [webglInitialized, setWebglInitialized] = useState<boolean>(false);
   const [fps, setFps] = useState<number>(60);
@@ -124,7 +140,11 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
     const environment = new SceneEnvironment(scene);
     environmentRef.current = environment;
 
-    // 4. Scene Controller (Dual Cameras & OrbitControls)
+    // 4. Corridor Synchronization Bridge (SUMO to 3D sync & failover)
+    const bridge = new CorridorSyncBridge(environment);
+    bridgeRef.current = bridge;
+
+    // 5. Scene Controller (Dual Cameras & OrbitControls)
     const controller = new SceneController(container, width, height);
     controllerRef.current = controller;
 
@@ -150,6 +170,9 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
       // Update environment animation (vehicles, strobe lightbars, ambulance corridor motion)
       const waypointPos = environment.update(now);
 
+      // Update corridor synchronization bridge (dead reckoning, watchdog fallback)
+      bridge.update(now);
+
       // Update camera controller (interpolation, OrbitControls damping, chase cam)
       controller.update(waypointPos);
 
@@ -163,6 +186,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
         setDrawCalls(renderer.info.render.calls);
         setTriangles(renderer.info.render.triangles);
         setCamMetrics(controller.getMetrics());
+        setSyncTelemetry(bridge.getTelemetry());
 
         const sigSnap = environment.trafficSignals.controller.getSnapshotAtTime(now);
         setPhaseSnapshot({
@@ -191,6 +215,7 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
     return () => {
       cancelAnimationFrame(frameId);
       window.removeEventListener('resize', handleResize);
+      bridge.dispose();
       controller.dispose();
       environment.dispose();
 
@@ -200,6 +225,15 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
       renderer.dispose();
     };
   }, []);
+
+  // Ingest live telemetry snapshots from WebSocket stream or props
+  useEffect(() => {
+    const snap = liveSnapshot || operations?.latestSnapshot;
+    if (snap && bridgeRef.current) {
+      bridgeRef.current.ingestSnapshot(snap);
+      setSyncTelemetry(bridgeRef.current.getTelemetry());
+    }
+  }, [liveSnapshot, operations?.latestSnapshot]);
 
   // Click Raycaster for Vehicle & Signal Pole Inspection
   const handleCanvasClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -409,6 +443,39 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
                 3D DIGITAL TWIN VIEWPORT
               </span>
               <StatusPill label="CORRIDOR & HUD ACTIVE" variant="cyan" size="xs" pulse />
+              <button
+                onClick={() => {
+                  if (bridgeRef.current) {
+                    bridgeRef.current.toggleSyncMode();
+                    setSyncTelemetry(bridgeRef.current.getTelemetry());
+                  }
+                }}
+                title="Toggle Real-Time SUMO Telemetry Sync vs Deterministic Fixture"
+                style={{
+                  backgroundColor: syncTelemetry.mode === 'LIVE_SUMO' ? 'rgba(0, 245, 212, 0.15)' : 'rgba(255, 209, 102, 0.15)',
+                  border: `1px solid ${syncTelemetry.mode === 'LIVE_SUMO' ? '#00f5d4' : '#ffd166'}`,
+                  color: syncTelemetry.mode === 'LIVE_SUMO' ? '#00f5d4' : '#ffd166',
+                  borderRadius: '12px',
+                  padding: '2px 8px',
+                  fontSize: '0.62rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                }}
+              >
+                <Radio size={10} color={syncTelemetry.mode === 'LIVE_SUMO' ? '#00f5d4' : '#ffd166'} />
+                <span>
+                  {syncTelemetry.mode === 'LIVE_SUMO' ? `SUMO LIVE (${syncTelemetry.activeVehiclesCount} veh)` : 'FIXTURE'}
+                </span>
+                <span style={{ fontSize: '0.58rem', opacity: 0.8 }}>
+                  [{syncTelemetry.status}]
+                </span>
+              </button>
+              {syncTelemetry.preemptionActive && (
+                <StatusPill label="PREEMPTION ACTIVE" variant="amber" size="xs" pulse />
+              )}
             </div>
 
             <div style={{ fontSize: '0.70rem', color: '#94a3b8' }}>
@@ -959,7 +1026,35 @@ export const DigitalTwinCanvas: React.FC<DigitalTwinCanvasProps> = ({
 
             {/* Projection & Controls Secondary Row */}
             <div style={{ display: 'flex', gap: '4px' }}>
-              {/* Projection Mode Switcher */}
+              {/* SUMO Live Sync Switcher */}
+              <button
+                onClick={() => {
+                  if (bridgeRef.current) {
+                    bridgeRef.current.toggleSyncMode();
+                    setSyncTelemetry(bridgeRef.current.getTelemetry());
+                  }
+                }}
+                title="Toggle Real-Time SUMO Telemetry Sync vs Local Fixture"
+                style={{
+                  backgroundColor: syncTelemetry.mode === 'LIVE_SUMO' ? 'rgba(0, 245, 212, 0.15)' : 'rgba(10, 17, 40, 0.88)',
+                  backdropFilter: 'blur(8px)',
+                  border: `1px solid ${syncTelemetry.mode === 'LIVE_SUMO' ? '#00f5d4' : '#1b2f5b'}`,
+                  color: syncTelemetry.mode === 'LIVE_SUMO' ? '#00f5d4' : '#94a3b8',
+                  borderRadius: '5px',
+                  padding: '3px 8px',
+                  fontSize: '0.65rem',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                }}
+              >
+                <Radio size={10} />
+                <span>SYNC: {syncTelemetry.mode === 'LIVE_SUMO' ? 'SUMO' : 'FIXTURE'}</span>
+              </button>
+
+              {/* Corridor Mode Switcher */}
               <button
                 onClick={handleToggleCorridorMode}
                 title="Toggle 1,000m Arterial Corridor World vs Single Intersection"

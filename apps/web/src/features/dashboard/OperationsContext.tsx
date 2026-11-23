@@ -33,6 +33,7 @@ interface OperationsContextType {
   corridorPlan: CorridorPlanResult | null;
   safetyAudit: SafetyAuditResult | null;
   snapshots: SnapshotSummary[];
+  latestSnapshot: any | null;
 
   // Operational Actions
   togglePlay: () => void;
@@ -56,11 +57,13 @@ export const OperationsProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [corridorPlan, setCorridorPlan] = useState<CorridorPlanResult | null>(null);
   const [safetyAudit, setSafetyAudit] = useState<SafetyAuditResult | null>(null);
   const [snapshots, setSnapshots] = useState<SnapshotSummary[]>([]);
+  const [latestSnapshot, setLatestSnapshot] = useState<any | null>(null);
 
   // Real-time WebSocket hook
   const { status, latencyMs, fps, sendCommand } = useWebSocketStream({
     simulationId,
     onSnapshot: (snapData) => {
+      setLatestSnapshot(snapData);
       if (typeof snapData.sim_time_sec === 'number') {
         setSimTimeSec(snapData.sim_time_sec);
       }
@@ -138,6 +141,9 @@ export const OperationsProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       try {
         const res = await api.stepSimulation(simulationId, dt, activeMission?.mission_id);
         setSimTimeSec(res.sim_time_sec);
+        if ((res as any).snapshot) {
+          setLatestSnapshot((res as any).snapshot);
+        }
       } catch {
         setSimTimeSec((prev) => Math.round((prev + dt) * 10) / 10);
       }
@@ -191,6 +197,7 @@ export const OperationsProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         corridorPlan,
         safetyAudit,
         snapshots,
+        latestSnapshot,
         togglePlay,
         stepSimulation,
         setPlaybackSpeed,
@@ -210,5 +217,9 @@ export const useOperations = (): OperationsContextType => {
     throw new Error('useOperations must be used within an OperationsProvider');
   }
   return context;
+};
+
+export const useSafeOperations = (): OperationsContextType | null => {
+  return useContext(OperationsContext);
 };
 

@@ -126,4 +126,3 @@ def test_dashboard_page_viewport_mode_switching() -> None:
     assert "2D CORRIDOR MAP & TIMELINE" in page_tsx
     assert "CorridorOperationsView" in page_tsx
     assert "DigitalTwinCanvas" in page_tsx
-

@@ -117,7 +117,18 @@ def test_scene_controller_corridor_camera_presets():
         content = f.read()
 
     # Presets include single-node and corridor presets
-    for preset in ["iso", "top", "close", "chase", "corridor", "nodeA", "nodeB", "nodeC", "nodeD", "hospital"]:
+    for preset in [
+        "iso",
+        "top",
+        "close",
+        "chase",
+        "corridor",
+        "nodeA",
+        "nodeB",
+        "nodeC",
+        "nodeD",
+        "hospital",
+    ]:
         assert preset in content
 
     # Camera max distance allows zooming out over 1,000m corridor
@@ -162,4 +173,3 @@ def test_digital_twin_canvas_corridor_controls():
     # Corridor mode toggle in HUD
     assert "handleToggleCorridorMode" in content
     assert "CORRIDOR:" in content
-
