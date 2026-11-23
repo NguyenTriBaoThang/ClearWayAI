@@ -305,84 +305,91 @@ class YOLOInferenceEngine:
 
     def _generate_synthetic_mixed_traffic(self, seed_offset: int | str) -> list[Detection]:
         """Generate deterministic Vietnamese mixed traffic detections (motorcycle swarm + cars + ambulance)."""
-        rng = np.random.default_rng(abs(hash(str(seed_offset))) % (2**31))
+        frame_idx = (
+            int(seed_offset)
+            if isinstance(seed_offset, int)
+            or (isinstance(seed_offset, str) and seed_offset.isdigit())
+            else abs(hash(str(seed_offset))) % 1000
+        )
+        rng = np.random.default_rng(42)  # Consistent vehicle fleet base positions
         dets: list[Detection] = []
 
-        # 1. Motorcycle swarm: 10 to 18 clustered motorcycles near stopline
-        num_motos = rng.integers(10, 19)
-        for _ in range(num_motos):
-            xc = rng.uniform(0.35, 0.65)
-            yc = rng.uniform(0.55, 0.75)
-            w = rng.uniform(0.06, 0.09)
-            h = rng.uniform(0.10, 0.14)
-            conf = rng.uniform(0.75, 0.96)
+        # 1. Motorcycle swarm: 12 clustered motorcycles near stopline
+        for i in range(12):
+            xc_base = 0.35 + (i % 6) * 0.05 + float(rng.uniform(-0.01, 0.01))
+            yc_base = 0.55 + (i // 6) * 0.08 + float(rng.uniform(-0.01, 0.01))
+            yc = (yc_base + frame_idx * 0.005) % 0.90
+            w = 0.07 + float(rng.uniform(-0.005, 0.005))
+            h = 0.12 + float(rng.uniform(-0.005, 0.005))
+            conf = 0.85 + float(rng.uniform(0.0, 0.10))
             dets.append(
                 Detection(
-                    bbox=(xc - w / 2, yc - h / 2, xc + w / 2, yc + h / 2),
+                    bbox=(xc_base - w / 2, yc - h / 2, xc_base + w / 2, yc + h / 2),
                     confidence=conf,
                     class_id=0,
                     class_name="motorcycle",
                 )
             )
 
-        # 2. Cars / Sedans: 3 to 5
-        num_cars = rng.integers(3, 6)
-        for _ in range(num_cars):
-            xc = rng.uniform(0.20, 0.80)
-            yc = rng.uniform(0.45, 0.65)
-            w = rng.uniform(0.14, 0.19)
-            h = rng.uniform(0.12, 0.17)
-            conf = rng.uniform(0.80, 0.98)
+        # 2. Cars / Sedans: 4
+        for i in range(4):
+            xc_base = 0.22 + i * 0.18
+            yc_base = 0.45 + (i % 2) * 0.08
+            yc = (yc_base + frame_idx * 0.008) % 0.90
+            w = 0.16
+            h = 0.14
+            conf = 0.88 + float(rng.uniform(0.0, 0.08))
             dets.append(
                 Detection(
-                    bbox=(xc - w / 2, yc - h / 2, xc + w / 2, yc + h / 2),
+                    bbox=(xc_base - w / 2, yc - h / 2, xc_base + w / 2, yc + h / 2),
                     confidence=conf,
                     class_id=1,
                     class_name="car",
                 )
             )
 
-        # 3. SUV: 1 to 3
-        num_suvs = rng.integers(1, 4)
-        for _ in range(num_suvs):
-            xc = rng.uniform(0.15, 0.85)
-            yc = rng.uniform(0.40, 0.60)
-            w = rng.uniform(0.16, 0.22)
-            h = rng.uniform(0.14, 0.20)
-            conf = rng.uniform(0.78, 0.95)
+        # 3. SUV: 2
+        for i in range(2):
+            xc_base = 0.28 + i * 0.35
+            yc_base = 0.35 + i * 0.05
+            yc = (yc_base + frame_idx * 0.007) % 0.90
+            w = 0.18
+            h = 0.16
+            conf = 0.85
             dets.append(
                 Detection(
-                    bbox=(xc - w / 2, yc - h / 2, xc + w / 2, yc + h / 2),
+                    bbox=(xc_base - w / 2, yc - h / 2, xc_base + w / 2, yc + h / 2),
                     confidence=conf,
                     class_id=2,
                     class_name="suv",
                 )
             )
 
-        # 4. Bus or Truck: 1 each occasionally
-        if rng.random() > 0.4:
-            dets.append(
-                Detection(
-                    bbox=(0.10, 0.40, 0.32, 0.68),
-                    confidence=0.88,
-                    class_id=3,
-                    class_name="bus",
-                )
-            )
-        if rng.random() > 0.5:
-            dets.append(
-                Detection(
-                    bbox=(0.68, 0.38, 0.90, 0.66),
-                    confidence=0.86,
-                    class_id=4,
-                    class_name="truck",
-                )
-            )
-
-        # 5. AMB-339 Priority Emergency Ambulance: on corridor approach
+        # 4. Bus & Truck
+        yc_bus = (0.30 + frame_idx * 0.004) % 0.90
         dets.append(
             Detection(
-                bbox=(0.42, 0.70, 0.62, 0.89),
+                bbox=(0.10, yc_bus, 0.32, min(0.99, yc_bus + 0.28)),
+                confidence=0.88,
+                class_id=3,
+                class_name="bus",
+            )
+        )
+        yc_truck = (0.25 + frame_idx * 0.005) % 0.90
+        dets.append(
+            Detection(
+                bbox=(0.68, yc_truck, 0.90, min(0.99, yc_truck + 0.26)),
+                confidence=0.86,
+                class_id=4,
+                class_name="truck",
+            )
+        )
+
+        # 5. AMB-339 Priority Emergency Ambulance
+        yc_amb = (0.60 + frame_idx * 0.012) % 0.90
+        dets.append(
+            Detection(
+                bbox=(0.42, yc_amb, 0.62, min(0.99, yc_amb + 0.19)),
                 confidence=0.94,
                 class_id=5,
                 class_name="ambulance",

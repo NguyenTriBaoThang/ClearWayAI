@@ -25,4 +25,3 @@ __all__ = [
     "evaluate_detections",
     "evaluate_map_range",
 ]
-

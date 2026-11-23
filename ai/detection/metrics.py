@@ -228,4 +228,3 @@ def evaluate_map_range(
         maps.append(res["map_50"])
 
     return round(float(np.mean(maps)), 4)
-
