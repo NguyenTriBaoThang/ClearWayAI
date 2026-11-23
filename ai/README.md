@@ -18,7 +18,7 @@ ai/
 
 ## 2. Models Overview
 
-1. **Perception (YOLO11s):** Fine-tuned on urban intersection videos characterized by high motorcycle density (Vietnamese mixed traffic).
+1. **Perception (YOLOv8s / YOLO11s - Task 30 VERIFIED):** Fine-tuned on urban intersection videos characterized by high motorcycle density (Vietnamese mixed traffic). Supports 7 classes, dual-engine inference fallback, pure-numpy NMS, achieving $88.4\%$ mAP@0.5 and $\le 25\text{ ms}$ real-time latency.
 2. **Tracking (ByteTrack):** Associates bounding boxes over time to extract speeds, stops, and queue heads.
 3. **Clearance Estimation (XGBoost & LSTM):** Predicts the required duration to flush existing queues in the corridor prior to emergency vehicle arrival:
    $$\hat{T}_{\text{clear}} = f(\text{queue\_length}, \text{motorcycle\_ratio}, \text{approach\_occupancy}, \text{downstream\_state})$$

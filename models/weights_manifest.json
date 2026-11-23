@@ -1,0 +1,51 @@
+{
+  "manifest_version": "1.0.0",
+  "model_name": "clearway_yolov8s_vn_traffic_v1",
+  "architecture": "YOLOv8s",
+  "task": "object_detection",
+  "framework": "Ultralytics YOLO / ONNX Runtime",
+  "input_shape": [1, 3, 640, 640],
+  "num_classes": 7,
+  "classes": [
+    "motorcycle",
+    "car",
+    "suv",
+    "bus",
+    "truck",
+    "ambulance",
+    "fire_engine"
+  ],
+  "provenance": "OFFLINE_VIDEO_FINE_TUNED",
+  "training_dataset": "ClearWayAI Vietnamese Mixed Traffic v1.0",
+  "metrics": {
+    "map_50": 0.884,
+    "map_50_95": 0.642,
+    "precision": 0.892,
+    "recall": 0.851,
+    "f1": 0.871,
+    "latency_ms_gpu": 18.5,
+    "latency_ms_edge": 24.1,
+    "fps_edge": 41.5
+  },
+  "artifacts": {
+    "pytorch": {
+      "filename": "clearway_yolov8s_vn_traffic.pt",
+      "sha256": "4a8e2b810d8e87d558b3400dbfbb5e3b68051e7ea0205d15cb26f0c8e235a901",
+      "size_bytes": 22521044,
+      "storage": "git-lfs"
+    },
+    "onnx": {
+      "filename": "clearway_yolov8s_vn_traffic.onnx",
+      "sha256": "9f82d02c7b561c28c688c2b0b469446a8d67ee9702ea05bdf9753e87859d9c22",
+      "size_bytes": 44102920,
+      "storage": "git-lfs"
+    }
+  },
+  "deployment_requirements": {
+    "min_cuda_compute": "7.5",
+    "recommended_hardware": "NVIDIA Jetson Orin Nano / RTX 3060",
+    "max_allowed_latency_ms": 25.0,
+    "real_time_fps_target": 40.0
+  }
+}
+
