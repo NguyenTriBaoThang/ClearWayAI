@@ -1,7 +1,7 @@
 """ClearWayAI Coordination & Safety Controller Package (`controller`).
 
 Implements multi-intersection corridor coordination, emergency vehicle pre-clearance,
-ETA estimation, signal phase scheduling, and independent safety gating.
+ETA estimation, signal phase scheduling, post-clearance recovery, and independent safety gating.
 """
 
 from controller.mission.emergency_mission import (
@@ -14,6 +14,13 @@ from controller.mission.eta_estimator import (
     MultiNodeETAEvaluator,
     MultiNodeETAReport,
     NodeETAResult,
+)
+from controller.recovery.recovery_controller import (
+    CorridorRecoveryReport,
+    NodeRecoveryStatus,
+    PostClearanceRecoveryController,
+    RecoveryConfig,
+    RecoveryState,
 )
 from controller.scheduler.corridor_coordinator import (
     CorridorCoordinationReport,
@@ -35,6 +42,7 @@ __all__ = [
     "CorridorCoordinationStatus",
     "CorridorCoordinatorConfig",
     "CorridorPreclearancePlan",
+    "CorridorRecoveryReport",
     "EmergencyMission",
     "EmergencyMissionManager",
     "EmergencyVehicleType",
@@ -44,8 +52,12 @@ __all__ = [
     "MultiNodeETAReport",
     "NodeCoordinationSchedule",
     "NodeETAResult",
+    "NodeRecoveryStatus",
+    "PostClearanceRecoveryController",
     "PreclearanceConfig",
     "PreclearanceController",
     "PreclearanceDecision",
     "PreclearanceState",
+    "RecoveryConfig",
+    "RecoveryState",
 ]

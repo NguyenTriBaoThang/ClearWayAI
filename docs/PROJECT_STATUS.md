@@ -76,7 +76,7 @@
 | **T37** | Mô phỏng nhiệm vụ xe ưu tiên và tính ETA nhiều nút | P0 | T21, T25–T26 | **VERIFIED** | EmergencyMissionManager (lifecycle state machine PENDING -> DISPATCHED -> APPROACHING -> CORRIDOR_TRANSIT -> ARRIVED), MultiNodeETAEvaluator (kinematic acceleration, traffic drag, weather friction), Nodes A–D & Hospital ETAs, sub-millisecond latency (<0.5ms), pytest (243/243) |
 | **T38** | Lập thuật toán pre-clearance dựa ETA & clearance prediction | P0 | T27, T36–T37 | **VERIFIED** | PreclearanceController (JIT delta trigger formula, deterministic state machine, 60s anti-starvation watchdog, multi-tier fallback integration), latency < 2ms, pytest |
 | **T39** | Điều phối trước nhiều nút giao trên hành lang A–D | P0 | T37, T38 | **VERIFIED** | MovingHorizonCorridorCoordinator (moving horizon window, cascading wave offsets, queue spillback detection & pre-emptive flushing, tail recovery handoff), sub-50ms latency, pytest |
-| **T40** | Recovery controller sau khi xe ưu tiên qua | P0 | T39 | **PLANNED** | Scheduled |
+| **T40** | Recovery controller sau khi xe ưu tiên qua | P0 | T39 | **VERIFIED** | PostClearanceRecoveryController (cross-street green debt formula, 3-cycle smooth amortization, master clock offset resync, 180s watchdog), latency < 5ms, pytest |
 | **T41** | Bộ kiểm tra tín hiệu và fail-safe độc lập | P0 | T21, T38–T40 | **PLANNED** | Scheduled |
 
 ### Phase G — Full-Stack Backend & Integration (Tasks 42–45)
@@ -117,6 +117,6 @@
 ---
 
 ## 3. Current Sprint Focus
-- **Current Milestone:** TASK 01–39 Complete & Verified (Phase A: 6/6, Phase B: 16/16, Phase C: 5/5, Phase D: 5/5, Phase E: 4/4 ALL 100% COMPLETE!, Phase F: 3/5 — Total 39/60 tasks verified = 65.0% of master plan).
-- **Next Dependent Task:** TASK 40 — Recovery controller sau khi xe ưu tiên qua (Phase F: Coordination & Safety Controller).
+- **Current Milestone:** TASK 01–40 Complete & Verified (Phase A: 6/6, Phase B: 16/16, Phase C: 5/5, Phase D: 5/5, Phase E: 4/4 ALL 100% COMPLETE!, Phase F: 4/5 — Total 40/60 tasks verified = 66.7% of master plan).
+- **Next Dependent Task:** TASK 41 — Bộ kiểm tra tín hiệu và fail-safe độc lập (Phase F: Coordination & Safety Controller).
 

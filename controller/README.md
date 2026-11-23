@@ -9,7 +9,7 @@ Contains the core moving-horizon multi-intersection corridor coordinator and the
 ```
 controller/
 ├── mission/                # Emergency Mission lifecycle manager & Multi-Node ETA estimator (Task 37)
-├── safety/                 # Deterministic Signal Safety Gateway & Conflict Matrices
+├── safety/                 # Deterministic Signal Safety Gateway & Conflict Matrices (Task 41)
 ├── scheduler/              # Moving-horizon multi-node pre-clearance scheduler & corridor coordinator (Tasks 38 & 39)
 ├── recovery/               # Post-transit smooth recovery state machine (Task 40)
 └── README.md
@@ -82,7 +82,25 @@ Managed via `controller/scheduler/corridor_coordinator.py`:
 
 ---
 
-## 5. Signal Safety Gateway Invariants
+## 5. Post-Clearance Smooth Recovery State Machine (Task 40 VERIFIED)
+
+Managed via `controller/recovery/recovery_controller.py`:
+- **Green Debt Formulation:**
+  $$G_{\text{debt}} = \min\left(36.0\text{s}, T_{\text{preempt}} \times \frac{G_{\text{cross}}}{C} + \frac{L_{\text{queue}}}{v_{\text{sat}}}\right)$$
+  - Quantifies unserved cross-street vehicle demand accumulated during priority preemption hold.
+- **Multi-Cycle Amortization (Anti-Shock Recovery):**
+  - Spreads green debt repayment over $N_{\text{cycles}} = 3$ cycles:
+    $$\Delta g_{\text{bonus}}^{(c)} = \min\left(12.0\text{s}, \frac{G_{\text{debt\_remaining}}}{N_{\text{cycles}} - c + 1}\right)$$
+  - Enforces safety split bounds: Arterial green floor $G_{\text{art\_min}} \ge 15.0\text{s}$, Cross green cap $G_{\text{cross\_max}} \le 45.0\text{s}$.
+- **Master Clock Offset Resynchronization:**
+  - Re-aligns local cycle offset with corridor master clock ($\delta\phi \le 1.5\text{s}$) to smoothly restore multi-intersection green waves.
+- **Deterministic State Machine:**
+  `INACTIVE` $\to$ `HANDOFF` $\to$ `COMPENSATING` $\to$ `RESYNCHRONIZING` $\to$ `EQUILIBRIUM_RESTORED`.
+- **Fail-Safe Watchdog:** Maximum recovery ceiling $180.0\text{s}$ forces equilibrium if unexpected disruptions occur.
+
+---
+
+## 6. Signal Safety Gateway Invariants
 
 The Safety Gateway intercepts all proposed phase plans:
 1. **Green Conflict Matrix:** Prevents conflicting traffic movements from showing Green at the same time.

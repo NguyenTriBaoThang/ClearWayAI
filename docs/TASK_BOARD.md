@@ -8,15 +8,15 @@
 
 ## 📊 Sprint Progress Overview
 - **Total Tasks:** 60
-- **Verified Complete:** 39 (T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39)
+- **Verified Complete:** 40 (T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40)
 - **In Progress:** 0
-- **Planned:** 21
-- **Phase Completion:** Phase A (6/6 complete - 100% COMPLETE!), Phase B (16/16 complete - 100% COMPLETE!), Phase C (5/5 complete - 100% COMPLETE!), Phase D (5/5 complete - 100% COMPLETE!), Phase E (4/4 complete - 100% COMPLETE!), Phase F (3/5 complete - 60%)
+- **Planned:** 20
+- **Phase Completion:** Phase A (6/6 complete - 100% COMPLETE!), Phase B (16/16 complete - 100% COMPLETE!), Phase C (5/5 complete - 100% COMPLETE!), Phase D (5/5 complete - 100% COMPLETE!), Phase E (4/4 complete - 100% COMPLETE!), Phase F (4/5 complete - 80%)
 
 ```mermaid
 pie title Task Completion by Status
-    "VERIFIED" : 39
-    "PLANNED" : 21
+    "VERIFIED" : 40
+    "PLANNED" : 20
 ```
 
 ---
@@ -64,7 +64,7 @@ pie title Task Completion by Status
 | **T37** | Phase F | Mô phỏng nhiệm vụ xe ưu tiên và tính ETA nhiều nút | **P0** | T21, T25–T26 | **VERIFIED** | EmergencyMissionManager (lifecycle state machine PENDING -> DISPATCHED -> APPROACHING -> CORRIDOR_TRANSIT -> ARRIVED), MultiNodeETAEvaluator (kinematic acceleration, traffic drag, weather friction), Nodes A–D & Hospital ETAs, sub-millisecond latency (<0.5ms), pytest (243/243) |
 | **T38** | Phase F | Lập thuật toán pre-clearance dựa ETA & clearance prediction | **P0** | T27, T36–T37 | **VERIFIED** | PreclearanceController (JIT delta trigger, deterministic state machine MONITORING->ARMED->TRANSITIONING->HOLDING_GREEN->EV_PASSING->CLEARED), anti-starvation 60s watchdog, sub-2ms latency |
 | **T39** | Phase F | Điều phối trước nhiều nút giao trên hành lang A–D | **P0** | T37, T38 | **VERIFIED** | MovingHorizonCorridorCoordinator (750m spatial / 45s temporal moving horizon, cascading green-wave offsets, queue spillback pre-emptive flushing, tail clearance release), pytest (7/7) |
-| **T40** | Phase F | Recovery controller sau khi xe ưu tiên qua | **P0** | T39 | `PLANNED` | Post-clearance smooth recovery state machine |
+| **T40** | Phase F | Recovery controller sau khi xe ưu tiên qua | **P0** | T39 | **VERIFIED** | PostClearanceRecoveryController (cross-street green debt calculation, 3-cycle smooth amortization, master clock offset resync, 180s watchdog), pytest (8/8) |
 | **T41** | Phase F | Bộ kiểm tra tín hiệu và fail-safe độc lập | **P0** | T21, T38–T40 | `PLANNED` | Independent Signal Safety Gateway |
 | **T42** | Phase G | Backend FastAPI, database và API contracts | **P0** | T21, T26, T36–T41 | `PLANNED` | Full FastAPI endpoints, SQLite/Postgres schemas |
 | **T43** | Phase G | Realtime event stream WebSocket, snapshots và replay | **P0** | T26, T42 | `PLANNED` | WebSocket stream /ws/simulations/{id} |
