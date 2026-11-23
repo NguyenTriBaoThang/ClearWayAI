@@ -68,7 +68,7 @@
 | **T33** | Định nghĩa clearance time và sinh label thực nghiệm | P0 | T24–T27, T32 | **VERIFIED** | CLEARANCE_TIME_SPEC.md (T_clear formulation, shockwave discharge), QueueDischargeSimulator, clearance_ground_truth.csv (600 episodes), ClearanceFeaturePipeline, pytest (211/211) |
 | **T34** | Train baseline Linear/RandomForest/XGBoost dự báo clearance | P0 | T33 | **VERIFIED** | GradientBoosting (Test MAE=1.202s, R²=0.985, latency=0.54ms), RandomForest, Ridge, ClearancePredictor, pytest (216/216) |
 | **T35** | Train LSTM/GRU dự báo clearance từ chuỗi trạng thái | P0 | T33, T34 | **VERIFIED** | ClearanceLSTM & ClearanceGRU (vectorized BPTT & Adam), 720 sliding windows (K=5), zero-leakage node split (Train A&B, Val C, Test D), ClearanceGRU Test MAE=4.73s, R²=0.828, latency=0.78ms, SequencePredictor, pytest (224/224) |
-| **T36** | Model Registry, chọn model thắng và fallback khi AI kém tin cậy | P0 | T34, T35 | **PLANNED** | Scheduled |
+| **T36** | Model Registry, chọn model thắng và fallback khi AI kém tin cậy | P0 | T34, T35 | **VERIFIED** | ClearanceModelRegistry, dynamic champion selection (gradient_boosting / clearance_gru), multi-tier fail-safe (Tier 1 Kinematic Shockwave, Tier 2 Conservative Safe 25s), model_registry_manifest.json, UnifiedClearancePredictor, pytest (233/233) — Phase E 100% COMPLETE! |
 
 ### Phase F — Coordination & Safety Controller (Tasks 37–41)
 | Task ID | Task Description | Priority | Dependencies | Status | Verification Proof |
@@ -117,6 +117,6 @@
 ---
 
 ## 3. Current Sprint Focus
-- **Current Milestone:** TASK 01–35 Complete & Verified (Phase A: 6/6, Phase B: 16/16, Phase C: 5/5, Phase D: 5/5 COMPLETE, Phase E: 3/4 — Total 35/60 tasks verified = 58.3%).
-- **Next Dependent Task:** TASK 36 — Model Registry, chọn model thắng và fallback khi AI kém tin cậy (Phase E).
+- **Current Milestone:** TASK 01–36 Complete & Verified (Phase A: 6/6, Phase B: 16/16, Phase C: 5/5, Phase D: 5/5, Phase E: 4/4 ALL 100% COMPLETE! — Total 36/60 tasks verified = 60.0% of master plan).
+- **Next Dependent Task:** TASK 37 — Mô phỏng nhiệm vụ xe ưu tiên và tính ETA nhiều nút (Phase F: Coordination & Safety Controller).
 

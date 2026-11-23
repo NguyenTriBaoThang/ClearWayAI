@@ -1,0 +1,102 @@
+{
+  "registry_version": "1.0.0",
+  "last_updated": "2026-11-23T03:22:37Z",
+  "champion_models": {
+    "tabular": "gradient_boosting",
+    "sequential": "clearance_gru"
+  },
+  "models": {
+    "gradient_boosting": {
+      "name": "gradient_boosting",
+      "role": "CHAMPION",
+      "model_type": "tabular",
+      "filename": "gradient_boosting.joblib",
+      "sha256": "cff16acd2a6cbc629e820707cf9e725a41aaa836093ba399be87ad4de981ed67",
+      "size_bytes": 504249,
+      "val_mae": 1.062,
+      "test_mae": 1.202,
+      "test_rmse": 1.997,
+      "test_r2": 0.985,
+      "latency_ms": 0.542,
+      "provenance": "CLEARANCE_TABULAR_MODEL",
+      "description": "Gradient Boosting Regressor (Tabular Champion for single-cycle snapshots)."
+    },
+    "random_forest": {
+      "name": "random_forest",
+      "role": "CHALLENGER",
+      "model_type": "tabular",
+      "filename": "random_forest.joblib",
+      "sha256": "6c328917dccc9c0ef1097f072a1edc4cfec49e05cd85ba0424f3e6b7e4b02400",
+      "size_bytes": 1288828,
+      "val_mae": 1.213,
+      "test_mae": 1.415,
+      "test_rmse": 2.344,
+      "test_r2": 0.9794,
+      "latency_ms": 14.58,
+      "provenance": "CLEARANCE_TABULAR_MODEL",
+      "description": "Random Forest Regressor (Non-linear ensemble challenger)."
+    },
+    "linear_regression": {
+      "name": "linear_regression",
+      "role": "CHALLENGER",
+      "model_type": "tabular",
+      "filename": "linear_regression.joblib",
+      "sha256": "cb10f8afb574da3e695cdb33d6e55add713e1ba670483e759a6a622f453b94ed",
+      "size_bytes": 1618,
+      "val_mae": 2.528,
+      "test_mae": 2.42,
+      "test_rmse": 3.722,
+      "test_r2": 0.948,
+      "latency_ms": 0.105,
+      "provenance": "CLEARANCE_TABULAR_MODEL",
+      "description": "Ridge Regularized Linear Regression baseline."
+    },
+    "clearance_gru": {
+      "name": "clearance_gru",
+      "role": "CHAMPION",
+      "model_type": "sequential",
+      "filename": "clearance_gru.npz",
+      "sha256": "9d1aa9f901be233051d77e3f13775da855e9c278c55ec5e0a5f2610fc1f7f473",
+      "size_bytes": 15919,
+      "val_mae": 5.168,
+      "test_mae": 4.733,
+      "test_rmse": 8.755,
+      "test_r2": 0.828,
+      "latency_ms": 0.778,
+      "provenance": "CLEARANCE_SEQUENCE_MODEL",
+      "description": "Gated Recurrent Unit Regressor (Sequential Champion for sliding window histories)."
+    },
+    "clearance_lstm": {
+      "name": "clearance_lstm",
+      "role": "CHALLENGER",
+      "model_type": "sequential",
+      "filename": "clearance_lstm.npz",
+      "sha256": "949120b194c2fde6e71ad5f44f2bad063544e5644d6b280d6111cdd67c59ccda",
+      "size_bytes": 18837,
+      "val_mae": 6.556,
+      "test_mae": 5.276,
+      "test_rmse": 10.054,
+      "test_r2": 0.7732,
+      "latency_ms": 0.679,
+      "provenance": "CLEARANCE_SEQUENCE_MODEL",
+      "description": "Long Short-Term Memory Regressor (Sequential challenger)."
+    }
+  },
+  "fallback_hierarchy": [
+    {
+      "tier": 0,
+      "name": "AI Inference",
+      "conditions": "Valid input within training domain, confidence >= 0.60, no exceptions"
+    },
+    {
+      "tier": 1,
+      "name": "Kinematic Physical Shockwave Discharge",
+      "conditions": "AI model fails, anomaly detected, or low confidence"
+    },
+    {
+      "tier": 2,
+      "name": "Conservative Static Default Safe Clearance",
+      "conditions": "Sensors offline or critical parameters missing/corrupted"
+    }
+  ]
+}

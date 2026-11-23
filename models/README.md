@@ -53,6 +53,17 @@ Trained on 720 sliding window sequences ($K=5$ history steps) from 120 rollouts 
 | **ClearanceLSTM** | Sequence LSTM | 6.556 s | 5.276 s | 10.054 s | 0.7732 | 0.679 ms | Real-Time Sequence |
 | *Gradient Boosting (Ref)* | Tabular Baseline | 1.062 s | 1.202 s | 1.997 s | 0.9850 | 0.542 ms | Pure Static Baseline |
 
+### 3.3 Clearance Model Registry & Multi-Tier Fallbacks (Task 36 VERIFIED)
+Managed via `ai/clearance/model_registry.py` with catalog stored at `models/clearance/model_registry_manifest.json`:
+
+- **Dynamic Champion Routing:**
+  - Sequence buffer $\ge 5$ observations $\to$ **`clearance_gru`** (Sequential Champion).
+  - Single instantaneous snapshot $\to$ **`gradient_boosting`** (Tabular Champion).
+- **Multi-Tier Fail-Safe Hierarchy:**
+  - **Tier 0 (AI Inference):** Normal AI execution with input domain verification and output anomaly audit.
+  - **Tier 1 (Kinematic Physical Fallback):** LWR shockwave discharge physics formula (`QueueDischargeSimulator`) triggered on low confidence ($< 0.60$), domain violation, or AI exception.
+  - **Tier 2 (Conservative Default Fallback):** Safe fail-safe static constant ($25.0\text{ s}$) triggered on missing/corrupted inputs.
+
 ---
 
 ## 4. Registry Policies

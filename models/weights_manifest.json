@@ -46,6 +46,60 @@
     "recommended_hardware": "NVIDIA Jetson Orin Nano / RTX 3060",
     "max_allowed_latency_ms": 25.0,
     "real_time_fps_target": 40.0
+  },
+  "clearance_models": {
+    "registry_catalog": "models/clearance/model_registry_manifest.json",
+    "champion_tabular": {
+      "name": "gradient_boosting",
+      "filename": "gradient_boosting.joblib",
+      "sha256": "cff16acd2a6cbc629e820707cf9e725a41aaa836093ba399be87ad4de981ed67",
+      "size_bytes": 504249,
+      "test_mae_sec": 1.202,
+      "test_r2": 0.9850,
+      "latency_ms": 0.542
+    },
+    "champion_sequential": {
+      "name": "clearance_gru",
+      "filename": "clearance_gru.npz",
+      "sha256": "9d1aa9f901be233051d77e3f13775da855e9c278c55ec5e0a5f2610fc1f7f473",
+      "size_bytes": 15919,
+      "test_mae_sec": 4.733,
+      "test_r2": 0.8280,
+      "latency_ms": 0.778
+    },
+    "challengers": [
+      {
+        "name": "clearance_lstm",
+        "filename": "clearance_lstm.npz",
+        "sha256": "949120b194c2fde6e71ad5f44f2bad063544e5644d6b280d6111cdd67c59ccda",
+        "size_bytes": 18837,
+        "test_mae_sec": 5.276,
+        "test_r2": 0.7732,
+        "latency_ms": 0.679
+      },
+      {
+        "name": "random_forest",
+        "filename": "random_forest.joblib",
+        "sha256": "6c328917dccc9c0ef1097f072a1edc4cfec49e05cd85ba0424f3e6b7e4b02400",
+        "size_bytes": 1288828,
+        "test_mae_sec": 1.415,
+        "test_r2": 0.9794,
+        "latency_ms": 14.58
+      },
+      {
+        "name": "linear_regression",
+        "filename": "linear_regression.joblib",
+        "sha256": "cb10f8afb574da3e695cdb33d6e55add713e1ba670483e759a6a622f453b94ed",
+        "size_bytes": 1618,
+        "test_mae_sec": 2.420,
+        "test_r2": 0.9480,
+        "latency_ms": 0.105
+      }
+    ],
+    "fallback_safeguards": {
+      "tier_1_kinematic": "Webster & Shockwave discharge simulator",
+      "tier_2_conservative_default_sec": 25.0
+    }
   }
 }
 
