@@ -48,6 +48,7 @@ class SyntheticCorridorEngine:
         # 70-72s: All-Red (Phase 5)
         self.cycle_time: float = 72.0
         self.current_phase: int = 0
+        self.override_phase: int | None = None
         self.preemption_active: bool = False
 
     def _load_routes(self):
@@ -76,19 +77,22 @@ class SyntheticCorridorEngine:
         self.sim_time += dt
 
         # 1. Update Signal Phases
-        cycle_pos = self.sim_time % self.cycle_time
-        if cycle_pos < 35.0:
-            self.current_phase = 0
-        elif cycle_pos < 39.0:
-            self.current_phase = 1
-        elif cycle_pos < 41.0:
-            self.current_phase = 2
-        elif cycle_pos < 66.0:
-            self.current_phase = 3
-        elif cycle_pos < 70.0:
-            self.current_phase = 4
+        if self.override_phase is not None:
+            self.current_phase = self.override_phase
         else:
-            self.current_phase = 5
+            cycle_pos = self.sim_time % self.cycle_time
+            if cycle_pos < 35.0:
+                self.current_phase = 0
+            elif cycle_pos < 39.0:
+                self.current_phase = 1
+            elif cycle_pos < 41.0:
+                self.current_phase = 2
+            elif cycle_pos < 66.0:
+                self.current_phase = 3
+            elif cycle_pos < 70.0:
+                self.current_phase = 4
+            else:
+                self.current_phase = 5
 
         # 2. Spawn Vehicles whose departure time has arrived
         while self.planned_vehicles and self.planned_vehicles[0]["depart"] <= self.sim_time:

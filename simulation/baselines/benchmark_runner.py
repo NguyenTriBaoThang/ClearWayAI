@@ -70,7 +70,9 @@ class BenchmarkRunner:
             phases = controller.step(sim_time=t, active_vehicles=active_vehs, dt=self.dt)
 
             # Apply phase to simulation engine (Node C primary)
-            mgr.engine.current_phase = phases.get("node_c", 0)
+            phase_c = phases.get("node_c", 0)
+            mgr.engine.override_phase = phase_c
+            mgr.engine.current_phase = phase_c
             is_preempted = getattr(controller, "is_corridor_preempted", False) or (
                 len(getattr(controller, "preempted_nodes", set())) > 0
             )
