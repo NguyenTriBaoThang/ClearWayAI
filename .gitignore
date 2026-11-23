@@ -48,6 +48,7 @@ lerna-debug.log*
 .eslintcache
 *.tsbuildinfo
 apps/web/dist/
+simulation/traci/logs/*.jsonl
 docs-site/dist/
 
 # Large Model Weights and Checkpoints (Use Git LFS or external bucket)
