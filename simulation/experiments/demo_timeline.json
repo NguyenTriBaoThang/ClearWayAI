@@ -1,0 +1,2513 @@
+{
+  "title": "ClearWayAI Master Demonstration Timeline",
+  "total_events": 40,
+  "generated_at": 1795454857.424638,
+  "execution_wall_time_sec": 0.006,
+  "scenarios": {
+    "nominal": {
+      "scenario": "NOMINAL_COORDINATION",
+      "duration_sec": 30.0,
+      "final_kpi": {
+        "avg_delay_sec": 24.8,
+        "delay_reduction_pct": 42.6
+      },
+      "status": "SUCCESS"
+    },
+    "emergency": {
+      "scenario": "EMERGENCY_CORRIDOR",
+      "ev_id": "AMB-339",
+      "travel_time_sec": 58.0,
+      "emergency_stops": 0,
+      "status": "SUCCESS"
+    },
+    "recovery": {
+      "scenario": "RECOVERY_COMPENSATION",
+      "duration_sec": 25.0,
+      "final_state": "RECOVERING",
+      "status": "SUCCESS"
+    }
+  },
+  "events": [
+    {
+      "sim_time_sec": 5.0,
+      "scenario": "NOMINAL_COORDINATION",
+      "phase_name": "STANDBY",
+      "active_ev_id": null,
+      "ev_position_m": null,
+      "ev_speed_kmh": null,
+      "corridor_kpi": {
+        "avg_delay_sec": 24.8,
+        "avg_stops_per_veh": 0.48,
+        "throughput_vph": 1840.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "NOMINAL",
+        "node_d": "NOMINAL"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": false,
+        "packet_seq": 1,
+        "total_frames": 1,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "Moving-horizon coordinator maintains continuous green progression across Nodes A-D."
+    },
+    {
+      "sim_time_sec": 10.0,
+      "scenario": "NOMINAL_COORDINATION",
+      "phase_name": "STANDBY",
+      "active_ev_id": null,
+      "ev_position_m": null,
+      "ev_speed_kmh": null,
+      "corridor_kpi": {
+        "avg_delay_sec": 24.8,
+        "avg_stops_per_veh": 0.48,
+        "throughput_vph": 1840.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "NOMINAL",
+        "node_d": "NOMINAL"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": false,
+        "packet_seq": 2,
+        "total_frames": 2,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "Moving-horizon coordinator maintains continuous green progression across Nodes A-D."
+    },
+    {
+      "sim_time_sec": 15.0,
+      "scenario": "NOMINAL_COORDINATION",
+      "phase_name": "STANDBY",
+      "active_ev_id": null,
+      "ev_position_m": null,
+      "ev_speed_kmh": null,
+      "corridor_kpi": {
+        "avg_delay_sec": 24.8,
+        "avg_stops_per_veh": 0.48,
+        "throughput_vph": 1840.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "NOMINAL",
+        "node_d": "NOMINAL"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": false,
+        "packet_seq": 3,
+        "total_frames": 3,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "Moving-horizon coordinator maintains continuous green progression across Nodes A-D."
+    },
+    {
+      "sim_time_sec": 20.0,
+      "scenario": "NOMINAL_COORDINATION",
+      "phase_name": "STANDBY",
+      "active_ev_id": null,
+      "ev_position_m": null,
+      "ev_speed_kmh": null,
+      "corridor_kpi": {
+        "avg_delay_sec": 24.8,
+        "avg_stops_per_veh": 0.48,
+        "throughput_vph": 1840.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "NOMINAL",
+        "node_d": "NOMINAL"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": false,
+        "packet_seq": 4,
+        "total_frames": 4,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "Moving-horizon coordinator maintains continuous green progression across Nodes A-D."
+    },
+    {
+      "sim_time_sec": 25.0,
+      "scenario": "NOMINAL_COORDINATION",
+      "phase_name": "STANDBY",
+      "active_ev_id": null,
+      "ev_position_m": null,
+      "ev_speed_kmh": null,
+      "corridor_kpi": {
+        "avg_delay_sec": 24.8,
+        "avg_stops_per_veh": 0.48,
+        "throughput_vph": 1840.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "NOMINAL",
+        "node_d": "NOMINAL"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": false,
+        "packet_seq": 5,
+        "total_frames": 5,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "Moving-horizon coordinator maintains continuous green progression across Nodes A-D."
+    },
+    {
+      "sim_time_sec": 30.0,
+      "scenario": "NOMINAL_COORDINATION",
+      "phase_name": "STANDBY",
+      "active_ev_id": null,
+      "ev_position_m": null,
+      "ev_speed_kmh": null,
+      "corridor_kpi": {
+        "avg_delay_sec": 24.8,
+        "avg_stops_per_veh": 0.48,
+        "throughput_vph": 1840.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "NOMINAL",
+        "node_d": "NOMINAL"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": false,
+        "packet_seq": 6,
+        "total_frames": 6,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "Moving-horizon coordinator maintains continuous green progression across Nodes A-D."
+    },
+    {
+      "sim_time_sec": 32.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": -116.6,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 2.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "EMERGENCY_CORRIDOR",
+        "node_b": "PRE_CLEARANCE",
+        "node_c": "NOMINAL",
+        "node_d": "NOMINAL"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 7,
+        "total_frames": 7,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=-116.6m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 34.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": -83.2,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 4.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "EMERGENCY_CORRIDOR",
+        "node_b": "PRE_CLEARANCE",
+        "node_c": "NOMINAL",
+        "node_d": "NOMINAL"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 8,
+        "total_frames": 8,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=-83.2m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 36.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": -49.8,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 6.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "EMERGENCY_CORRIDOR",
+        "node_b": "PRE_CLEARANCE",
+        "node_c": "NOMINAL",
+        "node_d": "NOMINAL"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 9,
+        "total_frames": 9,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=-49.8m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 38.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": -16.4,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 8.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "EMERGENCY_CORRIDOR",
+        "node_b": "PRE_CLEARANCE",
+        "node_c": "NOMINAL",
+        "node_d": "NOMINAL"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 10,
+        "total_frames": 10,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=-16.4m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 40.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 17.0,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 10.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "CAUTION_RECOVERY",
+        "node_b": "PRE_CLEARANCE",
+        "node_c": "NOMINAL",
+        "node_d": "NOMINAL"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 11,
+        "total_frames": 11,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=17.0m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 42.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 50.4,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 12.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "CAUTION_RECOVERY",
+        "node_b": "PRE_CLEARANCE",
+        "node_c": "PRE_CLEARANCE",
+        "node_d": "NOMINAL"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 12,
+        "total_frames": 12,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=50.4m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 44.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 83.8,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 14.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "CAUTION_RECOVERY",
+        "node_b": "EMERGENCY_CORRIDOR",
+        "node_c": "PRE_CLEARANCE",
+        "node_d": "NOMINAL"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 13,
+        "total_frames": 13,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=83.8m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 46.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 117.2,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 16.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "CAUTION_RECOVERY",
+        "node_b": "EMERGENCY_CORRIDOR",
+        "node_c": "PRE_CLEARANCE",
+        "node_d": "NOMINAL"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 14,
+        "total_frames": 14,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=117.2m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 48.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 150.6,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 18.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "EMERGENCY_CORRIDOR",
+        "node_c": "PRE_CLEARANCE",
+        "node_d": "NOMINAL"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 15,
+        "total_frames": 15,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=150.6m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 50.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 184.0,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 20.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "EMERGENCY_CORRIDOR",
+        "node_c": "PRE_CLEARANCE",
+        "node_d": "NOMINAL"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 16,
+        "total_frames": 16,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=184.0m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 52.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 217.4,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 22.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "EMERGENCY_CORRIDOR",
+        "node_c": "PRE_CLEARANCE",
+        "node_d": "NOMINAL"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 17,
+        "total_frames": 17,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=217.4m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 54.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 250.8,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 24.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "EMERGENCY_CORRIDOR",
+        "node_c": "PRE_CLEARANCE",
+        "node_d": "NOMINAL"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 18,
+        "total_frames": 18,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=250.8m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 56.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 284.2,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 26.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "CAUTION_RECOVERY",
+        "node_c": "PRE_CLEARANCE",
+        "node_d": "NOMINAL"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 19,
+        "total_frames": 19,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=284.2m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 58.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 317.6,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 28.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "CAUTION_RECOVERY",
+        "node_c": "PRE_CLEARANCE",
+        "node_d": "PRE_CLEARANCE"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 20,
+        "total_frames": 20,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=317.6m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 60.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 351.0,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 30.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "CAUTION_RECOVERY",
+        "node_c": "EMERGENCY_CORRIDOR",
+        "node_d": "PRE_CLEARANCE"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 21,
+        "total_frames": 21,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=351.0m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 62.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 384.4,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 32.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "EMERGENCY_CORRIDOR",
+        "node_d": "PRE_CLEARANCE"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 22,
+        "total_frames": 22,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=384.4m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 64.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 417.8,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 34.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "EMERGENCY_CORRIDOR",
+        "node_d": "PRE_CLEARANCE"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 23,
+        "total_frames": 23,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=417.8m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 66.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 451.2,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 36.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "EMERGENCY_CORRIDOR",
+        "node_d": "PRE_CLEARANCE"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 24,
+        "total_frames": 24,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=451.2m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 68.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 484.6,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 38.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "EMERGENCY_CORRIDOR",
+        "node_d": "PRE_CLEARANCE"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 25,
+        "total_frames": 25,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=484.6m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 70.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 518.0,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 40.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "CAUTION_RECOVERY",
+        "node_d": "PRE_CLEARANCE"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 26,
+        "total_frames": 26,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=518.0m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 72.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 551.4,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 42.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "CAUTION_RECOVERY",
+        "node_d": "PRE_CLEARANCE"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 27,
+        "total_frames": 27,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=551.4m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 74.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 584.8,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 44.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "CAUTION_RECOVERY",
+        "node_d": "EMERGENCY_CORRIDOR"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 28,
+        "total_frames": 28,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=584.8m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 76.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 618.2,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 46.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "CAUTION_RECOVERY",
+        "node_d": "EMERGENCY_CORRIDOR"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 29,
+        "total_frames": 29,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=618.2m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 78.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 651.6,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 48.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "NOMINAL",
+        "node_d": "EMERGENCY_CORRIDOR"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 30,
+        "total_frames": 30,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=651.6m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 80.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 685.0,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 50.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "NOMINAL",
+        "node_d": "EMERGENCY_CORRIDOR"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 31,
+        "total_frames": 31,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=685.0m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 82.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 718.4,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 52.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "NOMINAL",
+        "node_d": "EMERGENCY_CORRIDOR"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 32,
+        "total_frames": 32,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=718.4m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 84.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 751.8,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 54.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "NOMINAL",
+        "node_d": "EMERGENCY_CORRIDOR"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 33,
+        "total_frames": 33,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=751.8m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 86.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 785.2,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 56.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "NOMINAL",
+        "node_d": "CAUTION_RECOVERY"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 34,
+        "total_frames": 34,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=785.2m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 88.0,
+      "scenario": "EMERGENCY_CORRIDOR",
+      "phase_name": "MONITORING",
+      "active_ev_id": "AMB-339",
+      "ev_position_m": 818.6,
+      "ev_speed_kmh": 60.1,
+      "corridor_kpi": {
+        "travel_time_sec": 58.0,
+        "emergency_stops": 0.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "NOMINAL",
+        "node_d": "CAUTION_RECOVERY"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": true,
+        "packet_seq": 35,
+        "total_frames": 35,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "GREEN",
+            "ns_color": "RED",
+            "ped_color": "RED",
+            "emergency_strobe": true
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "AMB-339 at x=818.6m. VMS advises drivers to yield right. Green corridor active."
+    },
+    {
+      "sim_time_sec": 95.0,
+      "scenario": "RECOVERY_COMPENSATION",
+      "phase_name": "RECOVERING",
+      "active_ev_id": null,
+      "ev_position_m": null,
+      "ev_speed_kmh": null,
+      "corridor_kpi": {
+        "cross_street_queue_flushed_pct": 85.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "NOMINAL",
+        "node_d": "NOMINAL"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": false,
+        "packet_seq": 36,
+        "total_frames": 36,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "RED",
+            "ns_color": "GREEN",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "RED",
+            "ns_color": "GREEN",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "RED",
+            "ns_color": "GREEN",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "RED",
+            "ns_color": "GREEN",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "Recovery controller allocates extra green time to flush cross-street waiting queues."
+    },
+    {
+      "sim_time_sec": 100.0,
+      "scenario": "RECOVERY_COMPENSATION",
+      "phase_name": "RECOVERING",
+      "active_ev_id": null,
+      "ev_position_m": null,
+      "ev_speed_kmh": null,
+      "corridor_kpi": {
+        "cross_street_queue_flushed_pct": 85.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "NOMINAL",
+        "node_d": "NOMINAL"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": false,
+        "packet_seq": 37,
+        "total_frames": 37,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "RED",
+            "ns_color": "GREEN",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "RED",
+            "ns_color": "GREEN",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "RED",
+            "ns_color": "GREEN",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "RED",
+            "ns_color": "GREEN",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "Recovery controller allocates extra green time to flush cross-street waiting queues."
+    },
+    {
+      "sim_time_sec": 105.0,
+      "scenario": "RECOVERY_COMPENSATION",
+      "phase_name": "RECOVERING",
+      "active_ev_id": null,
+      "ev_position_m": null,
+      "ev_speed_kmh": null,
+      "corridor_kpi": {
+        "cross_street_queue_flushed_pct": 85.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "NOMINAL",
+        "node_d": "NOMINAL"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": false,
+        "packet_seq": 38,
+        "total_frames": 38,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "RED",
+            "ns_color": "GREEN",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "RED",
+            "ns_color": "GREEN",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "RED",
+            "ns_color": "GREEN",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "RED",
+            "ns_color": "GREEN",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "Recovery controller allocates extra green time to flush cross-street waiting queues."
+    },
+    {
+      "sim_time_sec": 110.0,
+      "scenario": "RECOVERY_COMPENSATION",
+      "phase_name": "RECOVERING",
+      "active_ev_id": null,
+      "ev_position_m": null,
+      "ev_speed_kmh": null,
+      "corridor_kpi": {
+        "cross_street_queue_flushed_pct": 85.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "NOMINAL",
+        "node_d": "NOMINAL"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": false,
+        "packet_seq": 39,
+        "total_frames": 39,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "RED",
+            "ns_color": "GREEN",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "RED",
+            "ns_color": "GREEN",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "RED",
+            "ns_color": "GREEN",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "RED",
+            "ns_color": "GREEN",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "Recovery controller allocates extra green time to flush cross-street waiting queues."
+    },
+    {
+      "sim_time_sec": 115.0,
+      "scenario": "RECOVERY_COMPENSATION",
+      "phase_name": "RECOVERING",
+      "active_ev_id": null,
+      "ev_position_m": null,
+      "ev_speed_kmh": null,
+      "corridor_kpi": {
+        "cross_street_queue_flushed_pct": 85.0
+      },
+      "vms_modes": {
+        "node_a": "NOMINAL",
+        "node_b": "NOMINAL",
+        "node_c": "NOMINAL",
+        "node_d": "NOMINAL"
+      },
+      "hardware_state": {
+        "mode": "SIMULATION",
+        "fault_code": "NONE",
+        "mmu_tripped": false,
+        "watchdog_age_sec": 0.0,
+        "watchdog_ok": true,
+        "emergency_strobe": false,
+        "packet_seq": 40,
+        "total_frames": 40,
+        "nodes": {
+          "node_a": {
+            "node_id": "node_a",
+            "ew_color": "RED",
+            "ns_color": "GREEN",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_b": {
+            "node_id": "node_b",
+            "ew_color": "RED",
+            "ns_color": "GREEN",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_c": {
+            "node_id": "node_c",
+            "ew_color": "RED",
+            "ns_color": "GREEN",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          },
+          "node_d": {
+            "node_id": "node_d",
+            "ew_color": "RED",
+            "ns_color": "GREEN",
+            "ped_color": "RED",
+            "emergency_strobe": false
+          }
+        },
+        "transport": "EMULATOR",
+        "port": "COM3",
+        "baudrate": 115200
+      },
+      "narrative": "Recovery controller allocates extra green time to flush cross-street waiting queues."
+    }
+  ]
+}
