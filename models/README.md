@@ -33,15 +33,25 @@ Fine-tuned on Vietnamese mixed traffic (Task 30) across 7 classes:
 
 ---
 
-## 3. Clearance Prediction Models (Task 34 VERIFIED)
+## 3. Clearance Prediction Models (Tasks 34 & 35 VERIFIED)
 
+### 3.1 Tabular Baseline Models (Task 34)
 Trained on 600 empirical episodes with strict node-based zero-leakage validation (Train: Nodes A & B, Val: Node C, Test: Node D):
 
 | Model | Test MAE | Test RMSE | Test $R^2$ | Inference Latency | Status |
 | :--- | :---: | :---: | :---: | :---: | :---: |
 | **Linear Regression (Ridge)** | 2.420 s | 3.722 s | 0.9480 | 0.105 ms | Baseline |
 | **Random Forest** | 1.415 s | 2.344 s | 0.9794 | 14.580 ms | Non-linear ensemble |
-| **Gradient Boosting** ★ | **1.202 s** | **1.997 s** | **0.9850** | **0.542 ms** | **Production Winner** |
+| **Gradient Boosting** ★ | **1.202 s** | **1.997 s** | **0.9850** | **0.542 ms** | **Production Tabular Winner** |
+
+### 3.2 Sequential Neural Models (Task 35)
+Trained on 720 sliding window sequences ($K=5$ history steps) from 120 rollouts across disjoint nodes:
+
+| Model | Type | Val MAE | Test MAE | Test RMSE | Test $R^2$ | Inference Latency | Status |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **ClearanceGRU** ★ | Sequence GRU | 5.168 s | 4.733 s | 8.755 s | 0.8280 | 0.778 ms | **Best Sequence Model** |
+| **ClearanceLSTM** | Sequence LSTM | 6.556 s | 5.276 s | 10.054 s | 0.7732 | 0.679 ms | Real-Time Sequence |
+| *Gradient Boosting (Ref)* | Tabular Baseline | 1.062 s | 1.202 s | 1.997 s | 0.9850 | 0.542 ms | Pure Static Baseline |
 
 ---
 

@@ -1,0 +1,42 @@
+{
+  "dataset_total_observations": 1200,
+  "total_sequences": 720,
+  "sequence_window_size": 5,
+  "feature_dim": 23,
+  "train_samples": 360,
+  "val_samples": 180,
+  "test_samples": 180,
+  "best_sequence_model": "clearance_gru",
+  "models": {
+    "gradient_boosting_tabular": {
+      "model_name": "gradient_boosting_tabular",
+      "model_type": "tabular_gradient_boosting",
+      "train_mae": 0.092,
+      "val_mae": 1.062,
+      "test_mae": 1.202,
+      "test_rmse": 1.997,
+      "test_r2": 0.985,
+      "latency_ms": 0.542
+    },
+    "clearance_lstm": {
+      "model_name": "clearance_lstm",
+      "model_type": "sequence_lstm",
+      "train_mae": 0.81,
+      "val_mae": 6.556,
+      "test_mae": 5.276,
+      "test_rmse": 10.054,
+      "test_r2": 0.7732,
+      "latency_ms": 0.679
+    },
+    "clearance_gru": {
+      "model_name": "clearance_gru",
+      "model_type": "sequence_gru",
+      "train_mae": 0.826,
+      "val_mae": 5.168,
+      "test_mae": 4.733,
+      "test_rmse": 8.755,
+      "test_r2": 0.828,
+      "latency_ms": 0.778
+    }
+  }
+}

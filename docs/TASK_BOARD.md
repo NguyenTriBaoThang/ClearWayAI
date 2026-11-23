@@ -59,7 +59,7 @@ pie title Task Completion by Status
 | **T32** | Phase D | Hiệu chỉnh camera và tính các chỉ số Traffic State | **P0** | T29, T31 | **VERIFIED** | Homography calibration, TrafficStateEstimator, 4 profiles, pytest (200/200) — Phase D 100% COMPLETE! |
 | **T33** | Phase E | Định nghĩa clearance time và sinh label thực nghiệm | **P0** | T24–T27, T32 | **VERIFIED** | CLEARANCE_TIME_SPEC.md, QueueDischargeSimulator, 600 episodes dataset, ClearanceFeaturePipeline, pytest (211/211) |
 | **T34** | Phase E | Train baseline Linear/RandomForest/XGBoost dự báo clearance | **P0** | T33 | **VERIFIED** | GradientBoosting (MAE=1.202s, R²=0.985), RandomForest, Ridge, pytest (216/216) |
-| **T35** | Phase E | Train LSTM/GRU dự báo clearance từ chuỗi trạng thái | **P0** | T33, T34 | `PLANNED` | PyTorch sequence clearance models |
+| **T35** | Phase E | Train LSTM/GRU dự báo clearance từ chuỗi trạng thái | **P0** | T33, T34 | **VERIFIED** | ClearanceLSTM & ClearanceGRU (vectorized BPTT & Adam), 720 sliding windows (K=5), zero-leakage node split (Train A&B, Val C, Test D), ClearanceGRU Test MAE=4.73s, R²=0.828, latency=0.78ms, SequencePredictor, pytest (224/224) |
 | **T36** | Phase E | Model Registry, chọn model thắng và fallback khi AI kém tin cậy | **P0** | T34, T35 | `PLANNED` | Model registry service, heuristic fallbacks |
 | **T37** | Phase F | Mô phỏng nhiệm vụ xe ưu tiên và tính ETA nhiều nút | **P0** | T21, T25–T26 | `PLANNED` | EmergencyMission manager, multi-node ETA service |
 | **T38** | Phase F | Lập thuật toán pre-clearance dựa ETA & clearance prediction | **P0** | T27, T36–T37 | `PLANNED` | ClearWay coordination state machine |

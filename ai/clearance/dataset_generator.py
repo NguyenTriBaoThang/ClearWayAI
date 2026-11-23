@@ -193,6 +193,105 @@ class QueueDischargeSimulator:
         df = pd.DataFrame(records)
         return df
 
+    def generate_rollout_episode(
+        self,
+        scenario_id: str,
+        node_id: str,
+        approach_id: str,
+        rollout_id: str,
+        num_steps: int = 10,
+        rng: np.random.Generator | None = None,
+    ) -> list[dict[str, Any]]:
+        """Simulate a time-series rollout of traffic state updates on an approach."""
+        if rng is None:
+            rng = np.random.default_rng()
+
+        init_ep = self.generate_episode(scenario_id, node_id, approach_id, rng)
+        weather = init_ep["weather"]
+        hour = init_ep["hour_of_day"]
+        q_len = init_ep["queue_length_m"]
+        moto_ratio = init_ep["motorcycle_ratio"]
+        heavy_count = init_ep["heavy_vehicle_count"]
+        app_occ = init_ep["approach_occupancy"]
+        down_occ = init_ep["downstream_occupancy"]
+
+        steps: list[dict[str, Any]] = []
+        for step in range(num_steps):
+            if step > 0:
+                delta_q = float(
+                    rng.normal(0.5 if scenario_id in ["peak", "spillback"] else -0.2, 2.0)
+                )
+                q_len = max(1.0, q_len + delta_q)
+                moto_ratio = float(np.clip(moto_ratio + rng.normal(0.0, 0.02), 0.60, 0.95))
+                app_occ = float(
+                    np.clip(app_occ + (delta_q / 120.0) + rng.normal(0.0, 0.02), 0.05, 0.98)
+                )
+                down_occ = float(np.clip(down_occ + rng.normal(0.0, 0.03), 0.05, 0.95))
+
+            veh_count = max(1, int(round(q_len / 4.2)))
+            clearance_time = self.compute_clearance_time(
+                queue_length_m=q_len,
+                queued_vehicle_count=veh_count,
+                motorcycle_ratio=moto_ratio,
+                heavy_vehicle_count=heavy_count,
+                approach_occupancy=app_occ,
+                downstream_occupancy=down_occ,
+                weather=weather,
+                rng=rng,
+            )
+
+            record = {
+                "rollout_id": rollout_id,
+                "step": step,
+                "scenario_id": scenario_id,
+                "node_id": node_id,
+                "approach_id": approach_id,
+                "queue_length_m": round(q_len, 2),
+                "queued_vehicle_count": veh_count,
+                "motorcycle_ratio": round(moto_ratio, 4),
+                "heavy_vehicle_count": heavy_count,
+                "approach_occupancy": round(app_occ, 4),
+                "downstream_occupancy": round(down_occ, 4),
+                "weather": weather,
+                "hour_of_day": hour,
+                "provenance": "SYNTHETIC_SHOCKWAVE",
+                "clearance_time_sec": clearance_time,
+            }
+            steps.append(record)
+
+        return steps
+
+    def generate_rollout_dataset(
+        self,
+        num_rollouts: int = 120,
+        steps_per_rollout: int = 10,
+        seed: int = 42,
+    ) -> pd.DataFrame:
+        """Generate balanced clearance rollout time-series across nodes and scenarios."""
+        rng = np.random.default_rng(seed)
+        all_records: list[dict[str, Any]] = []
+
+        rollouts_per_node = max(1, num_rollouts // len(NODES))
+        rollout_idx = 0
+        for node in NODES:
+            for i in range(rollouts_per_node):
+                # Deterministically stratify across scenarios for balanced node distributions
+                sc = SCENARIOS[i % len(SCENARIOS)]
+                app = str(rng.choice(APPROACHES))
+                r_id = f"rollout_{node}_{rollout_idx:04d}"
+                rollout_records = self.generate_rollout_episode(
+                    scenario_id=sc,
+                    node_id=node,
+                    approach_id=app,
+                    rollout_id=r_id,
+                    num_steps=steps_per_rollout,
+                    rng=rng,
+                )
+                all_records.extend(rollout_records)
+                rollout_idx += 1
+
+        return pd.DataFrame(all_records)
+
 
 def export_dataset(
     df: pd.DataFrame,
@@ -243,6 +342,18 @@ def main() -> int:
         default="data/processed/clearance/clearance_metadata.json",
         help="Path to output metadata JSON",
     )
+    parser.add_argument(
+        "--rollouts",
+        type=int,
+        default=0,
+        help="Number of rollout time-series episodes to generate (0 to skip)",
+    )
+    parser.add_argument(
+        "--rollouts-csv",
+        type=str,
+        default="data/processed/clearance/clearance_rollouts.csv",
+        help="Path to output rollouts CSV file",
+    )
     args = parser.parse_args()
 
     sim = QueueDischargeSimulator()
@@ -253,6 +364,14 @@ def main() -> int:
     print(f"  CSV: {args.output_csv}")
     print(f"  Meta: {args.output_meta}")
     print(f"  Mean Clearance Time: {df['clearance_time_sec'].mean():.2f} seconds")
+
+    if args.rollouts > 0:
+        rollout_df = sim.generate_rollout_dataset(num_rollouts=args.rollouts, seed=args.seed)
+        export_dataset(rollout_df, args.rollouts_csv)
+        print(
+            f"[SUCCESS] Generated {len(rollout_df)} rollout time-series steps ({args.rollouts} rollouts)."
+        )
+        print(f"  Rollouts CSV: {args.rollouts_csv}")
     return 0
 
 
