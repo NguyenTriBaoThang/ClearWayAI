@@ -73,7 +73,7 @@
 ### Phase F — Coordination & Safety Controller (Tasks 37–41)
 | Task ID | Task Description | Priority | Dependencies | Status | Verification Proof |
 | :--- | :--- | :---: | :---: | :---: | :--- |
-| **T37** | Mô phỏng nhiệm vụ xe ưu tiên và tính ETA nhiều nút | P0 | T21, T25–T26 | **PLANNED** | Scheduled |
+| **T37** | Mô phỏng nhiệm vụ xe ưu tiên và tính ETA nhiều nút | P0 | T21, T25–T26 | **VERIFIED** | EmergencyMissionManager (lifecycle state machine PENDING -> DISPATCHED -> APPROACHING -> CORRIDOR_TRANSIT -> ARRIVED), MultiNodeETAEvaluator (kinematic acceleration, traffic drag, weather friction), Nodes A–D & Hospital ETAs, sub-millisecond latency (<0.5ms), pytest (243/243) |
 | **T38** | Lập thuật toán pre-clearance dựa ETA & clearance prediction | P0 | T27, T36–T37 | **PLANNED** | Scheduled |
 | **T39** | Điều phối trước nhiều nút giao trên hành lang A–D | P0 | T37, T38 | **PLANNED** | Scheduled |
 | **T40** | Recovery controller sau khi xe ưu tiên qua | P0 | T39 | **PLANNED** | Scheduled |
@@ -117,6 +117,6 @@
 ---
 
 ## 3. Current Sprint Focus
-- **Current Milestone:** TASK 01–36 Complete & Verified (Phase A: 6/6, Phase B: 16/16, Phase C: 5/5, Phase D: 5/5, Phase E: 4/4 ALL 100% COMPLETE! — Total 36/60 tasks verified = 60.0% of master plan).
-- **Next Dependent Task:** TASK 37 — Mô phỏng nhiệm vụ xe ưu tiên và tính ETA nhiều nút (Phase F: Coordination & Safety Controller).
+- **Current Milestone:** TASK 01–37 Complete & Verified (Phase A: 6/6, Phase B: 16/16, Phase C: 5/5, Phase D: 5/5, Phase E: 4/4 ALL 100% COMPLETE!, Phase F: 1/5 — Total 37/60 tasks verified = 61.7% of master plan).
+- **Next Dependent Task:** TASK 38 — Lập thuật toán pre-clearance dựa ETA & clearance prediction (Phase F: Coordination & Safety Controller).
 
