@@ -12,6 +12,7 @@ apps/web/
 ├── src/
 │   ├── components/         # Reusable UI primitives (PanelFrame, StatusPill, KpiTile, LoadingSkeleton)
 │   ├── features/
+│   │   ├── corridor/       # 2D Corridor Route Map & Moving-Horizon Coordination Timeline
 │   │   ├── dashboard/      # Operations Center real-time context (OperationsContext.tsx)
 │   │   ├── digital-twin/   # Three.js WebGL canvas (DigitalTwinCanvas, 3D meshes, controllers)
 │   │   └── operations/     # Blueprint cards (V2X, PhaseTiming, AdaptiveSignal, IoT, Analytics, Controls, Drawers)

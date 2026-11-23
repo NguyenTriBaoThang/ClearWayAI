@@ -85,7 +85,7 @@
 | **T42** | Backend FastAPI, database và API contracts | P0 | T21, T26, T36–T41 | **VERIFIED** | FastAPI REST routers (/simulations, /missions, /clearance, /corridor, /safety), thread-safe SQLite DatabaseManager, domain schemas, pytest apps/api/tests/ (10/10), monorepo quality gates 5/5 PASS |
 | **T43** | Realtime event stream WebSocket, snapshots và replay | P0 | T26, T42 | **VERIFIED** | WebSocketManager (/ws/simulations/{id}, /ws/telemetry), client filter & dispatch, SQLite snapshots table, ReplayController API (/replay/load, play, pause, seek, speed, step, status), pytest apps/api/tests/ (18/18), monorepo quality gates 5/5 PASS |
 | **T44** | Thiết kế Dashboard điều hành thực tế, responsive | P0 | T01, T42–T43, T05–T20 | **VERIFIED** | OperationsContext real-time state, typed REST API client (api.ts), WebSocket hook (websocket.ts), responsive Cyber Grid (4K/1080p/laptop/mobile), tsc & vite build PASS, pytest (7/7) |
-| **T45** | Bản đồ 2D tuyến A–D và timeline điều phối | P0 | T39, T42–T44 | **PLANNED** | Scheduled |
+| **T45** | Bản đồ 2D tuyến A–D và timeline điều phối | P0 | T39, T42–T44 | **VERIFIED** | CorridorRouteMap2D (Nodes A–D 1,000m, AMB-339 kinematics, JIT trigger Δt), CorridorTimeline (Gantt offsets 0/13.5/27/40.5s, 3-cycle recovery debt), CorridorOperationsView, pytest (6/6) — Phase G 100% COMPLETE! |
 
 ### Phase H — 3D Digital Twin Integration & Verification (Tasks 46–48)
 | Task ID | Task Description | Priority | Dependencies | Status | Verification Proof |
@@ -117,6 +117,6 @@
 ---
 
 ## 3. Current Sprint Focus
-- **Current Milestone:** TASK 01–44 Complete & Verified (Phase A: 6/6, Phase B: 16/16, Phase C: 5/5, Phase D: 5/5, Phase E: 4/4, Phase F: 5/5 ALL 100% COMPLETE!; Phase G: 3/4 — Total 44/60 tasks verified = 73.3% of master plan).
-- **Next Dependent Task:** TASK 45 — Bản đồ 2D tuyến A–D và timeline điều phối (Phase G: Full-Stack Backend & Integration).
+- **Current Milestone:** TASK 01–45 Complete & Verified (Phase A: 6/6, Phase B: 16/16, Phase C: 5/5, Phase D: 5/5, Phase E: 4/4, Phase F: 5/5, Phase G: 4/4 ALL 100% COMPLETE! — Total 45/60 tasks verified = 75.0% of master plan).
+- **Next Dependent Task:** TASK 46 — Xây thế giới 3D WebGL đầu tiên cho 4 nút giao (Phase H: 3D Digital Twin Integration & Verification).
 

@@ -8,11 +8,13 @@ import { DigitalTwinCanvas } from '../features/digital-twin/DigitalTwinCanvas';
 import { SimulationControls } from '../features/operations/SimulationControls';
 import { MissionDrawer } from '../features/operations/MissionDrawer';
 import { UnifiedInspector } from '../features/operations/UnifiedInspector';
+import { CorridorOperationsView } from '../features/corridor/CorridorOperationsView';
 import { OperationsProvider, useOperations } from '../features/dashboard/OperationsContext';
 
 const DashboardContent: React.FC = () => {
   const [isMissionDrawerOpen, setIsMissionDrawerOpen] = useState<boolean>(false);
   const [isInspectorOpen, setIsInspectorOpen] = useState<boolean>(false);
+  const [viewportMode, setViewportMode] = useState<'3D' | 'CORRIDOR_2D'>('3D');
   const operations = useOperations();
 
   return (
@@ -35,7 +37,7 @@ const DashboardContent: React.FC = () => {
         <AdaptiveSignalCard />
       </div>
 
-      {/* Center 3D Digital Twin Viewport & Floating Simulation Controls */}
+      {/* Center Viewport Switcher & Primary Display */}
       <div
         style={{
           flex: '1 1 auto',
@@ -45,7 +47,61 @@ const DashboardContent: React.FC = () => {
           position: 'relative',
         }}
       >
-        <DigitalTwinCanvas intersectionId="INT-0457" />
+        {/* Viewport Mode Switcher Pill */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '12px',
+            right: '16px',
+            zIndex: 35,
+            display: 'flex',
+            alignItems: 'center',
+            backgroundColor: 'rgba(10, 20, 45, 0.9)',
+            border: '1px solid #1b2f5b',
+            borderRadius: '6px',
+            padding: '2px',
+            gap: '2px',
+          }}
+        >
+          <button
+            onClick={() => setViewportMode('3D')}
+            style={{
+              padding: '4px 10px',
+              fontSize: '0.68rem',
+              fontWeight: 700,
+              borderRadius: '4px',
+              cursor: 'pointer',
+              border: viewportMode === '3D' ? '1px solid #00e5ff' : '1px solid transparent',
+              backgroundColor: viewportMode === '3D' ? '#1b2f5b' : 'transparent',
+              color: viewportMode === '3D' ? '#00e5ff' : '#94a3b8',
+            }}
+          >
+            3D DIGITAL TWIN
+          </button>
+          <button
+            onClick={() => setViewportMode('CORRIDOR_2D')}
+            style={{
+              padding: '4px 10px',
+              fontSize: '0.68rem',
+              fontWeight: 700,
+              borderRadius: '4px',
+              cursor: 'pointer',
+              border: viewportMode === 'CORRIDOR_2D' ? '1px solid #06d6a0' : '1px solid transparent',
+              backgroundColor: viewportMode === 'CORRIDOR_2D' ? '#1b2f5b' : 'transparent',
+              color: viewportMode === 'CORRIDOR_2D' ? '#06d6a0' : '#94a3b8',
+            }}
+          >
+            2D CORRIDOR MAP & TIMELINE
+          </button>
+        </div>
+
+        {viewportMode === '3D' ? (
+          <DigitalTwinCanvas intersectionId="INT-0457" />
+        ) : (
+          <div style={{ flex: 1, padding: '4px 0', overflowY: 'auto' }}>
+            <CorridorOperationsView />
+          </div>
+        )}
 
         {/* Floating Simulation Controls Toolbar */}
         <div
