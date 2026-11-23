@@ -51,7 +51,7 @@
 | **T24** | Sinh giao thông hỗn hợp xe máy–ô tô và kịch bản tải | P0 | T23 | **VERIFIED** | Vietnamese fleet mix (75% moto, SL2015 arbitrary latAlignment), 4 scenario profiles (free_flow, normal, peak, spillback), deterministic seed, pytest (119/119) |
 | **T25** | Mô phỏng xe ưu tiên và cơ chế nhường đường trong SUMO | P0 | T23, T24 | **VERIFIED** | Emergency vTypes (AMB-339 ambulance, fire engine), speedFactor=1.30, blue-light lcCooperative=1.0 yielding, emergency presets, pytest (124/124) |
 | **T26** | Xây SUMO/TraCI adapter có step, replay, telemetry | P0 | T23–T25 | **VERIFIED** | SimulationManager dual-engine (TraCI + SyntheticCorridorEngine), TelemetryCollector (TelemetrySnapshotSchema), SnapshotExporter (JSONL), ReplayController, pytest (129/129) |
-| **T27** | Cài đặt 3 baseline để so sánh công bằng | P0 | T24–T26 | **PLANNED** | Scheduled |
+| **T27** | Cài đặt 3 baseline để so sánh công bằng | P0 | T24–T26 | **VERIFIED** | B0 Fixed-Time (Webster), B1 Reactive Local (100m Opticom), B2 Corridor Coordination (Green-Wave), BenchmarkRunner, pytest (134/134) |
 
 ### Phase D — Computer Vision & Data Governance (Tasks 28–32)
 | Task ID | Task Description | Priority | Dependencies | Status | Verification Proof |

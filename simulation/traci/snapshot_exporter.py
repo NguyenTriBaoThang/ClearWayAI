@@ -91,4 +91,3 @@ class SnapshotExporter:
             "avg_speed_kmh": round(avg_speed, 1),
             "emergency_mission_detected": has_mission,
         }
-

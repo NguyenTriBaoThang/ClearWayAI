@@ -140,8 +140,8 @@ class SyntheticCorridorEngine:
             # Check traffic light stoplines if approaching red signal
             is_stopped = False
             if (
-                not vdata["is_emergency"]
-                and self.current_phase not in [0, 1]
+                self.current_phase not in [0, 1]
+                and (not vdata["is_emergency"] or not self.preemption_active)
                 and (
                     ("eb" in vdata["route"] and 570.0 <= vdata["x"] < 595.0)
                     or ("wb" in vdata["route"] and 605.0 < vdata["x"] <= 630.0)

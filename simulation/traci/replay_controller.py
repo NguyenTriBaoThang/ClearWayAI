@@ -135,4 +135,3 @@ class ReplayController:
             return 100.0 if self.snapshots else 0.0
         start = self.snapshots[0].sim_time_sec
         return min(100.0, max(0.0, ((self.current_time - start) / duration) * 100.0))
-
