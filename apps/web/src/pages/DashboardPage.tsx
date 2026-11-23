@@ -5,14 +5,15 @@ import { AdaptiveSignalCard } from '../features/operations/AdaptiveSignalCard';
 import { IoTSensorsCard } from '../features/operations/IoTSensorsCard';
 import { AnalyticsCard } from '../features/operations/AnalyticsCard';
 import { DigitalTwinCanvas } from '../features/digital-twin/DigitalTwinCanvas';
-import { SimulationControls, SimulationScenarioId } from '../features/operations/SimulationControls';
+import { SimulationControls } from '../features/operations/SimulationControls';
 import { MissionDrawer } from '../features/operations/MissionDrawer';
 import { UnifiedInspector } from '../features/operations/UnifiedInspector';
+import { OperationsProvider, useOperations } from '../features/dashboard/OperationsContext';
 
-export const DashboardPage: React.FC = () => {
+const DashboardContent: React.FC = () => {
   const [isMissionDrawerOpen, setIsMissionDrawerOpen] = useState<boolean>(false);
   const [isInspectorOpen, setIsInspectorOpen] = useState<boolean>(false);
-  const [simRunning, setSimRunning] = useState<boolean>(true);
+  const operations = useOperations();
 
   return (
     <div
@@ -58,7 +59,9 @@ export const DashboardPage: React.FC = () => {
           }}
         >
           <SimulationControls
-            onTogglePlay={(running) => setSimRunning(running)}
+            onTogglePlay={operations.togglePlay}
+            onStep={() => operations.stepSimulation(0.1)}
+            onChangeSpeed={operations.setPlaybackSpeed}
             onOpenMissionDrawer={() => setIsMissionDrawerOpen(true)}
             onOpenInspector={() => setIsInspectorOpen(true)}
           />
@@ -82,6 +85,14 @@ export const DashboardPage: React.FC = () => {
         onClose={() => setIsInspectorOpen(false)}
       />
     </div>
+  );
+};
+
+export const DashboardPage: React.FC = () => {
+  return (
+    <OperationsProvider>
+      <DashboardContent />
+    </OperationsProvider>
   );
 };
 

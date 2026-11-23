@@ -222,6 +222,17 @@ code, pre, .font-mono {
   min-height: 220px;
 }
 
+@media (min-width: 2560px) {
+  .dashboard-grid-top {
+    min-height: 240px;
+    gap: 14px;
+  }
+  .dashboard-grid-bottom {
+    min-height: 300px;
+    gap: 14px;
+  }
+}
+
 @media (max-width: 1400px) {
   .dashboard-grid-top {
     grid-template-columns: 1.1fr 1fr 1.2fr;
@@ -231,7 +242,18 @@ code, pre, .font-mono {
   }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1024px) {
+  .dashboard-grid-top {
+    grid-template-columns: 1fr 1fr;
+    min-height: auto;
+  }
+  .dashboard-grid-bottom {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+}
+
+@media (max-width: 768px) {
   .dashboard-grid-top {
     grid-template-columns: 1fr;
     min-height: auto;
@@ -241,3 +263,23 @@ code, pre, .font-mono {
     min-height: auto;
   }
 }
+
+/* Connection indicator badges */
+.connection-badge-connected {
+  color: #06d6a0;
+  border-color: rgba(6, 214, 160, 0.4);
+  background-color: rgba(6, 214, 160, 0.12);
+}
+
+.connection-badge-simulated {
+  color: #ffd166;
+  border-color: rgba(255, 209, 102, 0.4);
+  background-color: rgba(255, 209, 102, 0.12);
+}
+
+.connection-badge-disconnected {
+  color: #ef476f;
+  border-color: rgba(239, 71, 111, 0.4);
+  background-color: rgba(239, 71, 111, 0.12);
+}
+

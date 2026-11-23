@@ -5,11 +5,15 @@ import { StatusPill } from '../components/StatusPill';
 interface TopBarProps {
   simulationTime?: string;
   isSimulatedMode?: boolean;
+  connectionStatus?: 'CONNECTED' | 'CONNECTING' | 'DISCONNECTED' | 'SIMULATED';
+  latencyMs?: number;
 }
 
 export const TopBar: React.FC<TopBarProps> = ({
   simulationTime = '2025-01-15 14:27:36',
   isSimulatedMode = true,
+  connectionStatus = 'CONNECTED',
+  latencyMs = 11,
 }) => {
   const [realTime, setRealTime] = useState<string>('');
   const [simSeconds, setSimSeconds] = useState<number>(36);
@@ -195,8 +199,25 @@ export const TopBar: React.FC<TopBarProps> = ({
         {/* Telemetry Pills: FPS & Latency */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
           <StatusPill label="60 FPS" variant="green" size="xs" />
-          <StatusPill label="11ms" variant="cyan" size="xs" />
-          <StatusPill label="WS ONLINE" variant="green" size="xs" pulse />
+          <StatusPill label={`${latencyMs}ms`} variant="cyan" size="xs" />
+          <StatusPill
+            label={
+              connectionStatus === 'CONNECTED'
+                ? 'WS ONLINE'
+                : connectionStatus === 'SIMULATED'
+                ? 'WS SIMULATED'
+                : 'WS CONNECTING'
+            }
+            variant={
+              connectionStatus === 'CONNECTED'
+                ? 'green'
+                : connectionStatus === 'SIMULATED'
+                ? 'amber'
+                : 'cyan'
+            }
+            size="xs"
+            pulse={connectionStatus === 'CONNECTED'}
+          />
         </div>
 
         {/* Timestamps: Simulation vs Wall Clock */}

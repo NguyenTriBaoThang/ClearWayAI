@@ -10,16 +10,17 @@ Modern React + Vite + TypeScript web application serving as the primary Traffic 
 apps/web/
 ├── public/                 # Static public assets
 ├── src/
-│   ├── components/         # Reusable UI primitives (StatusBadge, NotImplemented)
+│   ├── components/         # Reusable UI primitives (PanelFrame, StatusPill, KpiTile, LoadingSkeleton)
 │   ├── features/
-│   │   ├── digital-twin/   # Three.js WebGL canvas (DigitalTwinCanvas)
-│   │   └── operations/     # Blueprint cards (V2X, PhaseTiming, AdaptiveSignal, IoT, Analytics)
-│   ├── layout/             # Shell, TopBar (clocks, modes), Sidebar navigation
-│   ├── pages/              # Route pages (Home, Dashboard, DigitalTwin, Simulation, Experiments, Settings)
-│   ├── services/           # Typed API client connecting to FastAPI backend
-│   ├── types/              # Frontend TypeScript interfaces
+│   │   ├── dashboard/      # Operations Center real-time context (OperationsContext.tsx)
+│   │   ├── digital-twin/   # Three.js WebGL canvas (DigitalTwinCanvas, 3D meshes, controllers)
+│   │   └── operations/     # Blueprint cards (V2X, PhaseTiming, AdaptiveSignal, IoT, Analytics, Controls, Drawers)
+│   ├── layout/             # Shell, TopBar (clocks, modes, WebSocket status), Sidebar navigation
+│   ├── pages/              # Route pages (DashboardPage, DigitalTwinPage, SimulationPage, ExperimentsPage)
+│   ├── services/           # Typed API client (api.ts) & WebSocket stream client (websocket.ts)
+│   ├── types/              # Frontend TypeScript interfaces (domain, dashboard, api contracts)
 │   ├── App.tsx             # React Router routing
-│   ├── index.css           # Operations Center dark theme styling
+│   ├── index.css           # Responsive Cyber Grid dark theme styling (4K to mobile)
 │   └── main.tsx            # Application entrypoint
 ├── Dockerfile              # Multi-stage Nginx container build
 ├── package.json            # Web dependencies (Three.js, Lucide, React Router)

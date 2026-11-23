@@ -40,3 +40,5 @@ export interface HealthCheck {
 }
 
 export * from './dashboard';
+export * from './api';
+
