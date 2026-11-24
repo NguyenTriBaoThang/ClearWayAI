@@ -27,8 +27,12 @@ def test_docker_compose_configurations():
 
     # Core services check
     for service_name in ["api", "web"]:
-        assert service_name in dev_data["services"], f"Service {service_name} missing from dev compose"
-        assert service_name in prod_data["services"], f"Service {service_name} missing from prod compose"
+        assert service_name in dev_data["services"], (
+            f"Service {service_name} missing from dev compose"
+        )
+        assert service_name in prod_data["services"], (
+            f"Service {service_name} missing from prod compose"
+        )
 
     # Production compose should define healthchecks, resource limits, and network
     api_prod = prod_data["services"]["api"]

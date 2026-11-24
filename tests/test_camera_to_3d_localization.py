@@ -155,4 +155,3 @@ def test_full_verification_pipeline_run():
         assert report["lateral_error_mean_m"] <= 0.60
         assert report["heading_error_deg"] <= 10.0
         assert report_file.exists()
-

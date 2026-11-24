@@ -299,4 +299,3 @@ class VMSManager:
 
 # Global singleton instance
 vms_manager = VMSManager()
-

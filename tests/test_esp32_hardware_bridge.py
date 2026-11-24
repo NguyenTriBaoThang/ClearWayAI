@@ -163,9 +163,7 @@ def test_hardware_watchdog_timeout_failsafe():
     )
 
     # Sending a packet restores normal mode
-    ack_str = emulator.process_incoming_frame(
-        '{"cmd":"HEARTBEAT","seq":99}\n'
-    )
+    ack_str = emulator.process_incoming_frame('{"cmd":"HEARTBEAT","seq":99}\n')
     assert "HEARTBEAT" in ack_str
     assert emulator.mode == HardwareMode.SIMULATION
     assert emulator.fault_code == HardwareFaultCode.NONE
@@ -252,4 +250,3 @@ def test_diagnostic_testbench_subroutines():
     assert run_emergency_strobe(bridge, duration_sec=0.05) is True
 
     bridge.disconnect()
-

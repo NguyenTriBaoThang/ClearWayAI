@@ -1,7 +1,7 @@
 {
   "project": "ClearWayAI",
   "release_version": "v0.1.0-mvp",
-  "release_timestamp_utc": "2026-11-24T01:44:32.319594+00:00",
+  "release_timestamp_utc": "2026-11-24T01:53:18.160522+00:00",
   "verified_tasks": "60/60",
   "completion_ratio": 1.0,
   "deliverables_count": 20,
@@ -79,12 +79,12 @@
       "sha256": "464e16a3a7ed780ef5d95e3a7a1874171ba3c9f492f0579c543ea81d213d60a7"
     },
     "simulation/experiments/demo_scenario_runner.py": {
-      "size_bytes": 14818,
-      "sha256": "4acff7654ffa80d88eb475a5225fccce1470b2b42eda706e46edbc9729b32039"
+      "size_bytes": 14921,
+      "sha256": "12488c42bd68371b162b496b235d8c1d9947d0c3347855a20edc1e373e9a7e45"
     },
     "controller/hardware/esp32_bridge.py": {
-      "size_bytes": 15867,
-      "sha256": "8a7984ca68ee36f8387ecf6d436c7c6ffb7c05bf53bdfca0f229294c30197fe1"
+      "size_bytes": 16056,
+      "sha256": "33e1fb13a6a2accaaecd3f53b09be1f7fe3bcb1bcadfe50c611de94316f55133"
     }
   }
 }

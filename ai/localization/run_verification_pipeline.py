@@ -28,8 +28,12 @@ def run_localization_verification(
 ) -> dict:
     """Execute end-to-end projection and quantitative verification."""
     rng = np.random.default_rng(seed)
-    calib_file = calibration_path or (REPO_ROOT / "data" / "calibration" / "cam_synth_corridor.json")
-    out_file = report_output_path or (REPO_ROOT / "data" / "processed" / "camera_to_3d_verification_report.json")
+    calib_file = calibration_path or (
+        REPO_ROOT / "data" / "calibration" / "cam_synth_corridor.json"
+    )
+    out_file = report_output_path or (
+        REPO_ROOT / "data" / "processed" / "camera_to_3d_verification_report.json"
+    )
 
     print(f"📷 Loading Camera Calibration Profile: {calib_file}")
     profile = CameraCalibrationProfile.load_json(calib_file)
@@ -132,11 +136,17 @@ def run_localization_verification(
     print("🎯 CAMERA-TO-3D DIGITAL TWIN LOCALIZATION VERIFICATION RESULT")
     print("==================================================================")
     print(f"  Total Samples Evaluated:      {result.total_samples}")
-    print(f"  3D Root Mean Square Error:    {result.rmse_meters:.3f} m (Pass <= {result.pass_criteria_rmse_m:.2f}m)")
+    print(
+        f"  3D Root Mean Square Error:    {result.rmse_meters:.3f} m (Pass <= {result.pass_criteria_rmse_m:.2f}m)"
+    )
     print(f"  Mean Absolute Error (MAE):    {result.mae_meters:.3f} m")
-    print(f"  Lateral Lane Deviation Mean:  {result.lateral_error_mean_m:.3f} m (Pass <= {result.pass_criteria_lateral_m:.2f}m)")
+    print(
+        f"  Lateral Lane Deviation Mean:  {result.lateral_error_mean_m:.3f} m (Pass <= {result.pass_criteria_lateral_m:.2f}m)"
+    )
     print(f"  Longitudinal Error Mean:      {result.longitudinal_error_mean_m:.3f} m")
-    print(f"  Heading Angle Error Mean:     {result.heading_error_deg:.2f}° (Pass <= {result.pass_criteria_heading_deg:.1f}°)")
+    print(
+        f"  Heading Angle Error Mean:     {result.heading_error_deg:.2f}° (Pass <= {result.pass_criteria_heading_deg:.1f}°)"
+    )
     print(f"  Verification Status:          {result.status}")
     print("==================================================================\n")
 
@@ -144,7 +154,9 @@ def run_localization_verification(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Run Camera-to-3D Digital Twin Verification Pipeline.")
+    parser = argparse.ArgumentParser(
+        description="Run Camera-to-3D Digital Twin Verification Pipeline."
+    )
     parser.add_argument(
         "--calibration",
         type=Path,
@@ -171,4 +183,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

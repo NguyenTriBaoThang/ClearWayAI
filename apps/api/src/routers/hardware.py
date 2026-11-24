@@ -25,9 +25,7 @@ router = APIRouter(prefix="/api/v1/hardware", tags=["Physical Hardware Bench"])
 
 # Shared singleton instance of the hardware bridge
 # Defaults to high-fidelity simulation mode for CI/CD and automated testing
-hardware_bridge = ESP32HardwareBridge(
-    HardwareBridgeConfig(simulation_mode=True)
-)
+hardware_bridge = ESP32HardwareBridge(HardwareBridgeConfig(simulation_mode=True))
 hardware_bridge.connect()
 
 
@@ -118,4 +116,3 @@ def get_hardware_telemetry() -> ESP32TelemetryResponse:
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to fetch hardware telemetry: {e}",
         ) from None
-

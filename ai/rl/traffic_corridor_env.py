@@ -46,7 +46,12 @@ class BoxSpace:
         return self._rng.uniform(self.low, self.high).astype(np.float32)
 
     def contains(self, x: np.ndarray) -> bool:
-        return isinstance(x, np.ndarray) and x.shape == self.shape and np.all(x >= self.low) and np.all(x <= self.high)
+        return (
+            isinstance(x, np.ndarray)
+            and x.shape == self.shape
+            and np.all(x >= self.low)
+            and np.all(x <= self.high)
+        )
 
 
 @dataclass
@@ -201,14 +206,20 @@ class MultiIntersectionCorridorEnv:
             # Discharge on green phases (Phase 0: Arterial Green, Phase 3: Cross Green)
             discharge_rate_mps = 3.5  # meters of queue cleared per second
             if node.current_phase == 0:
-                node.arterial_queue_m = max(0.0, node.arterial_queue_m - discharge_rate_mps * self.dt_macro)
+                node.arterial_queue_m = max(
+                    0.0, node.arterial_queue_m - discharge_rate_mps * self.dt_macro
+                )
             elif node.current_phase == 3:
-                node.cross_queue_m = max(0.0, node.cross_queue_m - discharge_rate_mps * self.dt_macro)
+                node.cross_queue_m = max(
+                    0.0, node.cross_queue_m - discharge_rate_mps * self.dt_macro
+                )
 
             # Cap queues to storage length
             node.arterial_queue_m = min(150.0, node.arterial_queue_m)
             node.cross_queue_m = min(100.0, node.cross_queue_m)
-            self.total_civilian_delay += (node.arterial_queue_m + node.cross_queue_m) * 0.05 * self.dt_macro
+            self.total_civilian_delay += (
+                (node.arterial_queue_m + node.cross_queue_m) * 0.05 * self.dt_macro
+            )
 
         # 5. Step Emergency Vehicle Kinematics
         ev_progress_m = 0.0
@@ -236,7 +247,9 @@ class MultiIntersectionCorridorEnv:
                     self.ev_stopped_counter += 1
             else:
                 # Accelerate towards max priority speed
-                self.ev_speed = min(self.ev_max_speed, self.ev_speed + self.ev_accel * self.dt_macro)
+                self.ev_speed = min(
+                    self.ev_max_speed, self.ev_speed + self.ev_accel * self.dt_macro
+                )
 
             ev_step_dist = self.ev_speed * self.dt_macro
             self.ev_x += ev_step_dist
@@ -307,7 +320,10 @@ class MultiIntersectionCorridorEnv:
                 reward -= 3.0  # Heavy penalty for stopped emergency vehicle
 
         # 2. Terminal arrival bonus
-        if self.ev_arrival_time is not None and (self.sim_time - self.ev_arrival_time) <= self.dt_macro:
+        if (
+            self.ev_arrival_time is not None
+            and (self.sim_time - self.ev_arrival_time) <= self.dt_macro
+        ):
             # Arrived this step
             time_penalty = (self.ev_arrival_time - self.ev_departure_time) * 0.5
             reward += max(20.0, 100.0 - time_penalty)
@@ -359,7 +375,9 @@ class MultiIntersectionCorridorEnv:
     def _get_info(self) -> dict[str, Any]:
         """Construct informational telemetry dictionary."""
         ev_transit_time = (
-            (self.ev_arrival_time - self.ev_departure_time) if self.ev_arrival_time is not None else (self.sim_time - self.ev_departure_time)
+            (self.ev_arrival_time - self.ev_departure_time)
+            if self.ev_arrival_time is not None
+            else (self.sim_time - self.ev_departure_time)
         )
         return {
             "sim_time": self.sim_time,
@@ -372,4 +390,3 @@ class MultiIntersectionCorridorEnv:
             "total_civilian_delay": self.total_civilian_delay,
             "phase_switches_count": self.phase_switches_count,
         }
-

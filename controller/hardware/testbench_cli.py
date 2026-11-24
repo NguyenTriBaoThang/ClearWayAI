@@ -50,9 +50,7 @@ def run_walking_green(bridge: ESP32HardwareBridge) -> bool:
             else:
                 node_states[nid] = {"ew": "RED", "ns": "GREEN"}
 
-        print(
-            f"  [Step {active_idx + 1}/4] Green priority at {active_node.upper()} (Corridor EW)"
-        )
+        print(f"  [Step {active_idx + 1}/4] Green priority at {active_node.upper()} (Corridor EW)")
         res = bridge.sync_corridor(node_states, emergency_active=False)
         if res.get("status") != "OK":
             print(f"  ❌ Error syncing node {active_node}: {res}")
@@ -63,15 +61,11 @@ def run_walking_green(bridge: ESP32HardwareBridge) -> bool:
     return True
 
 
-def run_emergency_strobe(
-    bridge: ESP32HardwareBridge, duration_sec: float = 3.0
-) -> bool:
+def run_emergency_strobe(bridge: ESP32HardwareBridge, duration_sec: float = 3.0) -> bool:
     print(f"\n▶ Triggering EMERGENCY PRE-CLEARANCE CORRIDOR & STROBE for {duration_sec}s...")
     nodes = ["node_a", "node_b", "node_c", "node_d"]
     # All corridor nodes green on EW, red on NS
-    emergency_states = {
-        nid: {"ew": "GREEN", "ns": "RED"} for nid in nodes
-    }
+    emergency_states = {nid: {"ew": "GREEN", "ns": "RED"} for nid in nodes}
 
     res = bridge.sync_corridor(emergency_states, emergency_active=True)
     print(f"  Corridor Sync ACK: {res}")
@@ -110,21 +104,15 @@ def run_watchdog_test(bridge: ESP32HardwareBridge) -> bool:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="ClearWayAI ESP32 Hardware Testbench CLI"
-    )
+    parser = argparse.ArgumentParser(description="ClearWayAI ESP32 Hardware Testbench CLI")
     parser.add_argument(
         "--mode",
         choices=["sim", "serial"],
         default="sim",
         help="Transport mode (sim=Virtual Emulator, serial=Physical USB UART)",
     )
-    parser.add_argument(
-        "--port", default="COM3", help="Serial port (e.g. COM3 or /dev/ttyUSB0)"
-    )
-    parser.add_argument(
-        "--baudrate", type=int, default=115200, help="Baudrate (default: 115200)"
-    )
+    parser.add_argument("--port", default="COM3", help="Serial port (e.g. COM3 or /dev/ttyUSB0)")
+    parser.add_argument("--baudrate", type=int, default=115200, help="Baudrate (default: 115200)")
     parser.add_argument(
         "--run-test",
         choices=[
@@ -180,4 +168,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
-

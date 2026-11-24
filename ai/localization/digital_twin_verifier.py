@@ -65,7 +65,9 @@ class DigitalTwinLocalizationVerifier:
         gt = np.asarray(ground_truth_3d, dtype=np.float64)
 
         if len(pred) != len(gt):
-            raise ValueError(f"Sample count mismatch: {len(pred)} predictions vs {len(gt)} ground-truth")
+            raise ValueError(
+                f"Sample count mismatch: {len(pred)} predictions vs {len(gt)} ground-truth"
+            )
         if len(pred) == 0:
             raise ValueError("Cannot evaluate empty coordinate set")
 
@@ -135,4 +137,3 @@ class DigitalTwinLocalizationVerifier:
         with open(p, "w", encoding="utf-8") as f:
             json.dump(result.to_dict(), f, indent=2)
         print(f"✅ Digital Twin localization verification report saved to: {p}")
-

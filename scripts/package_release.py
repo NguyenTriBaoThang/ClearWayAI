@@ -102,7 +102,9 @@ def generate_release_manifest(
     return manifest_data
 
 
-def create_distribution_zip(output_zip: Path, manifest_entries: dict[str, dict[str, str | int]]) -> None:
+def create_distribution_zip(
+    output_zip: Path, manifest_entries: dict[str, dict[str, str | int]]
+) -> None:
     """Create a standalone ZIP archive containing all verified deliverables."""
     output_zip.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(output_zip, "w", zipfile.ZIP_DEFLATED) as zf:

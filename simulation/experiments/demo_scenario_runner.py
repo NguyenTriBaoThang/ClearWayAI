@@ -76,7 +76,9 @@ class DemoScenarioRunner:
         self.hw_bridge = ESP32HardwareBridge(HardwareBridgeConfig(simulation_mode=True))
         self.hw_bridge.connect()
 
-    def run_nominal_scenario(self, start_time: float = 0.0, duration_sec: float = 45.0) -> dict[str, Any]:
+    def run_nominal_scenario(
+        self, start_time: float = 0.0, duration_sec: float = 45.0
+    ) -> dict[str, Any]:
         """Scenario 1: Nominal Arterial Coordination under peak traffic volume."""
         sim_time = start_time
         dt = 5.0
@@ -248,7 +250,10 @@ class DemoScenarioRunner:
                 active_ev_id=mission.vehicle_id,
                 ev_position_m=round(ev_pos, 1),
                 ev_speed_kmh=round(ev_speed * 3.6, 1),
-                corridor_kpi={"travel_time_sec": round(sim_time - start_time, 1), "emergency_stops": float(stops)},
+                corridor_kpi={
+                    "travel_time_sec": round(sim_time - start_time, 1),
+                    "emergency_stops": float(stops),
+                },
                 vms_modes={nid: b.mode.value for nid, b in vms_report.boards.items()},
                 hardware_state=self.hw_bridge.get_telemetry(),
                 narrative=f"AMB-339 at x={ev_pos:.1f}m. VMS advises drivers to yield right. Green corridor active.",
@@ -266,7 +271,9 @@ class DemoScenarioRunner:
             "status": "SUCCESS",
         }
 
-    def run_recovery_scenario(self, start_time: float = 110.0, duration_sec: float = 30.0) -> dict[str, Any]:
+    def run_recovery_scenario(
+        self, start_time: float = 110.0, duration_sec: float = 30.0
+    ) -> dict[str, Any]:
         """Scenario 3: Post-Clearance Resilient Recovery for cross streets."""
         sim_time = start_time
         dt = 5.0
@@ -295,7 +302,8 @@ class DemoScenarioRunner:
 
             # Node LED states reflecting compensatory green on cross streets
             node_leds = {
-                nid: {"ew": "RED", "ns": "GREEN"} for nid in ["node_a", "node_b", "node_c", "node_d"]
+                nid: {"ew": "RED", "ns": "GREEN"}
+                for nid in ["node_a", "node_b", "node_c", "node_d"]
             }
             self.hw_bridge.sync_corridor(node_leds, emergency_active=False)
 

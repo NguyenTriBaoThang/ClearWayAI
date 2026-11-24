@@ -41,7 +41,14 @@ class PPOConfig:
 class AdamOptimizer:
     """Vectorized Adam optimizer for dictionary of NumPy parameter arrays."""
 
-    def __init__(self, params: dict[str, np.ndarray], lr: float = 3e-4, beta1: float = 0.9, beta2: float = 0.999, eps: float = 1e-8):
+    def __init__(
+        self,
+        params: dict[str, np.ndarray],
+        lr: float = 3e-4,
+        beta1: float = 0.9,
+        beta2: float = 0.999,
+        eps: float = 1e-8,
+    ):
         self.lr = lr
         self.beta1 = beta1
         self.beta2 = beta2
@@ -113,7 +120,9 @@ class ActorCriticPolicy:
         val = (h2 @ self.params["w_c3"] + self.params["b_c3"]).squeeze(-1)
         return val, h1, h2
 
-    def select_action(self, obs: np.ndarray, deterministic: bool = False) -> tuple[int, float, float]:
+    def select_action(
+        self, obs: np.ndarray, deterministic: bool = False
+    ) -> tuple[int, float, float]:
         """Sample action given observation. Returns (action, log_prob, value)."""
         probs, _, _ = self.forward_actor(obs)
         value, _, _ = self.forward_critic(obs)
@@ -127,7 +136,9 @@ class ActorCriticPolicy:
         log_prob = float(np.log(prob_a))
         return action, log_prob, float(value)
 
-    def evaluate_batch(self, obs_b: np.ndarray, act_b: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    def evaluate_batch(
+        self, obs_b: np.ndarray, act_b: np.ndarray
+    ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
         """Evaluate action log probabilities, state values, and entropy on a batch."""
         probs, _, _ = self.forward_actor(obs_b)
         vals, _, _ = self.forward_critic(obs_b)
@@ -189,8 +200,14 @@ class PPOAgent:
         for t in reversed(range(num_steps)):
             next_non_terminal = 1.0 - float(self.dones[t])
             next_value = last_val if t == num_steps - 1 else self.values[t + 1]
-            delta = self.rewards[t] + self.config.gamma * next_value * next_non_terminal - self.values[t]
-            advantages[t] = last_gae = delta + self.config.gamma * self.config.gae_lambda * next_non_terminal * last_gae
+            delta = (
+                self.rewards[t]
+                + self.config.gamma * next_value * next_non_terminal
+                - self.values[t]
+            )
+            advantages[t] = last_gae = (
+                delta + self.config.gamma * self.config.gae_lambda * next_non_terminal * last_gae
+            )
 
         returns = advantages + np.array(self.values, dtype=np.float32)
         return advantages, returns
@@ -244,7 +261,10 @@ class PPOAgent:
 
                 # Clipped surrogate objective
                 surr1 = ratios * b_adv
-                surr2 = np.clip(ratios, 1.0 - self.config.clip_epsilon, 1.0 + self.config.clip_epsilon) * b_adv
+                surr2 = (
+                    np.clip(ratios, 1.0 - self.config.clip_epsilon, 1.0 + self.config.clip_epsilon)
+                    * b_adv
+                )
                 policy_loss = -np.mean(np.minimum(surr1, surr2))
 
                 # Value function MSE loss
@@ -254,7 +274,11 @@ class PPOAgent:
                 # Entropy bonus
                 entropy = -np.mean(np.sum(probs * np.log(np.maximum(1e-8, probs)), axis=-1))
 
-                total_loss = policy_loss + self.config.value_coef * value_loss - self.config.entropy_coef * entropy
+                total_loss = (
+                    policy_loss
+                    + self.config.value_coef * value_loss
+                    - self.config.entropy_coef * entropy
+                )
 
                 # Compute Gradients analytically for backpropagation
                 grads: dict[str, np.ndarray] = {}
@@ -309,7 +333,9 @@ class PPOAgent:
 
         self.reset_buffer()
 
-        num_updates = self.config.epochs_per_update * max(1, (num_samples // self.config.batch_size))
+        num_updates = self.config.epochs_per_update * max(
+            1, (num_samples // self.config.batch_size)
+        )
         return {
             "total_loss": total_loss_accum / num_updates,
             "policy_loss": policy_loss_accum / num_updates,
@@ -335,4 +361,3 @@ class PPOAgent:
         for k, v in data["params"].items():
             if k in self.policy.params:
                 self.policy.params[k] = np.array(v, dtype=np.float32)
-

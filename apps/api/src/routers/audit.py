@@ -31,9 +31,7 @@ def _to_schema(r: DecisionAuditRecord | DecisionAuditLogRecord) -> DecisionAudit
     """Map internal decision audit record to response schema."""
     if isinstance(r, DecisionAuditLogRecord):
         attributions = (
-            json.loads(r.feature_attributions_json)
-            if r.feature_attributions_json
-            else {}
+            json.loads(r.feature_attributions_json) if r.feature_attributions_json else {}
         )
         return DecisionAuditSchema(
             decision_id=r.decision_id,
@@ -193,9 +191,7 @@ def evaluate_and_explain_decision(req: ExplainDecisionRequest) -> ExplainDecisio
 
     should_actuate = delta <= 0.0
     dec_type = (
-        DecisionType.PRE_CLEARANCE_TRIGGER
-        if should_actuate
-        else DecisionType.NOMINAL_MAINTAINED
+        DecisionType.PRE_CLEARANCE_TRIGGER if should_actuate else DecisionType.NOMINAL_MAINTAINED
     )
     cmd_phase = cfg.arterial_phase_green if should_actuate else req.current_signal_phase
 
@@ -234,4 +230,3 @@ def evaluate_and_explain_decision(req: ExplainDecisionRequest) -> ExplainDecisio
         feature_attributions=attributions,
         safety_status=str(SafetyStatus.SAFE),
     )
-

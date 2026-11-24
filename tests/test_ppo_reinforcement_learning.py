@@ -179,4 +179,3 @@ def test_evaluate_policy_benchmark_execution():
     assert "safety_invariants_compliance_pct" in metrics
     assert metrics["safety_invariants_compliance_pct"] == 100.0
     assert metrics["conflicting_green_violations"] == 0
-

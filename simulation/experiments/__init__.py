@@ -17,4 +17,3 @@ __all__ = [
     "MultiSeedTrialResult",
     "ScientificBenchmarkRunner",
 ]
-

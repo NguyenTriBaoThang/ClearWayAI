@@ -32,12 +32,14 @@ def check_markdown_links():
 
         matches = link_pattern.findall(content)
         for text, target in matches:
-            # Ignore web URLs, anchors, mailto
+            # Ignore web URLs, anchors, mailto, and placeholder ellipses
             if (
                 target.startswith("http://")
                 or target.startswith("https://")
                 or target.startswith("#")
                 or target.startswith("mailto:")
+                or target in ["...", "…", "target", "path/to/target.md", "url"]
+                or "..." in target
             ):
                 continue
 

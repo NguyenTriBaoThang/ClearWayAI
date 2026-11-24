@@ -25,4 +25,3 @@ __all__ = [
     "VehicleKalmanFilter3D",
     "run_localization_verification",
 ]
-

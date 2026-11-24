@@ -17,4 +17,3 @@ __all__ = [
     "VMSManager",
     "vms_manager",
 ]
-

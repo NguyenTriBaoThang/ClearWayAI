@@ -359,4 +359,3 @@ def test_threat_model_document_exists_and_complete():
     assert "SignalSafetyGateway" in content
     assert "INV-01" in content
     assert "INV-06" in content
-

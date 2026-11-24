@@ -115,4 +115,3 @@ def test_markdown_relative_links_integrity():
     from scripts.verify_markdown_links import check_markdown_links
 
     assert check_markdown_links() is True
-

@@ -655,4 +655,3 @@ class ESP32TelemetryResponse(BaseModel):
     port: str
     baudrate: int
     provenance: str = "REALTIME_HARDWARE"
-

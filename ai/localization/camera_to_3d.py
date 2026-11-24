@@ -57,12 +57,15 @@ class VehicleKalmanFilter3D:
 
     def predict(self, dt: float) -> np.ndarray:
         """Predict forward by dt seconds."""
-        F = np.array([
-            [1.0, 0.0, dt, 0.0],
-            [0.0, 1.0, 0.0, dt],
-            [0.0, 0.0, 1.0, 0.0],
-            [0.0, 0.0, 0.0, 1.0],
-        ], dtype=np.float64)
+        F = np.array(
+            [
+                [1.0, 0.0, dt, 0.0],
+                [0.0, 1.0, 0.0, dt],
+                [0.0, 0.0, 1.0, 0.0],
+                [0.0, 0.0, 0.0, 1.0],
+            ],
+            dtype=np.float64,
+        )
 
         # Discrete-time process noise covariance
         q_dt = self.q_var * dt
@@ -74,10 +77,13 @@ class VehicleKalmanFilter3D:
 
     def update(self, meas_x: float, meas_z: float) -> np.ndarray:
         """Update state with observed measurement [meas_x, meas_z]."""
-        H = np.array([
-            [1.0, 0.0, 0.0, 0.0],
-            [0.0, 1.0, 0.0, 0.0],
-        ], dtype=np.float64)
+        H = np.array(
+            [
+                [1.0, 0.0, 0.0, 0.0],
+                [0.0, 1.0, 0.0, 0.0],
+            ],
+            dtype=np.float64,
+        )
         R = np.diag([self.r_var, self.r_var])
 
         z = np.array([meas_x, meas_z], dtype=np.float64)
@@ -119,7 +125,9 @@ class CameraTo3DProjector:
         profile = CameraCalibrationProfile.load_json(calibration_path)
         return cls(profile, node_offset_x=node_offset_x, provenance=provenance)
 
-    def extract_ground_contact_point(self, bbox: list[float] | tuple[float, float, float, float]) -> tuple[float, float]:
+    def extract_ground_contact_point(
+        self, bbox: list[float] | tuple[float, float, float, float]
+    ) -> tuple[float, float]:
         """Extract bottom-center tire contact pixel from bounding box [x1, y1, x2, y2]."""
         x1, _y1, x2, y2 = bbox
         u = float((x1 + x2) / 2.0)
@@ -132,7 +140,9 @@ class CameraTo3DProjector:
         transformed = transform_points(self.homography, pts)[0]
         return float(transformed[0]), float(transformed[1])
 
-    def map_to_corridor_world_3d(self, x_metric: float, y_metric: float) -> tuple[float, float, float]:
+    def map_to_corridor_world_3d(
+        self, x_metric: float, y_metric: float
+    ) -> tuple[float, float, float]:
         """Map local approach metric coordinates into global Digital Twin 3D Cartesian coordinates.
 
         Corridor convention:
@@ -188,7 +198,11 @@ class CameraTo3DProjector:
             heading_deg = 0.0 if self.profile.approach_direction == "EB" else 180.0
         else:
             filter_obj = self.track_filters[vehicle_id]
-            dt = 0.1 if filter_obj.last_timestamp is None else max(0.01, timestamp_sec - filter_obj.last_timestamp)
+            dt = (
+                0.1
+                if filter_obj.last_timestamp is None
+                else max(0.01, timestamp_sec - filter_obj.last_timestamp)
+            )
             filter_obj.predict(dt)
             smooth_pos = filter_obj.update(raw_wx, raw_wz)
             smooth_wx, smooth_wz = float(smooth_pos[0]), float(smooth_pos[1])
@@ -222,4 +236,3 @@ class CameraTo3DProjector:
     def reset_tracks(self) -> None:
         """Reset internal Kalman filter trackers."""
         self.track_filters.clear()
-

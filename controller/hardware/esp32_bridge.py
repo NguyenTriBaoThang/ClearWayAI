@@ -114,11 +114,13 @@ class VirtualESP32Emulator:
             packet = json.loads(frame_json_str)
         except Exception:
             self.fault_code = HardwareFaultCode.ERR_HW_INVALID_FRAME
-            return json.dumps({
-                "ack": "ERROR",
-                "fault": self.fault_code.value,
-                "uptime_ms": int((current_time - self._boot_time) * 1000),
-            })
+            return json.dumps(
+                {
+                    "ack": "ERROR",
+                    "fault": self.fault_code.value,
+                    "uptime_ms": int((current_time - self._boot_time) * 1000),
+                }
+            )
 
         cmd = packet.get("cmd", "")
         seq = packet.get("seq", 0)
@@ -131,14 +133,16 @@ class VirtualESP32Emulator:
             self.mode = HardwareMode.SIMULATION
 
         if cmd == "HEARTBEAT":
-            return json.dumps({
-                "ack": "HEARTBEAT",
-                "seq": seq,
-                "status": "OK",
-                "mode": self.mode.value,
-                "watchdog_age_ms": 0,
-                "mmu_ok": not self.mmu_tripped,
-            })
+            return json.dumps(
+                {
+                    "ack": "HEARTBEAT",
+                    "seq": seq,
+                    "status": "OK",
+                    "mode": self.mode.value,
+                    "watchdog_age_ms": 0,
+                    "mmu_ok": not self.mmu_tripped,
+                }
+            )
 
         elif cmd == "PHASE_UPDATE":
             nodes_data = packet.get("nodes", {})
@@ -162,13 +166,15 @@ class VirtualESP32Emulator:
                 for nid in self.node_ids:
                     self.nodes[nid].ew_color = SignalLEDColor.FLASHING_YELLOW
                     self.nodes[nid].ns_color = SignalLEDColor.FLASHING_YELLOW
-                return json.dumps({
-                    "ack": "PHASE_UPDATE",
-                    "status": "MMU_CONFLICT_TRIP",
-                    "fault": self.fault_code.value,
-                    "conflict_node": conflict_node,
-                    "mmu_ok": False,
-                })
+                return json.dumps(
+                    {
+                        "ack": "PHASE_UPDATE",
+                        "status": "MMU_CONFLICT_TRIP",
+                        "fault": self.fault_code.value,
+                        "conflict_node": conflict_node,
+                        "mmu_ok": False,
+                    }
+                )
 
             # Normal phase update
             for nid, state in nodes_data.items():
@@ -193,19 +199,19 @@ class VirtualESP32Emulator:
                             else SignalLEDColor.RED
                         )
                     )
-                    self.nodes[nid].emergency_strobe = packet.get(
-                        "emergency", False
-                    )
+                    self.nodes[nid].emergency_strobe = packet.get("emergency", False)
 
             self.emergency_strobe_active = packet.get("emergency", False)
 
-            return json.dumps({
-                "ack": "PHASE_UPDATE",
-                "seq": seq,
-                "status": "OK",
-                "mmu_ok": True,
-                "nodes_updated": len(nodes_data),
-            })
+            return json.dumps(
+                {
+                    "ack": "PHASE_UPDATE",
+                    "seq": seq,
+                    "status": "OK",
+                    "mmu_ok": True,
+                    "nodes_updated": len(nodes_data),
+                }
+            )
 
         elif cmd == "LAMP_TEST":
             # Turn all LEDs ON for hardware inspection
@@ -215,11 +221,13 @@ class VirtualESP32Emulator:
                 self.nodes[nid].ns_color = SignalLEDColor.YELLOW
                 self.nodes[nid].ped_color = SignalLEDColor.GREEN
                 self.nodes[nid].emergency_strobe = True
-            return json.dumps({
-                "ack": "LAMP_TEST",
-                "status": "OK",
-                "mode": self.mode.value,
-            })
+            return json.dumps(
+                {
+                    "ack": "LAMP_TEST",
+                    "status": "OK",
+                    "mode": self.mode.value,
+                }
+            )
 
         elif cmd == "RESET_FAULTS":
             self.mmu_tripped = False
@@ -277,9 +285,7 @@ class VirtualESP32Emulator:
             "mode": self.mode.value,
             "fault_code": self.fault_code.value,
             "mmu_tripped": self.mmu_tripped,
-            "watchdog_age_sec": round(
-                current_time - self.last_heartbeat_timestamp, 3
-            ),
+            "watchdog_age_sec": round(current_time - self.last_heartbeat_timestamp, 3),
             "watchdog_ok": (current_time - self.last_heartbeat_timestamp)
             <= self.watchdog_threshold_sec,
             "emergency_strobe": self.emergency_strobe_active,
@@ -419,4 +425,3 @@ class ESP32HardwareBridge:
         res["port"] = self.config.port
         res["baudrate"] = self.config.baudrate
         return res
-

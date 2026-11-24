@@ -106,7 +106,9 @@ def evaluate_policy(
     print("\n=======================================================")
     print("📊 PPO CORRIDOR REINFORCEMENT LEARNING BENCHMARK RESULT")
     print("=======================================================")
-    print(f"  EV Travel Time:     B0: {b0_mean_time:.1f}s | PPO: {ppo_mean_time:.1f}s ({time_reduction_pct:+.1f}%)")
+    print(
+        f"  EV Travel Time:     B0: {b0_mean_time:.1f}s | PPO: {ppo_mean_time:.1f}s ({time_reduction_pct:+.1f}%)"
+    )
     print(f"  EV Stops (Ticks):   B0: {b0_mean_stops:.1f}  | PPO: {ppo_mean_stops:.1f}")
     print(f"  Civilian Delay:     B0: {b0_mean_delay:.1f} | PPO: {ppo_mean_delay:.1f}")
     print("  Safety Compliance:  100.0% (Zero MMU Violations)")
@@ -141,4 +143,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

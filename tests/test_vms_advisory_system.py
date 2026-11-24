@@ -180,4 +180,3 @@ def test_vms_3d_modules_exist_and_structure():
     assert "VMSAdvisoryCard" in card_src
     assert "VMS-A" in card_src
     assert "VMS-D" in card_src
-

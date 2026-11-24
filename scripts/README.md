@@ -40,7 +40,7 @@ python scripts/check_all.py
 ---
 
 ### 2.2 Markdown Link Validator (`verify_markdown_links.py`)
-Scans all 55+ repository markdown files, extracts internal relative markdown links (`[text](...)`), resolves them against the filesystem, and flags any broken references.
+Scans all 55+ repository markdown files, extracts internal relative markdown links (`[text](path/to/target.md)`), resolves them against the filesystem, and flags any broken references.
 
 ```bash
 python scripts/verify_markdown_links.py
