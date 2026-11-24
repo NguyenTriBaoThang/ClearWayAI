@@ -1,8 +1,8 @@
 {
   "title": "ClearWayAI Master Demonstration Timeline",
   "total_events": 40,
-  "generated_at": 1795482306.0209296,
-  "execution_wall_time_sec": 0.006,
+  "generated_at": 1795483632.9992201,
+  "execution_wall_time_sec": 0.004,
   "scenarios": {
     "nominal": {
       "scenario": "NOMINAL_COORDINATION",

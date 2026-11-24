@@ -50,22 +50,19 @@ export const TopBar: React.FC<TopBarProps> = ({
     >
       {/* Left: Brand, Suite Title, and Intersection Selector */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <div
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <img
+            src="/logo.jpg"
+            alt="ClearWay AI"
             style={{
-              width: '28px',
-              height: '28px',
+              width: '32px',
+              height: '32px',
               borderRadius: '6px',
-              backgroundColor: 'rgba(0, 229, 255, 0.15)',
               border: '1px solid rgba(0, 229, 255, 0.4)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#00e5ff',
+              objectFit: 'cover',
+              boxShadow: '0 0 10px rgba(0, 229, 255, 0.25)',
             }}
-          >
-            <Activity size={16} />
-          </div>
+          />
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             <span
               style={{

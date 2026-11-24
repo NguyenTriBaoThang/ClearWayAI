@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="../assets/branding/clearway-banner.jpg" alt="ClearWay AI Architecture Banner" width="100%" style="border-radius: 8px; max-width: 950px; margin-bottom: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.4);" />
+</div>
+
 # ClearWayAI System Architecture Document
 
 This document provides the foundational engineering specification, subsystem boundaries, data flow pipelines, and mathematical models of the ClearWayAI platform.

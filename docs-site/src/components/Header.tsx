@@ -47,8 +47,21 @@ export const Header: React.FC<HeaderProps> = ({
           <Menu size={22} />
         </button>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
-          <Activity size={22} color="var(--accent-cyan)" />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}>
+          <img
+            src={`${import.meta.env.BASE_URL}logo.jpg`}
+            alt="ClearWay AI"
+            style={{
+              width: '30px',
+              height: '30px',
+              borderRadius: '6px',
+              border: '1px solid rgba(56, 189, 248, 0.4)',
+              objectFit: 'cover',
+            }}
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src = '/logo.jpg';
+            }}
+          />
           <span style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
             ClearWay AI
           </span>

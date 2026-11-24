@@ -1,5 +1,11 @@
 <div align="center">
 
+<img src="assets/branding/clearway-banner.jpg" alt="ClearWay AI Hero Banner" width="100%" style="border-radius: 8px; max-width: 1100px; margin-bottom: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.4);" />
+
+<br/>
+
+<img src="assets/branding/clearway-logo.jpg" alt="ClearWay AI Logo" width="120px" style="border-radius: 12px; margin-bottom: 12px;" />
+
 # 🚦 ClearWay AI
 ### 3D Digital Twin • Multi-Intersection Pre-clearance • Traffic Simulation Platform
 **Hệ thống Bản sao Kỹ thuật số 3D & Điều phối Tiên nghiệm Đa nút Giao thông Thông minh cho Hành lang Cứu hộ Khẩn cấp**

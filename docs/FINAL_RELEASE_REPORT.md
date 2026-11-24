@@ -1,3 +1,9 @@
+<div align="center">
+  <img src="../assets/branding/clearway-banner.jpg" alt="ClearWay AI Executive Banner" width="100%" style="border-radius: 8px; max-width: 1000px; margin-bottom: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.4);" />
+  <br/>
+  <img src="../assets/branding/clearway-logo.jpg" alt="ClearWay AI Logo" width="110px" style="border-radius: 10px; margin-bottom: 12px;" />
+</div>
+
 # 🚦 ClearWayAI - Báo cáo Tổng kết Đồ án & Hồ sơ Nộp thi
 ### Next-Generation 3D Digital Twin, Multi-Intersection Adaptive Signal Coordination & Emergency Corridor Pre-clearance
 **Phiên bản:** `v0.1.0-mvp` | **Ngày công bố:** Tháng 11/2026 | **Tác giả:** Nguyễn Tri Bão Thắng

@@ -10,6 +10,12 @@
 - **Header:** ClearWayAI — Next-Generation Intelligent Traffic Management
 - **Subheader:** 3D Digital Twin, Multi-Intersection Adaptive Coordination & Dynamic Emergency Corridor Pre-clearance
 - **Tagline:** *"Clearing the Way for Smarter Cities and Safer Lives."*
+- **Visual Branding:**
+  <div align="center">
+    <img src="../assets/branding/clearway-banner.jpg" alt="ClearWay AI Pitch Deck Banner" width="95%" style="border-radius: 8px; margin: 12px 0;" />
+    <br/>
+    <img src="../assets/branding/clearway-logo.jpg" alt="ClearWay AI Logo" width="100px" style="border-radius: 8px; margin: 6px 0;" />
+  </div>
 - **Key Visual:** Isometric 3D cyber Digital Twin showing 4 coordinated intersections along Nguyen Van Linh Boulevard with emergency vehicle AMB-339 navigating a clear green wave.
 - **Presenter Hook:** *"Every day, urban traffic gridlock costs Vietnamese cities millions of dollars and steals irreplaceable minutes from emergency ambulances. ClearWayAI solves this crisis with AI-powered moving-horizon signal coordination and a real-time 3D Digital Twin."*
 

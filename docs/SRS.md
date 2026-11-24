@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="../assets/branding/clearway-banner.jpg" alt="ClearWay AI System Requirements Banner" width="100%" style="border-radius: 8px; max-width: 950px; margin-bottom: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.4);" />
+</div>
+
 # ClearWayAI System Requirements Specification (SRS)
 
 > **Document ID:** CW-SPEC-SRS-001  

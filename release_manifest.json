@@ -1,18 +1,18 @@
 {
   "project": "ClearWayAI",
   "release_version": "v0.1.0-mvp",
-  "release_timestamp_utc": "2026-11-24T01:08:55.138898+00:00",
+  "release_timestamp_utc": "2026-11-24T01:27:20.025883+00:00",
   "verified_tasks": "60/60",
   "completion_ratio": 1.0,
   "deliverables_count": 20,
   "files": {
     "README.md": {
-      "size_bytes": 19461,
-      "sha256": "e17496c6ebd7f8b62c9f6592057651e925e8af3af4cfef26802d0e7a6f2bc41c"
+      "size_bytes": 19806,
+      "sha256": "76bc494e956a3f550e118a08d25c93145998dbab422f946bbb049e24d1e48e2e"
     },
     "RELEASE_NOTES_v0.1.0-mvp.md": {
-      "size_bytes": 8262,
-      "sha256": "9b50ef86783256359e97546c709c5f74d94de5f6aaa05f0ba0ad0a894835b507"
+      "size_bytes": 8497,
+      "sha256": "e9961c63c1e0c1e8849f79f2ebfbc9ccea34fbd7e90ae21493016d3503039b65"
     },
     "docker-compose.yml": {
       "size_bytes": 1225,
@@ -35,8 +35,8 @@
       "sha256": "4bb95ce20c02b853410358201aa9538729441ac4a09ef588dd7fb06039580962"
     },
     "docs/FINAL_RELEASE_REPORT.md": {
-      "size_bytes": 13832,
-      "sha256": "db1110ed24bbf075f7d5879cae93e245f2bfe44133c1acf95d9582642f6d0de2"
+      "size_bytes": 14220,
+      "sha256": "35090b5563685f912f55b6febeab798007a3a2632b1fa4319fd5e1603e3275b4"
     },
     "docs/DEMO_SCENARIOS.md": {
       "size_bytes": 7645,
@@ -47,8 +47,8 @@
       "sha256": "0e713deed1b0c32b460a0278b6e92e16927e7364abd76fb3dc197ba9ef9e4861"
     },
     "docs/PITCH_DECK.md": {
-      "size_bytes": 9551,
-      "sha256": "85c5ed867bc1b774da1c5700e18769325f0e2f5fb854e614de552c5bd82bd3f0"
+      "size_bytes": 9900,
+      "sha256": "a6ad9290b09c47c020cb98e47ca485e15c2673840cd09cf7283a2978c2977330"
     },
     "docs/DEFENSE_QA.md": {
       "size_bytes": 7656,
@@ -59,8 +59,8 @@
       "sha256": "4e7ffbf30a72d2732cad21235d2d6580721a8c77f10a96277bb275263096b7cd"
     },
     "docs/PROJECT_STATUS.md": {
-      "size_bytes": 24431,
-      "sha256": "138d3711cfbae96e375e3a675b4cf408cc9d11e3277f5b6465e989acb9a4acac"
+      "size_bytes": 24667,
+      "sha256": "375089ca34b64d3a9b4e90059565f0eb653c549904852c97ff7885e2ecd40d8e"
     },
     "hardware/firmware/clearway_esp32_firmware.ino": {
       "size_bytes": 12845,

@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="../assets/branding/clearway-banner.jpg" alt="ClearWay AI UI Specification Banner" width="100%" style="border-radius: 8px; max-width: 950px; margin-bottom: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.4);" />
+</div>
+
 # ClearWayAI UI Reference Specification (`docs/UI_REFERENCE_SPEC.md`)
 
 > **Source Document:** Derived from direct pixel, layout, and color analysis of [assets/reference/dashboard-target.png](../assets/reference/dashboard-target.png) (1254×1254 px, 3.8 MB).  

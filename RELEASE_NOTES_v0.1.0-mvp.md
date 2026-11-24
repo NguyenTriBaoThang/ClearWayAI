@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="assets/branding/clearway-banner.jpg" alt="ClearWay AI Release Banner" width="100%" style="border-radius: 8px; max-width: 1000px; margin-bottom: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.4);" />
+</div>
+
 # ClearWayAI Release Notes — v0.1.0-mvp
 
 > **Official Release Notes for ClearWayAI MVP Milestone (`v0.1.0-mvp`)**  

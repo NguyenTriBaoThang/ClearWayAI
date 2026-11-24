@@ -208,6 +208,28 @@ export const DocViewer: React.FC<DocViewerProps> = ({
         </div>
       </div>
 
+      {/* Hero Banner for Introduction Section */}
+      {section.id === 'introduction' && (
+        <div
+          style={{
+            marginBottom: '28px',
+            borderRadius: '10px',
+            overflow: 'hidden',
+            border: '1px solid var(--border-color)',
+            boxShadow: '0 8px 30px rgba(0,0,0,0.35)',
+          }}
+        >
+          <img
+            src={`${import.meta.env.BASE_URL}banner.jpg`}
+            alt="ClearWay AI Intelligent Traffic Management Platform"
+            style={{ width: '100%', height: 'auto', display: 'block' }}
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src = '/banner.jpg';
+            }}
+          />
+        </div>
+      )}
+
       {/* Main Prose Article */}
       <article className="doc-prose">
         {renderFormattedContent(section.content)}

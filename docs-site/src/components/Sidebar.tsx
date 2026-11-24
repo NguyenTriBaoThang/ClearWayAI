@@ -39,6 +39,37 @@ export const Sidebar: React.FC<SidebarProps> = ({
         top: '60px',
       }}
     >
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px',
+          padding: '10px 12px',
+          marginBottom: '18px',
+          backgroundColor: 'rgba(56, 189, 248, 0.06)',
+          borderRadius: '8px',
+          border: '1px solid rgba(56, 189, 248, 0.25)',
+        }}
+      >
+        <img
+          src={`${import.meta.env.BASE_URL}logo.jpg`}
+          alt="ClearWay AI"
+          style={{
+            width: '28px',
+            height: '28px',
+            borderRadius: '6px',
+            objectFit: 'cover',
+          }}
+          onError={(e) => {
+            (e.currentTarget as HTMLImageElement).src = '/logo.jpg';
+          }}
+        />
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--text-primary)' }}>ClearWay AI</span>
+          <span style={{ fontSize: '0.65rem', color: 'var(--accent-cyan)', fontWeight: 600 }}>v0.1.0-mvp • 60/60 Tasks</span>
+        </div>
+      </div>
+
       <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-muted)', fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 700 }}>
         <BookOpen size={14} color="var(--accent-cyan)" />
         <span>Documentation Topics</span>
