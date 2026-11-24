@@ -1,14 +1,14 @@
 {
   "project": "ClearWayAI",
   "release_version": "v0.1.0-mvp",
-  "release_timestamp_utc": "2026-11-24T01:27:20.025883+00:00",
+  "release_timestamp_utc": "2026-11-24T01:44:32.319594+00:00",
   "verified_tasks": "60/60",
   "completion_ratio": 1.0,
   "deliverables_count": 20,
   "files": {
     "README.md": {
-      "size_bytes": 19806,
-      "sha256": "76bc494e956a3f550e118a08d25c93145998dbab422f946bbb049e24d1e48e2e"
+      "size_bytes": 23908,
+      "sha256": "9f2c736d5e72a509edfd5727e510fadc2a6658bb6ab1817787f9aab74536abb3"
     },
     "RELEASE_NOTES_v0.1.0-mvp.md": {
       "size_bytes": 8497,
@@ -35,8 +35,8 @@
       "sha256": "4bb95ce20c02b853410358201aa9538729441ac4a09ef588dd7fb06039580962"
     },
     "docs/FINAL_RELEASE_REPORT.md": {
-      "size_bytes": 14220,
-      "sha256": "35090b5563685f912f55b6febeab798007a3a2632b1fa4319fd5e1603e3275b4"
+      "size_bytes": 16606,
+      "sha256": "325a01bee8669ce9b6166686d0b7324e07a8a61eb665eba6493ffef2f1e80989"
     },
     "docs/DEMO_SCENARIOS.md": {
       "size_bytes": 7645,

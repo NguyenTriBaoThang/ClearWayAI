@@ -11,8 +11,13 @@ assets/
 ├── branding/
 │   ├── clearway-banner.jpg   # Official Wide Hero Banner (1100×370 px)
 │   └── clearway-logo.jpg     # Official Square Brand Icon / Logo (1024×1024 px)
-└── reference/
-    └── dashboard-target.png  # UI Design Blueprint Reference Target (1254×1254 px)
+├── reference/
+│   └── dashboard-target.png  # UI Design Blueprint Reference Target (1254×1254 px)
+└── screenshots/
+    ├── welcome-portal.jpg       # Welcome Portal & Module Hub
+    ├── operations-dashboard.jpg # Integrated Operations Dashboard (3D Twin + HUD)
+    ├── digital-twin-3d.jpg      # Full-Screen 3D WebGL Digital Twin Viewport
+    └── analytics-iot-map.jpg    # IoT Sensor Network & Operations Analytics
 ```
 
 ---

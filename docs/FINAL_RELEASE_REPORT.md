@@ -104,6 +104,47 @@ Tuân thủ tiêu chuẩn NEMA TS2 và tiêu chuẩn an toàn đường sắt, b
 
 ---
 
+## 📸 Giao diện Người dùng & Bản sao Kỹ thuật số Thực tế (Runtime UI & Digital Twin)
+
+Hệ thống cung cấp giao diện điều phối tác chiến 3D hoàn chỉnh được dựng trên Three.js WebGL và React:
+
+<table align="center" width="100%">
+<tr>
+<td align="center" width="50%">
+  <a href="../assets/screenshots/welcome-portal.jpg">
+    <img src="../assets/screenshots/welcome-portal.jpg" width="100%" style="border-radius: 6px; border: 1px solid #1e293b;" alt="ClearWay AI Welcome Portal & Module Hub"/>
+  </a>
+  <br/><b>1. Welcome Portal & Operations Hub</b>
+  <br/><i>Lobby điều hướng trung tâm với 3 phân hệ chính: Operations Dashboard, 3D Digital Twin View và SUMO Microscopic Simulation.</i>
+</td>
+<td align="center" width="50%">
+  <a href="../assets/screenshots/operations-dashboard.jpg">
+    <img src="../assets/screenshots/operations-dashboard.jpg" width="100%" style="border-radius: 6px; border: 1px solid #1e293b;" alt="Integrated Real-Time Operations Dashboard"/>
+  </a>
+  <br/><b>2. Real-Time Operations Dashboard</b>
+  <br/><i>Bảng điều hành tác chiến tích hợp: V2X telemetry, pha đèn nút giao INT-0457, biểu đồ thích ứng RL/Heuristic và khung nhìn 3D Digital Twin trung tâm.</i>
+</td>
+</tr>
+<tr>
+<td align="center" width="50%">
+  <a href="../assets/screenshots/digital-twin-3d.jpg">
+    <img src="../assets/screenshots/digital-twin-3d.jpg" width="100%" style="border-radius: 6px; border: 1px solid #1e293b;" alt="Full-Screen 3D WebGL Digital Twin Viewport"/>
+  </a>
+  <br/><b>3. Full-Screen 3D WebGL Digital Twin</b>
+  <br/><i>Khung nhìn bản sao kỹ thuật số 3D toàn màn hình kiểm tra chi tiết giao lộ và hành lang 1.000m (Nodes A–D) với góc xoay tự do và Chase Camera bám theo xe cấp cứu.</i>
+</td>
+<td align="center" width="50%">
+  <a href="../assets/screenshots/analytics-iot-map.jpg">
+    <img src="../assets/screenshots/analytics-iot-map.jpg" width="100%" style="border-radius: 6px; border: 1px solid #1e293b;" alt="IoT Sensor Network & Operations Analytics"/>
+  </a>
+  <br/><b>4. IoT Sensor Network & GIS Operations Analytics</b>
+  <br/><i>Mạng lưới 306 cảm biến IoT/RSU, bản đồ hành lang cấp cứu GIS thời gian thực, biểu đồ lưu lượng phương tiện và bảng nhật ký bất thường sự cố.</i>
+</td>
+</tr>
+</table>
+
+---
+
 ## 🔬 Kết quả Thực nghiệm Khoa học Đối chuẩn (Scientific Benchmarks)
 
 Thực nghiệm được tiến hành tự động qua `simulation/experiments/scientific_evaluator.py` trên kịch bản tải trọng cao điểm (`peak`, 6,200 veh/h, 75% xe máy) chạy lặp 10 seed ngẫu nhiên độc lập (khoảng tin cậy 95% Student-t):
