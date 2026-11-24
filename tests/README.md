@@ -33,6 +33,7 @@ tests/
 ├── test_technical_documentation_sync.py # Verification of all 24 chapters in docs-site (Task 56)
 ├── test_all_readmes_integrity.py     # Verification of all 19 monorepo README files & links (Task 57)
 ├── test_release_packaging_and_deployment.py # Docker configs, release report, notes & packaging (Task 58)
+├── test_ppo_reinforcement_learning.py# Gymnasium corridor env, PPO Actor-Critic & Safety Shield (Task 59)
 └── README.md
 ```
 

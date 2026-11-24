@@ -111,14 +111,14 @@
 | **T56** | Cập nhật Technical Documentation đầy đủ theo code thật | P0 | T03, T23–T55 | **VERIFIED** | Synchronized all 24 chapters in docs-site/src/data/docsContent.ts with real codebase (6-tier architecture, 7 REST routers, 6 safety invariants INV-01..06, ESP32 hardware testbench, VMS gantries, 10-seed benchmarks, Decree 13/2023/ND-CP Zero-PII), all 24 chapters marked VERIFIED, docs-site production build PASS (dist/index.html & dist/assets/ generated in 8.49s), pytest tests/test_technical_documentation_sync.py (3/3 PASS), monorepo quality gates 5/5 PASS |
 | **T57** | Viết lại ALL README theo hệ thống cuối cùng | P0 | T04, T50–T56 | **VERIFIED** | Comprehensive synchronization of all 19 project-owned README.md files (root, apps/api, apps/web, hardware, controller, simulation, tests, scripts, ai, data, models, notebooks, packages/shared, docs-site, docs/adr, simulation/sumo, traci, baselines, scenarios) reflecting final architecture, VMS gantries, ESP32 physical testbench, 7 REST routers, INV-01..06 safety invariants, scientific benchmarks (-42.6% delay, 0 stops), all 55 markdown files relative link checked (0 broken links), pytest tests/test_all_readmes_integrity.py (4/4 PASS), monorepo quality gates 5/5 PASS |
 | **T58** | Đóng gói release MVP, deployment và hồ sơ nộp thi | P0 | T02–T22, T50–T57 | **VERIFIED** | Multi-stage production Docker configurations (docker-compose.prod.yml, apps/api/Dockerfile, apps/web/nginx.conf), final competition submission dossier (docs/FINAL_RELEASE_REPORT.md), v0.1.0-mvp release notes (RELEASE_NOTES_v0.1.0-mvp.md), release packaging automation (scripts/package_release.py, release_manifest.json), pytest tests/test_release_packaging_and_deployment.py (5/5 PASS), monorepo quality gates 5/5 PASS |
-| **T59** | PPO Reinforcement Learning điều phối đa nút trong sandbox | P2 | T39–T41, T51 | **PLANNED** | Research track |
+| **T59** | PPO Reinforcement Learning điều phối đa nút trong sandbox | P2 | T39–T41, T51 | **VERIFIED** | Gymnasium-compatible MultiIntersectionCorridorEnv (25-dim obs, 4 discrete macro-actions), ActorCriticPolicy & PPOAgent in pure NumPy (ai/rl/ppo_agent.py), SignalSafetyGateway MMU safety shield (100% INV-01..06 compliance, 0 conflicting green violations), train & evaluate scripts (ai/rl/train_ppo.py, evaluate_policy.py), trained checkpoint (models/rl/ppo_corridor_agent.json), pytest tests/test_ppo_reinforcement_learning.py (7/7 PASS), monorepo quality gates 5/5 PASS |
 | **T60** | Camera thật → định vị xe lên 3D và kiểm định digital twin | P2 | T28–T32, T46–T47 | **PLANNED** | Research track |
 
 ---
 
 ## 3. Current Sprint Focus
-- **Current Milestone:** TASK 01–58 Complete & Verified (Phase A: 6/6, Phase B: 16/16, Phase C: 5/5, Phase D: 5/5, Phase E: 4/4, Phase F: 5/5, Phase G: 4/4, Phase H: 3/3, Phase I: 4/4 ALL 100% COMPLETE!, Phase J: 6/8 complete - 75.0% — Total 58/60 tasks verified = 96.7% of master plan).
-- **Next Dependent Task:** TASK 59 — PPO Reinforcement Learning điều phối đa nút trong sandbox (Phase J: Demo, Release & Advanced Exploration).
+- **Current Milestone:** TASK 01–59 Complete & Verified (Phase A: 6/6, Phase B: 16/16, Phase C: 5/5, Phase D: 5/5, Phase E: 4/4, Phase F: 5/5, Phase G: 4/4, Phase H: 3/3, Phase I: 4/4 ALL 100% COMPLETE!, Phase J: 7/8 complete - 87.5% — Total 59/60 tasks verified = 98.3% of master plan).
+- **Next Dependent Task:** TASK 60 — Camera thật → định vị xe lên 3D và kiểm định digital twin (Phase J: Demo, Release & Advanced Exploration — The Final Task 60!).
 
 
 

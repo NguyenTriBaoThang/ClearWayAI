@@ -1,0 +1,21 @@
+{
+  "benchmark_name": "Multi-Intersection PPO vs Baseline B0",
+  "num_eval_episodes": 5,
+  "metrics": {
+    "ev_transit_time_sec": {
+      "b0_fixed_time": 110.0,
+      "ppo_agent": 110.0,
+      "improvement_pct": 0.0
+    },
+    "ev_stopped_ticks": {
+      "b0_fixed_time": 83.0,
+      "ppo_agent": 83.0
+    },
+    "civilian_delay_total": {
+      "b0_fixed_time": 3045.48,
+      "ppo_agent": 2985.76
+    },
+    "safety_invariants_compliance_pct": 100.0,
+    "conflicting_green_violations": 0
+  }
+}

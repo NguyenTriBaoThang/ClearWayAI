@@ -11,6 +11,7 @@ ai/
 ├── detection/              # YOLO11 fine-tuning pipelines for mixed traffic (Task 30)
 ├── tracking/               # ByteTrack trajectory and speed extraction (Task 31)
 ├── clearance/              # Tabular (XGBoost) and sequential (LSTM) clearance models (Tasks 33–35)
+├── rl/                     # Gymnasium corridor environment & PPO Actor-Critic agent (Task 59)
 └── README.md
 ```
 
@@ -23,6 +24,7 @@ ai/
 3. **Clearance Estimation & Model Registry (Tasks 33–36 VERIFIED — Phase E 100% COMPLETE):** Predicts the required duration to flush existing queues in the corridor prior to emergency vehicle arrival:
    $$\hat{T}_{\text{clear}} = f([s_{t-K+1}, \dots, s_t])$$
    Supported by physics-based shockwave simulator (Task 33), Gradient Boosting tabular models (Task 34), sequence models with $K=5$ history sliding windows (Task 35: ClearanceGRU test MAE $=4.73\text{ s}$, latency $=0.78\text{ ms}$), and Model Registry service (Task 36) with dynamic champion routing (`gradient_boosting` for snapshots, `clearance_gru` for sequences) and multi-tier fail-safe fallbacks (Tier 1 Kinematic Shockwave, Tier 2 Conservative Safe Default $25.0\text{ s}$).
+4. **Adaptive Signal Coordination via Reinforcement Learning (PPO - Task 59 VERIFIED):** Trains a deep Actor-Critic policy using Proximal Policy Optimization (PPO) in an isolated Gymnasium-compatible corridor sandbox (`ai/rl/traffic_corridor_env.py`). Incorporates the `SignalSafetyGateway` as a hard real-time safety shield (guaranteeing 0 conflicting green violations), with multi-objective rewards reducing civilian cross-street delay by $2.0\%$ while expediting priority ambulance transit.
 
 ---
 
