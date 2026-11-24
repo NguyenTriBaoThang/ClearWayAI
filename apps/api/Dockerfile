@@ -14,7 +14,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy source code
 COPY apps/api ./apps/api
 COPY packages ./packages
+COPY controller ./controller
+COPY ai ./ai
+COPY simulation ./simulation
 COPY data ./data
+COPY models ./models
 
 ENV PYTHONPATH=/app:/app/apps/api/src
 EXPOSE 8000

@@ -13,6 +13,7 @@
 scripts/
 ├── check_all.py                     # Primary Monorepo 5-Gate Quality Checker (Task 52)
 ├── verify_markdown_links.py         # Zero-broken internal relative link validator (Task 57)
+├── package_release.py               # Release packaging & SHA-256 manifest generator (Task 58)
 ├── audit_visual_fidelity_and_fps.py # Visual fidelity, WebGL canvas, and 60 FPS auditor (Task 51)
 ├── prepare_demo.py                  # Preloader for verified scenarios and demonstration fixtures
 ├── bootstrap.ps1                    # Windows PowerShell automated setup and dependency installer
@@ -47,7 +48,17 @@ python scripts/verify_markdown_links.py
 
 ---
 
-### 2.3 Visual Fidelity & FPS Auditor (`audit_visual_fidelity_and_fps.py`)
+### 2.3 Release Packaging & Integrity Manifest (`package_release.py`)
+Validates that all core deliverables and documentation artifacts exist, calculates their SHA-256 cryptographic hashes, and generates `release_manifest.json` for formal release distribution and competition submissions.
+
+```bash
+python scripts/package_release.py
+python scripts/package_release.py --create-archive
+```
+
+---
+
+### 2.4 Visual Fidelity & FPS Auditor (`audit_visual_fidelity_and_fps.py`)
 Audits the Three.js 3D Digital Twin and web operations dashboard for:
 - Genuine WebGL canvas initialization (rejects static image placeholders).
 - 60 FPS frame render budget validation ($\le 16.6\text{ ms}$ render time).

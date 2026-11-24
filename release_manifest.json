@@ -1,0 +1,90 @@
+{
+  "project": "ClearWayAI",
+  "release_version": "v0.1.0-mvp",
+  "release_timestamp_utc": "2026-11-24T00:33:15.821867+00:00",
+  "verified_tasks": "58/60",
+  "completion_ratio": 0.967,
+  "deliverables_count": 20,
+  "files": {
+    "README.md": {
+      "size_bytes": 19463,
+      "sha256": "5a4bb91fd982533a4b2cb9423890b633c75bfee7a2b54949dc09ab74ef0ab1ea"
+    },
+    "RELEASE_NOTES_v0.1.0-mvp.md": {
+      "size_bytes": 8262,
+      "sha256": "9b50ef86783256359e97546c709c5f74d94de5f6aaa05f0ba0ad0a894835b507"
+    },
+    "docker-compose.yml": {
+      "size_bytes": 1225,
+      "sha256": "6b2f40f16bd9b8db83e71ba2f5e10a05c5ffb06b382cc6e23e9f684278bd88ec"
+    },
+    "docker-compose.prod.yml": {
+      "size_bytes": 1708,
+      "sha256": "2899fbaf2f66a057694713546fb7cc34389b9f2de3abd757ec3c53d551fe6a75"
+    },
+    "apps/api/Dockerfile": {
+      "size_bytes": 598,
+      "sha256": "dcfe720aa2d1061bf023de2598ff4ee74e078c53b0a48b0077378a7231aec7bc"
+    },
+    "apps/web/Dockerfile": {
+      "size_bytes": 611,
+      "sha256": "121660d88ec399297ccbee120aa2732fe91cb6a1c8d679239171de68db51d965"
+    },
+    "apps/web/nginx.conf": {
+      "size_bytes": 965,
+      "sha256": "4bb95ce20c02b853410358201aa9538729441ac4a09ef588dd7fb06039580962"
+    },
+    "docs/FINAL_RELEASE_REPORT.md": {
+      "size_bytes": 13832,
+      "sha256": "db1110ed24bbf075f7d5879cae93e245f2bfe44133c1acf95d9582642f6d0de2"
+    },
+    "docs/DEMO_SCENARIOS.md": {
+      "size_bytes": 7645,
+      "sha256": "0953571f3866eee2d498201db429961a36b43d3841dcbced410471e036ae67b4"
+    },
+    "docs/VIDEO_DEMO_SCRIPT.md": {
+      "size_bytes": 10509,
+      "sha256": "0e713deed1b0c32b460a0278b6e92e16927e7364abd76fb3dc197ba9ef9e4861"
+    },
+    "docs/PITCH_DECK.md": {
+      "size_bytes": 9551,
+      "sha256": "85c5ed867bc1b774da1c5700e18769325f0e2f5fb854e614de552c5bd82bd3f0"
+    },
+    "docs/DEFENSE_QA.md": {
+      "size_bytes": 7656,
+      "sha256": "a40bacd3b7c06d45ba0400a95c2e0a2e5336b5ad1b0d6921e877829331f5fa16"
+    },
+    "docs/TASK_BOARD.md": {
+      "size_bytes": 18447,
+      "sha256": "458447c016263333898481c11167c7b76a6c88ccb3df6babefb4cfc1f2a1153c"
+    },
+    "docs/PROJECT_STATUS.md": {
+      "size_bytes": 23696,
+      "sha256": "088211a1e1fd5bc2cb21a5cc9fa0c652ca208ee74d305440ea268f0a305157cf"
+    },
+    "hardware/firmware/clearway_esp32_firmware.ino": {
+      "size_bytes": 12845,
+      "sha256": "bcfa9c2e3631ec077a41d49c910a2d54d29ec085f6e2611d6a17d16eabfe5727"
+    },
+    "hardware/schematics/breadboard_wiring.md": {
+      "size_bytes": 5657,
+      "sha256": "d29e3933ca13e8bc7511d6248c067235ec754d19ada900f20f188492737ac5fb"
+    },
+    "hardware/bom/BILL_OF_MATERIALS.md": {
+      "size_bytes": 2554,
+      "sha256": "c8cd98b4ac89e2ff1803482eb17a766696fd13b2b39d641b1e4afa7dd986b36d"
+    },
+    "simulation/experiments/scientific_evaluator.py": {
+      "size_bytes": 22461,
+      "sha256": "464e16a3a7ed780ef5d95e3a7a1874171ba3c9f492f0579c543ea81d213d60a7"
+    },
+    "simulation/experiments/demo_scenario_runner.py": {
+      "size_bytes": 14818,
+      "sha256": "4acff7654ffa80d88eb475a5225fccce1470b2b42eda706e46edbc9729b32039"
+    },
+    "controller/hardware/esp32_bridge.py": {
+      "size_bytes": 15867,
+      "sha256": "8a7984ca68ee36f8387ecf6d436c7c6ffb7c05bf53bdfca0f229294c30197fe1"
+    }
+  }
+}

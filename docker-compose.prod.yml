@@ -1,0 +1,79 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    container_name: clearway-api-prod
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - SAFETY_MODE=SIMULATION
+      - DATA_PROVENANCE=SUMO_SIMULATED
+      - DEMO_MODE=true
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    volumes:
+      - clearway-data:/app/data
+      - clearway-models:/app/models
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2048M
+        reservations:
+          cpus: "0.5"
+          memory: 512M
+    restart: always
+    networks:
+      - clearway-net
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    container_name: clearway-web-prod
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8000
+      - VITE_WS_BASE_URL=ws://localhost:8000
+    depends_on:
+      api:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+    restart: always
+    networks:
+      - clearway-net
+
+  redis:
+    image: redis:7-alpine
+    container_name: clearway-redis-prod
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--save", "60", "1", "--loglevel", "warning"]
+    volumes:
+      - clearway-redis-data:/data
+    restart: always
+    networks:
+      - clearway-net
+
+volumes:
+  clearway-data:
+  clearway-models:
+  clearway-redis-data:
+
+networks:
+  clearway-net:
+    driver: bridge
+
