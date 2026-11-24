@@ -1,14 +1,14 @@
 {
   "project": "ClearWayAI",
   "release_version": "v0.1.0-mvp",
-  "release_timestamp_utc": "2026-11-24T00:55:42.258951+00:00",
-  "verified_tasks": "58/60",
-  "completion_ratio": 0.967,
+  "release_timestamp_utc": "2026-11-24T01:08:55.138898+00:00",
+  "verified_tasks": "60/60",
+  "completion_ratio": 1.0,
   "deliverables_count": 20,
   "files": {
     "README.md": {
-      "size_bytes": 19463,
-      "sha256": "8ea6dc6eb941ec21b364f531eb99370bd0ff3bcf5f9d44da2883f7a1bf208300"
+      "size_bytes": 19461,
+      "sha256": "e17496c6ebd7f8b62c9f6592057651e925e8af3af4cfef26802d0e7a6f2bc41c"
     },
     "RELEASE_NOTES_v0.1.0-mvp.md": {
       "size_bytes": 8262,
@@ -55,12 +55,12 @@
       "sha256": "a40bacd3b7c06d45ba0400a95c2e0a2e5336b5ad1b0d6921e877829331f5fa16"
     },
     "docs/TASK_BOARD.md": {
-      "size_bytes": 18665,
-      "sha256": "7c6d31d41f3aa3eacf2ca5397b15557b4d67d4bd3062237d0c3510999d2d3558"
+      "size_bytes": 18970,
+      "sha256": "4e7ffbf30a72d2732cad21235d2d6580721a8c77f10a96277bb275263096b7cd"
     },
     "docs/PROJECT_STATUS.md": {
-      "size_bytes": 24184,
-      "sha256": "a14b3851775c28e4ae916527236d9af925916c0f100a0929dd7e49c65b1e874d"
+      "size_bytes": 24431,
+      "sha256": "138d3711cfbae96e375e3a675b4cf408cc9d11e3277f5b6465e989acb9a4acac"
     },
     "hardware/firmware/clearway_esp32_firmware.ino": {
       "size_bytes": 12845,
