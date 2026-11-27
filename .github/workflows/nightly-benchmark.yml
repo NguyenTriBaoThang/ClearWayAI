@@ -28,7 +28,7 @@ jobs:
 
       - name: Run Visual Fidelity & FPS Performance Audit
         run: |
-          python audit_visual_fidelity_and_fps.py
+          python scripts/audit_visual_fidelity_and_fps.py
 
       - name: Run Full Test Matrix
         run: |
